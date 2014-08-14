@@ -14,14 +14,14 @@ import java.io.OutputStream;
 
 import javax.swing.JFileChooser;
 
-import datatypes.KnowledgeBaseList;
+import datatypes.KnowledgeBase;
 
 public class FileManager
 {
 	static JFileChooser fileChooser;
 
 	
-	public static void saveKnowledgeFile(KnowledgeBaseList kb,Component frame)
+	public static void saveKnowledgeFile(KnowledgeBase kb,Component frame)
 	{
 		fileChooser.setSelectedFile(new File(kb.getName()+".stu"));
 		int returnVal = fileChooser.showSaveDialog(frame);
@@ -40,7 +40,7 @@ public class FileManager
         
 	}
 	
-	public static KnowledgeBaseList loadKnowledgeFile(Component frame)
+	public static KnowledgeBase loadKnowledgeFile(Component frame)
 	{
 		int returnVal = fileChooser.showOpenDialog(frame);
 
@@ -58,7 +58,7 @@ public class FileManager
         }
 	}
 	
-	private static void saveKnowledgeFile(KnowledgeBaseList kb, File f)
+	private static void saveKnowledgeFile(KnowledgeBase kb, File f)
 	{
 		try
 		{
@@ -83,14 +83,14 @@ public class FileManager
 		}
 	}
 	
-	public static KnowledgeBaseList loadKnowledgeFile(File f)
+	public static KnowledgeBase loadKnowledgeFile(File f)
 	{
 	      FileInputStream fis;
 		try
 		{
 			fis = new FileInputStream(f);
 		    ObjectInputStream ois = new ObjectInputStream(fis);
-		    KnowledgeBaseList kb = (KnowledgeBaseList) ois.readObject();
+		    KnowledgeBase kb = (KnowledgeBase) ois.readObject();
 		    ois.close();
 		    return kb;
 		}
@@ -113,12 +113,12 @@ public class FileManager
 		return null;
 	}
 	
-	public static KnowledgeBaseList loadKnowledgeExample(String s)
+	public static KnowledgeBase loadKnowledgeExample(String s)
 	{
 		try
 		{
 		    ObjectInputStream ois = new ObjectInputStream(FileManager.class.getResourceAsStream("/Examples/" + s));
-		    KnowledgeBaseList kb = (KnowledgeBaseList) ois.readObject();
+		    KnowledgeBase kb = (KnowledgeBase) ois.readObject();
 		    ois.close();
 		    return kb;
 		}

@@ -26,7 +26,7 @@ import javax.swing.event.ChangeListener;
 public class ImportExport
 {
 	static Component frame;
-	static RuleObject thisRule; // a hack to get this into the description function
+	static Rule thisRule; // a hack to get this into the description function
 	
 	public static void setMainFrame(Component cpm)
 	{
@@ -98,7 +98,7 @@ public class ImportExport
 	 * @param var
 	 * @return
 	 */
-	public static Variable userSetVaraible(Variable var, RuleObject rule)
+	public static Variable userSetVaraible(Variable var, Rule rule)
 	{
 		thisRule = rule;
 		if(frame != null)
@@ -222,7 +222,7 @@ public class ImportExport
 	/**
 	 * displays a dialog that reports on a run
 	 */
-	public static void displayResults(Variable result, final ArrayList<RuleObject> howList, KnowledgeBaseList kb)
+	public static void displayResults(Variable result, final ArrayList<Rule> howList, KnowledgeBase kb)
 	{
 		String summary;
 		if(result != null)
@@ -284,7 +284,7 @@ public class ImportExport
 		JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.CLOSED_OPTION);
 	}
 	
-	public static void displayHowMessage(ArrayList<RuleObject> howList)
+	public static void displayHowMessage(ArrayList<Rule> howList)
 	{
 		if(howList.isEmpty())
 		{
@@ -294,7 +294,7 @@ public class ImportExport
 		{
 		
 			System.out.println("\nThe result was reached by firing these rules in this order\n");
-			for(RuleObject rule : howList)
+			for(Rule rule : howList)
 			{
 				System.out.println(rule.toString());
 			}

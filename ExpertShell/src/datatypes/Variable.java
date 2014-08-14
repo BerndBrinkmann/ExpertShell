@@ -8,7 +8,7 @@ public class Variable implements Serializable
 	protected String description = "";
 	protected Value currentValue;
 	protected ArrayList<Value> possibleValues;
-	protected RuleObject derivedFrom;
+	protected Rule derivedFrom;
 	protected String queryPrompt = "";
 	
 	protected Boolean isNumeric = false;
@@ -140,7 +140,7 @@ public class Variable implements Serializable
 			return numVal != null;
 	}
 	
-	public void setDerivedFrom(RuleObject r)
+	public void setDerivedFrom(Rule r)
 	{
 		derivedFrom = r;
 	}

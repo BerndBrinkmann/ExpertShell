@@ -8,10 +8,10 @@ import java.util.Comparator;
 
 // in order to sort the rule array by the number of antecedents each rule has
 
-public class RuleAntecedentComparator implements Comparator<RuleObject>
+public class RuleAntecedentComparator implements Comparator<Rule>
 {
 
-	public int compare(RuleObject r1, RuleObject r2)
+	public int compare(Rule r1, Rule r2)
 	{
 		
 		if(r1.getSpecificity() < r2.getSpecificity())
