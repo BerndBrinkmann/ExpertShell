@@ -19,7 +19,8 @@ import datatypes.KnowledgeBase;
 public class FileManager
 {
 	static JFileChooser fileChooser;
-
+	//this is a test comment by Arie
+	//blah
 	
 	public static void saveKnowledgeFile(KnowledgeBase kb,Component frame)
 	{
