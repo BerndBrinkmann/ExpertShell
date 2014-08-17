@@ -2,7 +2,6 @@ package gui;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MenuItem;
@@ -31,7 +30,7 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Tree;
 
-//note - to reference a widget in event code (like pushing a button) it must be 'exposed' by right-clicking on it in windowbuilder and selecting 'expose component' --Arie
+//note - to reference a widget it must be 'exposed' by right-clicking on it in windowbuilder and selecting 'expose component' --Arie
 
 
 public class MainScreen {
