@@ -1,6 +1,5 @@
 package gui;
 
-import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -17,24 +16,27 @@ public class AntecedentGUI {
 	Combo value;
 	Combo logicComb;
 	Label filler;
+	Composite parent;
 	
-	public AntecedentGUI(Composite ruleGrid) {
-				
-		var = RuleGUIFactory.createComboVar(ruleGrid);
-		logicComparitor = RuleGUIFactory.createComboComparitor(ruleGrid);
-		value = RuleGUIFactory.createComboValue(ruleGrid);
-		filler = new Label(ruleGrid, SWT.NONE);
+	public AntecedentGUI(Composite ruleGrid, boolean first) {
+		parent = ruleGrid;
+		
+		var = RuleGUIFactory.createComboVar(parent);
+		logicComparitor = RuleGUIFactory.createComboComparitor(parent);
+		value = RuleGUIFactory.createComboValue(parent);
+		filler = new Label(parent, SWT.NONE);
 	}
 	
-	public AntecedentGUI(Control stopper, Composite ruleGrid) {
+	public AntecedentGUI(Control stopper) {
 		
-		delButton = RuleGUIFactory.createButtonDelete(ruleGrid);
-		logicComb = RuleGUIFactory.createComboComLogic(ruleGrid);
+				
+		delButton = RuleGUIFactory.createButtonDelete(parent);
+		logicComb = RuleGUIFactory.createComboComLogic(parent);
 		
-		var = RuleGUIFactory.createComboVar(ruleGrid);
-		logicComparitor = RuleGUIFactory.createComboComparitor(ruleGrid);
-		value = RuleGUIFactory.createComboValue(ruleGrid);
-		filler = new Label(ruleGrid, SWT.NONE);
+		var = RuleGUIFactory.createComboVar(parent);
+		logicComparitor = RuleGUIFactory.createComboComparitor(parent);
+		value = RuleGUIFactory.createComboValue(parent);
+		filler = new Label(parent, SWT.NONE);
 		
 		delButton.moveAbove(stopper);
 		logicComb.moveAbove(stopper);

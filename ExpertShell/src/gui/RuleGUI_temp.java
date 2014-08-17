@@ -67,6 +67,12 @@ public class RuleGUI_temp extends Composite {
 		new Label(compRuleGrid, SWT.NONE);
 		
 		Button button_1 = RuleGUIFactory.createButtonAdd(compRuleGrid);
+		button_1.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				//stuff
+			}
+		});
 		new Label(compRuleGrid, SWT.NONE);
 		new Label(compRuleGrid, SWT.NONE);
 		new Label(compRuleGrid, SWT.NONE);
