@@ -8,8 +8,8 @@ public class KnowledgeBase implements Serializable
 	protected String Name;
 	protected String Description;
 	protected ArrayList<Rule> RuleList;
-	protected InferenceMethod inferenceMethod;
-	protected UncertaintyMethod uncertaintyMethod = UncertaintyMethod.NONE;
+	protected KBSettings.InferenceType inferenceType;
+	protected KBSettings.UncertaintyManagement = KBSettings.UncertaintyManagement.NONE;
 	protected ConflictResolutionMethod conflictResolutionMethod = ConflictResolutionMethod.NONE;
 	
 	public KnowledgeBase(String name)
@@ -28,14 +28,14 @@ public class KnowledgeBase implements Serializable
 		return Description;
 	}
 
-	public InferenceMethod getInferenceMethod()
+	public KBSettings.InferenceType getInferenceMethod()
 	{
-		return inferenceMethod;
+		return inferenceType;
 	}
 	
-	public void setInferenceMethod(InferenceMethod inferenceMethod)
+	public void setInferenceMethod(KBSettings.InferenceType inference)
 	{
-		this.inferenceMethod = inferenceMethod;
+		this.inferenceType = inference;
 	}
 	
 	public String getName()

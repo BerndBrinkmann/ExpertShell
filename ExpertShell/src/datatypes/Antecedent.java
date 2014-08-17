@@ -17,6 +17,33 @@ public class Antecedent implements Serializable
 	protected Double numVal = null;
 	protected UncertaintyMethod uncertaintyMethod = UncertaintyMethod.NONE;
 	
+	public Antecedent()
+	{
+		variable = new Variable("default");
+		value = new Value("default");
+	}
+	
+	public Antecedent(Variable var,Comparison comp ,Double val)
+	{
+		setIsNumeric(true);
+		numVal = val;
+		comparison = comp;
+		variable = var;
+		
+	}
+	
+	public Antecedent(Variable var, Value val)
+	{
+		variable = var;
+		value = val;
+	}
+	
+	public Antecedent(Variable var, Double val)
+	{
+		variable = var;
+		setIsNumeric(true);
+		numVal = val;
+	}
 
 	public UncertaintyMethod getUncertaintyMethod()
 	{
@@ -78,34 +105,6 @@ public class Antecedent implements Serializable
 			setValue(new Value(""));
 	}
 
-	
-	public Antecedent()
-	{
-		variable = new Variable("default");
-		value = new Value("default");
-	}
-	
-	public Antecedent(Variable var,Comparison comp ,Double val)
-	{
-		setIsNumeric(true);
-		numVal = val;
-		comparison = comp;
-		variable = var;
-		
-	}
-	
-	public Antecedent(Variable var, Value val)
-	{
-		variable = var;
-		value = val;
-	}
-	
-	public Antecedent(Variable var, Double val)
-	{
-		variable = var;
-		setIsNumeric(true);
-		numVal = val;
-	}
 	
 	public Variable getVariable()
 	{
