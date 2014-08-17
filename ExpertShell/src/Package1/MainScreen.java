@@ -40,7 +40,7 @@ public class MainScreen {
 	private Text text;
 	private Text text_1;
 	private Text text_2;
-
+	Button btnDefault = new Button(grpSelectRunMethod, SWT.RADIO);
 	/**
 	 * Launch the application.
 	 * @param args
@@ -161,7 +161,7 @@ public class MainScreen {
 		grpSelectRunMethod.setLayoutData(gd_grpSelectRunMethod);
 		grpSelectRunMethod.setText("Select Run Method");
 		
-		Button btnDefault = new Button(grpSelectRunMethod, SWT.RADIO);
+		
 		btnDefault.setBounds(10, 18, 90, 16);
 		btnDefault.setText("Default");
 		
