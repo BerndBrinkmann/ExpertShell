@@ -40,7 +40,7 @@ public class MainScreen {
 	private Text text;
 	private Text text_1;
 	private Text text_2;
-	Button btnDefault = new Button(grpSelectRunMethod, SWT.RADIO);
+	
 	/**
 	 * Launch the application.
 	 * @param args
@@ -89,12 +89,6 @@ public class MainScreen {
 		Menu menu_1 = new Menu(mntmFile);
 		mntmFile.setMenu(menu_1);
 		
-
-		
-		
-		
-
-		
 		MenuItem mntmHelp = new MenuItem(menu, SWT.CASCADE);
 		mntmHelp.setText("Help");
 		
@@ -105,8 +99,6 @@ public class MainScreen {
 		mntmMaual.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/book.jpg"));
 		mntmMaual.setText("Manual");
 		
-		
-		
 		MenuItem mntmAbout = new MenuItem(menu_3, SWT.NONE);
 		mntmAbout.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -114,8 +106,7 @@ public class MainScreen {
 				e.getSource();
 				
 			    HelpDialog about = new HelpDialog(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
-			    about.open();
-				
+			    about.open();	
 			}
 			
 		});
@@ -131,7 +122,7 @@ public class MainScreen {
 		tbtmMain.setControl(composite_1);
 		composite_1.setLayout(new GridLayout(1, false));
 		
-		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
+		final TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmUserInterface.setText("User Interface");
 
 		
@@ -161,16 +152,15 @@ public class MainScreen {
 		grpSelectRunMethod.setLayoutData(gd_grpSelectRunMethod);
 		grpSelectRunMethod.setText("Select Run Method");
 		
-		
+		final Button btnDefault = new Button(grpSelectRunMethod, SWT.RADIO);
 		btnDefault.setBounds(10, 18, 90, 16);
 		btnDefault.setText("Default");
 		
-		
-		Button btnForwardChaining = new Button(grpSelectRunMethod, SWT.RADIO);
+		final Button btnForwardChaining = new Button(grpSelectRunMethod, SWT.RADIO);
 		btnForwardChaining.setBounds(10, 40, 145, 16);
 		btnForwardChaining.setText("Forward Chaining");
 		
-		Button btnBackwardChaining = new Button(grpSelectRunMethod, SWT.RADIO);
+		final Button btnBackwardChaining = new Button(grpSelectRunMethod, SWT.RADIO);
 		btnBackwardChaining.setBounds(10, 62, 145, 16);
 		btnBackwardChaining.setText("Backward Chaining");
 		
@@ -180,11 +170,11 @@ public class MainScreen {
 		grpSelectReasoningMethod.setLayoutData(gd_grpSelectReasoningMethod);
 		grpSelectReasoningMethod.setText("Select Reasoning Method");
 		
-		Button button = new Button(grpSelectReasoningMethod, SWT.RADIO);
+		final Button button = new Button(grpSelectReasoningMethod, SWT.RADIO);
 		button.setText("Default");
 		button.setBounds(10, 18, 90, 16);
 		
-		Button btnCertainityFactor = new Button(grpSelectReasoningMethod, SWT.RADIO);
+		final Button btnCertainityFactor = new Button(grpSelectReasoningMethod, SWT.RADIO);
 		btnCertainityFactor.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -193,7 +183,7 @@ public class MainScreen {
 		btnCertainityFactor.setText("Certainty Factors");
 		btnCertainityFactor.setBounds(10, 62, 145, 16);
 		
-		Button btnBayesianReasoning = new Button(grpSelectReasoningMethod, SWT.RADIO);
+		final Button btnBayesianReasoning = new Button(grpSelectReasoningMethod, SWT.RADIO);
 		btnBayesianReasoning.setText("Bayesian Reasoning");
 		btnBayesianReasoning.setBounds(10, 40, 145, 16);
 		
@@ -217,7 +207,7 @@ public class MainScreen {
 		group.setLayoutData(gd_group);
 		
 		String[] ITEMS = {"A", "B"};   /*Test*/
-		Combo combo = new Combo(group, SWT.NONE);
+		final Combo combo = new Combo(group, SWT.NONE);
 		combo.setItems(ITEMS);			/*Test*/
 		combo.setText("Answer");
 		combo.addSelectionListener(new SelectionAdapter() {
@@ -239,9 +229,6 @@ public class MainScreen {
 		text_2.setBounds(10, 10, 320, 74);
 		scrolledComposite.setContent(composite_2);
 		scrolledComposite.setMinSize(composite_2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		
-		
 		
 		
 		MenuItem mntmOpenKnowledgeBase = new MenuItem(menu_1, SWT.CASCADE);
