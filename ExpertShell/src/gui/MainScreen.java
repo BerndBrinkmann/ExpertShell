@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.layout.FillLayout;
 
 //note - to reference a widget it must be 'exposed' by right-clicking on it in windowbuilder and selecting 'expose component' --Arie
 
@@ -368,6 +369,28 @@ public class MainScreen {
 			}
 		});
 		tbtmDeveloperInterface.setText("Developer Interface");
+		
+		Composite composite_3 = new Composite(tabFolder, SWT.NONE);
+		tbtmDeveloperInterface.setControl(composite_3);
+		composite_3.setLayout(new GridLayout(2, false));
+		
+		Composite composite_4 = new Composite(composite_3, SWT.NONE);
+		composite_4.setLayout(new GridLayout(1, false));
+		
+		Button btnNewButton_1 = new Button(composite_4, SWT.NONE);
+		btnNewButton_1.setBounds(0, 0, 75, 25);
+		btnNewButton_1.setText("New Button");
+		
+		Button btnNewButton_2 = new Button(composite_4, SWT.NONE);
+		btnNewButton_2.setBounds(0, 0, 75, 25);
+		btnNewButton_2.setText("New Button");
+		
+		Composite composite_5 = new Composite(composite_3, SWT.NONE);
+		composite_5.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		
+		RuleEditorGUI ruleEditor = new RuleEditorGUI(composite_5);
+		composite_5.layout();
+		
 
 	}
 	public Button getBtnBackwardChaining() {
