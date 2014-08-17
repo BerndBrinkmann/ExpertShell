@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Tree;
 
-
+//note - to reference a widget in event code (like pushing a button) it must be 'exposed' by right-clicking on it in windowbuilder and selecting 'expose component' --Arie
 
 
 public class MainScreen {
@@ -40,6 +40,13 @@ public class MainScreen {
 	private Text text;
 	private Text text_1;
 	private Text text_2;
+	private Button btnBackwardChaining;
+	private Button btnBayesianReasoning;
+	private Button btnCertainityFactor;
+	private Button btnDefault;
+	private Button btnForwardChaining;
+	private Button button;
+	private Combo combo;
 
 	/**
 	 * Launch the application.
@@ -161,16 +168,16 @@ public class MainScreen {
 		grpSelectRunMethod.setLayoutData(gd_grpSelectRunMethod);
 		grpSelectRunMethod.setText("Select Run Method");
 		
-		Button btnDefault = new Button(grpSelectRunMethod, SWT.RADIO);
+		btnDefault = new Button(grpSelectRunMethod, SWT.RADIO);
 		btnDefault.setBounds(10, 18, 90, 16);
 		btnDefault.setText("Default");
 		
 		
-		Button btnForwardChaining = new Button(grpSelectRunMethod, SWT.RADIO);
+		btnForwardChaining = new Button(grpSelectRunMethod, SWT.RADIO);
 		btnForwardChaining.setBounds(10, 40, 145, 16);
 		btnForwardChaining.setText("Forward Chaining");
 		
-		Button btnBackwardChaining = new Button(grpSelectRunMethod, SWT.RADIO);
+		btnBackwardChaining = new Button(grpSelectRunMethod, SWT.RADIO);
 		btnBackwardChaining.setBounds(10, 62, 145, 16);
 		btnBackwardChaining.setText("Backward Chaining");
 		
@@ -180,11 +187,11 @@ public class MainScreen {
 		grpSelectReasoningMethod.setLayoutData(gd_grpSelectReasoningMethod);
 		grpSelectReasoningMethod.setText("Select Reasoning Method");
 		
-		Button button = new Button(grpSelectReasoningMethod, SWT.RADIO);
+		button = new Button(grpSelectReasoningMethod, SWT.RADIO);
 		button.setText("Default");
 		button.setBounds(10, 18, 90, 16);
 		
-		Button btnCertainityFactor = new Button(grpSelectReasoningMethod, SWT.RADIO);
+		btnCertainityFactor = new Button(grpSelectReasoningMethod, SWT.RADIO);
 		btnCertainityFactor.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -193,7 +200,7 @@ public class MainScreen {
 		btnCertainityFactor.setText("Certainty Factors");
 		btnCertainityFactor.setBounds(10, 62, 145, 16);
 		
-		Button btnBayesianReasoning = new Button(grpSelectReasoningMethod, SWT.RADIO);
+		btnBayesianReasoning = new Button(grpSelectReasoningMethod, SWT.RADIO);
 		btnBayesianReasoning.setText("Bayesian Reasoning");
 		btnBayesianReasoning.setBounds(10, 40, 145, 16);
 		
@@ -217,7 +224,7 @@ public class MainScreen {
 		group.setLayoutData(gd_group);
 		
 		String[] ITEMS = {"A", "B"};   /*Test*/
-		Combo combo = new Combo(group, SWT.NONE);
+		combo = new Combo(group, SWT.NONE);
 		combo.setItems(ITEMS);			/*Test*/
 		combo.setText("Answer");
 		combo.addSelectionListener(new SelectionAdapter() {
@@ -344,7 +351,7 @@ public class MainScreen {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-				tbtmUserInterface.dispose();
+				//tbtmUserInterface.dispose();
 				
 			}
 		});
@@ -363,5 +370,26 @@ public class MainScreen {
 		});
 		tbtmDeveloperInterface.setText("Developer Interface");
 
+	}
+	public Button getBtnBackwardChaining() {
+		return btnBackwardChaining;
+	}
+	public Button getBtnBayesianReasoning() {
+		return btnBayesianReasoning;
+	}
+	public Button getBtnCertainityFactor() {
+		return btnCertainityFactor;
+	}
+	public Button getBtnDefault() {
+		return btnDefault;
+	}
+	public Button getBtnForwardChaining() {
+		return btnForwardChaining;
+	}
+	public Button getButton() {
+		return button;
+	}
+	public Combo getCombo() {
+		return combo;
 	}
 }
