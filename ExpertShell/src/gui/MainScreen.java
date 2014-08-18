@@ -386,7 +386,8 @@ public class MainScreen {
 		btnNewButton_2.setText("New Button");
 		
 		Composite composite_5 = new Composite(composite_3, SWT.NONE);
-		composite_5.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
+		composite_5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		RuleEditorGUI ruleEditor = new RuleEditorGUI(composite_5);
 		composite_5.layout();

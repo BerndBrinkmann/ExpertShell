@@ -2,6 +2,8 @@ package gui;
 
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -16,27 +18,25 @@ public class AntecedentGUI {
 	Combo value;
 	Combo logicComb;
 	Label filler;
-	Composite parent;
 	
-	public AntecedentGUI(Composite ruleGrid, boolean first) {
-		parent = ruleGrid;
+	public AntecedentGUI(Composite p, boolean first) {
 		
-		var = RuleGUIFactory.createComboVar(parent);
-		logicComparitor = RuleGUIFactory.createComboComparitor(parent);
-		value = RuleGUIFactory.createComboValue(parent);
-		filler = new Label(parent, SWT.NONE);
+		var = RuleGUIFactory.createComboVar(p);
+		logicComparitor = RuleGUIFactory.createComboComparitor(p);
+		value = RuleGUIFactory.createComboValue(p);
+		filler = new Label(p, SWT.NONE);
 	}
 	
-	public AntecedentGUI(Control stopper) {
+	public AntecedentGUI(Composite p, Control stopper) {
 		
 				
-		delButton = RuleGUIFactory.createButtonDelete(parent);
-		logicComb = RuleGUIFactory.createComboComLogic(parent);
+		delButton = RuleGUIFactory.createButtonDelete(p);
+		logicComb = RuleGUIFactory.createComboComLogic(p);
 		
-		var = RuleGUIFactory.createComboVar(parent);
-		logicComparitor = RuleGUIFactory.createComboComparitor(parent);
-		value = RuleGUIFactory.createComboValue(parent);
-		filler = new Label(parent, SWT.NONE);
+		var = RuleGUIFactory.createComboVar(p);
+		logicComparitor = RuleGUIFactory.createComboComparitor(p);
+		value = RuleGUIFactory.createComboValue(p);
+		filler = new Label(p, SWT.NONE);
 		
 		delButton.moveAbove(stopper);
 		logicComb.moveAbove(stopper);
@@ -44,6 +44,29 @@ public class AntecedentGUI {
 		logicComparitor.moveAbove(stopper);
 		value.moveAbove(stopper);
 		filler.moveAbove(stopper);
+		
+		delButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				destroy();
+				System.out.println("del");
+			}
+		});
+		
+		
+	}
+	
+	public void destroy() {
+		Composite p = delButton.getParent();
+		
+		delButton.dispose();
+		var.dispose();
+		logicComparitor.dispose();
+		value.dispose();
+		logicComb.dispose();
+		filler.dispose();
+		
+		p.getParent().getParent().layout(true);
 	}
 	
 }

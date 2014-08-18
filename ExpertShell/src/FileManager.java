@@ -20,7 +20,7 @@ public class FileManager
 {
 	static JFileChooser fileChooser;
 	//this is a test comment by Arie
-	//blah
+	//blahblah
 	
 	public static void saveKnowledgeFile(KnowledgeBase kb,Component frame)
 	{

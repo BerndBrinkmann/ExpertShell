@@ -12,41 +12,48 @@ import org.eclipse.swt.widgets.Label;
 
 public class AntecedentListGUI {
 	
-	
+	protected Composite parent;
 	protected Label ifLabel;
 	protected List<Label> fillers = new ArrayList<Label>();
-	protected List<AntecedentGUI> antList = new ArrayList<AntecedentGUI>();
+	protected List<AntecedentGUI> antecedents = new ArrayList<AntecedentGUI>();
 	protected Button addButton;
 	
-	public AntecedentListGUI(Composite ruleGrid) {
+	public AntecedentListGUI(Composite p) {
 		
-		addFiller(ruleGrid);
-		ifLabel = RuleGUIFactory.createLabelIf(ruleGrid);
-		antList.add(new AntecedentGUI(ruleGrid,true));
-		addButton = RuleGUIFactory.createButtonAdd(ruleGrid);
+		parent = p;
+		
+		addFiller();
+		ifLabel = RuleGUIFactory.createLabelIf(parent);
+		antecedents.add(new AntecedentGUI(parent,true));
+		addButton = RuleGUIFactory.createButtonAdd(parent);
+		
 		addButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				add();
+				System.out.println("Add");
 			}
 		});
 		
 		
-		addFillers(4,ruleGrid);
+		addFillers(4);
 	}
 	
 	public void add() {
-		antList.add(new AntecedentGUI(addButton));
+		System.out.println("Add");
+		antecedents.add(new AntecedentGUI(parent, addButton));
+		
+		parent.getParent().getParent().layout(true);
 	}
 	
-	private void addFiller(Composite ruleGrid) {
-		fillers.add(new Label(ruleGrid, SWT.NONE));
+	private void addFiller() {
+		fillers.add(new Label(parent, SWT.NONE));
 	}
 	
-	private void addFillers(int n, Composite ruleGrid) {
+	private void addFillers(int n) {
 		
 		for(int i=0;i<n;i++){
-			addFiller(ruleGrid);
+			addFiller();
 		}
 	}
 	
