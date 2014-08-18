@@ -229,11 +229,11 @@ public class ImportExport
 		String summary;
 		if(result != null)
 		{
-			if(kb.getUncertaintyMethod() == UncertaintyMethod.CERTAINTY_FACTOR)
+			if(kb.getUncertaintyMethod() == KBSettings.UncertaintyManagement.CF)
 			{
 				summary = result.getCertaintyValuesString();
 			}
-			else if(kb.getUncertaintyMethod() == UncertaintyMethod.BAYESIAN)
+			else if(kb.getUncertaintyMethod() == KBSettings.UncertaintyManagement.BAYESIAN)
 			{
 				summary = result.getBeliefValuesString();
 

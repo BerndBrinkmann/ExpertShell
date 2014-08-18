@@ -6,7 +6,7 @@ public class Conditional extends getSetKBSettings {
 	protected Value value;
 	protected Double numVal = null;
 	protected Boolean isNumeric = false;
-	
+
 	
 	public Variable getVariable()
 	{

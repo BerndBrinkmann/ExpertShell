@@ -37,13 +37,6 @@ public class Antecedent extends Conditional implements Serializable
 		variable = var;
 		value = val;
 	}
-	
-	public Antecedent(Variable var, Double val)
-	{
-		variable = var;
-		setIsNumeric(true);
-		numVal = val;
-	}
 
 	public double getLikelihoodOfNecessity()
 	{
@@ -129,7 +122,7 @@ public class Antecedent extends Conditional implements Serializable
 				
 	}
 	
-	public Consequent convertToConsequent()
+	public Consequent convertC()
 	{
 		if(isNumeric)
 		{

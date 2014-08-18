@@ -10,6 +10,7 @@ public class Consequent extends Conditional implements Serializable
 	
 	protected Boolean isNumeric = false;
 	protected Double numVal;
+	protected Boolean antecedentFlag = true;
 	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
 	
 	
@@ -90,7 +91,7 @@ public class Consequent extends Conditional implements Serializable
 	}
 	
 	
-	public Antecedent convertToAntecedent()
+	public Antecedent convertA()
 	{
 		if(isNumeric)
 		{
