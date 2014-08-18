@@ -149,10 +149,10 @@ public class MainScreen {
 			}
 		});
 		tbtmUserInterface.setControl(composite);
-		composite.setLayout(new GridLayout(22, false));
+		composite.setLayout(new GridLayout(3, false));
 		
 		Group grpKnowledgeBaseSelected = new Group(composite, SWT.NONE);
-		GridData gd_grpKnowledgeBaseSelected = new GridData(SWT.LEFT, SWT.CENTER, false, false, 15, 1);
+		GridData gd_grpKnowledgeBaseSelected = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_grpKnowledgeBaseSelected.heightHint = 62;
 		gd_grpKnowledgeBaseSelected.widthHint = 330;
 		grpKnowledgeBaseSelected.setLayoutData(gd_grpKnowledgeBaseSelected);
@@ -163,33 +163,34 @@ public class MainScreen {
 		
 		
 		Group grpSelectRunMethod = new Group(composite, SWT.NONE);
+		grpSelectRunMethod.setLayout(new GridLayout(1, false));
 		GridData gd_grpSelectRunMethod = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_grpSelectRunMethod.widthHint = 169;
 		grpSelectRunMethod.setLayoutData(gd_grpSelectRunMethod);
 		grpSelectRunMethod.setText("Select Run Method");
 		
 		btnDefault = new Button(grpSelectRunMethod, SWT.RADIO);
-		btnDefault.setBounds(10, 18, 90, 16);
 		btnDefault.setText("Default");
 		
 		
 		btnForwardChaining = new Button(grpSelectRunMethod, SWT.RADIO);
-		btnForwardChaining.setBounds(10, 40, 145, 16);
 		btnForwardChaining.setText("Forward Chaining");
 		
 		btnBackwardChaining = new Button(grpSelectRunMethod, SWT.RADIO);
-		btnBackwardChaining.setBounds(10, 62, 145, 16);
 		btnBackwardChaining.setText("Backward Chaining");
 		
 		Group grpSelectReasoningMethod = new Group(composite, SWT.NONE);
-		GridData gd_grpSelectReasoningMethod = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 6, 1);
+		grpSelectReasoningMethod.setLayout(new GridLayout(1, false));
+		GridData gd_grpSelectReasoningMethod = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_grpSelectReasoningMethod.widthHint = 162;
 		grpSelectReasoningMethod.setLayoutData(gd_grpSelectReasoningMethod);
 		grpSelectReasoningMethod.setText("Select Reasoning Method");
 		
 		button = new Button(grpSelectReasoningMethod, SWT.RADIO);
 		button.setText("Default");
-		button.setBounds(10, 18, 90, 16);
+		
+		btnBayesianReasoning = new Button(grpSelectReasoningMethod, SWT.RADIO);
+		btnBayesianReasoning.setText("Bayesian Reasoning");
 		
 		btnCertainityFactor = new Button(grpSelectReasoningMethod, SWT.RADIO);
 		btnCertainityFactor.addSelectionListener(new SelectionAdapter() {
@@ -198,31 +199,22 @@ public class MainScreen {
 			}
 		});
 		btnCertainityFactor.setText("Certainty Factors");
-		btnCertainityFactor.setBounds(10, 62, 145, 16);
-		
-		btnBayesianReasoning = new Button(grpSelectReasoningMethod, SWT.RADIO);
-		btnBayesianReasoning.setText("Bayesian Reasoning");
-		btnBayesianReasoning.setBounds(10, 40, 145, 16);
-		
-		
 		
 		ScrolledComposite scrolledComposite = new ScrolledComposite(composite, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		GridData gd_scrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 15, 1);
-		gd_scrolledComposite.heightHint = 291;
-		gd_scrolledComposite.widthHint = 326;
-		scrolledComposite.setLayoutData(gd_scrolledComposite);
-		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
+		scrolledComposite.setExpandHorizontal(true);
 		
 		Composite composite_2 = new Composite(scrolledComposite, SWT.NONE);
 		composite_2.setLayout(new GridLayout(1, false));
 		
 		Group group = new Group(composite_2, SWT.NONE);
 		GridData gd_group = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_group.heightHint = 105;
 		gd_group.widthHint = 331;
+		gd_group.heightHint = 105;
 		group.setLayoutData(gd_group);
 		
+		combo = new Combo(group, SWT.NONE);
+		combo.setItems(new String[] {"A", "B"});
 		String[] ITEMS = {"A", "B"};   /*Test*/
 		combo = new Combo(group, SWT.NONE);
 		combo.setItems(ITEMS);			/*Test*/
@@ -241,11 +233,27 @@ public class MainScreen {
 			}
 		});
 		combo.setBounds(10, 90, 320, 23);
+		combo.setText("Answer");
 		
 		text_2 = new Text(group, SWT.WRAP);
 		text_2.setBounds(10, 10, 320, 74);
 		scrolledComposite.setContent(composite_2);
 		scrolledComposite.setMinSize(composite_2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
 		
 		
 		

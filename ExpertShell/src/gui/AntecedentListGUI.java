@@ -6,6 +6,7 @@ import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -27,15 +28,6 @@ public class AntecedentListGUI {
 		antecedents.add(new AntecedentGUI(parent,true));
 		addButton = RuleGUIFactory.createButtonAdd(parent);
 		
-		addButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				add();
-				System.out.println("Add");
-			}
-		});
-		
-		
 		addFillers(4);
 	}
 	
@@ -54,6 +46,13 @@ public class AntecedentListGUI {
 		
 		for(int i=0;i<n;i++){
 			addFiller();
+		}
+	}
+	
+	public void setListeners(SelectionListener s) {
+		// ie 'for every antecedent'
+		for(AntecedentGUI a : antecedents) {
+			a.setListeners(s);
 		}
 	}
 	
