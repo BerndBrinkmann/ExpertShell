@@ -390,7 +390,14 @@ public class MainScreen {
 		composite_5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		RuleEditorGUI ruleEditor = new RuleEditorGUI(composite_5);
+		
+		TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);
+		tbtmVariables.setText("Variables");
+		
+		Composite composite_6 = new Composite(tabFolder, SWT.NONE);
+		tbtmVariables.setControl(composite_6);
 		composite_5.layout();
+		VariablesGUI variables = new VariablesGUI();
 		
 
 	}
