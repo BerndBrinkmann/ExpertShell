@@ -46,6 +46,7 @@ public class MainScreen {
 	private Button btnForwardChaining;
 	private Button button;
 	private Text text_2;
+	private Combo combo;
 
 	/**
 	 * Launch the application.
@@ -212,7 +213,7 @@ public class MainScreen {
 		gd_group.heightHint = 105;
 		group.setLayoutData(gd_group);
 		
-		Combo combo = new Combo(group, SWT.NONE);
+		combo = new Combo(group, SWT.NONE);
 		combo.setItems(new String[] {"A", "B"});
 		combo.setBounds(10, 90, 320, 23);
 		combo.setText("Answer");
@@ -391,6 +392,7 @@ public class MainScreen {
 	public Button getButton() {
 		return button;
 	}
+	
 	public Combo getCombo() {
 		return combo;
 	}

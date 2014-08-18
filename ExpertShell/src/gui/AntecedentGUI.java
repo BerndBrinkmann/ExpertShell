@@ -4,6 +4,7 @@ package gui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -45,14 +46,10 @@ public class AntecedentGUI {
 		value.moveAbove(stopper);
 		filler.moveAbove(stopper);
 		
-		delButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				destroy();
-				System.out.println("del");
-			}
-		});
-		
+	}
+	
+	public void setListeners(SelectionListener s) {
+		delButton.addSelectionListener(s);
 		
 	}
 	
@@ -68,5 +65,6 @@ public class AntecedentGUI {
 		
 		p.getParent().getParent().layout(true);
 	}
+	
 	
 }
