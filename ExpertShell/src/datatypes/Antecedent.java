@@ -2,7 +2,7 @@ package datatypes;
 
 import java.io.Serializable;
 
-public class Antecedent extends getSetKBSettings implements Serializable
+public class Antecedent extends Conditional implements Serializable
 {
 	//test comment by arie
 	//
@@ -77,28 +77,6 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		this.likelihoodOfSufficiency = likelihoodOfSufficiency;
 	}
 
-	public Boolean getIsNumeric()
-	{
-		return isNumeric;
-	}
-
-	public void setIsNumeric(Boolean isNumeric)
-	{
-		this.isNumeric = isNumeric;
-		if(variable != null)
-			variable.setIsNumeric(isNumeric);
-		if(isNumeric)
-			setValue(0.0);
-		else
-			setValue(new Value(""));
-	}
-
-	
-	public Variable getVariable()
-	{
-		return variable;
-	}
-	
 	public void setVariable(Variable v)
 	{
 		// will null this object's value field on setting of variable - it will no longer be valid
@@ -112,32 +90,6 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		}
 		else
 			setValue(new Value(""));
-	}
-	
-	public Value getValue()
-	{
-		return value;
-	}
-	
-	public Double getNumVal()
-	{
-		return numVal;
-	}
-
-	public void setValue(Value v)
-	{
-		value = v;
-		if(!v.getName().equals(""))
-			variable.addPossibleValue(v);
-			
-		isNumeric = false;
-
-	}
-	
-	public void setValue(Double x)
-	{
-		numVal = x;
-		isNumeric = true;
 	}
 	
 	public Boolean evaluate()
@@ -207,45 +159,4 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		}
 	}
 
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
-		result = prime * result
-				+ ((variable == null) ? 0 : variable.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Antecedent other = (Antecedent) obj;
-		if (value == null)
-		{
-			if (other.value != null)
-				return false;
-		}
-		else if (!value.equals(other.value))
-			return false;
-		if (variable == null)
-		{
-			if (other.variable != null)
-				return false;
-		}
-		else if (!variable.equals(other.variable))
-			return false;
-		return true;
-	}
-	
-	
-
-	
 }
