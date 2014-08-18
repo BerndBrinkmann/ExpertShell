@@ -2,7 +2,7 @@ package datatypes;
 
 import java.io.Serializable;
 
-public class Antecedent implements Serializable
+public class Antecedent extends getSetKBSettings implements Serializable
 {
 	//test comment by arie
 	//
@@ -44,18 +44,6 @@ public class Antecedent implements Serializable
 		setIsNumeric(true);
 		numVal = val;
 	}
-
-	public KBSettings.UncertaintyManagement getUncertaintyMethod()
-	{
-		return uncertaintyType;
-	}
-
-
-	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)
-	{
-		this.uncertaintyType = uncertainty;
-	}
-
 
 	public double getLikelihoodOfNecessity()
 	{

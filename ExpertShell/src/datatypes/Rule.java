@@ -6,7 +6,7 @@ import java.util.Stack;
 
 import removedClasses.UncertaintyMethod;
 
-public class Rule implements Serializable
+public class Rule extends getSetKBSettings implements Serializable
 {
 	protected ArrayList<Antecedent> antecedents;
 	protected ArrayList<Consequent> consequents;
@@ -17,11 +17,7 @@ public class Rule implements Serializable
 	
 	KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
 	
-	public KBSettings.UncertaintyManagement getUncertaintyMethod()
-	{
-		return uncertaintyType;
-	}
-
+	@Override
 	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)
 	{
 		this.uncertaintyType = uncertainty;

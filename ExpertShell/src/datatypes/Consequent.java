@@ -2,7 +2,7 @@ package datatypes;
 
 import java.io.Serializable;
 
-public class Consequent implements Serializable
+public class Consequent extends getSetKBSettings implements Serializable
 {
 	protected Variable variable;
 	protected Value value;
@@ -13,20 +13,6 @@ public class Consequent implements Serializable
 	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
 	
 	
-	
-
-	public KBSettings.UncertaintyManagement getUncertaintyMethod()
-	{
-		return uncertaintyType;
-	}
-
-
-	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)
-	{
-		this.uncertaintyType = uncertainty;
-	}
-
-
 	public Consequent()
 	{
 		variable = new Variable("default");
