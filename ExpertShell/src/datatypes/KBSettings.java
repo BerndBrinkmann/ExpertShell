@@ -7,7 +7,7 @@ public class KBSettings {
 		F_CHAINING, B_CHAINING
 	}
 	
-	public enum UncertaintyManagment
+	public enum UncertaintyManagement
 	{
 		NONE, CF, BAYESIAN
 	}

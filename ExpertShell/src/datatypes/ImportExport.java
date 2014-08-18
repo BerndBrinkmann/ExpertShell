@@ -23,6 +23,8 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import removedClasses.UncertaintyMethod;
+
 public class ImportExport
 {
 	static Component frame;

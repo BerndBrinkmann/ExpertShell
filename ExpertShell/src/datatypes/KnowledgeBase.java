@@ -9,8 +9,8 @@ public class KnowledgeBase implements Serializable
 	protected String Description;
 	protected ArrayList<Rule> RuleList;
 	protected KBSettings.InferenceType inferenceType;
-	protected KBSettings.UncertaintyManagement = KBSettings.UncertaintyManagement.NONE;
-	protected ConflictResolutionMethod conflictResolutionMethod = ConflictResolutionMethod.NONE;
+	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
+	protected KBSettings.ConflictResolution conflictResolution = KBSettings.ConflictResolution.NONE;
 	
 	public KnowledgeBase(String name)
 	{
@@ -51,7 +51,7 @@ public class KnowledgeBase implements Serializable
 	public void AddRule(Rule rule)
 	{
 		RuleList.add(rule);
-		rule.setUncertaintyMethod(uncertaintyMethod);
+		rule.setUncertaintyMethod(uncertaintyType);
 	}
 	
 	public int getNumberOfRules()
@@ -69,28 +69,28 @@ public class KnowledgeBase implements Serializable
 		RuleList.remove(rule);	
 	}
 
-	public UncertaintyMethod getUncertaintyMethod()
+	public KBSettings.UncertaintyManagement getUncertaintyMethod()
 	{
-		return uncertaintyMethod;
+		return uncertaintyType;
 	}
 
-	public void setUncertaintyMethod(UncertaintyMethod uncertaintyMethod)
+	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)
 	{
-		this.uncertaintyMethod = uncertaintyMethod;
+		this.uncertaintyType = uncertainty;
 		for(Rule rule : RuleList)
 		{
-			rule.setUncertaintyMethod(uncertaintyMethod);
+			rule.setUncertaintyMethod(uncertainty);
 		}
 	}
 
-	public ConflictResolutionMethod getConflictResolutionMethod()
+	public KBSettings.ConflictResolution getConflictResolutionMethod()
 	{
-		return conflictResolutionMethod;
+		return conflictResolution;
 	}
 
-	public void setConflictResolutionMethod(ConflictResolutionMethod conflictResolutionMethod)
+	public void setConflictResolutionMethod(KBSettings.ConflictResolution resolutionMethod)
 	{
-		this.conflictResolutionMethod = conflictResolutionMethod;
+		this.conflictResolution = resolutionMethod;
 	}
 
 	public Rule[] getRuleArray()
@@ -224,7 +224,7 @@ public class KnowledgeBase implements Serializable
 					var.removePossibleValue(pVal);
 			}
 			
-			if(!(uncertaintyMethod == UncertaintyMethod.CERTAINTY_FACTOR))
+			if(!(uncertaintyType == KBSettings.UncertaintyManagement.CF))
 				var.addPossibleValue(new Value("Other"));
 		}
 	}

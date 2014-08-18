@@ -15,7 +15,7 @@ public class Antecedent implements Serializable
 	protected Comparison comparison;
 	protected Boolean isNumeric = false;
 	protected Double numVal = null;
-	protected UncertaintyMethod uncertaintyMethod = UncertaintyMethod.NONE;
+	protected KBSettings.UncertaintyManagement uncertaintyType =KBSettings.UncertaintyManagement.NONE;
 	
 	public Antecedent()
 	{
@@ -45,15 +45,15 @@ public class Antecedent implements Serializable
 		numVal = val;
 	}
 
-	public UncertaintyMethod getUncertaintyMethod()
+	public KBSettings.UncertaintyManagement getUncertaintyMethod()
 	{
-		return uncertaintyMethod;
+		return uncertaintyType;
 	}
 
 
-	public void setUncertaintyMethod(UncertaintyMethod uncertaintyMethod)
+	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)
 	{
-		this.uncertaintyMethod = uncertaintyMethod;
+		this.uncertaintyType = uncertainty;
 	}
 
 
@@ -209,7 +209,7 @@ public class Antecedent implements Serializable
 		}
 		else
 		{
-			if(uncertaintyMethod == UncertaintyMethod.BAYESIAN
+			if(uncertaintyType == KBSettings.UncertaintyManagement.BAYESIAN
 					&& (likelihoodOfSufficiency != 1 || likelihoodOfNecessity != 1))
 			{
 				return variable.getName() + " is " + value.toString() + " {ls = "+likelihoodOfSufficiency+"} {ln = "+likelihoodOfNecessity+"}";

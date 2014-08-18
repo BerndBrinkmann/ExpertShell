@@ -10,20 +10,20 @@ public class Consequent implements Serializable
 	
 	protected Boolean isNumeric = false;
 	protected Double numVal;
-	protected UncertaintyMethod uncertaintyMethod = UncertaintyMethod.NONE;
+	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
 	
 	
 	
 
-	public UncertaintyMethod getUncertaintyMethod()
+	public KBSettings.UncertaintyManagement getUncertaintyMethod()
 	{
-		return uncertaintyMethod;
+		return uncertaintyType;
 	}
 
 
-	public void setUncertaintyMethod(UncertaintyMethod uncertaintyMethod)
+	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)
 	{
-		this.uncertaintyMethod = uncertaintyMethod;
+		this.uncertaintyType = uncertainty;
 	}
 
 
@@ -169,11 +169,11 @@ public class Consequent implements Serializable
 	{
 		if(!getIsNumeric())
 		{
-			if(uncertaintyMethod == UncertaintyMethod.CERTAINTY_FACTOR)
+			if(uncertaintyType == KBSettings.UncertaintyManagement.CF)
 			{
 				return variable.getName() + " is " + value.toString() + " {cf = "+certaintyFactor+"}";
 			}
-			else if(uncertaintyMethod == UncertaintyMethod.BAYESIAN && !value.getName().equals("default") && !value.getName().equals(""))
+			else if(uncertaintyType == KBSettings.UncertaintyManagement.BAYESIAN && !value.getName().equals("default") && !value.getName().equals(""))
 			{
 				return variable.getName() + " is " + value.toString() + " {prior = "+variable.getBelief(value)+"}";
 			}
