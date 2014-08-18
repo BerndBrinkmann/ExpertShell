@@ -3,7 +3,7 @@ package datatypes;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class KnowledgeBase implements Serializable
+public class KnowledgeBase extends getSetKBSettings implements Serializable 
 {
 	protected String Name;
 	protected String Description;
@@ -28,16 +28,6 @@ public class KnowledgeBase implements Serializable
 		return Description;
 	}
 
-	public KBSettings.InferenceType getInferenceMethod()
-	{
-		return inferenceType;
-	}
-	
-	public void setInferenceMethod(KBSettings.InferenceType inference)
-	{
-		this.inferenceType = inference;
-	}
-	
 	public String getName()
 	{
 		return Name;
@@ -67,30 +57,6 @@ public class KnowledgeBase implements Serializable
 	public void removeRule(Rule rule)
 	{	
 		RuleList.remove(rule);	
-	}
-
-	public KBSettings.UncertaintyManagement getUncertaintyMethod()
-	{
-		return uncertaintyType;
-	}
-
-	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)
-	{
-		this.uncertaintyType = uncertainty;
-		for(Rule rule : RuleList)
-		{
-			rule.setUncertaintyMethod(uncertainty);
-		}
-	}
-
-	public KBSettings.ConflictResolution getConflictResolutionMethod()
-	{
-		return conflictResolution;
-	}
-
-	public void setConflictResolutionMethod(KBSettings.ConflictResolution resolutionMethod)
-	{
-		this.conflictResolution = resolutionMethod;
 	}
 
 	public Rule[] getRuleArray()
