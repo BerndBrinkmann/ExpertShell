@@ -6,8 +6,8 @@ public class Variable implements Serializable
 {
 	protected String name;
 	protected String description = "";
-	protected Value currentValue;
 	protected ArrayList<Value> possibleValues;
+	protected Value currentValue;
 	protected Rule derivedFrom;
 	protected String queryPrompt = "";
 	
@@ -181,6 +181,7 @@ public class Variable implements Serializable
 		return getBelief(getValueIndex(val));
 	}
 	
+	//checks user input against list of possible values. (checks for val in list of p.values)
 	public int getValueIndex(Value val)
 	{
 		int index = -1;
@@ -205,7 +206,7 @@ public class Variable implements Serializable
 	{
 		return possibleValues.toArray(new Value[possibleValues.size()]);
 	}
-	
+	//Implement add possible value
 	public void removePossibleValue(Value v)
 	{
 		possibleValues.remove(v);
