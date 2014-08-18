@@ -49,7 +49,7 @@ public class AntecedentGUI {
 	}
 	
 	public void setListeners(SelectionListener s) {
-		delButton.addSelectionListener(s);
+		//delButton.addSelectionListener(s);
 		
 	}
 	

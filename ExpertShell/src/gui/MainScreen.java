@@ -39,13 +39,13 @@ public class MainScreen {
 	protected Shell shlExpertSystemShell;
 	private Text text;
 	private Text text_1;
+	private Text text_2;
 	private Button btnBackwardChaining;
 	private Button btnBayesianReasoning;
 	private Button btnCertainityFactor;
 	private Button btnDefault;
 	private Button btnForwardChaining;
 	private Button button;
-	private Text text_2;
 	private Combo combo;
 
 	/**
@@ -215,6 +215,23 @@ public class MainScreen {
 		
 		combo = new Combo(group, SWT.NONE);
 		combo.setItems(new String[] {"A", "B"});
+		String[] ITEMS = {"A", "B"};   /*Test*/
+		combo = new Combo(group, SWT.NONE);
+		combo.setItems(ITEMS);			/*Test*/
+		combo.setText("Answer");
+		combo.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+				System.out.println(combo.getText());
+				
+			}
+			
+			public void widgetDefaultSelected(SelectionEvent e){
+				e.getSource();
+				System.out.println(combo.getText());
+			}
+		});
 		combo.setBounds(10, 90, 320, 23);
 		combo.setText("Answer");
 		
@@ -237,7 +254,6 @@ public class MainScreen {
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		
-		String[] ITEMS = {"A", "B"};
 		
 		
 		
@@ -314,6 +330,18 @@ public class MainScreen {
 
 		mntmExit.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/exit_new.jpg"));
 		mntmExit.setText("Exit");
+		
+		
+		
+		
+	/**	text_1 = new Text(scrolledComposite, SWT.WRAP | SWT.V_SCROLL);
+		text_1.setToolTipText("");
+		scrolledComposite.setContent(text_1);
+		scrolledComposite.setMinSize(text_1.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		text_1.setText("Test");*/
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
@@ -392,7 +420,6 @@ public class MainScreen {
 	public Button getButton() {
 		return button;
 	}
-	
 	public Combo getCombo() {
 		return combo;
 	}
