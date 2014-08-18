@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import removedClasses.UncertaintyMethod;
+
 public class Rule implements Serializable
 {
 	protected ArrayList<Antecedent> antecedents;
@@ -13,25 +15,25 @@ public class Rule implements Serializable
 	protected int priority = 1;
 	protected int ruleNum;
 	
-	UncertaintyMethod uncertaintyMethod = UncertaintyMethod.NONE;
+	KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
 	
-	public UncertaintyMethod getUncertaintyMethod()
+	public KBSettings.UncertaintyManagement getUncertaintyMethod()
 	{
-		return uncertaintyMethod;
+		return uncertaintyType;
 	}
 
-	public void setUncertaintyMethod(UncertaintyMethod uncertaintyMethod)
+	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)
 	{
-		this.uncertaintyMethod = uncertaintyMethod;
+		this.uncertaintyType = uncertainty;
 		
 		//set all the antecedents and consequents also
 		for(Antecedent a : antecedents)
 		{
-			a.setUncertaintyMethod(uncertaintyMethod);
+			a.setUncertaintyMethod(uncertainty);
 		}
 		for(Consequent c : consequents)
 		{
-			c.setUncertaintyMethod(uncertaintyMethod);
+			c.setUncertaintyMethod(uncertainty);
 		}
 	}
 
@@ -44,13 +46,13 @@ public class Rule implements Serializable
 	public void addAntecedent(Antecedent ant)
 	{
 		antecedents.add(ant);
-		ant.setUncertaintyMethod(uncertaintyMethod);
+		ant.setUncertaintyMethod(uncertaintyType);
 	}
 	
 	public void addConsequent(Consequent cons)
 	{
 		consequents.add(cons);
-		cons.setUncertaintyMethod(uncertaintyMethod);
+		cons.setUncertaintyMethod(uncertaintyType);
 	}
 	
 	public void setConnective(Connectives con)

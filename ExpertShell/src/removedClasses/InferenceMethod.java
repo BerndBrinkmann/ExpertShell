@@ -1,4 +1,4 @@
-package datatypes;
+package removedClasses;
 
 public enum InferenceMethod
 {

@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 public class Antecedent implements Serializable
 {
+	//test comment by arie
+	//
+	
 	protected Variable variable;
 	protected Value value;
 	protected double likelihoodOfNecessity = 1;
@@ -12,18 +15,45 @@ public class Antecedent implements Serializable
 	protected Comparison comparison;
 	protected Boolean isNumeric = false;
 	protected Double numVal = null;
-	protected UncertaintyMethod uncertaintyMethod = UncertaintyMethod.NONE;
+	protected KBSettings.UncertaintyManagement uncertaintyType =KBSettings.UncertaintyManagement.NONE;
 	
-
-	public UncertaintyMethod getUncertaintyMethod()
+	public Antecedent()
 	{
-		return uncertaintyMethod;
+		variable = new Variable("default");
+		value = new Value("default");
+	}
+	
+	public Antecedent(Variable var,Comparison comp ,Double val)
+	{
+		setIsNumeric(true);
+		numVal = val;
+		comparison = comp;
+		variable = var;
+		
+	}
+	
+	public Antecedent(Variable var, Value val)
+	{
+		variable = var;
+		value = val;
+	}
+	
+	public Antecedent(Variable var, Double val)
+	{
+		variable = var;
+		setIsNumeric(true);
+		numVal = val;
+	}
+
+	public KBSettings.UncertaintyManagement getUncertaintyMethod()
+	{
+		return uncertaintyType;
 	}
 
 
-	public void setUncertaintyMethod(UncertaintyMethod uncertaintyMethod)
+	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)
 	{
-		this.uncertaintyMethod = uncertaintyMethod;
+		this.uncertaintyType = uncertainty;
 	}
 
 
@@ -75,34 +105,6 @@ public class Antecedent implements Serializable
 			setValue(new Value(""));
 	}
 
-	
-	public Antecedent()
-	{
-		variable = new Variable("default");
-		value = new Value("default");
-	}
-	
-	public Antecedent(Variable var,Comparison comp ,Double val)
-	{
-		setIsNumeric(true);
-		numVal = val;
-		comparison = comp;
-		variable = var;
-		
-	}
-	
-	public Antecedent(Variable var, Value val)
-	{
-		variable = var;
-		value = val;
-	}
-	
-	public Antecedent(Variable var, Double val)
-	{
-		variable = var;
-		setIsNumeric(true);
-		numVal = val;
-	}
 	
 	public Variable getVariable()
 	{
@@ -207,7 +209,7 @@ public class Antecedent implements Serializable
 		}
 		else
 		{
-			if(uncertaintyMethod == UncertaintyMethod.BAYESIAN
+			if(uncertaintyType == KBSettings.UncertaintyManagement.BAYESIAN
 					&& (likelihoodOfSufficiency != 1 || likelihoodOfNecessity != 1))
 			{
 				return variable.getName() + " is " + value.toString() + " {ls = "+likelihoodOfSufficiency+"} {ln = "+likelihoodOfNecessity+"}";
