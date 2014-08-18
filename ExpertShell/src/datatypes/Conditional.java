@@ -6,11 +6,62 @@ public class Conditional extends getSetKBSettings {
 	protected Value value;
 	protected Double numVal = null;
 	protected Boolean isNumeric = false;
+	protected Boolean antecedentFlag = true;
+	protected Comparison comparison;
 
+	public Conditional convert()
+	{
+		if(antecedentFlag)
+		{
+			if(isNumeric)
+			{
+				return new Antecedent(this.variable, Comparison.EQ, this.numVal);
+			}
+			else
+			{
+				return new Antecedent(this.variable, this.value);
+			}	
+		}
+		else
+		{
+			if(isNumeric)
+			{
+				return new Consequent(this.variable, this.numVal);
+			}
+			else
+			{
+				return new Consequent(this.variable, this.value);
+			}
+		}
+	}
+	
 	
 	public Variable getVariable()
 	{
 		return variable;
+	}
+
+	public void setVariable(Variable v)
+	{
+	
+		variable = v;
+		
+		if(variable.getIsNumeric())
+		{
+			if(antecedentFlag)
+			{
+				setValue(0.0);
+				setComparison(Comparison.EQ);
+			}
+			else
+			{
+				setValue(0.0);	
+			}
+		}
+		else
+		{
+			setValue(new Value(""));
+		}
 	}
 		
 	public Value getValue()
@@ -53,6 +104,19 @@ public class Conditional extends getSetKBSettings {
 		else
 			setValue(new Value(""));
 	}
+
+	public Comparison getComparison()
+	{
+		return comparison;
+	}
+
+	public void setComparison(Comparison comparison)
+	{
+		this.comparison = comparison;
+		if(!isNumeric)
+			setIsNumeric(true);
+	}
+	
 	
 	
 	@Override

@@ -16,6 +16,7 @@ public class Antecedent extends Conditional implements Serializable
 	protected Boolean isNumeric = false;
 	protected Double numVal = null;
 	protected KBSettings.UncertaintyManagement uncertaintyType =KBSettings.UncertaintyManagement.NONE;
+	protected Boolean antecedentFlag = true;
 	
 	public Antecedent()
 	{
@@ -43,18 +44,6 @@ public class Antecedent extends Conditional implements Serializable
 		return likelihoodOfNecessity;
 	}
 	
-	public Comparison getComparison()
-	{
-		return comparison;
-	}
-
-	public void setComparison(Comparison comparison)
-	{
-		this.comparison = comparison;
-		if(!isNumeric)
-			setIsNumeric(true);
-	}
-
 	public void setLikelihoodOfNecessity(double likelihoodOfNecessity)
 	{
 		this.likelihoodOfNecessity = likelihoodOfNecessity;
@@ -70,21 +59,6 @@ public class Antecedent extends Conditional implements Serializable
 		this.likelihoodOfSufficiency = likelihoodOfSufficiency;
 	}
 
-	public void setVariable(Variable v)
-	{
-		// will null this object's value field on setting of variable - it will no longer be valid
-		
-		variable = v;
-		
-		if(variable.getIsNumeric())
-		{
-			setValue(0.0);
-			setComparison(Comparison.EQ);
-		}
-		else
-			setValue(new Value(""));
-	}
-	
 	public Boolean evaluate()
 	{
 		if(!isNumeric)
@@ -120,18 +94,6 @@ public class Antecedent extends Conditional implements Serializable
 			}
 		}
 				
-	}
-	
-	public Consequent convertC()
-	{
-		if(isNumeric)
-		{
-			return new Consequent(this.variable, this.numVal);
-		}
-		else
-		{
-			return new Consequent(this.variable, this.value);
-		}
 	}
 	
 	public String toString()

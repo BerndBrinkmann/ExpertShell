@@ -10,9 +10,8 @@ public class Consequent extends Conditional implements Serializable
 	
 	protected Boolean isNumeric = false;
 	protected Double numVal;
-	protected Boolean antecedentFlag = true;
 	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
-	
+	protected Boolean antecedentFlag = false;
 	
 	public Consequent()
 	{
@@ -78,31 +77,6 @@ public class Consequent extends Conditional implements Serializable
 		variable.setBelief(value,odds/(1+odds) );		
 	}
 	
-	public void setVariable(Variable v)
-	{
-		// will null this object's value field on setting of variable - it will no longer be valid
-		
-		variable = v;
-		
-		if(variable.getIsNumeric())
-			setValue(0.0);
-		else
-			setValue(new Value(""));
-	}
-	
-	
-	public Antecedent convertA()
-	{
-		if(isNumeric)
-		{
-			return new Antecedent(this.variable, Comparison.EQ, this.numVal);
-		}
-		else
-		{
-			return new Antecedent(this.variable, this.value);
-		}
-	}
-
 	public String toString()
 	{
 		if(!getIsNumeric())
