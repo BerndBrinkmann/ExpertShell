@@ -9,7 +9,7 @@ public class NumericVariable extends Variable {
 	protected ArrayList<Value> possibleValues;
 	protected ArrayList<Integer> numOfValueInstances;
 	protected ArrayList<String> numericOperators;
-	protected Value currentValue;
+	protected Double currentValue = null;
 	protected Rule changedBy;
 	protected String queryPrompt = "";
 	
@@ -24,22 +24,7 @@ public class NumericVariable extends Variable {
 	protected Boolean userDerived = false;
 	protected Value defaultValue;
 	
-	public void setIsNumeric(Boolean isNumeric)
-	{
-		this.isNumeric = isNumeric;
-	}
 
-	public Double getNumVal()
-	{
-		return numVal;
-	}
-
-	public void setNumVal(Double numVal)
-	{
-		this.numVal = numVal;
-	}
-
-	
 	public NumericVariable(String n)
 	{
 		name = n;
@@ -48,35 +33,47 @@ public class NumericVariable extends Variable {
 		beliefs = new ArrayList<Double>();
 	}
 	
+	public NumericVariable(String n, String descr, ArrayList<Double> pr,
+			ArrayList<Double> cf, String query,ArrayList<Integer> vInstances,
+			Boolean askUsr,Boolean userDer, ArrayList<Value> posValues)
+	{
+		name = n;
+		description = descr;
+		queryPrompt = query;
+		askUser = askUsr;
+		userDerived = userDer;
+		
+		certaintyFactors = cf;
+		prior = pr;
+		
+		possibleValues = posValues;
+		numOfValueInstances = vInstances;
+		
+	}
 	
-	public Value getCurrentValue()
+	
+	public void setIsNumeric(Boolean isNumeric)
+	{
+		this.isNumeric = isNumeric;
+	}
+
+
+	public Double getCurrentVal()
 	{
 		return currentValue;
 	}
-	
-	public void setCurrentValue(Value val)
+
+	public void setCurrentValue(Double value)
 	{
-		currentValue = val;
+		currentValue = value;	
 	}
 	
-	public void setCurrentValue(Double d)
-	{
-		numVal = d;	
-		setIsNumeric(true);
-	}
-	
-	public void userSetCurrentValue(Value val)
+	public void userSetCurrentValue(Double value)
 	{
 		userDerived = true;
-		currentValue = val;		
+		currentValue = value;	
 	}
-	
-	public void userSetCurrentValue(Double d)
-	{
-		userDerived = true;
-		numVal = d;	
-		setIsNumeric(true);
-	}
+
 	
 	public void addPossibleValue(Value val)
 	{
@@ -87,75 +84,13 @@ public class NumericVariable extends Variable {
 		//certainty factors should be initialised to zero
 		certaintyFactors.add(new Double(0));
 		
-		//beliefs can be initilised to 0.5
+		//beliefs can be initialised to 0.5
 		beliefs.add(new Double(0.5));
-
 	}
-	
-	public void setCertaintyFactor(int i, Double certainty)
-	{
-		certaintyFactors.set(i, certainty);
-	}
-	
-	public void setCertaintyFactor(Value val, Double certainty)
-	{
-		certaintyFactors.set(getValueIndex(val), certainty);
-	}
-	
-	public void setBelief(Value val, Double belief)
-	{
-		beliefs.set(getValueIndex(val), belief);
-	}
-	
-	public String getName()
-	{
-		return name;
-	}
-	
-	public void setName(String s)
-	{
-		name = s;
-	}
-	
-	public void setDerivedFrom(Rule r)
-	{
-		derivedFrom = r;
-	}
-	
-	public Boolean isUserInput()
-	{
-		return askUser;
-	}
-	
-	public void setUserInput(Boolean b)
-	{
-		askUser = b;
-	}
-	
+		
 	public Value getPossibleValue(int i)
 	{
 		return possibleValues.get(i); 
-	}
-	
-	public Double getCertaintyFactor(int i)
-	{
-		return certaintyFactors.get(i);
-	}
-	
-	public Double getCertaintyFactor(Value val)
-	{
-		return getCertaintyFactor(getValueIndex(val));
-		
-	}
-	
-	public Double getBelief(int i)
-	{
-		return beliefs.get(i);
-	}
-	
-	public Double getBelief(Value val)
-	{
-		return beliefs.get(getValueIndex(val));
 	}
 	
 	//checks user input against list of possible values. (checks for val in list of p.values)
@@ -208,57 +143,6 @@ public class NumericVariable extends Variable {
 		return sb.toString();
 	}
 	
-	public String getCertaintyValuesString()
-	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("\n");
-		for(int i = 0; i < possibleValues.size(); i++)
-		{
-			sb.append("'"+possibleValues.get(i).getName()+"'("+ String.format("%.2f", getCertaintyFactor(i)*100) +"%), \n");
-		}
-		
-		
-		return sb.toString();
-	}
+
 	
-	public String getBeliefValuesString()
-	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("\n");
-		
-		//normalise the beliefs?
-		for(int i = 0; i < possibleValues.size(); i++)
-		{
-			
-			sb.append("'"+possibleValues.get(i).getName()+"'("+ String.format("%.2f", getBelief(i)*100)  +"%), \n");
-		}
-		
-		
-		return sb.toString();
-	}
-	
-	public String getDescription()
-	{
-		return description;
-	}
-	
-	public void setDescription(String s)
-	{
-		description = s;
-	}
-	
-	public String getQueryPrompt()
-	{
-		return queryPrompt;
-	}
-	
-	public void setQueryPrompt(String s)
-	{
-		queryPrompt = s;
-	}
-	
-	public String toString()
-	{
-		return name;
-	}
 }

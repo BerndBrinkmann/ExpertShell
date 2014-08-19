@@ -16,7 +16,7 @@ public class Consequent extends Conditional implements Serializable
 	public Consequent()
 	{
 		variable = new Variable("default");
-		value = new Value("default");
+		value = new Value("default", this);
 	}
 
 
@@ -55,7 +55,7 @@ public class Consequent extends Conditional implements Serializable
 	
 	public void execute()
 	{
-		if(!getIsNumeric())
+		if(!(variable instanceof NumericVariable))
 			variable.setCurrentValue(value);
 		else
 			variable.setCurrentValue(numVal);
@@ -86,7 +86,7 @@ public class Consequent extends Conditional implements Serializable
 		if(variable instanceof NumericVariable)
 			setValue(0.0);
 		else
-			setValue(new Value(""));
+			setValue(new Value("",this));
 	}
 	
 	
@@ -104,7 +104,7 @@ public class Consequent extends Conditional implements Serializable
 
 	public String toString()
 	{
-		if(!getIsNumeric())
+		if(!(variable instanceof NumericVariable))
 		{
 			if(uncertaintyType == KBSettings.UncertaintyManagement.CF)
 			{
