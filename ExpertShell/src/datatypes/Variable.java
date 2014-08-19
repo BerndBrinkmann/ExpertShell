@@ -22,11 +22,11 @@ public class Variable implements Serializable
 	protected Boolean userDerived = false;
 	protected Value defaultValue;
 	
-	public Boolean getIsNumeric()
+	public Variable()
 	{
-		return isNumeric;
+		
 	}
- 
+	
 	public void setIsNumeric(Boolean isNumeric)
 	{
 		this.isNumeric = isNumeric;
@@ -59,7 +59,7 @@ public class Variable implements Serializable
 	
 	public String getValue()
 	{
-		if(getIsNumeric())
+		if(this instanceof NumericVariable)
 		{
 			return numVal.toString();
 		}
@@ -134,7 +134,7 @@ public class Variable implements Serializable
 	
 	public Boolean hasValue()
 	{
-		if(!getIsNumeric())
+		if(!(this instanceof NumericVariable))
 			return currentValue != null;
 		else
 			return numVal != null;
@@ -178,7 +178,7 @@ public class Variable implements Serializable
 	
 	public Double getBelief(Value val)
 	{
-		return getBelief(getValueIndex(val));
+		return beliefs.get(getValueIndex(val));
 	}
 	
 	//checks user input against list of possible values. (checks for val in list of p.values)
@@ -202,7 +202,7 @@ public class Variable implements Serializable
 		return index;
 	}
 	
-	public Value[] getArrayOfPossibleValues()
+	public Value[] getArrayOfPossibleValues()	//should be able to just use get
 	{
 		return possibleValues.toArray(new Value[possibleValues.size()]);
 	}
@@ -223,7 +223,7 @@ public class Variable implements Serializable
 		sb.append("{");
 		for(int i = 0; i < possibleValues.size(); i++)
 		{
-			sb.append("'"+possibleValues.get(i).toString()+"'["+i+"],");
+			sb.append("'"+possibleValues.get(i).getName()+"'["+i+"],");
 		}
 		
 		sb.append("}");
@@ -237,7 +237,7 @@ public class Variable implements Serializable
 		sb.append("\n");
 		for(int i = 0; i < possibleValues.size(); i++)
 		{
-			sb.append("'"+possibleValues.get(i).toString()+"'("+ String.format("%.2f", getCertaintyFactor(i)*100) +"%), \n");
+			sb.append("'"+possibleValues.get(i).getName()+"'("+ String.format("%.2f", getCertaintyFactor(i)*100) +"%), \n");
 		}
 		
 		
@@ -253,7 +253,7 @@ public class Variable implements Serializable
 		for(int i = 0; i < possibleValues.size(); i++)
 		{
 			
-			sb.append("'"+possibleValues.get(i).toString()+"'("+ String.format("%.2f", getBelief(i)*100)  +"%), \n");
+			sb.append("'"+possibleValues.get(i).getName()+"'("+ String.format("%.2f", getBelief(i)*100)  +"%), \n");
 		}
 		
 		

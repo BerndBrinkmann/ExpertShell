@@ -281,7 +281,7 @@ public class Rule extends getSetKBSettings implements Serializable
 							var = ImportExport.userSetVaraible(var,this);
 							
 							//get the certainty if required				TODO added this condition
-							if(umethod == UncertaintyMethod.CERTAINTY_FACTOR && !var.getIsNumeric())
+							if(umethod == UncertaintyMethod.CERTAINTY_FACTOR && !(var instanceof NumericVariable))
 							{
 								var.setCertaintyFactor(var.getCurrentValue(), ImportExport.getCertainty("Input a certainty for "+var.toString()));
 							}

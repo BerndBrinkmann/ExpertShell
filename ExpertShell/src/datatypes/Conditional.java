@@ -44,7 +44,7 @@ public class Conditional extends getSetKBSettings {
 	public void setVariable(Variable v)
 	{
 		variable = v;
-		if(variable.getIsNumeric())
+		if(variable instanceof NumericVariable)
 		{
 			if(antecedentFlag)
 			{
