@@ -1,14 +1,21 @@
 package datatypes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Value implements Serializable
 {
 	protected String name;
+	protected Conditional conditionalPointer;
 	
-	public Value(String n)
+	
+	
+	
+	public Value(String n, Conditional cond)
 	{
 		name = n;
+		conditionalPointer = cond;
+		
 	}
 	
 	public String getName()
@@ -20,4 +27,5 @@ public class Value implements Serializable
 	{
 		return name;
 	}
+	
 }

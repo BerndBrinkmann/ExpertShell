@@ -13,7 +13,7 @@ public class Conditional extends getSetKBSettings {
 	{
 		if(antecedentFlag)
 		{
-			if(isNumeric)
+			if(this.variable instanceof NumericVariable)
 			{
 				return new Antecedent(this.variable, Comparison.EQ, this.numVal);
 			}
@@ -24,7 +24,7 @@ public class Conditional extends getSetKBSettings {
 		}
 		else
 		{
-			if(isNumeric)
+			if(this.variable instanceof NumericVariable)
 			{
 				return new Consequent(this.variable, this.numVal);
 			}
@@ -58,7 +58,7 @@ public class Conditional extends getSetKBSettings {
 		}
 		else
 		{
-			setValue(new Value(""));
+			setValue(new Value("", this));
 		}
 	}
 	
@@ -88,11 +88,6 @@ public class Conditional extends getSetKBSettings {
 	}
 	
 	
-	public Boolean getIsNumeric()
-	{
-		return isNumeric;
-	}
-	
 	public void setIsNumeric(Boolean isNumeric)
 	{
 		this.isNumeric = isNumeric;
@@ -101,7 +96,7 @@ public class Conditional extends getSetKBSettings {
 		if(isNumeric)
 			setValue(0.0);
 		else
-			setValue(new Value(""));
+			setValue(new Value("",this));
 	}
 
 	public Comparison getComparison()

@@ -20,7 +20,7 @@ public class Antecedent extends Conditional implements Serializable
 	public Antecedent()
 	{
 		variable = new Variable("default");
-		value = new Value("default");
+		value = new Value("default",this);
 	}
 	
 	public Antecedent(Variable var,Comparison comp ,Double val)
@@ -89,7 +89,7 @@ public class Antecedent extends Conditional implements Serializable
 			setComparison(Comparison.EQ);
 		}
 		else
-			setValue(new Value(""));
+			setValue(new Value("", this));
 	}
 	
 	public Boolean evaluate()

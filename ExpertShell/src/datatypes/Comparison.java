@@ -7,7 +7,10 @@ public enum Comparison
 	GT(">"),
 	LT("<"),
 	LTEQ("<="),
-	GTEQ(">=");
+	GTEQ(">="),
+	IS("is"),
+	ISNT("is not");
+	
 	
 	String name;
 	
