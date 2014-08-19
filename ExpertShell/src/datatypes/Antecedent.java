@@ -83,7 +83,7 @@ public class Antecedent extends Conditional implements Serializable
 		
 		variable = v;
 		
-		if(variable.getIsNumeric())
+		if(variable instanceof NumericVariable)
 		{
 			setValue(0.0);
 			setComparison(Comparison.EQ);
@@ -152,10 +152,10 @@ public class Antecedent extends Conditional implements Serializable
 			if(uncertaintyType == KBSettings.UncertaintyManagement.BAYESIAN
 					&& (likelihoodOfSufficiency != 1 || likelihoodOfNecessity != 1))
 			{
-				return variable.getName() + " is " + value.toString() + " {ls = "+likelihoodOfSufficiency+"} {ln = "+likelihoodOfNecessity+"}";
+				return variable.getName() + " is " + value.getName() + " {ls = "+likelihoodOfSufficiency+"} {ln = "+likelihoodOfNecessity+"}";
 			}
 			else
-				return variable.getName() + " is " + value.toString();
+				return variable.getName() + " is " + value.getName();
 		}
 	}
 

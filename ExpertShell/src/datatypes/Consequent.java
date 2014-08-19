@@ -83,7 +83,7 @@ public class Consequent extends Conditional implements Serializable
 		
 		variable = v;
 		
-		if(variable.getIsNumeric())
+		if(variable instanceof NumericVariable)
 			setValue(0.0);
 		else
 			setValue(new Value(""));
@@ -108,14 +108,14 @@ public class Consequent extends Conditional implements Serializable
 		{
 			if(uncertaintyType == KBSettings.UncertaintyManagement.CF)
 			{
-				return variable.getName() + " is " + value.toString() + " {cf = "+certaintyFactor+"}";
+				return variable.getName() + " is " + value.getName() + " {cf = "+certaintyFactor+"}";
 			}
 			else if(uncertaintyType == KBSettings.UncertaintyManagement.BAYESIAN && !value.getName().equals("default") && !value.getName().equals(""))
 			{
-				return variable.getName() + " is " + value.toString() + " {prior = "+variable.getBelief(value)+"}";
+				return variable.getName() + " is " + value.getName() + " {prior = "+variable.getBelief(value)+"}";
 			}
 			else
-				return variable.getName() + " is " + value.toString();
+				return variable.getName() + " is " + value.getName();
 		}
 		else
 		{

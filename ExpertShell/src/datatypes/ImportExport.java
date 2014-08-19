@@ -105,7 +105,7 @@ public class ImportExport
 		thisRule = rule;
 		if(frame != null)
 		{
-			if(var.getIsNumeric())
+			if(var instanceof NumericVariable)
 			{
 				JPanel panel = new JPanel();
 				
@@ -229,18 +229,18 @@ public class ImportExport
 		String summary;
 		if(result != null)
 		{
-			if(kb.getUncertaintyMethod() == UncertaintyMethod.CERTAINTY_FACTOR)
+			if(kb.getUncertaintyMethod() == KBSettings.UncertaintyManagement.CF)
 			{
 				summary = result.getCertaintyValuesString();
 			}
-			else if(kb.getUncertaintyMethod() == UncertaintyMethod.BAYESIAN)
+			else if(kb.getUncertaintyMethod() == KBSettings.UncertaintyManagement.BAYESIAN)
 			{
 				summary = result.getBeliefValuesString();
 
 			}
 			else
 			{
-				if(!result.getIsNumeric())
+				if(!(result instanceof NumericVariable))
 				{
 					if(result.getCurrentValue() != null)
 					{
