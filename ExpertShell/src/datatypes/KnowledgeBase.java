@@ -8,10 +8,12 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	protected String Name;
 	protected String Description;
 	protected ArrayList<Rule> RuleList;
-	protected ArrayList<Variable> VariableList;
+	protected ArrayList<Variable> VariableList = new ArrayList<Variable>();
 	protected KBSettings.InferenceType inferenceType;
 	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
 	protected KBSettings.ConflictResolution conflictResolution = KBSettings.ConflictResolution.NONE;
+	
+	
 	
 	public KnowledgeBase(String name)
 	{
@@ -87,25 +89,37 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		}
 	}
 	
-	public Variable[] getVariablesArray()
+	public ArrayList<Variable> getVariablesArray()
 	{
 		//search through all the rules and find all the variables
-		ArrayList<Variable> variables = new ArrayList<Variable>();
+	//	ArrayList<Variable> variables = new ArrayList<Variable>();
 		
 		for(Rule rule : getRuleArray())
 		{
 			for(Antecedent a : rule.getAntecedentArray())
 			{
-				if(!variables.contains(a.getVariable()))
-					variables.add(a.getVariable());
+				if(!VariableList.contains(a.getVariable()))
+					VariableList.add(a.getVariable());
 			}
 			for(Consequent c : rule.getConsequentArray())
 			{
-				if(!variables.contains(c.getVariable()))
-					variables.add(c.getVariable());
+				if(!VariableList.contains(c.getVariable()))
+					VariableList.add(c.getVariable());
 			}
 		}
-		return variables.toArray(new Variable[variables.size()]);
+		return VariableList;
+	}
+	
+	public void addVariableToArray( Variable Var)
+	{
+		if(!VariableList.contains(Var))
+			VariableList.add(Var);
+	}
+	
+	public void DeleteVariableFromArray( Variable Var)
+	{
+		if(!VariableList.contains(Var))
+			VariableList.remove(Var);
 	}
 	
 	public Variable[] getConsequentVariablesArray()
