@@ -30,8 +30,10 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.layout.FillLayout;
+import datatypes.*;
 
 //note - to reference a widget it must be 'exposed' by right-clicking on it in windowbuilder and selecting 'expose component' --Arie
+
 
 
 public class MainScreen {
@@ -47,6 +49,12 @@ public class MainScreen {
 	private Button btnForwardChaining;
 	private Button button;
 	private Combo combo;
+	private KnowledgeBase KBase;
+	
+
+	public KnowledgeBase getKowledgeBase(){
+		return KBase ;
+	}
 
 	/**
 	 * Launch the application.
@@ -80,10 +88,14 @@ public class MainScreen {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
+		//create default KnowledgeBase
+		KBase = new KnowledgeBase("default");
+		
+		
 		shlExpertSystemShell = new Shell();
 		shlExpertSystemShell.setMinimumSize(new Point(132, 10));
 		shlExpertSystemShell.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/UTasLogo.png"));
-		shlExpertSystemShell.setSize(744, 504);
+		shlExpertSystemShell.setSize(745, 511);
 		shlExpertSystemShell.setText("Expert System Shell");
 		shlExpertSystemShell.setLayout(new GridLayout(1, false));
 		
@@ -249,9 +261,6 @@ public class MainScreen {
 		scrolledComposite.setMinSize(composite_2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
 		
-		
-		
-		
 		MenuItem mntmOpenKnowledgeBase = new MenuItem(menu_1, SWT.CASCADE);
 		mntmOpenKnowledgeBase.setText("Open Knowledge Base");
 		
@@ -397,7 +406,7 @@ public class MainScreen {
 		TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);
 		tbtmVariables.setText("Variables");
 		
-		VariablesGUI Variables = new VariablesGUI(tabFolder, SWT.NONE);
+		VariablesGUI Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
 		tbtmVariables.setControl(Variables);
 		
 		
@@ -424,4 +433,5 @@ public class MainScreen {
 	public Combo getCombo() {
 		return combo;
 	}
+
 }
