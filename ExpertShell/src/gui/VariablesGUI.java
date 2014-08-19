@@ -19,11 +19,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import gui.MainScreen;
+import datatypes.*;
 
 public class VariablesGUI extends Composite {
 	private Text descriptionTxt;
 	private Text txtVariableName;
-
+	private datatypes.KnowledgeBase KBase;
+	private String Name;
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -34,7 +37,7 @@ public class VariablesGUI extends Composite {
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		setLayout(new GridLayout(2, false));
 		
-		List variableList = new List(this, SWT.BORDER);
+		final List variableList = new List(this, SWT.BORDER);
 		GridData gd_variableList = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
 		gd_variableList.widthHint = 141;
 		variableList.setLayoutData(gd_variableList);
@@ -85,6 +88,12 @@ public class VariablesGUI extends Composite {
 					//checks is a name for a variable was entered
 					JOptionPane.showMessageDialog(null, "Please enter a Variable Name");
 					txtVariableName.setFocus();
+					
+				}
+				else
+				{
+					Name = txtVariableName.getText();
+				  variableList.add(Name);
 				}
 			}
 		});
@@ -92,6 +101,20 @@ public class VariablesGUI extends Composite {
 		btnAddVariable.setText("Add ");
 		
 		Button btnDeleteVariable = new Button(GroupAddDelete, SWT.NONE);
+		btnDeleteVariable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				if (variableList.getSelectionIndex()==-1)
+				{
+					
+					JOptionPane.showMessageDialog(null, "Please select Variable");
+				}
+				else
+				{
+					variableList.remove(variableList.getSelectionIndex());
+				}
+			}
+		});
 		btnDeleteVariable.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
