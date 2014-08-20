@@ -31,11 +31,11 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.layout.FillLayout;
-<<<<<<< HEAD
+
 import org.eclipse.wb.swt.SWTResourceManager;
-=======
+
 import datatypes.*;
->>>>>>> refs/remotes/origin/master
+
 
 //note - to reference a widget it must be 'exposed' by right-clicking on it in windowbuilder and selecting 'expose component' --Arie
 
@@ -105,7 +105,7 @@ public class MainScreen {
 		shlExpertSystemShell.setMinimumSize(new Point(132, 10));
 		shlExpertSystemShell.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/UTasLogo.png"));
 
-		shlExpertSystemShell.setSize(745, 511);
+		shlExpertSystemShell.setSize(722, 563);
 		shlExpertSystemShell.setText("Expert System Shell");
 		shlExpertSystemShell.setLayout(new GridLayout(1, false));
 		
@@ -452,6 +452,14 @@ public class MainScreen {
 				btnBayesianReasoning.setSelection(false);
 				btnForwardChaining.setSelection(false);
 				btnBackwardChaining.setSelection(false);
+				if (btnCertainityFactor.getSelection()==true){
+					scale.setVisible(true);
+					lblCf.setVisible(true);
+				}
+				if (btnCertainityFactor.getSelection()==false){
+					scale.setVisible(false);
+					lblCf.setVisible(false);
+				}
 			}
 		});
 		mntmBoat.setText("Boat");
@@ -468,6 +476,14 @@ public class MainScreen {
 				btnBayesianReasoning.setSelection(false);
 				btnForwardChaining.setSelection(false);
 				btnBackwardChaining.setSelection(false);
+				if (btnCertainityFactor.getSelection()==true){
+					scale.setVisible(true);
+					lblCf.setVisible(true);
+				}
+				if (btnCertainityFactor.getSelection()==false){
+					scale.setVisible(false);
+					lblCf.setVisible(false);
+				}
 			}
 		});
 		mntmBoatWithCf.setText("Boat with CF");
@@ -481,6 +497,15 @@ public class MainScreen {
 				btnCertainityFactor.setSelection(true);
 				btnDefault.setSelection(true);
 				button.setSelection(false);
+				btnCertainityFactor.getSelection();
+				if (btnCertainityFactor.getSelection()==true){
+					scale.setVisible(true);
+					lblCf.setVisible(true);
+				}
+				if (btnCertainityFactor.getSelection()==false){
+					scale.setVisible(false);
+					lblCf.setVisible(false);
+				}
 				btnBayesianReasoning.setSelection(false);
 				btnForwardChaining.setSelection(false);
 				btnBackwardChaining.setSelection(false);
