@@ -266,6 +266,7 @@ public class MainScreen {
 		
 		
 		scrolledComposite = new ScrolledComposite(composite, SWT.V_SCROLL);
+		scrolledComposite.setAlwaysShowScrollBars(true);
 		GridData gd_scrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_scrolledComposite.heightHint = 381;
 		gd_scrolledComposite.widthHint = 326;
@@ -274,26 +275,32 @@ public class MainScreen {
 		scrolledComposite.setExpandVertical(true);
 		
 		CompQ = new Composite(scrolledComposite, SWT.NONE);
+		CompQ.addControlListener(new ControlAdapter() {
+			@Override
+			public void controlResized(ControlEvent e) {
+				e.getSource();
+			}
+		});
+		CompQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		CompQ.setLayout(new GridLayout(1, false));
-		CompQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		
+
+		//composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
+
 		
 		questionGroup = new Group(CompQ, SWT.NONE);
+		questionGroup.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		questionGroup.setLayout(new GridLayout(3, false));
-		GridData gd_questionGroup = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
-		gd_questionGroup.heightHint = 185;
-		gd_questionGroup.widthHint = 332;
-		questionGroup.setLayoutData(gd_questionGroup);
 		lblNewLabel = new Label(questionGroup, SWT.NONE);
 		GridData gd_lblNewLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
-		gd_lblNewLabel.widthHint = 302;
+		gd_lblNewLabel.widthHint = 303;
 		gd_lblNewLabel.heightHint = 65;
 		lblNewLabel.setLayoutData(gd_lblNewLabel);
 		String[] ITEMS = {"A", "B"};   /*Test*/
 		combo_1 = new Combo(questionGroup, SWT.NONE);
+		//different from QuestionGUI
 		GridData gd_combo_1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1);
-		gd_combo_1.widthHint = 280;
+		gd_combo_1.widthHint = 276;
 		combo_1.setLayoutData(gd_combo_1);
 		combo_1.setItems(ITEMS);			
 		combo_1.setText("Answer");
@@ -413,23 +420,35 @@ public class MainScreen {
 				e.getSource();
 				// Attempt at creating new Question box...
 					    lblNewLabel.setText("OK Pressed"); //test to see if button working
-						QuestionGUI askQuestion = new QuestionGUI(CompQ);
-						askQuestion.addQuestion();
-						//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-						scrolledComposite.layout();
-						CompQ.layout();
-						//questionGroup.layout();
-
-				//notes: scrolled composite doesnt scroll with additional frames
-			    // creates tiny box
-			}
-		});
+					    btnCertainityFactor.getSelection();
+						if (btnCertainityFactor.getSelection()==true){
+							QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
+							askCFQuestion.addQuestion();
+							//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+							CompQ.layout();
+							scrolledComposite.layout();
+							button.setSelection(false);
+							btnBayesianReasoning.setSelection(false);
+						}else{
+							QuestionGUI askQuestion = new QuestionGUI(CompQ);
+							askQuestion.addQuestion();
+							//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+							CompQ.layout();
+							CompQ.redraw();
+							scrolledComposite.layout();
+							btnCertainityFactor.setSelection(false);
+							//questionGroup.layout();	
+				}	
+					}
+				});
+				
+					  
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		OKButton.setText("OK");
+		
 		scrolledComposite.setContent(CompQ);
 		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
-
 		
 		/*combo.setBounds(10, 90, 320, 23);
 		
@@ -616,7 +635,7 @@ public class MainScreen {
 		TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);
 		tbtmVariables.setText("Variables");
 		
-		VariablesGUI Variables = new VariablesGUI(tabFolder, SWT.NONE/*,KBase*/);
+		VariablesGUI Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
 		tbtmVariables.setControl(Variables);
 		
 		

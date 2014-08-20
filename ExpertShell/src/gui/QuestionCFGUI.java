@@ -10,13 +10,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
-import org.eclipse.swt.custom.ScrolledComposite;
-
-public class QuestionGUI {
+public class QuestionCFGUI {
 	
-	Group questionGroup;
+Group questionGroup;
 	Composite CompQ;
-	ScrolledComposite scrolledComposite;
 	
 	Button WhyButton;
 	Button HowButton;
@@ -26,10 +23,9 @@ public class QuestionGUI {
 	Label CFPercentage;
 	Scale CFScale;
 	
+		public SelectionAdapter selAdaptor;
 	
-	public SelectionAdapter selAdaptor;
-	
-	public QuestionGUI(Composite CompQ){
+	public QuestionCFGUI(Composite CompQ){
 		
 		questionGroup = UserFactoryGUI.createQuestionGroup(CompQ);
 		questionGroup.getParent().layout();
@@ -43,7 +39,6 @@ public class QuestionGUI {
 		gd_label.widthHint=303;
 		gd_label.heightHint=65;
 		QforUser.setLayoutData(gd_label);
-
 		
 		
 		ans = UserFactoryGUI.createAnswerCombo(questionGroup);
@@ -54,7 +49,7 @@ public class QuestionGUI {
 		ans.setText("Answer");
 		
 		CFPercentage = UserFactoryGUI.createCFLabel(questionGroup);
-		CFPercentage.setVisible(false);
+		CFPercentage.setVisible(true);
 		
 		
 		CFScale = UserFactoryGUI.createCFScale(questionGroup);
@@ -72,7 +67,7 @@ public class QuestionGUI {
 		GridData gd_scale = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gd_scale.widthHint = 216;
 		CFScale.setLayoutData(gd_scale);
-		CFScale.setVisible(false);
+		CFScale.setVisible(true);
 		
 		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
 		WhyButton.addSelectionListener(new SelectionAdapter() {
@@ -105,7 +100,7 @@ public class QuestionGUI {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				// Attempt at creating new Question box...
-					    //QforUser.setText("OK Pressed"); //test to see if button working
+					    QforUser.setText("OK Pressed"); //test to see if button working
 						//QuestionGUI askQuestion = new QuestionGUI(CompQ);
 						//askQuestion.addQuestion();
 						//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
@@ -120,3 +115,15 @@ public class QuestionGUI {
 	
 
 }
+
+
+
+
+
+
+
+	
+	
+	
+	
+

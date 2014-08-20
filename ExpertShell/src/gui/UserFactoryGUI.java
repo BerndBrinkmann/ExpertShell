@@ -19,7 +19,7 @@ public final class UserFactoryGUI {
 	public static Group createQuestionGroup(Composite parent) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayout(new GridLayout(3, false));
-		group.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		group.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		//group.setLayoutData(layoutData);
 		return group;
 		
@@ -52,11 +52,16 @@ public final class UserFactoryGUI {
 	 * @wbp.factory
 	 * @wbp.factory.parameter.source layoutData gd_scale
 	 */
+
 	public static Scale createCFScale(Composite parent) {
 		Scale scale = new Scale(parent, SWT.NONE);
-		scale.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1)); //maybe??
+		
+		scale.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+	
 		//scale.setLayoutData(layoutData);
 		return scale;
+		
+
 	}
 	/**
 	 * @wbp.factory
@@ -65,7 +70,7 @@ public final class UserFactoryGUI {
 	public static Label createCFLabel(Composite parent) {
 		Label label = new Label(parent, SWT.NONE);
 		label.setText("CF%");
-		label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1)); //maybe??
+		label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		//label.setLayoutData(layoutData);
 		return label;
 	}
