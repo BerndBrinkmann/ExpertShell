@@ -9,6 +9,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
@@ -21,19 +22,19 @@ public class AnswerGUI {
 	Combo ans;
 	Label QforUser;
 	
-	public AnswerGUI(Composite CompQ, Control stop){
+	public AnswerGUI(Group questionGroup /*, Control stop*/){
 		
-		QforUser= UserFactoryGUI.createQuestionLabel(CompQ);
-		ans = UserFactoryGUI.createAnswerCombo(CompQ);
-		WhyButton = UserFactoryGUI.createWhyButton(CompQ);
-		HowButton = UserFactoryGUI.createHowButton(CompQ);
-		OKButton = UserFactoryGUI.createOKButton(CompQ);
+		QforUser= UserFactoryGUI.createQuestionLabel(questionGroup);
+		ans = UserFactoryGUI.createAnswerCombo(questionGroup);
+		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
+		HowButton = UserFactoryGUI.createHowButton(questionGroup);
+		OKButton = UserFactoryGUI.createOKButton(questionGroup);
 		
-		QforUser.moveAbove(stop);
-		ans.moveAbove(stop);
-		WhyButton.moveAbove(stop);
-		HowButton.moveAbove(stop);
-		OKButton.moveAbove(stop);
+		//QforUser.moveAbove(stop);
+		//ans.moveAbove(stop);
+		//WhyButton.moveAbove(stop);
+		//HowButton.moveAbove(stop);
+		//OKButton.moveAbove(stop);
 		
 	}
 	

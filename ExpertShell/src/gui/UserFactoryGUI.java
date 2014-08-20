@@ -14,10 +14,10 @@ public final class UserFactoryGUI {
 	 * @wbp.factory
 	 * @wbp.factory.parameter.source layoutData gd_group
 	 */
-	public static Group createQuestionGroup(Composite parent, Object layoutData) {
+	public static Group createQuestionGroup(Composite parent) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayout(new GridLayout(3, false));
-		group.setLayoutData(layoutData);
+		//group.setLayoutData(layoutData);
 		return group;
 	}
 	/**

@@ -58,7 +58,11 @@ public class MainScreen {
 	private Scale scale;
 	private Label lblCf;
 	private KnowledgeBase KBase;
-	
+	private Button OKButton;
+	private Button HowButton;
+	private Button WhyButton;
+    private Composite CompQ;
+    private Group questionGroup;
 
 	public KnowledgeBase getKowledgeBase(){
 		return KBase ;
@@ -267,22 +271,22 @@ public class MainScreen {
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 		
-		Composite CompQ = new Composite(scrolledComposite, SWT.NONE);
+		CompQ = new Composite(scrolledComposite, SWT.NONE);
 		CompQ.setLayout(new GridLayout(1, false));
 		
-		Group group = new Group(CompQ, SWT.NONE);
-		group.setLayout(new GridLayout(3, false));
-		GridData gd_group = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
-		gd_group.heightHint = 185;
-		gd_group.widthHint = 332;
-		group.setLayoutData(gd_group);
-		Label lblNewLabel = new Label(group, SWT.NONE);
+		questionGroup = new Group(CompQ, SWT.NONE);
+		questionGroup.setLayout(new GridLayout(3, false));
+		GridData gd_questionGroup = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
+		gd_questionGroup.heightHint = 185;
+		gd_questionGroup.widthHint = 332;
+		questionGroup.setLayoutData(gd_questionGroup);
+		Label lblNewLabel = new Label(questionGroup, SWT.NONE);
 		GridData gd_lblNewLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
 		gd_lblNewLabel.widthHint = 302;
 		gd_lblNewLabel.heightHint = 65;
 		lblNewLabel.setLayoutData(gd_lblNewLabel);
 		String[] ITEMS = {"A", "B"};   /*Test*/
-		combo_1 = new Combo(group, SWT.NONE);
+		combo_1 = new Combo(questionGroup, SWT.NONE);
 		GridData gd_combo_1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1);
 		gd_combo_1.widthHint = 280;
 		combo_1.setLayoutData(gd_combo_1);
@@ -303,7 +307,7 @@ public class MainScreen {
 		});
 
 			
-		lblCf = new Label(group, SWT.NONE);
+		lblCf = new Label(questionGroup, SWT.NONE);
 		lblCf.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		//GridData gd_lblCf = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		//gd_lblCf.widthHint = 101;
@@ -311,7 +315,7 @@ public class MainScreen {
 		lblCf.setText("CF%");
 		lblCf.setVisible(false);
 		
-		scale = new Scale(group, SWT.NONE);
+		scale = new Scale(questionGroup, SWT.NONE);
 		scale.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -373,7 +377,7 @@ public class MainScreen {
 		
 		
 		
-		Button WhyButton = new Button(group, SWT.NONE);
+		WhyButton = new Button(questionGroup, SWT.NONE);
 		WhyButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -385,7 +389,7 @@ public class MainScreen {
 		WhyButton.setLayoutData(gd_WhyButton);
 		WhyButton.setText("Why?");
 		
-		Button HowButton = new Button(group, SWT.NONE);
+		HowButton = new Button(questionGroup, SWT.NONE);
 		HowButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -397,11 +401,21 @@ public class MainScreen {
 		HowButton.setLayoutData(gd_HowButton);
 		HowButton.setText("How?");
 		
-		Button OKButton = new Button(group, SWT.NONE);
+		OKButton = new Button(questionGroup, SWT.NONE);
 		OKButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				// Attempt at crearing new Question box...
+				if (OKButton.getSelection()==true){
+						QuestionGUI askQuestion = new QuestionGUI(CompQ);
+						AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+						CompQ.layout();
+						questionGroup.layout();
+				}
+
+				
+				
 			}
 		});
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -410,6 +424,7 @@ public class MainScreen {
 		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
 
+		
 		/*combo.setBounds(10, 90, 320, 23);
 		
 		text_2 = new Text(group, SWT.WRAP);
@@ -541,32 +556,6 @@ public class MainScreen {
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		
-		text_1.setText("Test");*/
-	/*	new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);*/
-		
-		
-		
-		
-		
-		
 		
 		
 	/*	Button btnNewButton = new Button(composite, SWT.NONE);
@@ -584,24 +573,7 @@ public class MainScreen {
 		gd_btnNewButton.widthHint = 113;
 		btnNewButton.setLayoutData(gd_btnNewButton);
 		btnNewButton.setText("Close Interface");*/
-		
-		
-		/*new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);*/
+
 		
 		TabItem tbtmDeveloperInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmDeveloperInterface.addDisposeListener(new DisposeListener() {
