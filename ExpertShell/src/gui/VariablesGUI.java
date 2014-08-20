@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.custom.CBanner;
-import swing2swt.layout.BoxLayout;
+//import swing2swt.layout.BoxLayout;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -19,22 +19,31 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import datatypes.*;
+
 
 public class VariablesGUI extends Composite {
+	
+	KnowledgeBase knowledgeBase;
+	
 	private Text descriptionTxt;
 	private Text txtVariableName;
+	List variableList;
 
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public VariablesGUI(Composite parent, int style) {
+	public VariablesGUI(Composite parent, int style, KnowledgeBase kb) {
 		super(parent, SWT.NONE);
+		knowledgeBase = kb;
+		
+		
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		setLayout(new GridLayout(2, false));
 		
-		List variableList = new List(this, SWT.BORDER);
+		variableList = new List(this, SWT.BORDER);
 		GridData gd_variableList = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
 		gd_variableList.widthHint = 141;
 		variableList.setLayoutData(gd_variableList);
