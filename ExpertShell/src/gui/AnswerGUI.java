@@ -15,6 +15,8 @@ import org.eclipse.swt.widgets.Label;
 
 
 public class AnswerGUI {
+	
+	protected Group questionGroup;
 
 	Button WhyButton;
 	Button HowButton;

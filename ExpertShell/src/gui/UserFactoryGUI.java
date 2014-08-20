@@ -2,6 +2,8 @@ package gui;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Combo;
@@ -17,8 +19,11 @@ public final class UserFactoryGUI {
 	public static Group createQuestionGroup(Composite parent) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayout(new GridLayout(3, false));
+		group.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		//group.setLayoutData(layoutData);
 		return group;
+		
+
 	}
 	/**
 	 * @wbp.factory
@@ -94,7 +99,15 @@ public final class UserFactoryGUI {
 		Button button = new Button(parent, SWT.NONE);
 		button.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		button.setText("OK");
-		return button;
+		
+		button.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+			}
+		});
+				return button;		
+						
 	}
 	
 	

@@ -63,6 +63,8 @@ public class MainScreen {
 	private Button WhyButton;
     private Composite CompQ;
     private Group questionGroup;
+    private Label lblNewLabel;
+    private ScrolledComposite scrolledComposite;
 
 	public KnowledgeBase getKowledgeBase(){
 		return KBase ;
@@ -263,7 +265,7 @@ public class MainScreen {
 		btnBayesianReasoning.setBounds(10, 40, 145, 16);
 		
 		
-		ScrolledComposite scrolledComposite = new ScrolledComposite(composite, SWT.V_SCROLL);
+		scrolledComposite = new ScrolledComposite(composite, SWT.V_SCROLL);
 		GridData gd_scrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_scrolledComposite.heightHint = 381;
 		gd_scrolledComposite.widthHint = 326;
@@ -273,6 +275,9 @@ public class MainScreen {
 		
 		CompQ = new Composite(scrolledComposite, SWT.NONE);
 		CompQ.setLayout(new GridLayout(1, false));
+		CompQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		
 		
 		questionGroup = new Group(CompQ, SWT.NONE);
 		questionGroup.setLayout(new GridLayout(3, false));
@@ -280,7 +285,7 @@ public class MainScreen {
 		gd_questionGroup.heightHint = 185;
 		gd_questionGroup.widthHint = 332;
 		questionGroup.setLayoutData(gd_questionGroup);
-		Label lblNewLabel = new Label(questionGroup, SWT.NONE);
+		lblNewLabel = new Label(questionGroup, SWT.NONE);
 		GridData gd_lblNewLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
 		gd_lblNewLabel.widthHint = 302;
 		gd_lblNewLabel.heightHint = 65;
@@ -406,16 +411,17 @@ public class MainScreen {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-				// Attempt at crearing new Question box...
-				if (OKButton.getSelection()==true){
+				// Attempt at creating new Question box...
+					    lblNewLabel.setText("OK Pressed"); //test to see if button working
 						QuestionGUI askQuestion = new QuestionGUI(CompQ);
-						AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+						askQuestion.addQuestion();
+						//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+						scrolledComposite.layout();
 						CompQ.layout();
-						questionGroup.layout();
-				}
+						//questionGroup.layout();
 
-				
-				
+				//notes: scrolled composite doesnt scroll with additional frames
+			    // creates tiny box
 			}
 		});
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -610,7 +616,7 @@ public class MainScreen {
 		TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);
 		tbtmVariables.setText("Variables");
 		
-		VariablesGUI Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
+		VariablesGUI Variables = new VariablesGUI(tabFolder, SWT.NONE/*,KBase*/);
 		tbtmVariables.setControl(Variables);
 		
 		
