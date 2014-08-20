@@ -298,14 +298,11 @@ public class Variable implements Serializable
 		return name;
 	}
 	
-		
+	//converts the variable from numeric to linguistic and vice versa	
 	public Variable convert()
 	{
 		if(this instanceof NumericVariable)
 		{
-			
-					
-			
 			for(int i=0;i<allValues.size();i++)
 			{
 				
@@ -317,8 +314,8 @@ public class Variable implements Serializable
 						ComparisonSetter(i,comparison.EQ);
 				}
 			}
-		
-			return new LinguisticVariable(this.name, this.description, this.beliefs,this.certaintyFactors,this.queryPrompt,this.numOfValueInstances,
+			return new LinguisticVariable(this.name, this.description, this.beliefs,
+					this.certaintyFactors,this.queryPrompt,this.numOfValueInstances,
 					this.askUser,this.userDerived,this.possibleValues);	
 		}
 		else
@@ -331,9 +328,7 @@ public class Variable implements Serializable
 						ComparisonSetter(i,comparison.EQ);
 				default:
 						ComparisonSetter(i,comparison.NEQ);				
-				}
-				
-				
+				}	
 			}	
 			return	new NumericVariable(this.name, this.description, this.beliefs,
 					this.certaintyFactors,this.queryPrompt,this.numOfValueInstances,
@@ -342,6 +337,7 @@ public class Variable implements Serializable
 	
 	}
 	
+	//used to shorten the calls in convert to get and set the comparison value
 	public void ComparisonSetter(int i, Comparison compare)
 	{
 		allValues.get(i).conditionalPointer.setComparison(compare);
@@ -353,6 +349,3 @@ public class Variable implements Serializable
 	}
 	
 }
-	
-	
-

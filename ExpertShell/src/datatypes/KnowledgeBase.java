@@ -222,5 +222,33 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		return OutputString.toString();
 	}
 	
+	public Boolean isVariable(Variable v)
+	{
+		int inList = -1;
+		for(int i=0; i<VariableList.size();i++)
+		{
+			//if(variable typed into rule editor box exists in list)
+			inList = i;
+		}
+		if(inList != -1)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	public void addVariable(Variable v)
+	{
+		VariableList.add(v);
+	}
+	
+	public void removeVariable(Variable v)
+	{
+		VariableList.remove(v);
+	}
+
 	
 }

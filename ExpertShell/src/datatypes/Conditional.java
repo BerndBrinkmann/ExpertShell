@@ -150,4 +150,5 @@ public class Conditional extends getSetKBSettings {
 			return false;
 		return true;
 	}
+	
 }
