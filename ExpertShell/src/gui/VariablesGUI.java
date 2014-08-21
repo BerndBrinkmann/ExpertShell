@@ -26,11 +26,11 @@ import datatypes.*;
 
 public class VariablesGUI extends Composite {
 	
-	KnowledgeBase knowledgeBase;
+	
 	
 	private Text descriptionTxt;
 	private Text txtVariableName;
-	List variableList;
+	private List variableList;
 	
 	/**
 	 * Create the composite.
@@ -40,8 +40,10 @@ public class VariablesGUI extends Composite {
 	
 
 	
+	
 	public VariablesGUI(Composite parent, int style,final KnowledgeBase KBase) {
 		
+		super(parent, style);
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		setLayout(new GridLayout(2, false));
 		
@@ -100,10 +102,10 @@ public class VariablesGUI extends Composite {
 				else
 				{
 				
-					Name = txtVariableName.getText();
+				/*	Name = txtVariableName.getText();
 				  variableList.add(Name);
 				 
-				  
+				  */
 				  
 				}
 			}
