@@ -110,16 +110,30 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		return VariableList;
 	}
 	
-	public void addVariableToArray( Variable Var)
+	public int addVariableToArray( Variable Var)
 	{
 		if(!VariableList.contains(Var))
+		{
 			VariableList.add(Var);
+			return 1;
+		}	
+		else
+		{
+			return -1;
+		}
 	}
 	
-	public void DeleteVariableFromArray( Variable Var)
+	public int DeleteVariableFromArray( Variable Var)
 	{
-		if(!VariableList.contains(Var))
+		if(VariableList.contains(Var))
+		{
 			VariableList.remove(Var);
+			return 1;
+		}	
+		else
+		{
+			return -1;
+		}
 	}
 	
 	public Variable[] getConsequentVariablesArray()

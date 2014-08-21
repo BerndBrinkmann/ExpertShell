@@ -31,6 +31,7 @@ public class VariablesGUI extends Composite {
 	private Text descriptionTxt;
 	private Text txtVariableName;
 	private List variableList;
+	private Variable variable;
 	
 	/**
 	 * Create the composite.
@@ -101,12 +102,16 @@ public class VariablesGUI extends Composite {
 				}
 				else
 				{
-				
-				/*	Name = txtVariableName.getText();
-				  variableList.add(Name);
-				 
-				  */
-				  
+					if (variableList.indexOf(txtVariableName.getText(), 0) != -1) 
+					{
+						JOptionPane.showMessageDialog(null, "Variable already exists Variable List");
+					}
+					variable = new Variable();
+					variable.setName(txtVariableName.getText());
+					if (KBase.addVariableToArray(variable)==-1)
+					{
+						JOptionPane.showMessageDialog(null, "Variable already exists in Knowledgebase");
+					}
 				}
 			}
 		});
