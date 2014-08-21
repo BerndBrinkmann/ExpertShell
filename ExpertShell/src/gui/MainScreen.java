@@ -550,8 +550,9 @@ public class MainScreen {
 					QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
 					askCFQuestion.addQuestion();
 					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 					CompQ.layout();
-					scrolledComposite.layout();
+					//scrolledComposite.layout();
 					button.setSelection(false);
 					btnBayesianReasoning.setSelection(false);
 				}else
