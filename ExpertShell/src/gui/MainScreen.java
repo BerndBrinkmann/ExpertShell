@@ -34,6 +34,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import datatypes.*;
+import org.eclipse.swt.events.TraverseListener;
+import org.eclipse.swt.events.TraverseEvent;
 
 
 //note - to reference a widget it must be 'exposed' by right-clicking on it in windowbuilder and selecting 'expose component' --Arie
@@ -52,6 +54,7 @@ public class MainScreen {
 	private Button btnDefault;
 	private Button btnForwardChaining;
 	private Button button;
+	private Button btnRun;
 	private Combo combo;
 	private Combo combo_1;
 	private Scale scale;
@@ -188,7 +191,7 @@ public class MainScreen {
 		gd_text.widthHint = 307;
 		text.setLayoutData(gd_text);
 		
-		Button btnRun = new Button(grpKnowledgeBaseSelected, SWT.NONE);
+		btnRun = new Button(grpKnowledgeBaseSelected, SWT.NONE);
 
 		
 				
@@ -261,7 +264,11 @@ public class MainScreen {
 		btnBayesianReasoning.setBounds(10, 40, 145, 16);
 		
 		
-		scrolledComposite = new ScrolledComposite(composite, SWT.V_SCROLL);
+		scrolledComposite = new ScrolledComposite(composite, SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite.addTraverseListener(new TraverseListener() {
+			public void keyTraversed(TraverseEvent e) {
+			}
+		});
 		scrolledComposite.setAlwaysShowScrollBars(true);
 		GridData gd_scrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_scrolledComposite.heightHint = 381;
@@ -538,6 +545,7 @@ public class MainScreen {
 				e.getSource();
 				//KnowledgeBase.validate();
 			    btnCertainityFactor.getSelection();
+			    btnRun.getSelection();
 				if (btnCertainityFactor.getSelection()==true){
 					QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
 					askCFQuestion.addQuestion();
@@ -546,14 +554,15 @@ public class MainScreen {
 					scrolledComposite.layout();
 					button.setSelection(false);
 					btnBayesianReasoning.setSelection(false);
-				}else{
+				}else
+				{
 					QuestionGUI askQuestion = new QuestionGUI(CompQ);
 					askQuestion.addQuestion();
 					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 					CompQ.layout();
-					CompQ.redraw();
-					scrolledComposite.layout();
 					btnCertainityFactor.setSelection(false);
+					;
 					//questionGroup.layout();
 				}
 			}
