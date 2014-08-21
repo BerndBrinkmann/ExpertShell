@@ -569,7 +569,7 @@ public class MainScreen {
 			}
 		});	
 		
-		//blah
+		
 		
 		MenuItem mntmSave = new MenuItem(menu_1, SWT.NONE);
 		mntmSave.addSelectionListener(new SelectionAdapter() {
