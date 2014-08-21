@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 
@@ -25,8 +27,8 @@ import datatypes.*;
 public class VariablesGUI extends Composite {
 	private Text descriptionTxt;
 	private Text txtVariableName;
-
 	private String Name;
+	
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -34,10 +36,10 @@ public class VariablesGUI extends Composite {
 	 */
 	
 	// Get KnowledgeBase
+	 
 	
 	
-	
-	public VariablesGUI(Composite parent, int style,KnowledgeBase KBase) {
+	public VariablesGUI(Composite parent, int style,final KnowledgeBase KBase) {
 		
 		super(parent, SWT.NONE);
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
@@ -106,9 +108,12 @@ public class VariablesGUI extends Composite {
 				}
 				else
 				{
+				
 					Name = txtVariableName.getText();
 				  variableList.add(Name);
-				  KBase.
+				 
+				  
+				  
 				}
 			}
 		});
