@@ -106,9 +106,18 @@ public class Conditional extends getSetKBSettings {
 
 	public void setComparison(Comparison comparison)
 	{
-		this.comparison = comparison;
-		if(!isNumeric)
-			setIsNumeric(true);
+		if(this.variable instanceof NumericVariable)
+		{
+			this.comparison = comparison;
+		}
+		else if(this.variable instanceof LinguisticVariable)
+		{
+			this.comparison = comparison;	
+		}
+		else
+		{
+			
+		}
 	}
 	
 	
@@ -150,4 +159,5 @@ public class Conditional extends getSetKBSettings {
 			return false;
 		return true;
 	}
+	
 }
