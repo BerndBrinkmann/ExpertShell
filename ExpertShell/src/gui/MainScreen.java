@@ -192,7 +192,7 @@ public class MainScreen {
 
 		
 				
-		//moved recreate to run button		
+			
 		btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnRun.setText("Run");
 		
