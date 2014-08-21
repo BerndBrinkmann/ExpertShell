@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.layout.FillLayout;
-
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import datatypes.*;
@@ -65,6 +64,8 @@ public class MainScreen {
     private Group questionGroup;
     private Label lblNewLabel;
     private ScrolledComposite scrolledComposite;
+    private Menu menu_4;
+    private MenuItem newKB;
 
 	public KnowledgeBase getKowledgeBase(){
 		return KBase ;
@@ -192,6 +193,14 @@ public class MainScreen {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				//KnowledgeBase.validate();
+				
+				
+				
+				
+				
+				
+				
 			}
 		});
 		btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -279,6 +288,7 @@ public class MainScreen {
 			@Override
 			public void controlResized(ControlEvent e) {
 				e.getSource();
+				//CompQ.update();
 			}
 		});
 		CompQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -468,7 +478,7 @@ public class MainScreen {
 		scrolledComposite_1.setExpandHorizontal(true);
 		scrolledComposite_1.setExpandVertical(true);
 		
-		Label lblWhyhow = new Label(scrolledComposite_1, SWT.NONE);
+		Label lblWhyhow = new Label(scrolledComposite_1, SWT.WRAP);
 		lblWhyhow.setText("Why/How");
 		scrolledComposite_1.setContent(lblWhyhow);
 		scrolledComposite_1.setMinSize(lblWhyhow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -477,7 +487,7 @@ public class MainScreen {
 		MenuItem mntmOpenKnowledgeBase = new MenuItem(menu_1, SWT.CASCADE);
 		mntmOpenKnowledgeBase.setText("Open Knowledge Base");
 		
-		Menu menu_4 = new Menu(mntmOpenKnowledgeBase);
+		menu_4 = new Menu(mntmOpenKnowledgeBase);
 		mntmOpenKnowledgeBase.setMenu(menu_4);
 		
 		MenuItem mntmBoat = new MenuItem(menu_4, SWT.NONE);
@@ -555,8 +565,28 @@ public class MainScreen {
 		
 		
 		MenuItem mntmSave = new MenuItem(menu_1, SWT.NONE);
+		mntmSave.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+			//Creating menu items dynamically for new knowledge base
+			// needs save all rules and settings etc. - look for FileManager
+				newKB = new MenuItem(menu_4, SWT.NONE);
+				//newKB.addSelectionListener(this);
+				newKB.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						e.getSource();
+			}
+		});
+				newKB.setText("newKB"+ KBase.getName());
+				
+			}
+		});
 		mntmSave.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/Save-icon.png"));
 		mntmSave.setText("Save");
+		
+		
 		
 		MenuItem mntmExit = new MenuItem(menu_1, SWT.NONE);
 		mntmExit.addSelectionListener(new SelectionAdapter() {
