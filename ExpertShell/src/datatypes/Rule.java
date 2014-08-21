@@ -321,7 +321,7 @@ public class Rule extends getSetKBSettings implements Serializable
 			double min = Double.MAX_VALUE;
 			for(int i = 0; i < getNumberOfAntecedents(); i++)
 			{
-				if(getAntecedent(i).getIsNumeric())
+				if(getAntecedent(i).variable instanceof NumericVariable)
 				{
 					Double numMin = 1.0;
 					// if an expression evaluates to true then it's local cf is 1, which is then compared with all other ants in the rule
@@ -352,7 +352,7 @@ public class Rule extends getSetKBSettings implements Serializable
 			double max = 0;
 			for(int i = 0; i < getNumberOfAntecedents(); i++)
 			{
-				if(getAntecedent(i).getIsNumeric())
+				if(getAntecedent(i).variable instanceof NumericVariable)
 				{
 					Double numMax = 0.0;
 					if(getAntecedent(i).evaluate())
