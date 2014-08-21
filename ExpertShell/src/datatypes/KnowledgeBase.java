@@ -113,11 +113,17 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	
 	public Variable getVariable(String VarString)
 	{
-		if(VariableList.contains(VarString))
+		int x =0;
+		
+		for (int i =0 ; i < VariableList.size() ; i +=1)
 		{
-			return VariableList.get((VariableList.indexOf(VarString)));
+			
+			if(VariableList.get(i).name.equals(VarString))
+			{
+				x = i;
+			}
 		}
-		else return VarTemp;
+		return VariableList.get(x);
 	}
 	
 	public int addVariableToArray( Variable Var)
