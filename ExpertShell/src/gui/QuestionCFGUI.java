@@ -1,6 +1,7 @@
 package gui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -14,6 +15,7 @@ public class QuestionCFGUI {
 	
 Group questionGroup;
 	Composite CompQ;
+	ScrolledComposite scrolledComposite;
 	
 	Button WhyButton;
 	Button HowButton;
@@ -29,7 +31,7 @@ Group questionGroup;
 		
 		questionGroup = UserFactoryGUI.createQuestionGroup(CompQ);
 		questionGroup.getParent().layout();
-		
+		CompQ.update();
 	}
 	
 	public void addQuestion(){
