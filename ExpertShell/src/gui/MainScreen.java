@@ -194,10 +194,24 @@ public class MainScreen {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				//KnowledgeBase.validate();
-				
-				
-				
-				
+			    btnCertainityFactor.getSelection();
+				if (btnCertainityFactor.getSelection()==true){
+					QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
+					askCFQuestion.addQuestion();
+					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+					CompQ.layout();
+					scrolledComposite.layout();
+					button.setSelection(false);
+					btnBayesianReasoning.setSelection(false);
+				}else{
+					QuestionGUI askQuestion = new QuestionGUI(CompQ);
+					askQuestion.addQuestion();
+					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+					CompQ.layout();
+					CompQ.redraw();
+					scrolledComposite.layout();
+					btnCertainityFactor.setSelection(false);
+					//questionGroup.layout();	
 				
 				
 				
@@ -205,7 +219,25 @@ public class MainScreen {
 		});
 		btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnRun.setText("Run");
-		
+	    
+		btnCertainityFactor.getSelection();
+		if (btnCertainityFactor.getSelection()==true){
+			QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
+			askCFQuestion.addQuestion();
+			//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+			CompQ.layout();
+			scrolledComposite.layout();
+			button.setSelection(false);
+			btnBayesianReasoning.setSelection(false);
+		}else{
+			QuestionGUI askQuestion = new QuestionGUI(CompQ);
+			askQuestion.addQuestion();
+			//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+			CompQ.layout();
+			CompQ.redraw();
+			scrolledComposite.layout();
+			btnCertainityFactor.setSelection(false);
+			//questionGroup.layout();	
 		
 		
 		
@@ -430,7 +462,7 @@ public class MainScreen {
 				e.getSource();
 				// Attempt at creating new Question box...
 					    lblNewLabel.setText("OK Pressed"); //test to see if button working
-					    btnCertainityFactor.getSelection();
+				/*	    btnCertainityFactor.getSelection();
 						if (btnCertainityFactor.getSelection()==true){
 							QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
 							askCFQuestion.addQuestion();
@@ -447,7 +479,7 @@ public class MainScreen {
 							CompQ.redraw();
 							scrolledComposite.layout();
 							btnCertainityFactor.setSelection(false);
-							//questionGroup.layout();	
+							//questionGroup.layout();	*/
 				}	
 					}
 				});
