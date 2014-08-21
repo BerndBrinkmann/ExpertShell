@@ -4,9 +4,6 @@ import java.io.Serializable;
 
 public class Antecedent extends Conditional implements Serializable
 {
-	//test comment by arie
-	//
-	
 	protected Variable variable;
 	protected Value value;
 	protected double likelihoodOfNecessity = 1;

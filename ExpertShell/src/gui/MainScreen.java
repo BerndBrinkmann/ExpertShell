@@ -194,6 +194,7 @@ public class MainScreen {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				//KnowledgeBase.validate();
+			    lblNewLabel.setText("OK Pressed"); //test to see if button working
 			    btnCertainityFactor.getSelection();
 				if (btnCertainityFactor.getSelection()==true){
 					QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
@@ -211,35 +212,14 @@ public class MainScreen {
 					CompQ.redraw();
 					scrolledComposite.layout();
 					btnCertainityFactor.setSelection(false);
-					//questionGroup.layout();	
-				
-				
-				
+					//questionGroup.layout();
+				}
 			}
-		});
+		});	
+				
+				
 		btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnRun.setText("Run");
-	    
-		btnCertainityFactor.getSelection();
-		if (btnCertainityFactor.getSelection()==true){
-			QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
-			askCFQuestion.addQuestion();
-			//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-			CompQ.layout();
-			scrolledComposite.layout();
-			button.setSelection(false);
-			btnBayesianReasoning.setSelection(false);
-		}else{
-			QuestionGUI askQuestion = new QuestionGUI(CompQ);
-			askQuestion.addQuestion();
-			//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-			CompQ.layout();
-			CompQ.redraw();
-			scrolledComposite.layout();
-			btnCertainityFactor.setSelection(false);
-			//questionGroup.layout();	
-		
-		
 		
 		Group grpSelectRunMethod = new Group(composite, SWT.NONE);
 		GridData gd_grpSelectRunMethod = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -461,26 +441,7 @@ public class MainScreen {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				// Attempt at creating new Question box...
-					    lblNewLabel.setText("OK Pressed"); //test to see if button working
-				/*	    btnCertainityFactor.getSelection();
-						if (btnCertainityFactor.getSelection()==true){
-							QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
-							askCFQuestion.addQuestion();
-							//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-							CompQ.layout();
-							scrolledComposite.layout();
-							button.setSelection(false);
-							btnBayesianReasoning.setSelection(false);
-						}else{
-							QuestionGUI askQuestion = new QuestionGUI(CompQ);
-							askQuestion.addQuestion();
-							//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-							CompQ.layout();
-							CompQ.redraw();
-							scrolledComposite.layout();
-							btnCertainityFactor.setSelection(false);
-							//questionGroup.layout();	*/
-				}	
+	
 					}
 				});
 				
@@ -724,6 +685,6 @@ public class MainScreen {
 	public Combo getCombo() {
 		return combo;
 	}
-
+	
 }
 
