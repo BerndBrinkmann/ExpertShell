@@ -32,7 +32,8 @@ public class QuestionGUI {
 	public QuestionGUI(Composite CompQ){
 		
 		questionGroup = UserFactoryGUI.createQuestionGroup(CompQ);
-		questionGroup.getParent().layout();
+		questionGroup.getParent().getParent().layout(true);
+		CompQ.update();
 		
 	}
 	

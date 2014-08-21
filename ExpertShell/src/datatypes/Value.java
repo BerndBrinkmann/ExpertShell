@@ -18,6 +18,12 @@ public class Value implements Serializable
 		
 	}
 	
+	public Value(String n)
+	{
+		name = n;
+		
+	}
+	
 	public String getName()
 	{
 		return name;
