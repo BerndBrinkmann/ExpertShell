@@ -12,9 +12,10 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	protected KBSettings.InferenceType inferenceType;
 	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
 	protected KBSettings.ConflictResolution conflictResolution = KBSettings.ConflictResolution.NONE;
+	protected Variable VarTemp;
 	
 	
-	
+
 	public KnowledgeBase(String name)
 	{
 		Name = name;
@@ -108,6 +109,15 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 			}
 		}
 		return VariableList;
+	}
+	
+	public Variable getVariable(String VarString)
+	{
+		if(VariableList.contains(VarString))
+		{
+			return VariableList.get((VariableList.indexOf(VarString)));
+		}
+		else return VarTemp;
 	}
 	
 	public int addVariableToArray( Variable Var)

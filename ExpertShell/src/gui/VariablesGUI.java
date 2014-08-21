@@ -22,6 +22,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import datatypes.*;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 
 
 public class VariablesGUI extends Composite {
@@ -31,7 +33,7 @@ public class VariablesGUI extends Composite {
 	private Text descriptionTxt;
 	private Text txtVariableName;
 	private List variableList;
-	private Variable variable;
+	private Variable currentvariable;
 	
 	/**
 	 * Create the composite.
@@ -49,6 +51,15 @@ public class VariablesGUI extends Composite {
 		setLayout(new GridLayout(2, false));
 		
 		variableList = new List(this, SWT.BORDER);
+		variableList.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				
+				currentvariable =KBase.getVariable(variableList.getSelection()[0]);
+			}
+		});
+
 		GridData gd_variableList = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
 		gd_variableList.widthHint = 141;
 		variableList.setLayoutData(gd_variableList);
@@ -105,12 +116,20 @@ public class VariablesGUI extends Composite {
 					if (variableList.indexOf(txtVariableName.getText(), 0) != -1) 
 					{
 						JOptionPane.showMessageDialog(null, "Variable already exists Variable List");
+						
 					}
-					variable = new Variable();
-					variable.setName(txtVariableName.getText());
-					if (KBase.addVariableToArray(variable)==-1)
+					else
 					{
-						JOptionPane.showMessageDialog(null, "Variable already exists in Knowledgebase");
+						currentvariable = new Variable();
+						currentvariable.setName(txtVariableName.getText());
+						if (KBase.addVariableToArray(currentvariable)==-1)
+						{
+							JOptionPane.showMessageDialog(null, "Variable already exists in Knowledgebase");
+						}
+						else
+						{
+							variableList.add(currentvariable.getName());
+						}
 					}
 				}
 			}
