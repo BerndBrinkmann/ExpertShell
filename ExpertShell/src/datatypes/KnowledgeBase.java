@@ -126,19 +126,6 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		return VariableList.get(x);
 	}
 	
-	public int addVariableToArray( Variable Var)
-	{
-		if(!VariableList.contains(Var))
-		{
-			VariableList.add(Var);
-			return 1;
-		}	
-		else
-		{
-			return -1;
-		}
-	}
-	
 	public int DeleteVariableFromArray( Variable Var)
 	{
 		if(VariableList.contains(Var))
@@ -279,7 +266,25 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	{
 		VariableList.remove(v);
 	}
-    public LinguisticVariable getTarget(){
+    
+	public void saveVariable(Variable Var)
+	{
+		int x=0;
+		for (int i = 0;i< VariableList.size();i++)
+		{
+			if (VariableList.get(i).getName()==Var.getName())
+			{
+				VariableList.set(i,Var);
+				x=1;
+			}
+		}
+		if (x==0)
+		{
+			VariableList.add(Var);
+		}	
+	}
+		
+	public LinguisticVariable getTarget(){
     	
     	return target;
     }

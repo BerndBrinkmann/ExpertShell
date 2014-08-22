@@ -11,10 +11,10 @@ import datatypes.Variable;
 
 public class Variable implements Serializable
 {
-	protected String name;
+	protected String name="";
 	protected String description = "";
-	protected ArrayList<Value> possibleValues;
-	protected ArrayList<Value> allValues;
+	protected ArrayList<Value> possibleValues = new ArrayList<Value>();
+	protected ArrayList<Value> allValues = new ArrayList<Value>();
 	protected ArrayList<Integer> numOfValueInstances;
 	protected ArrayList<String> numericOperators;
 	protected Value currentValue;
@@ -24,8 +24,8 @@ public class Variable implements Serializable
 	protected Boolean isNumeric = false;
 	protected Double numVal = null;
 	
-	protected ArrayList<Double> certaintyFactors;  //by our convention certainty factors are stored as 0-1
-	protected ArrayList<Double> beliefs;
+	protected ArrayList<Double> certaintyFactors = new ArrayList<Double>();;  //by our convention certainty factors are stored as 0-1
+	protected ArrayList<Double> beliefs = new ArrayList<Double>();
 		
 	
 	protected Boolean askUser = false;
@@ -57,10 +57,10 @@ public class Variable implements Serializable
 	public Variable(String n)
 	{
 		name = n;
-		possibleValues = new ArrayList<Value>();
-		certaintyFactors = new ArrayList<Double>();
-		beliefs = new ArrayList<Double>();
-		allValues  = new ArrayList<Value>();
+		//possibleValues = new ArrayList<Value>();
+//		certaintyFactors = new ArrayList<Double>();
+//		beliefs = new ArrayList<Double>();
+//		allValues  = new ArrayList<Value>();
 	}
 	
 	
@@ -112,10 +112,10 @@ public class Variable implements Serializable
 			possibleValues.add(val);
 		}
 		//certainty factors should be initialised to zero
-		certaintyFactors.add(new Double(0));
+	//	certaintyFactors.add(new Double(0));
 		allValues.add(val);
 		//beliefs can be initilised to 0.5
-		beliefs.add(new Double(0.5));
+//		beliefs.add(new Double(0.5));
 
 	}
 	
