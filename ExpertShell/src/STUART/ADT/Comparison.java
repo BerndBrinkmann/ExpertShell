@@ -1,4 +1,4 @@
-package datatypes;
+package STUART.ADT;
 
 public enum Comparison
 {
@@ -7,10 +7,7 @@ public enum Comparison
 	GT(">"),
 	LT("<"),
 	LTEQ("<="),
-	GTEQ(">="),
-	IS("is"),
-	ISNT("is not");
-	
+	GTEQ(">=");
 	
 	String name;
 	

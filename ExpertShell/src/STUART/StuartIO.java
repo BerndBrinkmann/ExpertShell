@@ -1,5 +1,4 @@
-package datatypes;
-
+package STUART;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -23,9 +22,13 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import removedClasses.UncertaintyMethod;
+import STUART.ADT.KnowledgeBase;
+import STUART.ADT.Rule;
+import STUART.ADT.UncertaintyMethod;
+import STUART.ADT.Value;
+import STUART.ADT.Variable;
 
-public class ImportExport
+public class StuartIO
 {
 	static Component frame;
 	static Rule thisRule; // a hack to get this into the description function
@@ -105,7 +108,7 @@ public class ImportExport
 		thisRule = rule;
 		if(frame != null)
 		{
-			if(var instanceof NumericVariable)
+			if(var.getIsNumeric())
 			{
 				JPanel panel = new JPanel();
 				
@@ -229,18 +232,18 @@ public class ImportExport
 		String summary;
 		if(result != null)
 		{
-			if(kb.getUncertaintyMethod() == KBSettings.UncertaintyManagement.CF)
+			if(kb.getUncertaintyMethod() == UncertaintyMethod.CERTAINTY_FACTOR)
 			{
 				summary = result.getCertaintyValuesString();
 			}
-			else if(kb.getUncertaintyMethod() == KBSettings.UncertaintyManagement.BAYESIAN)
+			else if(kb.getUncertaintyMethod() == UncertaintyMethod.BAYESIAN)
 			{
 				summary = result.getBeliefValuesString();
 
 			}
 			else
 			{
-				if(!(result instanceof NumericVariable))
+				if(!result.getIsNumeric())
 				{
 					if(result.getCurrentValue() != null)
 					{
@@ -296,9 +299,9 @@ public class ImportExport
 		{
 		
 			System.out.println("\nThe result was reached by firing these rules in this order\n");
-			for(Rule rule : howList)
+			for(Rule r : howList)
 			{
-				System.out.println(rule.toString());
+				System.out.println(r.toString());
 			}
 		}
 	}

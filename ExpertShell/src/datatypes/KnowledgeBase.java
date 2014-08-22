@@ -8,10 +8,14 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	protected String Name;
 	protected String Description;
 	protected ArrayList<Rule> RuleList;
+	protected ArrayList<Variable> VariableList = new ArrayList<Variable>();
 	protected KBSettings.InferenceType inferenceType;
 	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
 	protected KBSettings.ConflictResolution conflictResolution = KBSettings.ConflictResolution.NONE;
+	protected Variable VarTemp;
+	protected LinguisticVariable target;
 	
+
 	public KnowledgeBase(String name)
 	{
 		Name = name;
@@ -86,25 +90,66 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		}
 	}
 	
-	public Variable[] getVariablesArray()
+	public ArrayList<Variable> getVariablesArray()
 	{
 		//search through all the rules and find all the variables
-		ArrayList<Variable> variables = new ArrayList<Variable>();
+	//	ArrayList<Variable> variables = new ArrayList<Variable>();
 		
 		for(Rule rule : getRuleArray())
 		{
 			for(Antecedent a : rule.getAntecedentArray())
 			{
-				if(!variables.contains(a.getVariable()))
-					variables.add(a.getVariable());
+				if(!VariableList.contains(a.getVariable()))
+					VariableList.add(a.getVariable());
 			}
 			for(Consequent c : rule.getConsequentArray())
 			{
-				if(!variables.contains(c.getVariable()))
-					variables.add(c.getVariable());
+				if(!VariableList.contains(c.getVariable()))
+					VariableList.add(c.getVariable());
 			}
 		}
-		return variables.toArray(new Variable[variables.size()]);
+		return VariableList;
+	}
+	
+	public Variable getVariable(String VarString)
+	{
+		int x =0;
+		
+		for (int i =0 ; i < VariableList.size() ; i +=1)
+		{
+			
+			if(VariableList.get(i).name.equals(VarString))
+			{
+				x = i;
+			}
+		}
+		return VariableList.get(x);
+	}
+	
+	public int addVariableToArray( Variable Var)
+	{
+		if(!VariableList.contains(Var))
+		{
+			VariableList.add(Var);
+			return 1;
+		}	
+		else
+		{
+			return -1;
+		}
+	}
+	
+	public int DeleteVariableFromArray( Variable Var)
+	{
+		if(VariableList.contains(Var))
+		{
+			VariableList.remove(Var);
+			return 1;
+		}	
+		else
+		{
+			return -1;
+		}
 	}
 	
 	public Variable[] getConsequentVariablesArray()
@@ -207,5 +252,40 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		return OutputString.toString();
 	}
 	
+	public Boolean isVariable(Variable v)
+	{
+		int inList = -1;
+		for(int i=0; i<VariableList.size();i++)
+		{
+			//if(variable typed into rule editor box exists in list)
+			inList = i;
+		}
+		if(inList != -1)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 	
+	public void addVariable(Variable v)
+	{
+		VariableList.add(v);
+	}
+	
+	public void removeVariable(Variable v)
+	{
+		VariableList.remove(v);
+	}
+    public LinguisticVariable getTarget(){
+    	
+    	return target;
+    }
+	
+	public void setTarget(LinguisticVariable tgt){
+		
+		target=tgt;
+	}
 }

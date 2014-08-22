@@ -1,12 +1,13 @@
-package datatypes;
-//test
+package STUART.ADT;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import removedClasses.UncertaintyMethod;
+import STUART.StuartIO;
+import STUART.StuartInferenceEngine;
 
-public class Rule extends getSetKBSettings implements Serializable
+public class Rule implements Serializable
 {
 	protected ArrayList<Antecedent> antecedents;
 	protected ArrayList<Consequent> consequents;
@@ -15,21 +16,25 @@ public class Rule extends getSetKBSettings implements Serializable
 	protected int priority = 1;
 	protected int ruleNum;
 	
-	KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
+	UncertaintyMethod uncertaintyMethod = UncertaintyMethod.NONE;
 	
-	@Override
-	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)
+	public UncertaintyMethod getUncertaintyMethod()
 	{
-		this.uncertaintyType = uncertainty;
+		return uncertaintyMethod;
+	}
+
+	public void setUncertaintyMethod(UncertaintyMethod uncertaintyMethod)
+	{
+		this.uncertaintyMethod = uncertaintyMethod;
 		
 		//set all the antecedents and consequents also
 		for(Antecedent a : antecedents)
 		{
-			a.setUncertaintyMethod(uncertainty);
+			a.setUncertaintyMethod(uncertaintyMethod);
 		}
 		for(Consequent c : consequents)
 		{
-			c.setUncertaintyMethod(uncertainty);
+			c.setUncertaintyMethod(uncertaintyMethod);
 		}
 	}
 
@@ -42,13 +47,13 @@ public class Rule extends getSetKBSettings implements Serializable
 	public void addAntecedent(Antecedent ant)
 	{
 		antecedents.add(ant);
-		ant.setUncertaintyMethod(uncertaintyType);
+		ant.setUncertaintyMethod(uncertaintyMethod);
 	}
 	
 	public void addConsequent(Consequent cons)
 	{
 		consequents.add(cons);
-		cons.setUncertaintyMethod(uncertaintyType);
+		cons.setUncertaintyMethod(uncertaintyMethod);
 	}
 	
 	public void setConnective(Connectives con)
@@ -76,6 +81,8 @@ public class Rule extends getSetKBSettings implements Serializable
 		return consequents.get(i);
 	}
 	
+	
+	// fuck it. replace with removeAntecedent and removeConsequent boooooring
 	public void removeConditional(Object conditional)
 	{	
 		// would be better if we implemented a Conditional class and had Antecedent and Consequent extend that
@@ -88,6 +95,7 @@ public class Rule extends getSetKBSettings implements Serializable
 				consequents.remove(conditional);
 		}
 	}
+	
 	
 	public Antecedent[] getAntecedentArray()
 	{
@@ -187,12 +195,12 @@ public class Rule extends getSetKBSettings implements Serializable
 					 if(var.isUserInput())
 					 {
 						//get the input from the user
-						var = ImportExport.userSetVaraible(var,this);
+						var = StuartIO.userSetVaraible(var,this);
 						
 						//get the certainty if required
 						if(umethod == UncertaintyMethod.CERTAINTY_FACTOR)
 						{
-							var.setCertaintyFactor(var.getCurrentValue(), ImportExport.getCertainty("Input a certainty for "+var.toString()));
+							var.setCertaintyFactor(var.getCurrentValue(), StuartIO.getCertainty("Input a certainty for "+var.toString()));
 						}
 					 }
 					 else
@@ -226,12 +234,12 @@ public class Rule extends getSetKBSettings implements Serializable
 					 if(var.isUserInput())
 					 {
 						//get the input from the user
-						var = ImportExport.userSetVaraible(var,this);
+						var = StuartIO.userSetVaraible(var,this);
 						
 						//get the certainty if required
 						if(umethod == UncertaintyMethod.CERTAINTY_FACTOR)
 						{
-							var.setCertaintyFactor(var.getCurrentValue(), ImportExport.getCertainty("Input a certainty for "+var.toString()));
+							var.setCertaintyFactor(var.getCurrentValue(), StuartIO.getCertainty("Input a certainty for "+var.toString()));
 						}
 					 }
 					 else
@@ -254,7 +262,7 @@ public class Rule extends getSetKBSettings implements Serializable
 	}
 	
 	//returns the result of evaluating the required antecedents in a rule and also fires if required
-	public Boolean evaluateAll(UncertaintyMethod umethod)
+		public Boolean evaluateAll(UncertaintyMethod umethod)
 		{
 			// there must be at least a single antecedent to evaluate
 			Boolean result = false;
@@ -278,12 +286,12 @@ public class Rule extends getSetKBSettings implements Serializable
 						 if(var.isUserInput())
 						 {
 							//get the input from the user
-							var = ImportExport.userSetVaraible(var,this);
+							var = StuartIO.userSetVaraible(var,this);
 							
 							//get the certainty if required				TODO added this condition
-							if(umethod == UncertaintyMethod.CERTAINTY_FACTOR && !(var instanceof NumericVariable))
+							if(umethod == UncertaintyMethod.CERTAINTY_FACTOR && !var.getIsNumeric())
 							{
-								var.setCertaintyFactor(var.getCurrentValue(), ImportExport.getCertainty("Input a certainty for "+var.toString()));
+								var.setCertaintyFactor(var.getCurrentValue(), StuartIO.getCertainty("Input a certainty for "+var.toString()));
 							}
 						 }
 
@@ -309,6 +317,7 @@ public class Rule extends getSetKBSettings implements Serializable
 		
 		}
 
+	
 	public void fireCertainty()
 	{
 		Double antecedentCertaintyProd = 1.0;
@@ -321,7 +330,7 @@ public class Rule extends getSetKBSettings implements Serializable
 			double min = Double.MAX_VALUE;
 			for(int i = 0; i < getNumberOfAntecedents(); i++)
 			{
-				if(getAntecedent(i).variable instanceof NumericVariable)
+				if(getAntecedent(i).getIsNumeric())
 				{
 					Double numMin = 1.0;
 					// if an expression evaluates to true then it's local cf is 1, which is then compared with all other ants in the rule
@@ -352,7 +361,7 @@ public class Rule extends getSetKBSettings implements Serializable
 			double max = 0;
 			for(int i = 0; i < getNumberOfAntecedents(); i++)
 			{
-				if(getAntecedent(i).variable instanceof NumericVariable)
+				if(getAntecedent(i).getIsNumeric())
 				{
 					Double numMax = 0.0;
 					if(getAntecedent(i).evaluate())

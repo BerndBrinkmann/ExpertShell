@@ -1,23 +1,14 @@
-package datatypes;
+package STUART.ADT;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import datatypes.Antecedent;
-import datatypes.Consequent;
-import datatypes.Rule;
-import datatypes.KBSettings;
-import datatypes.Value;
-import datatypes.Variable;
 
 public class Variable implements Serializable
 {
 	protected String name;
 	protected String description = "";
-	protected ArrayList<Value> possibleValues;
-	protected ArrayList<Value> allValues;
-	protected ArrayList<Integer> numOfValueInstances;
-	protected ArrayList<String> numericOperators;
 	protected Value currentValue;
+	protected ArrayList<Value> possibleValues;
 	protected Rule derivedFrom;
 	protected String queryPrompt = "";
 	
@@ -31,13 +22,12 @@ public class Variable implements Serializable
 	protected Boolean askUser = false;
 	protected Boolean userDerived = false;
 	protected Value defaultValue;
-	protected Comparison comparison;
 	
-	public Variable()
+	public Boolean getIsNumeric()
 	{
-		
+		return isNumeric;
 	}
-	
+ 
 	public void setIsNumeric(Boolean isNumeric)
 	{
 		this.isNumeric = isNumeric;
@@ -60,7 +50,6 @@ public class Variable implements Serializable
 		possibleValues = new ArrayList<Value>();
 		certaintyFactors = new ArrayList<Double>();
 		beliefs = new ArrayList<Double>();
-		allValues  = new ArrayList<Value>();
 	}
 	
 	
@@ -71,7 +60,7 @@ public class Variable implements Serializable
 	
 	public String getValue()
 	{
-		if(this instanceof NumericVariable)
+		if(getIsNumeric())
 		{
 			return numVal.toString();
 		}
@@ -113,7 +102,7 @@ public class Variable implements Serializable
 		}
 		//certainty factors should be initialised to zero
 		certaintyFactors.add(new Double(0));
-		allValues.add(val);
+		
 		//beliefs can be initilised to 0.5
 		beliefs.add(new Double(0.5));
 
@@ -146,7 +135,7 @@ public class Variable implements Serializable
 	
 	public Boolean hasValue()
 	{
-		if(!(this instanceof NumericVariable))
+		if(!getIsNumeric())
 			return currentValue != null;
 		else
 			return numVal != null;
@@ -190,10 +179,9 @@ public class Variable implements Serializable
 	
 	public Double getBelief(Value val)
 	{
-		return beliefs.get(getValueIndex(val));
+		return getBelief(getValueIndex(val));
 	}
 	
-	//checks user input against list of possible values. (checks for val in list of p.values)
 	public int getValueIndex(Value val)
 	{
 		int index = -1;
@@ -214,7 +202,7 @@ public class Variable implements Serializable
 		return index;
 	}
 	
-	public Value[] getArrayOfPossibleValues()	//should be able to just use get
+	public Value[] getArrayOfPossibleValues()
 	{
 		return possibleValues.toArray(new Value[possibleValues.size()]);
 	}
@@ -222,7 +210,6 @@ public class Variable implements Serializable
 	public void removePossibleValue(Value v)
 	{
 		possibleValues.remove(v);
-		allValues.remove(v);
 	}
 	
 	public int getNumberOfPossibleValues()
@@ -236,7 +223,7 @@ public class Variable implements Serializable
 		sb.append("{");
 		for(int i = 0; i < possibleValues.size(); i++)
 		{
-			sb.append("'"+possibleValues.get(i).getName()+"'["+i+"],");
+			sb.append("'"+possibleValues.get(i).toString()+"'["+i+"],");
 		}
 		
 		sb.append("}");
@@ -250,7 +237,7 @@ public class Variable implements Serializable
 		sb.append("\n");
 		for(int i = 0; i < possibleValues.size(); i++)
 		{
-			sb.append("'"+possibleValues.get(i).getName()+"'("+ String.format("%.2f", getCertaintyFactor(i)*100) +"%), \n");
+			sb.append("'"+possibleValues.get(i).toString()+"'("+ String.format("%.2f", getCertaintyFactor(i)*100) +"%), \n");
 		}
 		
 		
@@ -266,7 +253,7 @@ public class Variable implements Serializable
 		for(int i = 0; i < possibleValues.size(); i++)
 		{
 			
-			sb.append("'"+possibleValues.get(i).getName()+"'("+ String.format("%.2f", getBelief(i)*100)  +"%), \n");
+			sb.append("'"+possibleValues.get(i).toString()+"'("+ String.format("%.2f", getBelief(i)*100)  +"%), \n");
 		}
 		
 		
@@ -297,55 +284,4 @@ public class Variable implements Serializable
 	{
 		return name;
 	}
-	
-	//converts the variable from numeric to linguistic and vice versa	
-	public Variable convert()
-	{
-		if(this instanceof NumericVariable)
-		{
-			for(int i=0;i<allValues.size();i++)
-			{
-				
-				switch(ComparisonGetter(i))
-				{
-				case NEQ:
-						ComparisonSetter(i,comparison.ISNT);
-				default:
-						ComparisonSetter(i,comparison.EQ);
-				}
-			}
-			return new LinguisticVariable(this.name, this.description, this.beliefs,
-					this.certaintyFactors,this.queryPrompt,this.numOfValueInstances,
-					this.askUser,this.userDerived,this.possibleValues);	
-		}
-		else
-		{		
-			for(int i=0;i<allValues.size();i++)
-			{
-				switch(ComparisonGetter(i))
-				{
-				case IS:
-						ComparisonSetter(i,comparison.EQ);
-				default:
-						ComparisonSetter(i,comparison.NEQ);				
-				}	
-			}	
-			return	new NumericVariable(this.name, this.description, this.beliefs,
-					this.certaintyFactors,this.queryPrompt,this.numOfValueInstances,
-					this.askUser,this.userDerived,this.possibleValues);
-		}	
-	
-	}
-	
-	//used to shorten the calls in convert to get and set the comparison value
-	public void ComparisonSetter(int i, Comparison compare)
-	{
-		allValues.get(i).conditionalPointer.setComparison(compare);
-	}
-	
-	public Comparison ComparisonGetter(int i)
-	{
-		return allValues.get(i).conditionalPointer.getComparison();	
-	}
-	
 }

@@ -6,13 +6,63 @@ public class Conditional extends getSetKBSettings {
 	protected Value value;
 	protected Double numVal = null;
 	protected Boolean isNumeric = false;
+	protected Boolean antecedentFlag = true;
+	protected Comparison comparison;
+
+	public Conditional convert()
+	{
+		if(antecedentFlag)
+		{
+			if(this.variable instanceof NumericVariable)
+			{
+				return new Antecedent(this.variable, Comparison.EQ, this.numVal);
+			}
+			else
+			{
+				return new Antecedent(this.variable, this.value);
+			}	
+		}
+		else
+		{
+			if(this.variable instanceof NumericVariable)
+			{
+				return new Consequent(this.variable, this.numVal);
+			}
+			else
+			{
+				return new Consequent(this.variable, this.value);
+			}
+		}
+	}
 	
 	
 	public Variable getVariable()
 	{
 		return variable;
 	}
-		
+
+	public void setVariable(Variable v)
+	{
+		variable = v;
+		if(variable instanceof NumericVariable)
+		{
+			if(antecedentFlag)
+			{
+				setValue(0.0);
+				setComparison(Comparison.EQ);
+			}
+			else
+			{
+				setValue(0.0);	
+			}
+		}
+		else
+		{
+			setValue(new Value("", this));
+		}
+	}
+	
+	
 	public Value getValue()
 	{
 		return value;
@@ -38,11 +88,6 @@ public class Conditional extends getSetKBSettings {
 	}
 	
 	
-	public Boolean getIsNumeric()
-	{
-		return isNumeric;
-	}
-	
 	public void setIsNumeric(Boolean isNumeric)
 	{
 		this.isNumeric = isNumeric;
@@ -51,8 +96,30 @@ public class Conditional extends getSetKBSettings {
 		if(isNumeric)
 			setValue(0.0);
 		else
-			setValue(new Value(""));
+			setValue(new Value("",this));
 	}
+
+	public Comparison getComparison()
+	{
+		return comparison;
+	}
+
+	public void setComparison(Comparison comparison)
+	{
+		if(this.variable instanceof NumericVariable)
+		{
+			this.comparison = comparison;
+		}
+		else if(this.variable instanceof LinguisticVariable)
+		{
+			this.comparison = comparison;	
+		}
+		else
+		{
+			
+		}
+	}
+	
 	
 	
 	@Override
@@ -92,4 +159,5 @@ public class Conditional extends getSetKBSettings {
 			return false;
 		return true;
 	}
+	
 }
