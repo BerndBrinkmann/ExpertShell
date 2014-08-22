@@ -13,33 +13,51 @@ import org.eclipse.swt.widgets.Label;
 
 public class AntecedentListGUI {
 	
-	protected Composite parent;
+	protected RuleEditorGUI parent;
+	protected Composite container;
 	protected Label ifLabel;
 	protected List<Label> fillers = new ArrayList<Label>();
-	protected List<AntecedentGUI> antecedents = new ArrayList<AntecedentGUI>();
+	protected ArrayList<AntecedentGUI> antecedents = new ArrayList<AntecedentGUI>();
 	protected Button addButton;
 	
-	public AntecedentListGUI(Composite p) {
+	public AntecedentListGUI(RuleEditorGUI p) {
 		
+		//make a reference to the ruleEditorGui parent object
 		parent = p;
 		
-		addFiller();
-		ifLabel = RuleGUIFactory.createLabelIf(parent);
-		antecedents.add(new AntecedentGUI(parent,true));
-		addButton = RuleGUIFactory.createButtonAdd(parent);
+		//container is the composite where we're adding controls
+		container = p.ruleGrid;
 		
+		SelectionAdapter s = p.selAdaptor;
+		
+		addFiller();
+		ifLabel = RuleGUIFactory.createLabelIf(container);
+		antecedents.add(new AntecedentGUI(this,true));
+		addButton = RuleGUIFactory.createButtonAdd(container);
 		addFillers(4);
+		
+		addButton.addSelectionListener(s);
 	}
 	
 	public void add() {
-		System.out.println("Add");
-		antecedents.add(new AntecedentGUI(parent, addButton));
+		antecedents.add(new AntecedentGUI(this, addButton));
 		
-		parent.getParent().getParent().layout(true);
+		container.getParent().getParent().layout(true);
+	}
+	
+	public void delete(int index) {
+		//get the element to delete
+		AntecedentGUI toDelete = antecedents.get(index);
+		
+		//remove the GUI elements it has
+		toDelete.destroy();
+		
+		//remove it from the list of antecedents
+		antecedents.remove(index);
 	}
 	
 	private void addFiller() {
-		fillers.add(new Label(parent, SWT.NONE));
+		fillers.add(new Label(container, SWT.NONE));
 	}
 	
 	private void addFillers(int n) {
@@ -49,15 +67,6 @@ public class AntecedentListGUI {
 		}
 	}
 	
-	public void setListeners(SelectionListener s) {
-		// ie 'for every antecedent'
-		
-		addButton.addSelectionListener(s);
-		
-		for(AntecedentGUI a : antecedents) {
-			a.setListeners(s);
-		}
-	}
 	
 	public Button getAddButton()
 	{

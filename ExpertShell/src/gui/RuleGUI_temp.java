@@ -12,6 +12,12 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 
 
 public class RuleGUI_temp extends Composite {
@@ -34,6 +40,22 @@ public class RuleGUI_temp extends Composite {
 		label.setText("IF");
 		
 		Combo combo = new Combo(compRuleGrid, SWT.NONE);
+		combo.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				System.out.println(e.toString());
+			}
+		});
+		combo.addVerifyListener(new VerifyListener() {
+			public void verifyText(VerifyEvent e) {
+				System.out.println(e.toString());
+			}
+		});
+		combo.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				System.out.println(e.toString());
+			}
+		});
 		combo.setItems(new String[] {"traffic_light", "asdf", "qwer"});
 		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		combo.select(0);

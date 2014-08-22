@@ -1,13 +1,14 @@
 package gui;
 
-import org.eclipse.swt.widgets.Control;
+import gui.WidgetTypes.*;
+
 import org.eclipse.swt.widgets.Widget;
 
 public class WidgetInfo {
 	
 	Group group;
 	Source source;
-	int index;
+	int index,i;
 	
 	
 	public WidgetInfo(Widget w, RuleEditorGUI r) {
@@ -17,14 +18,56 @@ public class WidgetInfo {
 		if (w == r.antList.getAddButton()) {
 			group = Group.ANTECEDENT;
 			source = Source.ADD;
+			return;
 		}
+		
+		
+		i = 0;
+		group = Group.ANTECEDENT; //assume in ant list
+		for(AntecedentGUI a : r.antList.antecedents) {
+			if (w == a.delButton) {
+				source = Source.DELETE;
+				index = i;
+				return;
+			}
+			if (w == a.logicComb) {
+				source = Source.COMBINE;
+				index = i;
+				return;
+			}
+			if (w == a.var) {
+				source = Source.VARIABLE;
+				index = i;
+				return;
+			}
+			if (w == a.logicComparitor) {
+				source = Source.COMPARE;
+				index = i;
+				return;
+			}
+			if (w == a.value) {
+				source = Source.VALUE;
+				index = i;
+				return;
+			}
+
+			
+			i++;
+		}
+		
+		
 	}
 	
-	public enum Group {
-		RULE,ANTECEDENT,CONCEQUENT
+	public Source getSource() {
+		return source;
 	}
 	
-	public enum Source {
-		ADD,DELETE,
+	public Group getGroup() {
+		return group;
 	}
+	
+	public int getIndex() {
+		return index;
+	}
+	
 }
