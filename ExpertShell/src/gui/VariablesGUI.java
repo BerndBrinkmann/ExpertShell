@@ -113,26 +113,6 @@ public class VariablesGUI extends Composite {
 		btnRadioButtonNo.setBounds(55, 10, 39, 16);
 		btnRadioButtonNo.setText("No");
 		
-		Button btnAddVariable = new Button(GroupAddDelete, SWT.NONE);
-		btnAddVariable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(MouseEvent e) {
-				
-				// add button
-			}
-		});
-		btnAddVariable.setBounds(103, 406, 75, 25);
-		btnAddVariable.setText("Add ");
-		
-		Button btnDeleteVariable = new Button(GroupAddDelete, SWT.NONE);
-		btnDeleteVariable.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
-		btnDeleteVariable.setBounds(181, 406, 87, 25);
-		btnDeleteVariable.setText("Delete ");
-		
 		List possibleValuesList = new List(GroupAddDelete, SWT.BORDER);
 		possibleValuesList.setBounds(103, 159, 378, 204);
 		
@@ -168,7 +148,7 @@ public class VariablesGUI extends Composite {
 				
 			}
 		});
-		btnSave.setBounds(22, 406, 75, 25);
+		btnSave.setBounds(103, 406, 75, 25);
 		btnSave.setText("Save");
 		new Label(this, SWT.NONE);
 
