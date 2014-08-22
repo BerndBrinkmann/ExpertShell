@@ -51,9 +51,17 @@ public class AntecedentListGUI {
 	
 	public void setListeners(SelectionListener s) {
 		// ie 'for every antecedent'
+		
+		addButton.addSelectionListener(s);
+		
 		for(AntecedentGUI a : antecedents) {
 			a.setListeners(s);
 		}
+	}
+	
+	public Button getAddButton()
+	{
+		return addButton;
 	}
 	
 	
