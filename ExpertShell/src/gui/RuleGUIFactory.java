@@ -89,4 +89,13 @@ public final class RuleGUIFactory {
 		composite.setLayout(new GridLayout(6, false));
 		return composite;
 	}
+	/**
+	 * @wbp.factory
+	 */
+	public static Label createLabelThen(Composite parent) {
+		Label label = new Label(parent, SWT.NONE);
+		label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		label.setText("THEN");
+		return label;
+	}
 }

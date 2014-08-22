@@ -34,7 +34,7 @@ public class AntecedentListGUI {
 		ifLabel = RuleGUIFactory.createLabelIf(container);
 		antecedents.add(new AntecedentGUI(this,true));
 		addButton = RuleGUIFactory.createButtonAdd(container);
-		addFillers(4);
+		addFillers(5);
 		
 		addButton.addSelectionListener(s);
 	}

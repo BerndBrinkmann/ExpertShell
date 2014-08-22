@@ -40,6 +40,7 @@ public class RuleEditorGUI {
 		ruleGrid = RuleGUIFactory.createCompositeRuleHolder(p);
 		
 		antList = new AntecedentListGUI(this);
+		consList = new ConsequentListGUI(this);
 		
 		ruleGrid.getParent().layout();
 	}
@@ -62,6 +63,8 @@ public class RuleEditorGUI {
 		Source source = info.getSource();
 		Group group = info.getGroup();
 		
+				
+		
 		if (group == Group.ANTECEDENT) {
 			if (source == Source.ADD) {
 				debug("Add antecedent");
@@ -82,6 +85,25 @@ public class RuleEditorGUI {
 				//add code to modify KB here!
 			} else if (source == Source.COMBINE) {
 				debug("Change antecedent combinational logic: " + index);
+				//add code to modify KB here!
+			}
+		} else if (group == Group.CONSEQUENT) {
+			if (source == Source.ADD) {
+				debug("Add consequent");
+				consList.add();
+				//add code to modify KB here!
+			} else if (source == Source.DELETE) {
+				debug("Delete consequent: " + index);
+				consList.delete(index);
+				//add code to modify KB here!
+			} else if (source == Source.VARIABLE) {
+				debug("Change consequent variable: " + index);
+				//add code to modify KB here!
+			} else if (source == Source.COMPARE) {
+				debug("Change consequent assignment: " + index);
+				//add code to modify KB here!
+			} else if (source == Source.VALUE) {
+				debug("Change consequent value: " + index);
 				//add code to modify KB here!
 			}
 		}

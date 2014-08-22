@@ -2,7 +2,7 @@ package gui;
 
 public class WidgetTypes {
 	public enum Group {
-		RULE,ANTECEDENT,CONCEQUENT
+		RULE,ANTECEDENT,CONSEQUENT
 	}
 	
 	public enum Source {

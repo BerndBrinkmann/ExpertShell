@@ -102,9 +102,7 @@ public class RuleGUI_temp extends Composite {
 		new Label(compRuleGrid, SWT.NONE);
 		new Label(compRuleGrid, SWT.NONE);
 		
-		Label label_2 = new Label(compRuleGrid, SWT.NONE);
-		label_2.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_2.setText("THEN");
+		Label label_2 = RuleGUIFactory.createLabelThen(compRuleGrid);
 		
 		Combo combo_7 = new Combo(compRuleGrid, SWT.NONE);
 		combo_7.setItems(new String[] {"action"});
