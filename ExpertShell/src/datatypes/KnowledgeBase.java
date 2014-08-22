@@ -95,19 +95,6 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		//search through all the rules and find all the variables
 	//	ArrayList<Variable> variables = new ArrayList<Variable>();
 		
-		for(Rule rule : getRuleArray())
-		{
-			for(Antecedent a : rule.getAntecedentArray())
-			{
-				if(!VariableList.contains(a.getVariable()))
-					VariableList.add(a.getVariable());
-			}
-			for(Consequent c : rule.getConsequentArray())
-			{
-				if(!VariableList.contains(c.getVariable()))
-					VariableList.add(c.getVariable());
-			}
-		}
 		return VariableList;
 	}
 	
@@ -125,6 +112,25 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		}
 		return VariableList.get(x);
 	}
+	
+	public void updateVariableList()
+	{
+		for(Rule rule : getRuleArray())
+		{
+			for(Antecedent a : rule.getAntecedentArray())
+			{
+				if(!VariableList.contains(a.getVariable()))
+					VariableList.add(a.getVariable());
+			}
+			for(Consequent c : rule.getConsequentArray())
+			{
+				if(!VariableList.contains(c.getVariable()))
+					VariableList.add(c.getVariable());
+			}
+		}
+	
+	}
+	
 	
 	public int DeleteVariableFromArray( Variable Var)
 	{
@@ -269,10 +275,12 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
     
 	public void saveVariable(Variable Var)
 	{
+		//Fix update all variables in rules
+		//:search all rules for this variable name and if found replace with this variable
 		int x=0;
 		for (int i = 0;i< VariableList.size();i++)
 		{
-			if (VariableList.get(i).getName()==Var.getName())
+			if (VariableList.get(i).getName().equals(Var.getName()))
 			{
 				VariableList.set(i,Var);
 				x=1;

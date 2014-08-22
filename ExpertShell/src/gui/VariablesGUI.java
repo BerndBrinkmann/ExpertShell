@@ -22,19 +22,20 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import datatypes.*;
+
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 
 
 public class VariablesGUI extends Composite {
 	
+	protected String Name;
+	protected Text descriptionTxt;
+	protected Text txtVariableName;
+	protected List variableList;
+	protected Variable currentvariable = new Variable();
+	protected List possibleValuesList;
 	
-	
-	private Text descriptionTxt;
-	private Text txtVariableName;
-	private List variableList;
-	private Variable currentvariable ;
-	private List possibleValuesList;
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -47,7 +48,8 @@ public class VariablesGUI extends Composite {
 	public VariablesGUI(Composite parent, int style,final KnowledgeBase KBase) {
 		
 		super(parent, style);
-		setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		
+		setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		setLayout(new GridLayout(2, false));
 		
 		variableList = new List(this, SWT.BORDER);
@@ -70,7 +72,8 @@ public class VariablesGUI extends Composite {
 			}
 		});
 
-		GridData gd_variableList = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
+		GridData gd_variableList = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2);
+		gd_variableList.heightHint = 441;
 		gd_variableList.widthHint = 141;
 		variableList.setLayoutData(gd_variableList);
 		
@@ -78,14 +81,14 @@ public class VariablesGUI extends Composite {
 		GridData gd_GroupAddDelete = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		gd_GroupAddDelete.heightHint = 423;
 		GroupAddDelete.setLayoutData(gd_GroupAddDelete);
-		GroupAddDelete.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		GroupAddDelete.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		
 		Label lblName = new Label(GroupAddDelete, SWT.NONE);
-		lblName.setBounds(10, 10, 87, 15);
+		lblName.setBounds(10, 25, 80, 15);
 		lblName.setText("Variable Name:");
 		
 		Label lblDescription = new Label(GroupAddDelete, SWT.NONE);
-		lblDescription.setBounds(30, 31, 66, 21);
+		lblDescription.setBounds(24, 52, 63, 21);
 		lblDescription.setText("Description:");
 		
 		Label lblAskUser = new Label(GroupAddDelete, SWT.NONE);
@@ -93,10 +96,10 @@ public class VariablesGUI extends Composite {
 		lblAskUser.setText("Ask User:");
 		
 		descriptionTxt = new Text(GroupAddDelete, SWT.BORDER);
-		descriptionTxt.setBounds(103, 34, 378, 104);
+		descriptionTxt.setBounds(103, 49, 378, 104);
 		
 		txtVariableName = new Text(GroupAddDelete, SWT.BORDER);
-		txtVariableName.setBounds(103, 7, 203, 21);
+		txtVariableName.setBounds(102, 22, 203, 21);
 		
 		Group group = new Group(GroupAddDelete, SWT.NONE);
 		group.setBounds(103, 369, 105, 31);
@@ -131,10 +134,10 @@ public class VariablesGUI extends Composite {
 		btnDeleteVariable.setText("Delete ");
 		
 		List possibleValuesList = new List(GroupAddDelete, SWT.BORDER);
-		possibleValuesList.setBounds(103, 144, 378, 219);
+		possibleValuesList.setBounds(103, 159, 378, 204);
 		
 		Label lblPossibleValues = new Label(GroupAddDelete, SWT.NONE);
-		lblPossibleValues.setBounds(10, 144, 87, 15);
+		lblPossibleValues.setBounds(10, 159, 87, 15);
 		lblPossibleValues.setText("Possible Values:");
 		
 		Button btnSave = new Button(GroupAddDelete, SWT.NONE);
@@ -142,8 +145,8 @@ public class VariablesGUI extends Composite {
 			@Override
 			public void mouseDown(MouseEvent e) {
 				// Save button was pressed
-				
-				
+
+				Variable TempVariable = new Variable();
 				if(txtVariableName.getText()=="")
 				{
 					//checks is a name for a variable was entered
@@ -152,10 +155,15 @@ public class VariablesGUI extends Composite {
 				}
 				else
 				{
-					currentvariable.setName(txtVariableName.getText());
-					currentvariable.setDescription(descriptionTxt.getText());
-					KBase.saveVariable(currentvariable);
-											
+					
+					TempVariable.setName(txtVariableName.getText());
+					TempVariable.setDescription(descriptionTxt.getText());
+					KBase.saveVariable(TempVariable);
+					variableList.removeAll();
+					for (Variable v: KBase.getVariablesArray())
+					{
+						variableList.add(v.getName());
+					}
 				}
 				
 			}
