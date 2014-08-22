@@ -155,7 +155,7 @@ public class Test_Case {
 			rules[i].setRuleNum(i);
 			boat_kb.AddRule(rules[i]);
 		}
-// I added this method to knowledge base originally but I then deleted it due to conflicts
+
 		boat_kb.setTarget(boat);
 		boat_kb.setUncertaintyMethod(KBSettings.UncertaintyManagement.BAYESIAN);
 		
