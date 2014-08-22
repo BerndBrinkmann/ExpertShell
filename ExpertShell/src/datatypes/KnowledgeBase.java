@@ -94,7 +94,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	{
 		//search through all the rules and find all the variables
 	//	ArrayList<Variable> variables = new ArrayList<Variable>();
-		
+		updateVariableList();
 		return VariableList;
 	}
 	
@@ -265,6 +265,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	
 	public void addVariable(Variable v)
 	{
+		if(!VariableList.contains(v))
 		VariableList.add(v);
 	}
 	
