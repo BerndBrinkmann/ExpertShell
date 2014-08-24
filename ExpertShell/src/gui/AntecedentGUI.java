@@ -5,14 +5,7 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -34,6 +27,9 @@ public class AntecedentGUI {
 	
 	public AntecedentGUI(AntecedentListGUI p, boolean first) {
 		
+		//assign parent of this antGUI
+		parent = p;
+		
 		//get where to draw controls
 		Composite c = p.container;
 		
@@ -54,6 +50,8 @@ public class AntecedentGUI {
 	}
 	
 	public AntecedentGUI(AntecedentListGUI p, Control stopper) {
+		
+		parent = p;
 		
 		//get where to draw controls
 		Composite c = p.container;
@@ -79,6 +77,7 @@ public class AntecedentGUI {
 		
 		filler = new Label(c, SWT.NONE);
 		
+		//move these new controls above the 'stopper'. usually the add button
 		delButton.moveAbove(stopper);
 		logicComb.moveAbove(stopper);
 		var.moveAbove(stopper);
@@ -86,12 +85,12 @@ public class AntecedentGUI {
 		value.moveAbove(stopper);
 		filler.moveAbove(stopper);
 		
-				
 	}
 	
 	
 	public void destroy() {
-		Composite p = delButton.getParent();
+		
+		Composite c = parent.container;
 		
 		delButton.dispose();
 		var.dispose();
@@ -100,7 +99,7 @@ public class AntecedentGUI {
 		logicComb.dispose();
 		filler.dispose();
 		
-		p.getParent().getParent().layout(true);
+		c.getParent().getParent().layout();
 	}
 	
 }

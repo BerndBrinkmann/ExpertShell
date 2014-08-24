@@ -30,7 +30,7 @@ public class InferenceEngine
 	{			
 		// obtain the target variable
 		howList = new ArrayList<Rule>();
-		Variable target = StuartIO.getVariable("Input a target variable", knowledgeBase.getConsequentVariablesArray());
+		Variable target = StuartIO.getVariable("Choose the target variable", knowledgeBase.getConsequentVariablesArray());
 		if(target == null)
 		{
 			System.out.println("Operation Cancelled by User");

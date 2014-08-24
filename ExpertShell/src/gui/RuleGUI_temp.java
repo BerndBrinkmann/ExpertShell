@@ -18,6 +18,7 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.widgets.Spinner;
 
 
 public class RuleGUI_temp extends Composite {
@@ -66,7 +67,15 @@ public class RuleGUI_temp extends Composite {
 		combo_2.setItems(new String[] {"green", "red"});
 		combo_2.select(0);
 		
-		Composite composite = new Composite(compRuleGrid, SWT.NONE);
+		Composite composite = RuleGUIFactory.createCompositeLNLS(compRuleGrid);
+		
+		Label lblNewLabel = RuleGUIFactory.createLabelLN(composite);
+		
+		Spinner spinner = RuleGUIFactory.createSpinnerLN(composite);
+		
+		Label lblNewLabel_1 = RuleGUIFactory.createLabelLS(composite);
+		
+		Spinner spinner_1 = RuleGUIFactory.createSpinnerLS(composite);
 		
 		Button button = RuleGUIFactory.createButtonDelete(compRuleGrid);
 		
@@ -102,9 +111,7 @@ public class RuleGUI_temp extends Composite {
 		new Label(compRuleGrid, SWT.NONE);
 		new Label(compRuleGrid, SWT.NONE);
 		
-		Label label_2 = new Label(compRuleGrid, SWT.NONE);
-		label_2.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_2.setText("THEN");
+		Label label_2 = RuleGUIFactory.createLabelThen(compRuleGrid);
 		
 		Combo combo_7 = new Combo(compRuleGrid, SWT.NONE);
 		combo_7.setItems(new String[] {"action"});
@@ -117,7 +124,16 @@ public class RuleGUI_temp extends Composite {
 		combo_9.setItems(new String[] {"green", "red"});
 		combo_9.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		combo_9.select(0);
-		new Label(compRuleGrid, SWT.NONE);
+		
+		Composite composite_1 = RuleGUIFactory.createCompositeConsequentUncertainty(compRuleGrid);
+		
+		Label lblPrior = RuleGUIFactory.createLabelPrior(composite_1);
+		
+		Spinner spinner_2 = RuleGUIFactory.createSpinnerPrior(composite_1);
+		
+		Label lblCf = RuleGUIFactory.createLabelCF(composite_1);
+		
+		Spinner spinner_3 = RuleGUIFactory.createSpinnerCF(composite_1);
 		
 		Button button_2 = new Button(compRuleGrid, SWT.NONE);
 		button_2.setText("X");
@@ -153,5 +169,4 @@ public class RuleGUI_temp extends Composite {
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
-
 }

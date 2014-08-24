@@ -21,6 +21,11 @@ public class WidgetInfo {
 			return;
 		}
 		
+		if (w == r.consList.getAddButton()) {
+			group = Group.CONSEQUENT;
+			source = Source.ADD;
+			return;
+		}
 		
 		i = 0;
 		group = Group.ANTECEDENT; //assume in ant list
@@ -55,6 +60,40 @@ public class WidgetInfo {
 			i++;
 		}
 		
+		i = 0;
+		group = Group.CONSEQUENT;
+		for(ConsequentGUI a : r.consList.conseqents) {
+			if (w == a.delButton) {
+				source = Source.DELETE;
+				index = i;
+				return;
+			}
+			if (w == a.logicComb) {
+				source = Source.COMBINE;
+				index = i;
+				return;
+			}
+			if (w == a.var) {
+				source = Source.VARIABLE;
+				index = i;
+				return;
+			}
+			if (w == a.assign) {
+				source = Source.ASSIGN;
+				index = i;
+				return;
+			}
+			if (w == a.value) {
+				source = Source.VALUE;
+				index = i;
+				return;
+			}
+
+			i++;
+		}
+		
+		group = null;
+		source = null;
 		
 	}
 	

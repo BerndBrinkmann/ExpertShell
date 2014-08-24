@@ -10,26 +10,34 @@ import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 
+import datatypes.KBSettings.UncertaintyManagement;
+import datatypes.KnowledgeBase;
+
 public class RuleEditorGUI {
 	
-	boolean consoleDebugOutput = true; //debug
+	boolean consoleDebugOutput = true; //----debug----
 	
 	public Composite ruleGrid;
 	AntecedentListGUI antList;
 	ConsequentListGUI consList;
+	final KnowledgeBase kb;
 	
 	public SelectionAdapter selAdaptor;
 	public FocusAdapter focAdaptor;
 	
-	public RuleEditorGUI(Composite p) {
+	public RuleEditorGUI(Composite p, KnowledgeBase k) {
 		
-
+		kb = k;
+		
+		//for button 'clicks'
 		selAdaptor = new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				handleUserAction(e);
 			}
 		};
+		
+		//for combo boxes losing focus
 		focAdaptor = new FocusAdapter(){
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -40,8 +48,14 @@ public class RuleEditorGUI {
 		ruleGrid = RuleGUIFactory.createCompositeRuleHolder(p);
 		
 		antList = new AntecedentListGUI(this);
+		consList = new ConsequentListGUI(this);
 		
-		ruleGrid.getParent().layout();
+		ruleGrid.getParent().getParent().layout(true,true);
+	}
+	
+	public void updateUncertainty() {
+		antList.updateUncertainty();
+		consList.updateUncertainty();
 	}
 	
 	public void debug(String s) {
@@ -57,19 +71,23 @@ public class RuleEditorGUI {
 		//make a new 'info' object to get stuff about the source button/combo
 		WidgetInfo info = new WidgetInfo(w,RuleEditorGUI.this);
 		
-		//get the index of the control (for example in a list of concequents)
+		//get the index of the control (for example in a list of consequents)
 		int index = info.getIndex();
 		Source source = info.getSource();
 		Group group = info.getGroup();
+		
+				
 		
 		if (group == Group.ANTECEDENT) {
 			if (source == Source.ADD) {
 				debug("Add antecedent");
 				antList.add();
+				ruleGrid.getParent().getParent().layout(true,true);
 				//add code to modify KB here!
 			} else if (source == Source.DELETE) {
 				debug("Delete antecedent: " + index);
 				antList.delete(index);
+				ruleGrid.getParent().getParent().layout(true,true);
 				//add code to modify KB here!
 			} else if (source == Source.VARIABLE) {
 				debug("Change antecedent variable: " + index);
@@ -82,6 +100,30 @@ public class RuleEditorGUI {
 				//add code to modify KB here!
 			} else if (source == Source.COMBINE) {
 				debug("Change antecedent combinational logic: " + index);
+				//add code to modify KB here!
+			}
+		} else if (group == Group.CONSEQUENT) {
+			if (source == Source.ADD) {
+				debug("Add consequent");
+				consList.add();
+				ruleGrid.getParent().getParent().layout(true,true);
+				//add code to modify KB here!
+			} else if (source == Source.DELETE) {
+				debug("Delete consequent: " + index);
+				consList.delete(index);
+				ruleGrid.getParent().getParent().layout(true,true);
+				//add code to modify KB here!
+			} else if (source == Source.VARIABLE) {
+				debug("Change consequent variable: " + index);
+				//add code to modify KB here!
+			} else if (source == Source.COMPARE) {
+				debug("Change consequent assignment: " + index);
+				//add code to modify KB here!
+			} else if (source == Source.VALUE) {
+				debug("Change consequent value: " + index);
+				//add code to modify KB here!
+			} else if (source == Source.ASSIGN) {
+				debug("Change assignment: " + index);
 				//add code to modify KB here!
 			}
 		}

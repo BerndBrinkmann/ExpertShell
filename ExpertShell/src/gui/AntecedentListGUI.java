@@ -7,9 +7,13 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Spinner;
+
+import datatypes.KBSettings.UncertaintyManagement;
 
 public class AntecedentListGUI {
 	
@@ -18,6 +22,9 @@ public class AntecedentListGUI {
 	protected Label ifLabel;
 	protected List<Label> fillers = new ArrayList<Label>();
 	protected ArrayList<AntecedentGUI> antecedents = new ArrayList<AntecedentGUI>();
+	protected Composite uncertaintyContainer;
+	protected Label lnLabel,lsLabel;
+	protected Spinner spinLN, spinLS;
 	protected Button addButton;
 	
 	public AntecedentListGUI(RuleEditorGUI p) {
@@ -33,16 +40,23 @@ public class AntecedentListGUI {
 		addFiller();
 		ifLabel = RuleGUIFactory.createLabelIf(container);
 		antecedents.add(new AntecedentGUI(this,true));
+		uncertaintyContainer = RuleGUIFactory.createCompositeLNLS(container);
+		lnLabel = RuleGUIFactory.createLabelLN(uncertaintyContainer);
+		spinLN = RuleGUIFactory.createSpinnerLN(uncertaintyContainer);
+		lsLabel = RuleGUIFactory.createLabelLS(uncertaintyContainer);
+		spinLS = RuleGUIFactory.createSpinnerLS(uncertaintyContainer);
+		
 		addButton = RuleGUIFactory.createButtonAdd(container);
-		addFillers(4);
+		addFillers(5);
 		
 		addButton.addSelectionListener(s);
+		
+		updateUncertainty();
 	}
 	
 	public void add() {
 		antecedents.add(new AntecedentGUI(this, addButton));
-		
-		container.getParent().getParent().layout(true);
+		parent.updateUncertainty();
 	}
 	
 	public void delete(int index) {
@@ -54,6 +68,8 @@ public class AntecedentListGUI {
 		
 		//remove it from the list of antecedents
 		antecedents.remove(index);
+		
+		parent.updateUncertainty();
 	}
 	
 	private void addFiller() {
@@ -67,6 +83,55 @@ public class AntecedentListGUI {
 		}
 	}
 	
+	
+	public void updateUncertainty() {
+		
+		UncertaintyManagement u = parent.kb.getUncertaintyMethod();
+
+		boolean showLNLS;
+		boolean showPrior;
+		boolean showCF;
+		
+		switch (u) {
+		case BAYESIAN:
+			showLNLS = true;
+			showPrior = true;
+			showCF = false;
+			break;
+		case CF:
+			showLNLS = false;
+			showPrior = false;
+			showCF = true;
+			break;
+		default:
+		case NONE:
+			showLNLS = false;
+			showPrior = false;
+			showCF = false;
+			break;
+		}
+		
+		if (uncertaintyContainer.getLayoutData() == null) uncertaintyContainer.setLayoutData(new GridData());  //might have no layout data yet
+		
+		//hide/unhide the LN/LS container and controls
+		((GridData) uncertaintyContainer.getLayoutData()).exclude = !showLNLS;
+		uncertaintyContainer.setVisible(showLNLS);
+		
+		//set the height of the LN/LS container
+		
+		((GridData) uncertaintyContainer.getLayoutData()).verticalSpan = antecedents.size();
+		
+		
+		//hide/unhide the filler labels in each ant line
+		for(AntecedentGUI a: antecedents) {
+			if (a.filler.getLayoutData() == null) a.filler.setLayoutData(new GridData());
+			((GridData) a.filler.getLayoutData()).exclude = showLNLS;
+			a.filler.setVisible(!showLNLS);
+		}
+		
+		
+		
+	}
 	
 	public Button getAddButton()
 	{
