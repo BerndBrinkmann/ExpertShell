@@ -137,4 +137,43 @@ public final class RuleGUIFactory {
 		label.setText("LS:");
 		return label;
 	}
+	/**
+	 * @wbp.factory
+	 */
+	public static Label createLabelPrior(Composite parent) {
+		Label label = new Label(parent, SWT.NONE);
+		label.setText("Prior:");
+		label.setBounds(0, 0, 55, 15);
+		return label;
+	}
+	/**
+	 * @wbp.factory
+	 */
+	public static Spinner createSpinnerPrior(Composite parent) {
+		Spinner spinner = new Spinner(parent, SWT.BORDER);
+		return spinner;
+	}
+	/**
+	 * @wbp.factory
+	 */
+	public static Label createLabelCF(Composite parent) {
+		Label label = new Label(parent, SWT.NONE);
+		label.setText("CF:");
+		return label;
+	}
+	/**
+	 * @wbp.factory
+	 */
+	public static Spinner createSpinnerCF(Composite parent) {
+		Spinner spinner = new Spinner(parent, SWT.BORDER);
+		return spinner;
+	}
+	/**
+	 * @wbp.factory
+	 */
+	public static Composite createCompositeConsequentUncertainty(Composite parent) {
+		Composite composite = new Composite(parent, SWT.NONE);
+		composite.setLayout(new GridLayout(4, false));
+		return composite;
+	}
 }

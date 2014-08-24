@@ -11,42 +11,37 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Widget;
+
+import datatypes.KBSettings.UncertaintyManagement;
 
 public class ConsequentGUI {
 	
-	AntecedentListGUI parent;
+	ConsequentListGUI parent;
 	Button delButton;
 	Combo var;
 	Combo assign;
 	Combo value;
 	Combo logicComb;
 	Label filler,filler1;
+	Composite uncertaintyContainer;
+	Label labelPrior,labelCF;
+	Spinner spinPrior,spinCF;	
 	
 	ArrayList<Widget> widgets = new ArrayList<Widget>();
 	
 	public ConsequentGUI(ConsequentListGUI p, boolean first) {
-		
-		//get where to draw controls
-		Composite c = p.container;
-		
-		//get listeners
-		FocusAdapter f = p.parent.focAdaptor;
-		
-		var = RuleGUIFactory.createComboVar(c);
-		var.addFocusListener(f);
-		
-		assign = RuleGUIFactory.createComboAssign(c);
-		assign.addFocusListener(f);
-		
-		value = RuleGUIFactory.createComboValue(c);
-		value.addFocusListener(f);
-		
-		filler = new Label(c, SWT.NONE);
-		
+		createConsequentGUI(p, null, true);
 	}
 	
 	public ConsequentGUI(ConsequentListGUI p, Control stopper) {
+		createConsequentGUI(p, stopper, false);
+	}
+	
+	private void createConsequentGUI(ConsequentListGUI p, Control stopper, boolean first) {
+		
+		parent = p;
 		
 		//get where to draw controls
 		Composite c = p.container;
@@ -55,10 +50,12 @@ public class ConsequentGUI {
 		SelectionAdapter s = p.parent.selAdaptor;
 		FocusAdapter f = p.parent.focAdaptor;
 		
-		delButton = RuleGUIFactory.createButtonDelete(c);
-		delButton.addSelectionListener(s);
-		
-		filler1 = new Label(c, SWT.NONE);
+		//the lines after the first include delete button
+		if (!first) {
+			delButton = RuleGUIFactory.createButtonDelete(c);
+			delButton.addSelectionListener(s);
+			filler1 = new Label(c, SWT.NONE);
+		}
 		
 		var = RuleGUIFactory.createComboVar(c);
 		var.addFocusListener(f);
@@ -69,30 +66,39 @@ public class ConsequentGUI {
 		value = RuleGUIFactory.createComboValue(c);
 		value.addFocusListener(f);
 		
-		filler = new Label(c, SWT.NONE);
+		uncertaintyContainer = RuleGUIFactory.createCompositeConsequentUncertainty(c);
+		labelPrior = RuleGUIFactory.createLabelPrior(uncertaintyContainer);		
+		spinPrior = RuleGUIFactory.createSpinnerPrior(uncertaintyContainer);
+		labelCF = RuleGUIFactory.createLabelCF(uncertaintyContainer);
+		spinCF = RuleGUIFactory.createSpinnerCF(uncertaintyContainer);	
+		//filler = new Label(c, SWT.NONE);
 		
-		delButton.moveAbove(stopper);
-		filler1.moveAbove(stopper);
-		var.moveAbove(stopper);
-		assign.moveAbove(stopper);
-		value.moveAbove(stopper);
-		filler.moveAbove(stopper);
-		
-				
+		if (!first) {
+			delButton.moveAbove(stopper);
+			filler1.moveAbove(stopper);
+			var.moveAbove(stopper);
+			assign.moveAbove(stopper);
+			value.moveAbove(stopper);
+			uncertaintyContainer.moveAbove(stopper);
+		}
 	}
 	
 	
 	public void destroy() {
-		Composite p = delButton.getParent();
+		Composite c = parent.container;
 		
 		delButton.dispose();
 		var.dispose();
 		assign.dispose();
 		value.dispose();
 		filler1.dispose();
-		filler.dispose();
+		labelPrior.dispose();
+		spinPrior.dispose();
+		labelCF.dispose();
+		spinCF.dispose();
+		uncertaintyContainer.dispose();
 		
-		p.getParent().getParent().layout(true);
+		c.getParent().getParent().layout();
 	}
 	
 }

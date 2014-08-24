@@ -660,7 +660,9 @@ public class MainScreen {
 		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ruleEditor.setUncertainty(UncertaintyManagement.NONE);
+				KBase.setUncertaintyMethod(UncertaintyManagement.NONE);
+				ruleEditor.updateUncertainty();
+				ruleEditor.ruleGrid.getParent().getParent().layout(true,true);
 			}
 		});
 		btnNewButton_1.setBounds(0, 0, 75, 25);
@@ -670,8 +672,9 @@ public class MainScreen {
 		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ruleEditor.setUncertainty(UncertaintyManagement.CF);
-				ruleEditor.ruleGrid.layout();
+				KBase.setUncertaintyMethod(UncertaintyManagement.CF);
+				ruleEditor.updateUncertainty();
+				ruleEditor.ruleGrid.getParent().getParent().layout(true,true);
 			}
 		});
 		btnNewButton_2.setBounds(0, 0, 75, 25);
@@ -681,7 +684,9 @@ public class MainScreen {
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ruleEditor.setUncertainty(UncertaintyManagement.BAYESIAN);
+				KBase.setUncertaintyMethod(UncertaintyManagement.BAYESIAN);
+				ruleEditor.updateUncertainty();
+				ruleEditor.ruleGrid.getParent().getParent().layout(true,true);
 			}
 		});
 		btnNewButton.setText("bays");

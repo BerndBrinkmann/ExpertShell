@@ -15,16 +15,19 @@ import datatypes.KnowledgeBase;
 
 public class RuleEditorGUI {
 	
-	boolean consoleDebugOutput = true; //debug
+	boolean consoleDebugOutput = true; //----debug----
 	
 	public Composite ruleGrid;
 	AntecedentListGUI antList;
 	ConsequentListGUI consList;
+	final KnowledgeBase kb;
 	
 	public SelectionAdapter selAdaptor;
 	public FocusAdapter focAdaptor;
 	
-	public RuleEditorGUI(Composite p) {
+	public RuleEditorGUI(Composite p, KnowledgeBase k) {
+		
+		kb = k;
 		
 		//for button 'clicks'
 		selAdaptor = new SelectionAdapter() {
@@ -34,7 +37,7 @@ public class RuleEditorGUI {
 			}
 		};
 		
-		//for combo boxes loosing focus
+		//for combo boxes losing focus
 		focAdaptor = new FocusAdapter(){
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -47,7 +50,12 @@ public class RuleEditorGUI {
 		antList = new AntecedentListGUI(this);
 		consList = new ConsequentListGUI(this);
 		
-		ruleGrid.getParent().layout();
+		ruleGrid.getParent().getParent().layout(true,true);
+	}
+	
+	public void updateUncertainty() {
+		antList.updateUncertainty();
+		consList.updateUncertainty();
 	}
 	
 	public void debug(String s) {
@@ -74,10 +82,12 @@ public class RuleEditorGUI {
 			if (source == Source.ADD) {
 				debug("Add antecedent");
 				antList.add();
+				ruleGrid.getParent().getParent().layout(true,true);
 				//add code to modify KB here!
 			} else if (source == Source.DELETE) {
 				debug("Delete antecedent: " + index);
 				antList.delete(index);
+				ruleGrid.getParent().getParent().layout(true,true);
 				//add code to modify KB here!
 			} else if (source == Source.VARIABLE) {
 				debug("Change antecedent variable: " + index);
@@ -96,10 +106,12 @@ public class RuleEditorGUI {
 			if (source == Source.ADD) {
 				debug("Add consequent");
 				consList.add();
+				ruleGrid.getParent().getParent().layout(true,true);
 				//add code to modify KB here!
 			} else if (source == Source.DELETE) {
 				debug("Delete consequent: " + index);
 				consList.delete(index);
+				ruleGrid.getParent().getParent().layout(true,true);
 				//add code to modify KB here!
 			} else if (source == Source.VARIABLE) {
 				debug("Change consequent variable: " + index);

@@ -124,7 +124,16 @@ public class RuleGUI_temp extends Composite {
 		combo_9.setItems(new String[] {"green", "red"});
 		combo_9.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		combo_9.select(0);
-		new Label(compRuleGrid, SWT.NONE);
+		
+		Composite composite_1 = RuleGUIFactory.createCompositeConsequentUncertainty(compRuleGrid);
+		
+		Label lblPrior = RuleGUIFactory.createLabelPrior(composite_1);
+		
+		Spinner spinner_2 = RuleGUIFactory.createSpinnerPrior(composite_1);
+		
+		Label lblCf = RuleGUIFactory.createLabelCF(composite_1);
+		
+		Spinner spinner_3 = RuleGUIFactory.createSpinnerCF(composite_1);
 		
 		Button button_2 = new Button(compRuleGrid, SWT.NONE);
 		button_2.setText("X");
