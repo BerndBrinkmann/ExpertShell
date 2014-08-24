@@ -690,8 +690,7 @@ public class MainScreen {
 		composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
 		composite_5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		ruleEditor = new RuleEditorGUI(composite_5);
-		
+		ruleEditor = new RuleEditorGUI(composite_5, KBase);
 		composite_5.layout();
 		
 		TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);
