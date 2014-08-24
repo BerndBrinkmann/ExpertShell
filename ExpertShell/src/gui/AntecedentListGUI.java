@@ -7,9 +7,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+
+import datatypes.KBSettings.UncertaintyManagement;
 
 public class AntecedentListGUI {
 	
@@ -18,6 +21,8 @@ public class AntecedentListGUI {
 	protected Label ifLabel;
 	protected List<Label> fillers = new ArrayList<Label>();
 	protected ArrayList<AntecedentGUI> antecedents = new ArrayList<AntecedentGUI>();
+	protected Composite uncertaintyContainer;
+	protected Label lnLabel,lsLabel;
 	protected Button addButton;
 	
 	public AntecedentListGUI(RuleEditorGUI p) {
@@ -33,6 +38,9 @@ public class AntecedentListGUI {
 		addFiller();
 		ifLabel = RuleGUIFactory.createLabelIf(container);
 		antecedents.add(new AntecedentGUI(this,true));
+		uncertaintyContainer = RuleGUIFactory.createCompositeLNLS(container);
+		lnLabel = RuleGUIFactory.createLabelLN(container);
+		lsLabel = RuleGUIFactory.createLabelLS(container);
 		addButton = RuleGUIFactory.createButtonAdd(container);
 		addFillers(5);
 		
@@ -67,6 +75,50 @@ public class AntecedentListGUI {
 		}
 	}
 	
+	
+	public void setUncertainty(UncertaintyManagement u) {
+		
+		boolean showLNLS;
+		boolean showPrior;
+		boolean showCF;
+		
+		switch (u) {
+		case BAYESIAN:
+			showLNLS = true;
+			showPrior = true;
+			showCF = false;
+			break;
+		case CF:
+			showLNLS = false;
+			showPrior = false;
+			showCF = true;
+			break;
+		default:
+		case NONE:
+			showLNLS = false;
+			showPrior = false;
+			showCF = false;
+			break;
+		}
+		
+		//hide/unhide the LN/LS container and controls
+		((GridData) uncertaintyContainer.getLayoutData()).exclude = !showLNLS;
+		uncertaintyContainer.setVisible(showLNLS);
+		
+		//set the height of the LN/LS container
+		if (showLNLS) {
+			((GridData) uncertaintyContainer.getLayoutData()).verticalSpan = antecedents.size();
+		}
+		
+		//hide/unhide the filler labels in each ant line
+		for(AntecedentGUI a: antecedents) {
+			((GridData) a.filler.getLayoutData()).exclude = showLNLS;
+			a.filler.setVisible(!showLNLS);
+		}
+		
+		
+		
+	}
 	
 	public Button getAddButton()
 	{

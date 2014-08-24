@@ -6,6 +6,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Spinner;
 
 public final class RuleGUIFactory {
 	/**
@@ -96,6 +97,44 @@ public final class RuleGUIFactory {
 		Label label = new Label(parent, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		label.setText("THEN");
+		return label;
+	}
+	/**
+	 * @wbp.factory
+	 */
+	public static Composite createCompositeLNLS(Composite parent) {
+		Composite composite = new Composite(parent, SWT.NONE);
+		composite.setLayout(new GridLayout(4, false));
+		return composite;
+	}
+	/**
+	 * @wbp.factory
+	 */
+	public static Label createLabelLN(Composite parent) {
+		Label label = new Label(parent, SWT.NONE);
+		label.setText("LN:");
+		return label;
+	}
+	/**
+	 * @wbp.factory
+	 */
+	public static Spinner createSpinnerLN(Composite parent) {
+		Spinner spinner = new Spinner(parent, SWT.BORDER);
+		return spinner;
+	}
+	/**
+	 * @wbp.factory
+	 */
+	public static Spinner createSpinnerLS(Composite parent) {
+		Spinner spinner = new Spinner(parent, SWT.BORDER);
+		return spinner;
+	}
+	/**
+	 * @wbp.factory
+	 */
+	public static Label createLabelLS(Composite parent) {
+		Label label = new Label(parent, SWT.NONE);
+		label.setText("LS:");
 		return label;
 	}
 }

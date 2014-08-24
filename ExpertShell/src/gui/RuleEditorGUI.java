@@ -10,6 +10,9 @@ import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 
+import datatypes.KBSettings.UncertaintyManagement;
+import datatypes.KnowledgeBase;
+
 public class RuleEditorGUI {
 	
 	boolean consoleDebugOutput = true; //debug
@@ -23,13 +26,15 @@ public class RuleEditorGUI {
 	
 	public RuleEditorGUI(Composite p) {
 		
-
+		//for button 'clicks'
 		selAdaptor = new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				handleUserAction(e);
 			}
 		};
+		
+		//for combo boxes loosing focus
 		focAdaptor = new FocusAdapter(){
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -58,7 +63,7 @@ public class RuleEditorGUI {
 		//make a new 'info' object to get stuff about the source button/combo
 		WidgetInfo info = new WidgetInfo(w,RuleEditorGUI.this);
 		
-		//get the index of the control (for example in a list of concequents)
+		//get the index of the control (for example in a list of consequents)
 		int index = info.getIndex();
 		Source source = info.getSource();
 		Group group = info.getGroup();
@@ -104,6 +109,9 @@ public class RuleEditorGUI {
 				//add code to modify KB here!
 			} else if (source == Source.VALUE) {
 				debug("Change consequent value: " + index);
+				//add code to modify KB here!
+			} else if (source == Source.ASSIGN) {
+				debug("Change assignment: " + index);
 				//add code to modify KB here!
 			}
 		}

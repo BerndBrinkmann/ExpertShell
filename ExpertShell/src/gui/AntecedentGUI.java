@@ -27,6 +27,9 @@ public class AntecedentGUI {
 	
 	public AntecedentGUI(AntecedentListGUI p, boolean first) {
 		
+		//assign parent of this antGUI
+		parent = p;
+		
 		//get where to draw controls
 		Composite c = p.container;
 		
@@ -47,6 +50,8 @@ public class AntecedentGUI {
 	}
 	
 	public AntecedentGUI(AntecedentListGUI p, Control stopper) {
+		
+		parent = p;
 		
 		//get where to draw controls
 		Composite c = p.container;
@@ -72,6 +77,7 @@ public class AntecedentGUI {
 		
 		filler = new Label(c, SWT.NONE);
 		
+		//move these new controls above the 'stopper'. usually the add button
 		delButton.moveAbove(stopper);
 		logicComb.moveAbove(stopper);
 		var.moveAbove(stopper);
@@ -84,7 +90,8 @@ public class AntecedentGUI {
 	
 	
 	public void destroy() {
-		Composite p = delButton.getParent();
+		
+		Composite c = parent.container;
 		
 		delButton.dispose();
 		var.dispose();
@@ -93,7 +100,7 @@ public class AntecedentGUI {
 		logicComb.dispose();
 		filler.dispose();
 		
-		p.getParent().getParent().layout(true);
+		c.getParent().getParent().layout(true);
 	}
 	
 }

@@ -18,6 +18,7 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.widgets.Spinner;
 
 
 public class RuleGUI_temp extends Composite {
@@ -66,7 +67,15 @@ public class RuleGUI_temp extends Composite {
 		combo_2.setItems(new String[] {"green", "red"});
 		combo_2.select(0);
 		
-		Composite composite = new Composite(compRuleGrid, SWT.NONE);
+		Composite composite = RuleGUIFactory.createCompositeLNLS(compRuleGrid);
+		
+		Label lblNewLabel = RuleGUIFactory.createLabelLN(composite);
+		
+		Spinner spinner = RuleGUIFactory.createSpinnerLN(composite);
+		
+		Label lblNewLabel_1 = RuleGUIFactory.createLabelLS(composite);
+		
+		Spinner spinner_1 = RuleGUIFactory.createSpinnerLS(composite);
 		
 		Button button = RuleGUIFactory.createButtonDelete(compRuleGrid);
 		
@@ -151,5 +160,4 @@ public class RuleGUI_temp extends Composite {
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
-
 }
