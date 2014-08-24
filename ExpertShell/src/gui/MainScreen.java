@@ -34,6 +34,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import datatypes.*;
+import datatypes.KBSettings.UncertaintyManagement;
+
 import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.events.TraverseEvent;
 
@@ -69,8 +71,9 @@ public class MainScreen {
     private ScrolledComposite scrolledComposite;
     private Menu menu_4;
     private MenuItem newKB;
+    private RuleEditorGUI ruleEditor;
 
-	public KnowledgeBase getKowledgeBase(){
+	public KnowledgeBase getKnowledgeBase(){
 		return KBase ;
 	}
 
@@ -654,18 +657,40 @@ public class MainScreen {
 		composite_4.setLayout(new GridLayout(1, false));
 		
 		Button btnNewButton_1 = new Button(composite_4, SWT.NONE);
+		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ruleEditor.setUncertainty(UncertaintyManagement.NONE);
+			}
+		});
 		btnNewButton_1.setBounds(0, 0, 75, 25);
-		btnNewButton_1.setText("New Button");
+		btnNewButton_1.setText("none");
 		
 		Button btnNewButton_2 = new Button(composite_4, SWT.NONE);
+		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ruleEditor.setUncertainty(UncertaintyManagement.CF);
+				ruleEditor.ruleGrid.layout();
+			}
+		});
 		btnNewButton_2.setBounds(0, 0, 75, 25);
-		btnNewButton_2.setText("New Button");
+		btnNewButton_2.setText("cf");
+		
+		Button btnNewButton = new Button(composite_4, SWT.NONE);
+		btnNewButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ruleEditor.setUncertainty(UncertaintyManagement.BAYESIAN);
+			}
+		});
+		btnNewButton.setText("bays");
 		
 		Composite composite_5 = new Composite(composite_3, SWT.NONE);
 		composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
 		composite_5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		RuleEditorGUI ruleEditor = new RuleEditorGUI(composite_5);
+		ruleEditor = new RuleEditorGUI(composite_5);
 		
 		composite_5.layout();
 		
