@@ -29,7 +29,7 @@ public class InferenceEngine
 	{			
 		// obtain the target variable
 		howList = new ArrayList<Rule>();
-		Variable target = StuartIO.getVariable("Input a target variable", knowledgeBase.getConsequentVariablesArray());
+		Variable target = StuartIO.getVariable("Choose the target variable", knowledgeBase.getConsequentVariablesArray());
 		if(target == null)
 		{
 			System.out.println("Operation Cancelled by User");
@@ -40,7 +40,7 @@ public class InferenceEngine
 		Rule[] rulesList = knowledgeBase.getRuleArray();		
 		
 		//sort the rule list for forward chaining
-		if(knowledgeBase.getConflictResolutionMethod() == ConflictResolutionMethod.MORE_SPECIFIC_FIRST)
+		if(knowledgeBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
 			Arrays.sort(rulesList, new RuleAntecedentComparator());
 		
 		while(true)
