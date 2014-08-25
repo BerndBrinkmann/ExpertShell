@@ -26,20 +26,33 @@ public class RuleListGUI extends Composite {
 	//create an editable/selectable rulelistGUI linked to a knowledgebase
 	public RuleListGUI(Composite parent, int style, KnowledgeBase k) {
 		super(parent, style);
+		kb = k;
+		selectedIndex = -1;
+		selectable = true;
+		
 		setupComposite();
 		setupListener();
 		
-		kb = k;
-		selectedIndex = -1;
+		
+		
+		ruleGUIs = new ArrayList<RuleGUI>();
+		//for each rule in the knowledge base
+		for(Rule r : kb.getRuleArray()) {
+			//make a new rule display box
+			ruleGUIs.add(new RuleGUI(this,style,r,listen));
+		}
 	}
 	
 	//create a non-editable list of arbitary rules (for displaying)
 	public RuleListGUI(Composite parent, int style, ArrayList<Rule> rulelist) {
 		super(parent, style);
+		
+		kb = null;
+		selectable = false;
 		setupComposite();
 		setupListener();
 		
-		kb = null;
+		
 		
 		for(Rule r : rulelist) {
 			ruleGUIs.add(new RuleGUI(this,style,r,null));
@@ -59,8 +72,9 @@ public class RuleListGUI extends Composite {
 
 			public void mouseDown(MouseEvent e) {
 				Object source;
+				int index;
 				source = e.getSource();
-				getIndexFromWidget(source);
+				index = getIndexFromWidget(source);
 				
 			}
 
@@ -81,5 +95,5 @@ public class RuleListGUI extends Composite {
 		}
 		return i;
 	}
-
+	
 }
