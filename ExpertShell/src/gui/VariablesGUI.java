@@ -45,9 +45,7 @@ public class VariablesGUI extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	
 
-	
 	
 	public VariablesGUI(Composite parent, int style,  KnowledgeBase kb) {
 		

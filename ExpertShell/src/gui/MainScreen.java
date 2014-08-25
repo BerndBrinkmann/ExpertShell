@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.custom.StyledText;
 
 
+
 //note - to reference a widget it must be 'exposed' by right-clicking on it in windowbuilder and selecting 'expose component' --Arie
 
 
@@ -259,6 +260,13 @@ public class MainScreen {
 									;
 									//questionGroup.layout();
 								}
+								//IO.setMainFrame(OKButton);
+								KBase.validate();
+								
+								InferenceEngine Inference = new InferenceEngine(KBase);		
+								Variable result = Inference.solveForwardChaining();
+								
+								IO.displayResults(result, Inference.getHowList(), KBase);	
 							}
 						});
 		

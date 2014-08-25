@@ -157,7 +157,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		{
 			for(Consequent c : rule.getConsequentArray())
 			{
-				if(!variables.contains(c.getVariable()))
+				if(!variables.contains(c.getVariable())&& c.getVariable() !=null)
 					variables.add(c.getVariable());
 			}
 		}
@@ -174,13 +174,13 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		{
 			for(Antecedent a : rule.getAntecedentArray())
 			{
-				if(!antVariables.contains(a.getVariable()))
+				if(!antVariables.contains(a.getVariable())&& a.getVariable() !=null)
 					antVariables.add(a.getVariable());
 			}
 			
 			for(Consequent c : rule.getConsequentArray())
 			{
-				if(!conVariables.contains(c.getVariable()))
+				if(!conVariables.contains(c.getVariable())&& c.getVariable() !=null)
 					conVariables.add(c.getVariable());
 			}
 		}
