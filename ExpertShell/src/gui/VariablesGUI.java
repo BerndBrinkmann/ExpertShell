@@ -78,9 +78,9 @@ public class VariablesGUI extends Composite {
 					if (currentvariable.getArrayOfPossibleValues()!= null)
 					{
 
-
 						for (Value i : currentvariable.getArrayOfPossibleValues())
 						{
+
 
 							possibleValuesList.add(i.toString());
 
