@@ -60,16 +60,6 @@ public class RuleListGUI_temp extends Composite {
 		Button btnNewButton_2 = new Button(composite_2, SWT.NONE);
 		btnNewButton_2.setBounds(0, 0, 75, 25);
 		btnNewButton_2.setText("Copy");
-		
-		Composite composite_1 = RuleGUIFactory.createCompositeEditorControls(this);
-		
-		Button btnNewButton = RuleGUIFactory.createButtonMoveUp(composite_1);
-		
-		Button btnMoveDown = RuleGUIFactory.createButtonMoveDown(composite_1);
-		
-		Button btnAdd = RuleGUIFactory.createButtonRuleAdd(composite_1);
-		
-		Button btnCopy = RuleGUIFactory.createButtonRuleCopy(composite_1);
 
 	}
 

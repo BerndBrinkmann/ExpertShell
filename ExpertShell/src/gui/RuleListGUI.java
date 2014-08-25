@@ -42,7 +42,7 @@ public class RuleListGUI extends Composite {
 		kb = null;
 		
 		for(Rule r : rulelist) {
-			ruleGUIs.add(new RuleGUI(this,style,r,false));
+			ruleGUIs.add(new RuleGUI(this,style,r,null));
 		}
 	
 	}
@@ -74,7 +74,7 @@ public class RuleListGUI extends Composite {
 		//loop through each ruleGUI element
 		for(RuleGUI r: ruleGUIs) {
 			i++;
-			if (r.getStyledTextWidget == source)
+			if (r.getStyledTextWidget() == source)
 			{
 				return i;
 			}
