@@ -40,6 +40,7 @@ import datatypes.KBSettings.UncertaintyManagement;
 import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.custom.StyledText;
 
 
 //note - to reference a widget it must be 'exposed' by right-clicking on it in windowbuilder and selecting 'expose component' --Arie
@@ -676,7 +677,32 @@ public class MainScreen {
 		
 		Composite composite_3 = new Composite(tabFolder, SWT.NONE);
 		tbtmDeveloperInterface.setControl(composite_3);
-		composite_3.setLayout(new GridLayout(2, false));
+		composite_3.setLayout(new GridLayout(3, false));
+		
+		Composite compListEditor = new Composite(composite_3, SWT.NONE);
+		compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		compListEditor.setLayout(new GridLayout(1, false));
+		
+		Label label = new Label(compListEditor, SWT.NONE);
+		label.setText("()");
+		
+		Composite compEditorControls = new Composite(compListEditor, SWT.NONE);
+		compEditorControls.setLayout(new GridLayout(5, false));
+		
+		Button button_1 = new Button(compEditorControls, SWT.NONE);
+		button_1.setText("\u2191");
+		
+		Button button_2 = new Button(compEditorControls, SWT.NONE);
+		button_2.setText("\u2193");
+		
+		Button button_3 = new Button(compEditorControls, SWT.NONE);
+		button_3.setText("Add");
+		
+		Button button_4 = new Button(compEditorControls, SWT.NONE);
+		button_4.setText("Del");
+		
+		Button button_5 = new Button(compEditorControls, SWT.NONE);
+		button_5.setText("Copy");
 		
 		Composite composite_4 = new Composite(composite_3, SWT.NONE);
 		composite_4.setLayout(new GridLayout(1, false));
@@ -716,12 +742,12 @@ public class MainScreen {
 		});
 		btnNewButton.setText("bays");
 		
-		Composite composite_5 = new Composite(composite_3, SWT.NONE);
-		composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
-		composite_5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		Composite compRuleEditorHolder = new Composite(composite_3, SWT.NONE);
+		compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
+		compRuleEditorHolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		ruleEditor = new RuleEditorGUI(composite_5, KBase);
-		composite_5.layout();
+		ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase);
+		compRuleEditorHolder.layout();
 		
 		TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);
 		tbtmVariables.setText("Variables");
