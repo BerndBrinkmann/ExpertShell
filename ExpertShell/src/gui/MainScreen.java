@@ -770,7 +770,7 @@ public class MainScreen {
 	listChangeFlag = true;
 	targetvariablecombo.removeAll();
 	
-	if(KBase.getConsequentVariablesArray().isEmpty() ==false)
+	if(KBase.getConsequentVariablesArray().length ==0)
 	{
 	for (Variable v : KBase.getConsequentVariablesArray())
 		{
@@ -781,7 +781,7 @@ public class MainScreen {
 		}
 		}
 	if(targetvariablecombo.getSelectionIndex() != -1){
-	selectedVariable = KBase.getConsequentVariablesArray().get(targetvariablecombo.getSelectionIndex());
+	selectedVariable = KBase.getConsequentVariablesArray()[targetvariablecombo.getSelectionIndex()];
 	}
 	
 	}
