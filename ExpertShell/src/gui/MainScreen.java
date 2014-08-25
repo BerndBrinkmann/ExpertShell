@@ -311,20 +311,26 @@ public class MainScreen {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				btnDefault.getSelection();
+				if (btnDefault.getSelection()==true){
 				btnForwardChaining.setSelection(false);
 				btnBackwardChaining.setSelection(false);
 				targetvariablecombo.setVisible(false);
 				lblSelectTargetVariable.setVisible(false);
+				}
 			}
 		});
 		btnForwardChaining.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				btnForwardChaining.getSelection();
+				if(btnForwardChaining.getSelection()==true){
 				btnDefault.setSelection(false);
 				btnBackwardChaining.setSelection(false);
 				targetvariablecombo.setVisible(false);
 				lblSelectTargetVariable.setVisible(false);
+				}
 			}
 		});
 		
@@ -332,10 +338,13 @@ public class MainScreen {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				btnBackwardChaining.getSelection();
+				if(btnBackwardChaining.getSelection()==true){
 				btnDefault.setSelection(false);
 				btnForwardChaining.setSelection(false);
 				targetvariablecombo.setVisible(true);
 				lblSelectTargetVariable.setVisible(true);
+				}
 			}
 		});
 		
