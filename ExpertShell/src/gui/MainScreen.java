@@ -131,7 +131,7 @@ public class MainScreen {
 		shlExpertSystemShell.setMinimumSize(new Point(132, 10));
 		shlExpertSystemShell.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/UTasLogo.png"));
 
-		shlExpertSystemShell.setSize(726, 584);
+		shlExpertSystemShell.setSize(757, 611);
 		shlExpertSystemShell.setText("Expert System Shell");
 		shlExpertSystemShell.setLayout(new GridLayout(1, false));
 		
@@ -183,10 +183,10 @@ public class MainScreen {
 		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
 		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		GridData gd_lblNewLabel_1 = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_lblNewLabel_1.heightHint = 488;
-		gd_lblNewLabel_1.widthHint = 691;
+		gd_lblNewLabel_1.heightHint = 508;
+		gd_lblNewLabel_1.widthHint = 717;
 		lblNewLabel_1.setLayoutData(gd_lblNewLabel_1);
-		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/MainImage.jpg"));
+		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/MainImageRS.jpg"));
 		
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmUserInterface.setText("User Interface");
