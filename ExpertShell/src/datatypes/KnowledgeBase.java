@@ -147,7 +147,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		}
 	}
 	
-	public ArrayList<Variable> getConsequentVariablesArray()
+	public Variable[] getConsequentVariablesArray()
 	{
 		ArrayList<Variable> variables = new ArrayList<Variable>();
 		
