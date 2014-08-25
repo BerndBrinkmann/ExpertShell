@@ -13,7 +13,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
 	protected KBSettings.ConflictResolution conflictResolution = KBSettings.ConflictResolution.NONE;
 	protected Variable VarTemp;
-	protected LinguisticVariable target;
+	protected Variable target;
 	
 
 	public KnowledgeBase(String name)
@@ -293,12 +293,12 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		}	
 	}
 		
-	public LinguisticVariable getTarget(){
+	public Variable getTarget(){
     	
     	return target;
     }
 	
-	public void setTarget(LinguisticVariable tgt){
+	public void setTarget(Variable tgt){
 		
 		target=tgt;
 	}

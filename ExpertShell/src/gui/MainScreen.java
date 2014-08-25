@@ -38,6 +38,7 @@ import datatypes.KBSettings.UncertaintyManagement;
 
 import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.events.TraverseEvent;
+import org.eclipse.swt.widgets.Canvas;
 
 
 //note - to reference a widget it must be 'exposed' by right-clicking on it in windowbuilder and selecting 'expose component' --Arie
@@ -118,7 +119,7 @@ public class MainScreen {
 		shlExpertSystemShell.setMinimumSize(new Point(132, 10));
 		shlExpertSystemShell.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/UTasLogo.png"));
 
-		shlExpertSystemShell.setSize(722, 563);
+		shlExpertSystemShell.setSize(722, 577);
 		shlExpertSystemShell.setText("Expert System Shell");
 		shlExpertSystemShell.setLayout(new GridLayout(1, false));
 		
@@ -163,8 +164,17 @@ public class MainScreen {
 		tbtmMain.setText("Main");
 		
 		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
+		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		tbtmMain.setControl(composite_1);
 		composite_1.setLayout(new GridLayout(1, false));
+		
+		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
+		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
+		GridData gd_lblNewLabel_1 = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_lblNewLabel_1.heightHint = 488;
+		gd_lblNewLabel_1.widthHint = 691;
+		lblNewLabel_1.setLayoutData(gd_lblNewLabel_1);
+		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/MainImage.jpg"));
 		
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmUserInterface.setText("User Interface");
