@@ -21,15 +21,15 @@ public class RuleListGUI_temp extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
-		Composite composite = new Composite(this, SWT.NONE);
-		composite.setLayout(new GridLayout(1, false));
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		Composite compList = new Composite(this, SWT.NONE);
+		compList.setLayout(new GridLayout(1, false));
+		compList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		Group group = RuleGUIFactory.createGroupRuleContainer(composite, "1.");
+		Group group = RuleGUIFactory.createGroupRuleContainer(compList, "1.");
 		
 		StyledText styledText = RuleGUIFactory.createStyledTextRule(group, "IF\t\t\t\tthingy is blue\r\nTHEN\t\tother_thing is yes\r\n\t\t\t\tblah is no");
 		
-		Group group_1 = new Group(composite, SWT.NONE);
+		Group group_1 = new Group(compList, SWT.NONE);
 		group_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		group_1.setText("2.");
 		group_1.setBounds(0, 0, 157, 67);
