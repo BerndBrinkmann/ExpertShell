@@ -83,11 +83,7 @@ public class VariablesGUI extends Composite {
 						{
 
 							possibleValuesList.add(i.toString());
-							System.out.println(i);
-							String temp = i.toString();
-							System.out.println(temp);
-							possibleValuesList.add(temp);
-
+							
 						}
 					}
 				}
@@ -172,8 +168,6 @@ public class VariablesGUI extends Composite {
 		btnSave.setBounds(103, 406, 75, 25);
 		btnSave.setText("Save");
 		
-		possibleValuesList = new List(GroupAddDelete, SWT.BORDER);
-		possibleValuesList.setBounds(103, 175, 354, 176);
 		new Label(this, SWT.NONE);
 		
 
