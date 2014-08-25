@@ -50,7 +50,7 @@ import org.eclipse.swt.custom.StyledText;
 public class MainScreen {
 
 	protected Shell shlExpertSystemShell;
-	private Text text;
+	private Label text;
 	private Text text_1;
 	private Text text_2;
 	private Button btnBackwardChaining;
@@ -211,7 +211,7 @@ public class MainScreen {
 		grpKnowledgeBaseSelected.setLayoutData(gd_grpKnowledgeBaseSelected);
 		grpKnowledgeBaseSelected.setText("Knowledge Base Selected");
 		
-		text = new Text(grpKnowledgeBaseSelected, SWT.BORDER);
+		text = new Label(grpKnowledgeBaseSelected, SWT.NONE);
 		GridData gd_text = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
 		gd_text.widthHint = 323;
 		text.setLayoutData(gd_text);
@@ -762,9 +762,9 @@ public class MainScreen {
 	listChangeFlag = true;
 	targetvariablecombo.removeAll();
 	
-	if(KBase.getVariablesArray().isEmpty() == false)
+	if(KBase.getConsequentVariablesArray().isEmpty() ==false)
 	{
-	for (Variable v : KBase.getVariablesArray())
+	for (Variable v : KBase.getConsequentVariablesArray())
 		{
 		if(v != null)
 		{	
@@ -773,7 +773,7 @@ public class MainScreen {
 		}
 		}
 	if(targetvariablecombo.getSelectionIndex() != -1){
-	selectedVariable = KBase.getVariablesArray().get(targetvariablecombo.getSelectionIndex());
+	selectedVariable = KBase.getConsequentVariablesArray().get(targetvariablecombo.getSelectionIndex());
 	}
 	
 	}

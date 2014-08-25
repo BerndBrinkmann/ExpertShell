@@ -147,7 +147,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		}
 	}
 	
-	public Variable[] getConsequentVariablesArray()
+	public ArrayList<Variable> getConsequentVariablesArray()
 	{
 		ArrayList<Variable> variables = new ArrayList<Variable>();
 		
@@ -159,7 +159,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 					variables.add(c.getVariable());
 			}
 		}
-		return variables.toArray(new Variable[variables.size()]);
+		return variables;
 	}
 	
 	public void autoSetUserInput()

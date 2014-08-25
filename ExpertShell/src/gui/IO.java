@@ -197,7 +197,7 @@ public class IO
 	 * @param variables
 	 * @return
 	 */
-	public static Variable getVariable(String message, Variable[] variables)
+	public static Variable getVariable(String message, ArrayList<Variable> variables)
 	{
 		Variable var;
 		if(frame != null)
