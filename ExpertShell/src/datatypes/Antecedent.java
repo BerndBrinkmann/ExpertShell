@@ -123,7 +123,6 @@ public class Antecedent extends Conditional implements Serializable
 				return false;
 			}
 		}
-				
 	}
 	
 	public Consequent convertToConsequent()

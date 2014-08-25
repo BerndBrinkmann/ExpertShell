@@ -38,12 +38,12 @@ public class InferenceEngine {
 	{			
 		// obtain the target variable
 		howList = new ArrayList<Rule>();
-		Variable target = IO.getVariable("Choose the target variable", KBase.getConsequentVariablesArray());
-		if(target == null)
-		{
-			System.out.println("Operation Cancelled by User");
-			return null;
-		}
+		//Variable target = IO.getVariable("Choose the target variable", KBase.getConsequentVariablesArray());
+		//if(target == null)
+		//{
+		//	System.out.println("Operation Cancelled by User");
+		//	return null;
+		//}
 		
 		Rule rule;
 		Rule[] rulesList = KBase.getRuleArray();		
@@ -79,7 +79,8 @@ public class InferenceEngine {
 			//if no rules fired in the cycle then return true;
 			if(nRulesFired == 0)
 			{
-				return target;
+				//return target;
+				return null;
 			}
 		}
 	}    
