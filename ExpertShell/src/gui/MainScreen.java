@@ -368,7 +368,7 @@ public class MainScreen {
 		btnBayesianReasoning.setBounds(10, 40, 145, 16);
 		
 		
-		scrolledComposite = new ScrolledComposite(composite, SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite = new ScrolledComposite(composite, SWT.V_SCROLL);
 		scrolledComposite.addTraverseListener(new TraverseListener() {
 			public void keyTraversed(TraverseEvent e) {
 			}
