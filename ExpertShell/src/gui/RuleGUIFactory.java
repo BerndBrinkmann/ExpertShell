@@ -7,6 +7,9 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.layout.FillLayout;
 
 public final class RuleGUIFactory {
 	/**
@@ -176,4 +179,27 @@ public final class RuleGUIFactory {
 		composite.setLayout(new GridLayout(4, false));
 		return composite;
 	}
+	/**
+	 * @wbp.factory
+	 * @wbp.factory.parameter.source text "IF\t\t\t\tthingy is blue\r\nTHEN\t\tother_thing is yes\r\n\t\t\t\tblah is no"
+	 */
+	public static StyledText createStyledTextRule(Composite parent, String text) {
+		StyledText styledText = new StyledText(parent, SWT.BORDER);
+		styledText.setText(text);
+		styledText.setEditable(false);
+		styledText.setEnabled(false);
+		return styledText;
+	}
+	/**
+	 * @wbp.factory
+	 * @wbp.factory.parameter.source text "1."
+	 */
+	public static Group createGroupRuleContainer(Composite parent, String text) {
+		Group group = new Group(parent, SWT.NONE);
+		group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		group.setText(text);
+		group.setLayout(new FillLayout(SWT.HORIZONTAL));
+		return group;
+	}
+	
 }
