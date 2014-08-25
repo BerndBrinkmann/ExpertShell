@@ -38,6 +38,7 @@ import datatypes.KBSettings.UncertaintyManagement;
 
 import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.events.TraverseEvent;
+import org.eclipse.swt.widgets.Canvas;
 
 
 //note - to reference a widget it must be 'exposed' by right-clicking on it in windowbuilder and selecting 'expose component' --Arie
@@ -72,6 +73,12 @@ public class MainScreen {
     private Menu menu_4;
     private MenuItem newKB;
     private RuleEditorGUI ruleEditor;
+    private Combo targetvariablecombo;
+    private Boolean listChangeFlag = false;
+    private String variableListLabel;
+    private Variable selectedVariable;
+    private String selectedVariableString;
+
 
 	public KnowledgeBase getKnowledgeBase(){
 		return KBase ;
@@ -118,7 +125,7 @@ public class MainScreen {
 		shlExpertSystemShell.setMinimumSize(new Point(132, 10));
 		shlExpertSystemShell.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/UTasLogo.png"));
 
-		shlExpertSystemShell.setSize(722, 563);
+		shlExpertSystemShell.setSize(722, 577);
 		shlExpertSystemShell.setText("Expert System Shell");
 		shlExpertSystemShell.setLayout(new GridLayout(1, false));
 		
@@ -163,8 +170,17 @@ public class MainScreen {
 		tbtmMain.setText("Main");
 		
 		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
+		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		tbtmMain.setControl(composite_1);
 		composite_1.setLayout(new GridLayout(1, false));
+		
+		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
+		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
+		GridData gd_lblNewLabel_1 = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_lblNewLabel_1.heightHint = 488;
+		gd_lblNewLabel_1.widthHint = 691;
+		lblNewLabel_1.setLayoutData(gd_lblNewLabel_1);
+		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/MainImage.jpg"));
 		
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmUserInterface.setText("User Interface");
@@ -177,30 +193,68 @@ public class MainScreen {
 			}
 		});
 		tbtmUserInterface.setControl(composite);
-		GridLayout gl_composite = new GridLayout(3, false);
+		GridLayout gl_composite = new GridLayout(4, false);
 		gl_composite.marginWidth = 3;
 		composite.setLayout(gl_composite);
 		
 		Group grpKnowledgeBaseSelected = new Group(composite, SWT.NONE);
-		grpKnowledgeBaseSelected.setLayout(new GridLayout(1, false));
-		GridData gd_grpKnowledgeBaseSelected = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		grpKnowledgeBaseSelected.setLayout(new GridLayout(3, false));
+		GridData gd_grpKnowledgeBaseSelected = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gd_grpKnowledgeBaseSelected.heightHint = 62;
-		gd_grpKnowledgeBaseSelected.widthHint = 330;
+		gd_grpKnowledgeBaseSelected.widthHint = 345;
 		grpKnowledgeBaseSelected.setLayoutData(gd_grpKnowledgeBaseSelected);
 		grpKnowledgeBaseSelected.setText("Knowledge Base Selected");
 		
 		text = new Text(grpKnowledgeBaseSelected, SWT.BORDER);
-		GridData gd_text = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_text = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
 		gd_text.widthHint = 307;
 		text.setLayoutData(gd_text);
-		
-		btnRun = new Button(grpKnowledgeBaseSelected, SWT.NONE);
-
-		
 				
-			
-		btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnRun.setText("Run");
+				Label lblSelectTargetVariable = new Label(grpKnowledgeBaseSelected, SWT.NONE);
+				lblSelectTargetVariable.setText("Select Target Variable");
+				
+				targetvariablecombo = new Combo(grpKnowledgeBaseSelected, SWT.NONE);
+				targetvariablecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+				this.setVariableCombo();
+
+				
+				btnRun = new Button(grpKnowledgeBaseSelected, SWT.NONE);
+				
+						
+								
+							
+						btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+						btnRun.setText("Run");
+						
+						btnRun.addSelectionListener(new SelectionAdapter() {
+							@Override
+							public void widgetSelected(SelectionEvent e) {
+								e.getSource();
+								//KnowledgeBase.validate();
+							    btnCertainityFactor.getSelection();
+							    btnRun.getSelection();
+								if (btnCertainityFactor.getSelection()==true){
+									QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
+									askCFQuestion.addQuestion();
+									//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+									scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+									CompQ.layout();
+									//scrolledComposite.layout();
+									button.setSelection(false);
+									btnBayesianReasoning.setSelection(false);
+								}else
+								{
+									QuestionGUI askQuestion = new QuestionGUI(CompQ);
+									askQuestion.addQuestion();
+									//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+									scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+									CompQ.layout();
+									btnCertainityFactor.setSelection(false);
+									;
+									//questionGroup.layout();
+								}
+							}
+						});
 		
 		Group grpSelectRunMethod = new Group(composite, SWT.NONE);
 		GridData gd_grpSelectRunMethod = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -273,9 +327,9 @@ public class MainScreen {
 			}
 		});
 		scrolledComposite.setAlwaysShowScrollBars(true);
-		GridData gd_scrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_scrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gd_scrolledComposite.heightHint = 381;
-		gd_scrolledComposite.widthHint = 326;
+		gd_scrolledComposite.widthHint = 329;
 		scrolledComposite.setLayoutData(gd_scrolledComposite);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
@@ -438,14 +492,6 @@ public class MainScreen {
 		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
 		
-		/*combo.setBounds(10, 90, 320, 23);
-		
-		text_2 = new Text(group, SWT.WRAP);
-		text_2.setBounds(10, 10, 320, 74);
-		scrolledComposite.setContent(composite_2);
-		scrolledComposite.setMinSize(composite_2.computeSize(SWT.DEFAULT, SWT.DEFAULT));*/
-		
-		
 
 		ScrolledComposite scrolledComposite_1 = new ScrolledComposite(composite, SWT.BORDER | SWT.V_SCROLL);
 		scrolledComposite_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
@@ -460,6 +506,10 @@ public class MainScreen {
 		lblWhyhow.setText("Why/How");
 		scrolledComposite_1.setContent(lblWhyhow);
 		scrolledComposite_1.setMinSize(lblWhyhow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
 		
 		
 		MenuItem mntmOpenKnowledgeBase = new MenuItem(menu_1, SWT.CASCADE);
@@ -541,36 +591,6 @@ public class MainScreen {
 			}
 		});
 		mntmForecast.setText("Forecast");
-		
-		btnRun.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-				//KnowledgeBase.validate();
-			    btnCertainityFactor.getSelection();
-			    btnRun.getSelection();
-				if (btnCertainityFactor.getSelection()==true){
-					QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
-					askCFQuestion.addQuestion();
-					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-					CompQ.layout();
-					//scrolledComposite.layout();
-					button.setSelection(false);
-					btnBayesianReasoning.setSelection(false);
-				}else
-				{
-					QuestionGUI askQuestion = new QuestionGUI(CompQ);
-					askQuestion.addQuestion();
-					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-					CompQ.layout();
-					btnCertainityFactor.setSelection(false);
-					;
-					//questionGroup.layout();
-				}
-			}
-		});	
 		
 		
 		
@@ -704,9 +724,26 @@ public class MainScreen {
 		VariablesGUI Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
 		tbtmVariables.setControl(Variables);
 		
-		
-
 	}
+	
+	public void setVariableCombo()
+	{
+	listChangeFlag = true;
+	targetvariablecombo.removeAll();
+	
+		for (Variable v : KBase.getVariablesArray())
+		{
+			variableListLabel = v.toString();
+			targetvariablecombo.add(variableListLabel);
+		}
+	
+	selectedVariable = KBase.getVariablesArray().get(targetvariablecombo.getSelectionIndex());
+	
+	listChangeFlag = false;	
+	}
+
+	
+	
 	public Button getBtnBackwardChaining() {
 		return btnBackwardChaining;
 	}
