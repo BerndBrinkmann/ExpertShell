@@ -98,8 +98,6 @@ public class AntecedentGUI {
 		value.dispose();
 		logicComb.dispose();
 		filler.dispose();
-		
-		c.getParent().getParent().layout();
 	}
 	
 }

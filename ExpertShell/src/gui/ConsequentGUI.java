@@ -98,7 +98,6 @@ public class ConsequentGUI {
 		spinCF.dispose();
 		uncertaintyContainer.dispose();
 		
-		c.getParent().getParent().layout();
 	}
 	
 }
