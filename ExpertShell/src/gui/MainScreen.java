@@ -731,13 +731,16 @@ public class MainScreen {
 	listChangeFlag = true;
 	targetvariablecombo.removeAll();
 	
-		for (Variable v : KBase.getVariablesArray())
+	if(KBase.getVariablesArray().isEmpty() == false)
+	{
+	for (Variable v : KBase.getVariablesArray())
 		{
 			variableListLabel = v.toString();
 			targetvariablecombo.add(variableListLabel);
 		}
-	
 	selectedVariable = KBase.getVariablesArray().get(targetvariablecombo.getSelectionIndex());
+	}
+	
 	
 	listChangeFlag = false;	
 	}
