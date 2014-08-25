@@ -3,6 +3,8 @@ package datatypes;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import datatypes.Variable;
+
 public class KnowledgeBase extends getSetKBSettings implements Serializable 
 {
 	protected String Name;
@@ -159,7 +161,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 					variables.add(c.getVariable());
 			}
 		}
-		return variables;
+		return variables.toArray(new Variable[variables.size()]);
 	}
 	
 	public void autoSetUserInput()
