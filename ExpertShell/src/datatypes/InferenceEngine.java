@@ -1,6 +1,7 @@
 package datatypes;
 
 import java.io.IOException;
+import datatypes.getSetKBSettings;
 import java.io.PipedInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +30,7 @@ public class InferenceEngine
 	{			
 		// obtain the target variable
 		howList = new ArrayList<Rule>();
-		Variable target = StuartIO.getVariable("Input a target variable", knowledgeBase.getConsequentVariablesArray());
+		Variable target = StuartIO.getVariable("Choose the target variable", knowledgeBase.getConsequentVariablesArray());
 		if(target == null)
 		{
 			System.out.println("Operation Cancelled by User");
@@ -40,7 +41,7 @@ public class InferenceEngine
 		Rule[] rulesList = knowledgeBase.getRuleArray();		
 		
 		//sort the rule list for forward chaining
-		if(knowledgeBase.getConflictResolutionMethod() == ConflictResolutionMethod.MORE_SPECIFIC_FIRST)
+		if(knowledgeBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
 			Arrays.sort(rulesList, new RuleAntecedentComparator());
 		
 		while(true)
@@ -60,7 +61,7 @@ public class InferenceEngine
 				}
 				else
 				{
-					if(rule.evaluate(knowledgeBase.getUncertaintyMethod()))
+					if(rule.evaluate(getSetKBSettings.uncertaintyType))
 					{
 						howList.add(rule);
 					}
@@ -105,7 +106,7 @@ public class InferenceEngine
 		//find the first lot of containing rules and push to the stack
 		Rule[] containingRules = findContainingRules(cons);
 		//sort the containing rules to resolve conflicts
-		if(knowledgeBase.getConflictResolutionMethod() == ConflictResolutionMethod.MORE_SPECIFIC_FIRST)
+		if(knowledgeBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
 			Arrays.sort(containingRules, new RuleAntecedentComparator());
 		
 		
@@ -144,7 +145,7 @@ public class InferenceEngine
 						containingRules = findContainingRules(rule.getAntecedent(j).convertToConsequent());
 						
 						//sort the containing rules to resolve conflicts
-						if(knowledgeBase.getConflictResolutionMethod() == ConflictResolutionMethod.MORE_SPECIFIC_FIRST)
+						if(knowledgeBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
 							Arrays.sort(containingRules, new RuleAntecedentComparator());
 						if(containingRules.length > 0)
 						{		
