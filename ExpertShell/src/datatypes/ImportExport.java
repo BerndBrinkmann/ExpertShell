@@ -32,7 +32,7 @@ public class ImportExport
 	
 	public static void setMainFrame(Component cpm)
 	{
-		frame = cpm;
+		frame = null;
 	}
 	
 	public static String getString()
@@ -48,8 +48,7 @@ public class ImportExport
 	public static String getString(String message, String[] possibleValues)
 	{
 		String s;
-		if(frame != null)
-		{
+
 			s = (String)JOptionPane.showInputDialog(
 	                frame,
 	                message,
@@ -58,11 +57,7 @@ public class ImportExport
 	                null,
 	                possibleValues,
 	                "");
-		}
-		else
-		{
-			s = "";
-		}
+
 		
 		return s;
 	}
@@ -76,8 +71,7 @@ public class ImportExport
 	public static Value getValue(String message, Value[] possibleValues)
 	{
 		Value val;
-		if(frame != null)
-		{
+
 			val = (Value)JOptionPane.showInputDialog(
 	                frame,
 	                message,
@@ -86,11 +80,6 @@ public class ImportExport
 	                null,
 	                possibleValues,
 	                "");
-		}
-		else
-		{
-			val = null;
-		}
 		return val;
 	}
 	
@@ -200,8 +189,7 @@ public class ImportExport
 	public static Variable getVariable(String message, Variable[] possibleVariables)
 	{
 		Variable var;
-		if(frame != null)
-		{
+
 			var = (Variable)JOptionPane.showInputDialog(
 	                frame,
 	                message,
@@ -210,11 +198,6 @@ public class ImportExport
 	                null,
 	                possibleVariables,
 	                "");
-		}
-		else
-		{
-			var = null;
-		}
 		return var;
 	}
 	
