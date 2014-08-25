@@ -71,21 +71,15 @@ public class VariablesGUI extends Composite {
 				{
 
 					possibleValuesList.removeAll();
-					System.out.println(variableList.getSelection()[0]);
-
 					currentvariable = KBase.getVariable(variableList.getSelection()[0]);
 					descriptionTxt.setText(currentvariable.getDescription());
 					txtVariableName.setText(currentvariable.getName());
 					QuestionPrompt.setText(currentvariable.getQueryPrompt());
 					if (currentvariable.getArrayOfPossibleValues()!= null)
 					{
-
-
 						for (Value i : currentvariable.getArrayOfPossibleValues())
 						{
-
 							possibleValuesList.add(i.toString());
-							
 						}
 					}
 				}
