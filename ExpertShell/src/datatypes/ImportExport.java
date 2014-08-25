@@ -53,7 +53,7 @@ public class ImportExport
 			s = (String)JOptionPane.showInputDialog(
 	                frame,
 	                message,
-	                "STUART requires input",
+	                "requires input",
 	                JOptionPane.PLAIN_MESSAGE,
 	                null,
 	                possibleValues,
@@ -81,7 +81,7 @@ public class ImportExport
 			val = (Value)JOptionPane.showInputDialog(
 	                frame,
 	                message,
-	                "STUART requires input",
+	                "requires input",
 	                JOptionPane.PLAIN_MESSAGE,
 	                null,
 	                possibleValues,
@@ -207,7 +207,7 @@ public class ImportExport
 			var = (Variable)JOptionPane.showInputDialog(
 	                frame,
 	                message,
-	                "STUART requires input",
+	                "requires input",
 	                JOptionPane.PLAIN_MESSAGE,
 	                null,
 	                possibleVariables,
