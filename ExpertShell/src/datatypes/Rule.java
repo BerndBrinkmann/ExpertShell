@@ -1,12 +1,16 @@
 package datatypes;
-//test
+
 import java.io.Serializable;
+
+import datatypes.KBSettings;
+import datatypes.KBSettings.UncertaintyManagement;
+import datatypes.getSetKBSettings;
 import java.util.ArrayList;
 import java.util.Stack;
 
 import removedClasses.UncertaintyMethod;
 
-public class Rule extends getSetKBSettings implements Serializable
+public class Rule extends getSetKBSettings
 {
 	protected ArrayList<Antecedent> antecedents;
 	protected ArrayList<Consequent> consequents;
@@ -15,7 +19,7 @@ public class Rule extends getSetKBSettings implements Serializable
 	protected int priority = 1;
 	protected int ruleNum;
 	
-	KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
+	KBSettings.UncertaintyManagement uncertaintyType = UncertaintyManagement.NONE;
 	
 	@Override
 	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)
@@ -149,14 +153,14 @@ public class Rule extends getSetKBSettings implements Serializable
 	}
 	
 	//returns the result of evaluating the required antecedents in a rule and also fires if required
-	public Boolean evaluate(UncertaintyMethod umethod)
+	public Boolean evaluate(UncertaintyManagement umethod)
 	{
 		//evaluate all antecedents in the case of Bayesian and Certainty factor reasoning. Otherwise minimise user interaction
 		switch(umethod)
 		{
 			case BAYESIAN:
 				return evaluateAll(umethod);
-			case CERTAINTY_FACTOR:
+			case CF:
 				return evaluateAll(umethod);
 			default:
 				break;
@@ -190,7 +194,7 @@ public class Rule extends getSetKBSettings implements Serializable
 						var = ImportExport.userSetVaraible(var,this);
 						
 						//get the certainty if required
-						if(umethod == UncertaintyMethod.CERTAINTY_FACTOR)
+						if(umethod == KBSettings.UncertaintyManagement.CF)
 						{
 							var.setCertaintyFactor(var.getCurrentValue(), ImportExport.getCertainty("Input a certainty for "+var.toString()));
 						}
@@ -229,7 +233,7 @@ public class Rule extends getSetKBSettings implements Serializable
 						var = ImportExport.userSetVaraible(var,this);
 						
 						//get the certainty if required
-						if(umethod == UncertaintyMethod.CERTAINTY_FACTOR)
+						if(umethod == UncertaintyManagement.CF)
 						{
 							var.setCertaintyFactor(var.getCurrentValue(), ImportExport.getCertainty("Input a certainty for "+var.toString()));
 						}
@@ -254,7 +258,7 @@ public class Rule extends getSetKBSettings implements Serializable
 	}
 	
 	//returns the result of evaluating the required antecedents in a rule and also fires if required
-	public Boolean evaluateAll(UncertaintyMethod umethod)
+	public Boolean evaluateAll(UncertaintyManagement umethod)
 		{
 			// there must be at least a single antecedent to evaluate
 			Boolean result = false;
