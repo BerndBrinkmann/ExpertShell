@@ -3,42 +3,83 @@ package gui;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Listener;
 
 import datatypes.KnowledgeBase;
 import datatypes.Rule;
 
 public class RuleListGUI extends Composite {
 	
-	private ArrayList<Group> ruleGUIs;
+	private ArrayList<RuleGUI> ruleGUIs;
 	private final KnowledgeBase kb;
 	private boolean selectable;
+	private int selectedIndex;
+	private MouseListener listen;
 	
-	//create an editable/selectable rulelistGUI
+	//create an editable/selectable rulelistGUI linked to a knowledgebase
 	public RuleListGUI(Composite parent, int style, KnowledgeBase k) {
 		super(parent, style);
 		setupComposite();
+		setupListener();
 		
 		kb = k;
+		selectedIndex = -1;
 	}
 	
 	//create a non-editable list of arbitary rules (for displaying)
 	public RuleListGUI(Composite parent, int style, ArrayList<Rule> rulelist) {
 		super(parent, style);
 		setupComposite();
+		setupListener();
 		
-		makeRuleListGUI(k,null,false);
-	}
+		kb = null;
+		
+		for(Rule r : rulelist) {
+			ruleGUIs.add(new RuleGUI(this,style,r,false));
+		}
 	
+	}
 	
 	private void setupComposite() {
 		//setup composite
 		this.setLayout(new GridLayout(1, false));
 		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+	}
+	
+	private void setupListener() {
+		listen = new MouseListener() {
+			public void mouseDoubleClick(MouseEvent e) {}
+
+			public void mouseDown(MouseEvent e) {
+				Object source;
+				source = e.getSource();
+				getIndexFromWidget(source);
+				
+			}
+
+			public void mouseUp(MouseEvent e) {	}
+		};
+	}
+	
+	private int getIndexFromWidget(Object source) {
+		int i = -1;
 		
+		//loop through each ruleGUI element
+		for(RuleGUI r: ruleGUIs) {
+			i++;
+			if (r.getStyledTextWidget == source)
+			{
+				return i;
+			}
+		}
+		return i;
 	}
 
 }
