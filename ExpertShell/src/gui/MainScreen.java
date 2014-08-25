@@ -764,7 +764,7 @@ public class MainScreen {
 		tbtmVariables.setControl(Variables);
 		
 	}
-	
+	//variable combooo
 	public void setVariableCombo()
 	{
 	listChangeFlag = true;
