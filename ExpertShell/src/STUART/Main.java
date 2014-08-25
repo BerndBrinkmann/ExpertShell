@@ -11,16 +11,16 @@ import STUART.GUI.*;
 public class Main 
 {
 	
-	public static void main(String[] args)
-	{
-		//set up the static file chooser.
-		KnowledgeBaseFileManager.fileChooser = new JFileChooser();
-		
-		SplashScreen s = new SplashScreen();
-//		RuleWizard ruleWizard = new RuleWizard();
-
-		System.out.println("S.T.U.A.R.T is GO!\n");
-	}
+//	public static void main(String[] args)
+//	{
+//		//set up the static file chooser.
+//		KnowledgeBaseFileManager.fileChooser = new JFileChooser();
+//		
+//		SplashScreen s = new SplashScreen();
+////		RuleWizard ruleWizard = new RuleWizard();
+//
+//		System.out.println("S.T.U.A.R.T is GO!\n");
+//	}
 	
 	
 	//hard coded knowledge base for testing purposes
