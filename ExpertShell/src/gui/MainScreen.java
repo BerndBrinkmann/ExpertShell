@@ -76,6 +76,7 @@ public class MainScreen {
     private Menu menu_4;
     private MenuItem newKB;
     private RuleEditorGUI ruleEditor;
+    private RuleListGUI ruleList;
     private Combo targetvariablecombo;
     private Boolean listChangeFlag = false;
     private String variableListLabel = "";
@@ -691,8 +692,8 @@ public class MainScreen {
 		compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		compListEditor.setLayout(new GridLayout(1, false));
 		
-		Label label = new Label(compListEditor, SWT.NONE);
-		label.setText("()");
+		RuleListGUI ruleList = new RuleListGUI(compListEditor, SWT.NONE, KBase);
+		composite_3.getParent().getParent().layout(true,true);
 		
 		Composite compEditorControls = new Composite(compListEditor, SWT.NONE);
 		compEditorControls.setLayout(new GridLayout(5, false));
