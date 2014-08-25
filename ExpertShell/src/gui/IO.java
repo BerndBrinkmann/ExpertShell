@@ -22,12 +22,7 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import STUART.ADT.KnowledgeBase;
-import STUART.ADT.Rule;
-import STUART.ADT.UncertaintyMethod;
-import STUART.ADT.Value;
-import STUART.ADT.Variable;
-
+import datatypes.*;
 public class IO
 {
 	static Component frame;
@@ -199,10 +194,10 @@ public class IO
 	/**
 	 * returns a variable object from a set of possible variables
 	 * @param message
-	 * @param possibleVariables
+	 * @param variables
 	 * @return
 	 */
-	public static Variable getVariable(String message, Variable[] possibleVariables)
+	public static Variable getVariable(String message, Variable[] variables)
 	{
 		Variable var;
 		if(frame != null)
@@ -213,7 +208,7 @@ public class IO
 	                "STUART requires input",
 	                JOptionPane.PLAIN_MESSAGE,
 	                null,
-	                possibleVariables,
+	                variables,
 	                "");
 		}
 		else
