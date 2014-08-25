@@ -1,6 +1,8 @@
 package datatypes;
 
-public class KBSettings {
+import java.io.Serializable;
+
+public class KBSettings implements Serializable  {
 
 	public enum ConflictResolution
 	{

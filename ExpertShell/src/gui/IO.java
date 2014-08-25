@@ -30,7 +30,7 @@ public class IO
 	
 	public static void setMainFrame(Component cpm)
 	{
-		frame = cpm;
+		frame = null;
 	}
 	
 	public static String getString()
@@ -46,8 +46,7 @@ public class IO
 	public static String getString(String message, String[] possibleValues)
 	{
 		String s;
-		if(frame != null)
-		{
+
 			s = (String)JOptionPane.showInputDialog(
 	                frame,
 	                message,
@@ -56,11 +55,7 @@ public class IO
 	                null,
 	                possibleValues,
 	                "");
-		}
-		else
-		{
-			s = "";
-		}
+
 		
 		return s;
 	}
@@ -74,8 +69,7 @@ public class IO
 	public static Value getValue(String message, Value[] possibleValues)
 	{
 		Value val;
-		if(frame != null)
-		{
+
 			val = (Value)JOptionPane.showInputDialog(
 	                frame,
 	                message,
@@ -84,11 +78,7 @@ public class IO
 	                null,
 	                possibleValues,
 	                "");
-		}
-		else
-		{
-			val = null;
-		}
+
 		return val;
 	}
 	
@@ -101,8 +91,7 @@ public class IO
 	public static Variable userSetVaraible(Variable var, Rule rule)
 	{
 		thisRule = rule;
-		if(frame != null)
-		{
+
 			if(var instanceof NumericVariable)
 			{
 				JPanel panel = new JPanel();
@@ -146,38 +135,6 @@ public class IO
 					}	
 				}
 			}
-			else
-			{
-				
-				
-				JPanel panel = new JPanel();
-				
-				if(var.getQueryPrompt().trim().equals(""))
-				{
-					panel.add(new JLabel("Input a value for "+var.getName()));
-				}
-				else
-				{
-					panel.add(new JLabel(var.getQueryPrompt()));
-				}
-				
-				JComboBox combox = new JComboBox(var.getArrayOfPossibleValues());
-				
-				JButton why = new JButton("Why?");
-				why.addActionListener(new ActionListener() { 
-					  public void actionPerformed(ActionEvent e) { 
-						  displayWhyMessage();
-					  } 
-					} );
-				
-				panel.add(combox);
-				panel.add(why);
-
-				JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
-				Value val =  (Value) combox.getSelectedItem();
-				var.userSetCurrentValue(val);
-			}
-		}
 		
 		return var;
 	}
@@ -200,8 +157,7 @@ public class IO
 	public static Variable getVariable(String message, Variable[] variables)
 	{
 		Variable var;
-		if(frame != null)
-		{
+
 			var = (Variable)JOptionPane.showInputDialog(
 	                frame,
 	                message,
@@ -210,11 +166,9 @@ public class IO
 	                null,
 	                variables,
 	                "");
-		}
-		else
-		{
-			var = null;
-		}
+
+			
+		
 		return var;
 	}
 	

@@ -10,7 +10,7 @@ import java.util.Stack;
 
 import removedClasses.UncertaintyMethod;
 
-public class Rule extends getSetKBSettings
+public class Rule extends getSetKBSettings implements Serializable 
 {
 	protected ArrayList<Antecedent> antecedents;
 	protected ArrayList<Consequent> consequents;
