@@ -25,7 +25,7 @@ public class InferenceEngine {
 
  KnowledgeBase KBase;
 
-	ArrayList<Rule> howList;
+	protected ArrayList<Rule> howList;
 	
 	public InferenceEngine( KnowledgeBase kb)
 	{
