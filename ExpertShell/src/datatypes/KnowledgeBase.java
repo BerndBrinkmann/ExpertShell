@@ -9,6 +9,8 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	protected String Description;
 	protected ArrayList<Rule> RuleList;
 	protected ArrayList<Variable> VariableList = new ArrayList<Variable>();
+	protected getSetKBSettings getsetSettings;
+	protected KBSettings kbSettings = new KBSettings();
 	protected KBSettings.InferenceType inferenceType;
 	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
 	protected KBSettings.ConflictResolution conflictResolution = KBSettings.ConflictResolution.NONE;

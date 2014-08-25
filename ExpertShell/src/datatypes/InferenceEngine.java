@@ -69,7 +69,7 @@ public class InferenceEngine {
 				}
 				else
 				{
-					if(rule.evaluate(getSetKBSettings.getUncertaintyMethod()))
+					if(rule.evaluate(KBase.getsetSettings.getUncertaintyMethod()))
 					{
 						howList.add(rule);
 					}
@@ -136,7 +136,7 @@ public class InferenceEngine {
 			//get the set of rule at the top of the stack
 			Rule rule = stack.peek();
 								
-			if(rule.evaluate(getSetKBSettings.getUncertaintyMethod()))
+			if(rule.evaluate(KBase.getsetSettings.getUncertaintyMethod()))
 			{
 				//if a rule is evaluated then drop the set off the stack and look at the rule set below
 				howList.add(stack.pop());
