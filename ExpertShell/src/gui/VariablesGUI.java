@@ -78,12 +78,11 @@ public class VariablesGUI extends Composite {
 					if (currentvariable.getArrayOfPossibleValues()!= null)
 					{
 
+
 						for (Value i : currentvariable.getArrayOfPossibleValues())
 						{
 
-
 							possibleValuesList.add(i.toString());
-
 							System.out.println(i);
 							String temp = i.toString();
 							System.out.println(temp);
