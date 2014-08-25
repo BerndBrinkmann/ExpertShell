@@ -31,7 +31,7 @@ public class InferenceEngine {
 	{
 		 
 		//create a deep copy of the knowledge base object to operate on
-		KBase = SerializationUtils.clone(kb);
+		KBase = (KnowledgeBase) SerializationUtils.clone(kb);
 	}
 		
 	public Variable solveForwardChaining()
