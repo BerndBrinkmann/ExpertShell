@@ -1,5 +1,7 @@
 package test;
 
+import java.util.ArrayList;
+
 import datatypes.Antecedent;
 import datatypes.Connectives;
 import datatypes.Consequent;
@@ -15,19 +17,22 @@ public class Test_Case {
 	
 
 	//hard coded knowledge base for testing purposes
-	public static KnowledgeBase createBoatKnowlegeBase()
+	public KnowledgeBase createBoatKnowlegeBase()
 	{
 		KnowledgeBase boat_kb = new KnowledgeBase("Boat Knowlege Base");
 		
 		//define the variables
-		LinguisticVariable numberOfMasts = new LinguisticVariable("number of masts");
+		
+		Variable numberOfMasts = new Variable("number of masts");
+		boat_kb.addVariable(numberOfMasts);
 		Value one = new Value("one");
 		Value two = new Value("two");
 		numberOfMasts.addPossibleValue(one);
 		numberOfMasts.addPossibleValue(two);
 		numberOfMasts.setUserInput(true);
 		
-		LinguisticVariable shapeOfMain = new LinguisticVariable("shape of main-sail");
+		Variable shapeOfMain = new Variable("shape of main-sail");
+		boat_kb.addVariable(shapeOfMain);
 		Value tri = new Value("triangular");
 		Value quad = new Value("quadrilateral");
 		Value triw2fore = new Value("triangular with two foresails");
@@ -36,22 +41,24 @@ public class Test_Case {
 		shapeOfMain.addPossibleValue(triw2fore);
 		shapeOfMain.setUserInput(true);
 		
-		LinguisticVariable mainMastPosition = new LinguisticVariable("main mast position");
+		Variable mainMastPosition = new Variable("main mast position");
+		boat_kb.addVariable(mainMastPosition);
 		Value fwrdShortMast = new Value("forward of the short mast");
 		Value aftShortMast = new Value("aft of the short mast");
 		mainMastPosition.addPossibleValue(fwrdShortMast);
 		mainMastPosition.addPossibleValue(aftShortMast);
 		mainMastPosition.setUserInput(true);
 		
-		LinguisticVariable shortMastPosition = new LinguisticVariable("short mast position");
-		
+		Variable shortMastPosition = new Variable("short mast position");
+		boat_kb.addVariable(shortMastPosition);
 		Value fwrdHelm = new Value("forward of the helm");
 		Value aftHelm = new Value("aft of the  helm");
 		shortMastPosition.addPossibleValue(fwrdHelm);
 		shortMastPosition.addPossibleValue(aftHelm);
 		shortMastPosition.setUserInput(true);
 		
-		LinguisticVariable boat = new LinguisticVariable("boat");
+		Variable boat = new Variable("boat");
+		boat_kb.addVariable(boat);
 		Value jibCutter = new Value("jib headed cutter");
 		Value gaffSloop = new Value("gaff headed sloop");
 		Value jibKetch = new Value("jib headed ketch");

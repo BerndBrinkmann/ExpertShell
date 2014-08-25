@@ -34,6 +34,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import datatypes.*;
+import test.*;
 import datatypes.KBSettings.UncertaintyManagement;
 
 import org.eclipse.swt.events.TraverseListener;
@@ -75,9 +76,10 @@ public class MainScreen {
     private RuleEditorGUI ruleEditor;
     private Combo targetvariablecombo;
     private Boolean listChangeFlag = false;
-    private String variableListLabel;
+    private String variableListLabel = "";
     private Variable selectedVariable;
     private String selectedVariableString;
+    private Test_Case test;
 
 
 	public KnowledgeBase getKnowledgeBase(){
@@ -119,6 +121,9 @@ public class MainScreen {
 	protected void createContents() {
 		//create default KnowledgeBase
 		KBase = new KnowledgeBase("default");
+		test = new Test_Case();
+		KBase = test.createBoatKnowlegeBase();
+		
 		
 		
 		shlExpertSystemShell = new Shell();
@@ -735,10 +740,16 @@ public class MainScreen {
 	{
 	for (Variable v : KBase.getVariablesArray())
 		{
-			variableListLabel = v.toString();
+		if(v != null)
+		{	
+		variableListLabel = v.toString();
 			targetvariablecombo.add(variableListLabel);
 		}
+		}
+	if(targetvariablecombo.getSelectionIndex() != -1){
 	selectedVariable = KBase.getVariablesArray().get(targetvariablecombo.getSelectionIndex());
+	}
+	
 	}
 	
 	
