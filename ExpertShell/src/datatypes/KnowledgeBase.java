@@ -119,12 +119,12 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		{
 			for(Antecedent a : rule.getAntecedentArray())
 			{
-				if(!VariableList.contains(a.getVariable()))
+				if(!VariableList.contains(a.getVariable())&& a.getVariable() !=null)
 					VariableList.add(a.getVariable());
 			}
 			for(Consequent c : rule.getConsequentArray())
 			{
-				if(!VariableList.contains(c.getVariable()))
+				if(!VariableList.contains(c.getVariable())&& c.getVariable() !=null)
 					VariableList.add(c.getVariable());
 			}
 		}
@@ -276,7 +276,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
     
 	public void saveVariable(Variable Var)
 	{
-		//Fix update all variables in rules
+		//has to be Fixed: update with all variables in rules
 		//:search all rules for this variable name and if found replace with this variable
 		int x=0;
 		for (int i = 0;i< VariableList.size();i++)

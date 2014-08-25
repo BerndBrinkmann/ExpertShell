@@ -29,13 +29,13 @@ import org.eclipse.swt.events.FocusEvent;
 
 public class VariablesGUI extends Composite {
 	
-	protected String Name;
-	protected Text descriptionTxt;
-	protected Text txtVariableName;
-	protected List variableList;
-	protected Variable currentvariable = new Variable();
-	protected List possibleValuesList;
-	
+	 String Name;
+	 Text descriptionTxt;
+	 Text txtVariableName;
+	 List variableList;
+	 Variable currentvariable = new Variable();
+	 List possibleValuesList;
+	 KnowledgeBase KBase;
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -45,10 +45,10 @@ public class VariablesGUI extends Composite {
 
 	
 	
-	public VariablesGUI(Composite parent, int style,final KnowledgeBase KBase) {
+	public VariablesGUI(Composite parent, int style,  KnowledgeBase kb) {
 		
 		super(parent, style);
-		
+		KBase = kb;
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		setLayout(new GridLayout(2, false));
 		
