@@ -1,36 +1,44 @@
 package datatypes;
 
+import gui.IO;
+
 import java.io.IOException;
+
 import datatypes.getSetKBSettings;
+import datatypes.KnowledgeBase;
+
 import java.io.PipedInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Stack;
+import java.io.Serializable;
 
 import javax.swing.JOptionPane;
 
-
+import org.apache.commons.lang3.SerializationUtils;
 
 import datatypes.*;
 
-public class InferenceEngine
-{
-	KnowledgeBase knowledgeBase;
+public class InferenceEngine {
+
+ KnowledgeBase KBase;
+
 	ArrayList<Rule> howList;
 	
-	public InferenceEngine(KnowledgeBase kb)
+	public InferenceEngine( KnowledgeBase kb)
 	{
+		 
 		//create a deep copy of the knowledge base object to operate on
-		//knowledgeBase = SerializationUtils.clone(kb);
+		KBase = SerializationUtils.clone(kb);
 	}
 		
 	public Variable solveForwardChaining()
 	{			
 		// obtain the target variable
 		howList = new ArrayList<Rule>();
-		Variable target = StuartIO.getVariable("Choose the target variable", knowledgeBase.getConsequentVariablesArray());
+		Variable target = IO.getVariable("Choose the target variable", KBase.getConsequentVariablesArray());
 		if(target == null)
 		{
 			System.out.println("Operation Cancelled by User");
@@ -38,10 +46,10 @@ public class InferenceEngine
 		}
 		
 		Rule rule;
-		Rule[] rulesList = knowledgeBase.getRuleArray();		
+		Rule[] rulesList = KBase.getRuleArray();		
 		
 		//sort the rule list for forward chaining
-		if(knowledgeBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
+		if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
 			Arrays.sort(rulesList, new RuleAntecedentComparator());
 		
 		while(true)
@@ -61,7 +69,7 @@ public class InferenceEngine
 				}
 				else
 				{
-					if(rule.evaluate(getSetKBSettings.uncertaintyType))
+					if(rule.evaluate(getSetKBSettings.getUncertaintyMethod()))
 					{
 						howList.add(rule);
 					}
@@ -84,8 +92,8 @@ public class InferenceEngine
 	
 	public Variable solveBackwardChaining()
 	{
-		Variable targetVar = StuartIO.getVariable("Input the target variable", knowledgeBase.getConsequentVariablesArray());
-		Value targetVal = StuartIO.getValue("Input a value to search for", targetVar.getArrayOfPossibleValues());
+		Variable targetVar = IO.getVariable("Input the target variable", KBase.getConsequentVariablesArray());
+		Value targetVal = IO.getValue("Input a value to search for", targetVar.getArrayOfPossibleValues());
 		if(targetVar == null || targetVal == null)
 		{
 			System.out.println("Operation Cancelled by User");
@@ -106,7 +114,7 @@ public class InferenceEngine
 		//find the first lot of containing rules and push to the stack
 		Rule[] containingRules = findContainingRules(cons);
 		//sort the containing rules to resolve conflicts
-		if(knowledgeBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
+		if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
 			Arrays.sort(containingRules, new RuleAntecedentComparator());
 		
 		
@@ -128,7 +136,7 @@ public class InferenceEngine
 			//get the set of rule at the top of the stack
 			Rule rule = stack.peek();
 								
-			if(rule.evaluate(knowledgeBase.getUncertaintyMethod()))
+			if(rule.evaluate(getSetKBSettings.getUncertaintyMethod()))
 			{
 				//if a rule is evaluated then drop the set off the stack and look at the rule set below
 				howList.add(stack.pop());
@@ -145,7 +153,7 @@ public class InferenceEngine
 						containingRules = findContainingRules(rule.getAntecedent(j).convertToConsequent());
 						
 						//sort the containing rules to resolve conflicts
-						if(knowledgeBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
+						if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
 							Arrays.sort(containingRules, new RuleAntecedentComparator());
 						if(containingRules.length > 0)
 						{		
@@ -181,13 +189,13 @@ public class InferenceEngine
 		ArrayList<Rule> rules = new ArrayList<Rule>();
 		
 		//perform a linear search through the rule list
-		for(int i = 0; i < knowledgeBase.getNumberOfRules(); i++)
+		for(int i = 0; i < KBase.getNumberOfRules(); i++)
 		{
-			for(int j = 0; j < knowledgeBase.getRule(i).getNumberOfConsequents(); j++)
+			for(int j = 0; j < KBase.getRule(i).getNumberOfConsequents(); j++)
 			{
-				if(cons.equals(knowledgeBase.getRule(i).getConsequent(j)))
+				if(cons.equals(KBase.getRule(i).getConsequent(j)))
 				{
-					rules.add(knowledgeBase.getRule(i));
+					rules.add(KBase.getRule(i));
 				}
 			}
 		}
