@@ -192,7 +192,7 @@ public class MainScreen {
 		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/MainImageRS.jpg"));
 		
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
-		tbtmUserInterface.setText("User Interface");
+		tbtmUserInterface.setText("Run Knowledgebase");
 
 		
 		Composite composite = new Composite(tabFolder, SWT.NONE);
@@ -571,6 +571,7 @@ public class MainScreen {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				//want to actually open boat KB when this is pressed
 				text.setText("Boat");
 				btnDefault.setSelection(true);
 				button.setSelection(true);
@@ -714,7 +715,7 @@ public class MainScreen {
 				
 			}
 		});
-		tbtmDeveloperInterface.setText("Developer Interface");
+		tbtmDeveloperInterface.setText("Create/Edit Knowledgebase");
 		
 		Composite composite_3 = new Composite(tabFolder, SWT.NONE);
 		tbtmDeveloperInterface.setControl(composite_3);
