@@ -53,7 +53,7 @@ public class ImportExport
 			s = (String)JOptionPane.showInputDialog(
 	                frame,
 	                message,
-	                "STUART requires input",
+	                "requires input",
 	                JOptionPane.PLAIN_MESSAGE,
 	                null,
 	                possibleValues,
@@ -81,7 +81,7 @@ public class ImportExport
 			val = (Value)JOptionPane.showInputDialog(
 	                frame,
 	                message,
-	                "STUART requires input",
+	                "requires input",
 	                JOptionPane.PLAIN_MESSAGE,
 	                null,
 	                possibleValues,
@@ -103,8 +103,6 @@ public class ImportExport
 	public static Variable userSetVaraible(Variable var, Rule rule)
 	{
 		thisRule = rule;
-		if(frame != null)
-		{
 			if(var instanceof NumericVariable)
 			{
 				JPanel panel = new JPanel();
@@ -179,7 +177,7 @@ public class ImportExport
 				Value val =  (Value) combox.getSelectedItem();
 				var.userSetCurrentValue(val);
 			}
-		}
+		
 		
 		return var;
 	}
@@ -207,7 +205,7 @@ public class ImportExport
 			var = (Variable)JOptionPane.showInputDialog(
 	                frame,
 	                message,
-	                "STUART requires input",
+	                "requires input",
 	                JOptionPane.PLAIN_MESSAGE,
 	                null,
 	                possibleVariables,
