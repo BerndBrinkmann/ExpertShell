@@ -131,7 +131,7 @@ public class MainScreen {
 		shlExpertSystemShell.setMinimumSize(new Point(132, 10));
 		shlExpertSystemShell.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/UTasLogo.png"));
 
-		shlExpertSystemShell.setSize(722, 577);
+		shlExpertSystemShell.setSize(733, 577);
 		shlExpertSystemShell.setText("Expert System Shell");
 		shlExpertSystemShell.setLayout(new GridLayout(1, false));
 		
@@ -213,7 +213,7 @@ public class MainScreen {
 		
 		text = new Text(grpKnowledgeBaseSelected, SWT.BORDER);
 		GridData gd_text = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
-		gd_text.widthHint = 307;
+		gd_text.widthHint = 323;
 		text.setLayoutData(gd_text);
 				
 				Label lblSelectTargetVariable = new Label(grpKnowledgeBaseSelected, SWT.NONE);
