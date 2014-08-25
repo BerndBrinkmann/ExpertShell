@@ -73,6 +73,12 @@ public class MainScreen {
     private Menu menu_4;
     private MenuItem newKB;
     private RuleEditorGUI ruleEditor;
+    private Combo targetvariablecombo;
+    private Boolean listChangeFlag = false;
+    private String variableListLabel;
+    private Variable selectedVariable;
+    private String selectedVariableString;
+
 
 	public KnowledgeBase getKnowledgeBase(){
 		return KBase ;
@@ -207,8 +213,10 @@ public class MainScreen {
 				Label lblSelectTargetVariable = new Label(grpKnowledgeBaseSelected, SWT.NONE);
 				lblSelectTargetVariable.setText("Select Target Variable");
 				
-				Combo combo_2 = new Combo(grpKnowledgeBaseSelected, SWT.NONE);
-				combo_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+				targetvariablecombo = new Combo(grpKnowledgeBaseSelected, SWT.NONE);
+				targetvariablecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+				this.setVariableCombo();
+
 				
 				btnRun = new Button(grpKnowledgeBaseSelected, SWT.NONE);
 				
@@ -716,9 +724,26 @@ public class MainScreen {
 		VariablesGUI Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
 		tbtmVariables.setControl(Variables);
 		
-		
-
 	}
+	
+	public void setVariableCombo()
+	{
+	listChangeFlag = true;
+	targetvariablecombo.removeAll();
+	
+		for (Variable v : KBase.getVariablesArray())
+		{
+			variableListLabel = v.toString();
+			targetvariablecombo.add(variableListLabel);
+		}
+	
+	selectedVariable = KBase.getVariablesArray().get(targetvariablecombo.getSelectionIndex());
+	
+	listChangeFlag = false;	
+	}
+
+	
+	
 	public Button getBtnBackwardChaining() {
 		return btnBackwardChaining;
 	}
