@@ -103,8 +103,6 @@ public class ImportExport
 	public static Variable userSetVaraible(Variable var, Rule rule)
 	{
 		thisRule = rule;
-		if(frame != null)
-		{
 			if(var instanceof NumericVariable)
 			{
 				JPanel panel = new JPanel();
@@ -179,7 +177,7 @@ public class ImportExport
 				Value val =  (Value) combox.getSelectedItem();
 				var.userSetCurrentValue(val);
 			}
-		}
+		
 		
 		return var;
 	}
