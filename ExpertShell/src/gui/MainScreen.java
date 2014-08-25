@@ -131,7 +131,7 @@ public class MainScreen {
 		shlExpertSystemShell.setMinimumSize(new Point(132, 10));
 		shlExpertSystemShell.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/UTasLogo.png"));
 
-		shlExpertSystemShell.setSize(733, 577);
+		shlExpertSystemShell.setSize(726, 584);
 		shlExpertSystemShell.setText("Expert System Shell");
 		shlExpertSystemShell.setLayout(new GridLayout(1, false));
 		
