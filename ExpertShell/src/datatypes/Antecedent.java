@@ -154,5 +154,21 @@ public class Antecedent extends Conditional implements Serializable
 				return variable.getName() + " is " + value.getName();
 		}
 	}
+	
+	public String getVariableAsString() {
+		return variable.getName();
+	}
+	
+	public String getValueAsString() {
+		if(isNumeric) {
+			return numVal.toString();
+		} else {
+			return value.getName();
+		}
+	}
+	
+	public String getComparisonAsString() {
+		return comparison.toString();
+	}
 
 }

@@ -83,6 +83,7 @@ public class MainScreen {
     private Variable selectedVariable;
     private String selectedVariableString;
     private Test_Case test;
+    private Label lblSelectTargetVariable;
 
 
 	public KnowledgeBase getKnowledgeBase(){
@@ -218,11 +219,13 @@ public class MainScreen {
 		gd_text.widthHint = 323;
 		text.setLayoutData(gd_text);
 				
-				Label lblSelectTargetVariable = new Label(grpKnowledgeBaseSelected, SWT.NONE);
+				lblSelectTargetVariable = new Label(grpKnowledgeBaseSelected, SWT.NONE);
 				lblSelectTargetVariable.setText("Select Target Variable");
+				lblSelectTargetVariable.setVisible(false);
 				
 				targetvariablecombo = new Combo(grpKnowledgeBaseSelected, SWT.NONE);
 				targetvariablecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+				targetvariablecombo.setVisible(false);
 				this.setVariableCombo();
 
 				
@@ -238,6 +241,20 @@ public class MainScreen {
 							@Override
 							public void widgetSelected(SelectionEvent e) {
 								e.getSource();
+								
+								if(text.getText()==""){
+									
+									NoRun noKB = new NoRun(shlExpertSystemShell, SWT.ICON_ERROR|SWT.OK);
+									noKB.open();
+									
+								}
+								
+								if(targetvariablecombo.isVisible()==true && targetvariablecombo.getText()==""){
+									
+									NoRunV noVar = new NoRunV(shlExpertSystemShell, SWT.ICON_ERROR|SWT.OK);
+									noVar.open();
+									
+								}
 								//KnowledgeBase.validate();
 							    btnCertainityFactor.getSelection();
 							    btnRun.getSelection();
@@ -294,16 +311,26 @@ public class MainScreen {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				btnDefault.getSelection();
+				if (btnDefault.getSelection()==true){
 				btnForwardChaining.setSelection(false);
 				btnBackwardChaining.setSelection(false);
+				targetvariablecombo.setVisible(false);
+				lblSelectTargetVariable.setVisible(false);
+				}
 			}
 		});
 		btnForwardChaining.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				btnForwardChaining.getSelection();
+				if(btnForwardChaining.getSelection()==true){
 				btnDefault.setSelection(false);
 				btnBackwardChaining.setSelection(false);
+				targetvariablecombo.setVisible(false);
+				lblSelectTargetVariable.setVisible(false);
+				}
 			}
 		});
 		
@@ -311,8 +338,13 @@ public class MainScreen {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				btnBackwardChaining.getSelection();
+				if(btnBackwardChaining.getSelection()==true){
 				btnDefault.setSelection(false);
 				btnForwardChaining.setSelection(false);
+				targetvariablecombo.setVisible(true);
+				lblSelectTargetVariable.setVisible(true);
+				}
 			}
 		});
 		
@@ -336,7 +368,7 @@ public class MainScreen {
 		btnBayesianReasoning.setBounds(10, 40, 145, 16);
 		
 		
-		scrolledComposite = new ScrolledComposite(composite, SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite = new ScrolledComposite(composite, SWT.V_SCROLL);
 		scrolledComposite.addTraverseListener(new TraverseListener() {
 			public void keyTraversed(TraverseEvent e) {
 			}
