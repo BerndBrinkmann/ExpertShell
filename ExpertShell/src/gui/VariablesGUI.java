@@ -31,13 +31,14 @@ import org.eclipse.swt.events.FocusEvent;
 public class VariablesGUI extends Composite {
 	
 
-	 String Name;
-	 Text descriptionTxt;
-	 Text txtVariableName;
-	 List variableList;
-	 Variable currentvariable = new Variable();
-	 List possibleValuesList;
-	 KnowledgeBase KBase;
+	private String Name;
+	 private Text descriptionTxt;
+	 private Text txtVariableName;
+	 private List variableList;
+	 private List possibleValuesList;
+	 private Variable currentvariable = new Variable();
+	 private KnowledgeBase KBase;
+	 private Text QuestionPrompt;
 
 	/**
 	 * Create the composite.
@@ -60,7 +61,7 @@ public class VariablesGUI extends Composite {
 		setVariableList();
 		Group GroupAddDelete = new Group(this, SWT.NONE);
 		possibleValuesList = new List(GroupAddDelete, SWT.BORDER);
-		possibleValuesList.setBounds(103, 159, 378, 204);
+		possibleValuesList.setBounds(112, 215, 369, 148);
 		
 		variableList.addSelectionListener(new SelectionAdapter() {
 			
@@ -68,19 +69,17 @@ public class VariablesGUI extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				if (variableList.getSelection()[0] != null)
 				{
-					System.out.println(variableList.getSelection()[0]);
+
+					possibleValuesList.removeAll();
 					currentvariable = KBase.getVariable(variableList.getSelection()[0]);
 					descriptionTxt.setText(currentvariable.getDescription());
 					txtVariableName.setText(currentvariable.getName());
+					QuestionPrompt.setText(currentvariable.getQueryPrompt());
 					if (currentvariable.getArrayOfPossibleValues()!= null)
 					{
-						
 						for (Value i : currentvariable.getArrayOfPossibleValues())
 						{
-							System.out.println(i);
-							String temp = i.toString();
-							System.out.println(temp);
-							possibleValuesList.add(temp);
+							possibleValuesList.add(i.toString());
 						}
 					}
 				}
@@ -99,11 +98,11 @@ public class VariablesGUI extends Composite {
 		GroupAddDelete.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		
 		Label lblName = new Label(GroupAddDelete, SWT.NONE);
-		lblName.setBounds(10, 25, 80, 15);
+		lblName.setBounds(26, 25, 80, 15);
 		lblName.setText("Variable Name:");
 		
 		Label lblDescription = new Label(GroupAddDelete, SWT.NONE);
-		lblDescription.setBounds(24, 52, 63, 21);
+		lblDescription.setBounds(43, 52, 63, 21);
 		lblDescription.setText("Description:");
 		
 		Label lblAskUser = new Label(GroupAddDelete, SWT.NONE);
@@ -111,10 +110,12 @@ public class VariablesGUI extends Composite {
 		lblAskUser.setText("Ask User:");
 		
 		descriptionTxt = new Text(GroupAddDelete, SWT.BORDER);
-		descriptionTxt.setBounds(103, 49, 378, 104);
+		descriptionTxt.setBounds(112, 49, 369, 104);
+		
+
 		
 		txtVariableName = new Text(GroupAddDelete, SWT.BORDER);
-		txtVariableName.setBounds(102, 22, 203, 21);
+		txtVariableName.setBounds(113, 22, 192, 21);
 		
 		Group group = new Group(GroupAddDelete, SWT.NONE);
 		group.setBounds(103, 369, 105, 31);
@@ -129,7 +130,7 @@ public class VariablesGUI extends Composite {
 		btnRadioButtonNo.setText("No");
 		
 		Label lblPossibleValues = new Label(GroupAddDelete, SWT.NONE);
-		lblPossibleValues.setBounds(10, 159, 87, 15);
+		lblPossibleValues.setBounds(19, 219, 87, 15);
 		lblPossibleValues.setText("Possible Values:");
 		
 		Button btnSave = new Button(GroupAddDelete, SWT.NONE);
@@ -147,9 +148,16 @@ public class VariablesGUI extends Composite {
 				}
 				else
 				{
-					
+					for (int i = 0;i< KBase.getVariablesArray().size();i++)
+					{
+						if (KBase.getVariablesArray().get(i).getName().equals(txtVariableName.getText()))
+						{
+						TempVariable = KBase.getVariablesArray().get(i);
+						}
+					}
 					TempVariable.setName(txtVariableName.getText());
 					TempVariable.setDescription(descriptionTxt.getText());
+					TempVariable.setQueryPrompt(QuestionPrompt.getText());
 					KBase.saveVariable(TempVariable);
 					variableList.removeAll();
 					for (Variable v: KBase.getVariablesArray())
@@ -162,7 +170,17 @@ public class VariablesGUI extends Composite {
 		});
 		btnSave.setBounds(103, 406, 75, 25);
 		btnSave.setText("Save");
+		
+		QuestionPrompt = new Text(GroupAddDelete, SWT.BORDER);
+		QuestionPrompt.setBounds(113, 159, 368, 50);
+		
+		Label lblQuestionPrompt = new Label(GroupAddDelete, SWT.NONE);
+		lblQuestionPrompt.setBounds(10, 159, 97, 15);
+		lblQuestionPrompt.setText("Question Prompt:");
+		
 		new Label(this, SWT.NONE);
+		
+
 
 	}
 
@@ -186,5 +204,4 @@ public class VariablesGUI extends Composite {
 		}
 		}
 	}
-	
 }
