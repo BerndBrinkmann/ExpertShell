@@ -126,7 +126,7 @@ public class MainScreen {
 		KBase = test.createBoatKnowlegeBase();
 		
 		
-		
+		//resized
 		shlExpertSystemShell = new Shell();
 		shlExpertSystemShell.setMinimumSize(new Point(132, 10));
 		shlExpertSystemShell.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/UTasLogo.png"));
