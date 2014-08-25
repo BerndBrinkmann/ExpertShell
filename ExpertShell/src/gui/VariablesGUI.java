@@ -21,6 +21,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+
 import datatypes.*;
 
 import org.eclipse.swt.events.FocusAdapter;
@@ -29,13 +30,15 @@ import org.eclipse.swt.events.FocusEvent;
 
 public class VariablesGUI extends Composite {
 	
-	protected String Name;
-	protected Text descriptionTxt;
-	protected Text txtVariableName;
-	protected List variableList;
-	protected Variable currentvariable = new Variable();
-	protected List possibleValuesList;
-	
+
+	 String Name;
+	 Text descriptionTxt;
+	 Text txtVariableName;
+	 List variableList;
+	 Variable currentvariable = new Variable();
+	 List possibleValuesList;
+	 KnowledgeBase KBase;
+
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -45,27 +48,39 @@ public class VariablesGUI extends Composite {
 
 	
 	
-	public VariablesGUI(Composite parent, int style,final KnowledgeBase KBase) {
+	public VariablesGUI(Composite parent, int style,  KnowledgeBase kb) {
 		
 		super(parent, style);
-		
+
+		KBase = kb;
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		setLayout(new GridLayout(2, false));
-		
 		variableList = new List(this, SWT.BORDER);
+		
+		setVariableList();
+		Group GroupAddDelete = new Group(this, SWT.NONE);
+		possibleValuesList = new List(GroupAddDelete, SWT.BORDER);
+		possibleValuesList.setBounds(103, 159, 378, 204);
+		
 		variableList.addSelectionListener(new SelectionAdapter() {
+			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (variableList.getSelection()[0] != null)
 				{
+					System.out.println(variableList.getSelection()[0]);
 					currentvariable = KBase.getVariable(variableList.getSelection()[0]);
 					descriptionTxt.setText(currentvariable.getDescription());
 					txtVariableName.setText(currentvariable.getName());
 					if (currentvariable.getArrayOfPossibleValues()!= null)
 					{
+						
 						for (Value i : currentvariable.getArrayOfPossibleValues())
 						{
-							possibleValuesList.add(i.toString());
+							System.out.println(i);
+							String temp = i.toString();
+							System.out.println(temp);
+							possibleValuesList.add(temp);
 						}
 					}
 				}
@@ -77,7 +92,7 @@ public class VariablesGUI extends Composite {
 		gd_variableList.widthHint = 141;
 		variableList.setLayoutData(gd_variableList);
 		
-		Group GroupAddDelete = new Group(this, SWT.NONE);
+		
 		GridData gd_GroupAddDelete = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		gd_GroupAddDelete.heightHint = 423;
 		GroupAddDelete.setLayoutData(gd_GroupAddDelete);
@@ -112,9 +127,6 @@ public class VariablesGUI extends Composite {
 		Button btnRadioButtonNo = new Button(group, SWT.RADIO);
 		btnRadioButtonNo.setBounds(55, 10, 39, 16);
 		btnRadioButtonNo.setText("No");
-		
-		List possibleValuesList = new List(GroupAddDelete, SWT.BORDER);
-		possibleValuesList.setBounds(103, 159, 378, 204);
 		
 		Label lblPossibleValues = new Label(GroupAddDelete, SWT.NONE);
 		lblPossibleValues.setBounds(10, 159, 87, 15);
@@ -158,4 +170,21 @@ public class VariablesGUI extends Composite {
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
+	
+	public void setVariableList()
+	{
+		variableList.removeAll();
+		if(KBase.getVariablesArray().isEmpty() == false)
+		{
+		for (Variable v : KBase.getVariablesArray())
+		{
+			if(v != null)
+			{
+				variableList.add(v.toString());
+			}
+				
+		}
+		}
+	}
+	
 }
