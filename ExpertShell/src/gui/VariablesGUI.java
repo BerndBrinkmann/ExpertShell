@@ -153,12 +153,13 @@ public class VariablesGUI extends Composite {
 		group.setBounds(103, 369, 105, 31);
 		
 		btnRadioButtonYes = new Button(group, SWT.RADIO);
-		btnRadioButtonYes.setEnabled(false);
+		btnRadioButtonYes.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnRadioButtonYes.setSelection(true);
 		btnRadioButtonYes.setBounds(10, 10, 39, 16);
 		btnRadioButtonYes.setText("Yes");
 		
 		btnRadioButtonNo = new Button(group, SWT.RADIO);
+		btnRadioButtonNo.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnRadioButtonNo.setBounds(55, 10, 39, 16);
 		btnRadioButtonNo.setText("No");
 		
@@ -248,6 +249,7 @@ public class VariablesGUI extends Composite {
 	public void setForInput(Boolean enable)
 	{
 		txtVariableName.setEnabled(enable);
+		btnRadioButtonYes.setEnabled(enable);
 		btnRadioButtonNo.setEnabled(enable);
 		descriptionTxt.setEnabled(enable);
 		QuestionPrompt.setEnabled(enable);
