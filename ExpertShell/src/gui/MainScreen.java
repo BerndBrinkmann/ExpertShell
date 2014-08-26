@@ -496,11 +496,11 @@ public class MainScreen {
 				
 				/**This code cause GUI to close when called - issue somewhere*/
 				
-				KBase.validate();
+				//KBase.validate();
 				
-				Variable result = Inference.solveForwardChaining();
+				//Variable result = Inference.solveForwardChaining();
 				HowList = Inference.getHowList();
-				IO.displayResults(result, Inference.getHowList(), KBase);	
+				//IO.displayResults(result, Inference.getHowList(), KBase);	
 			}
 		});
 		
