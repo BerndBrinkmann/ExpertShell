@@ -2,7 +2,7 @@ package datatypes;
 
 import java.io.Serializable;
 
-public class Antecedent extends Conditional implements Serializable
+public class Antecedent extends getSetKBSettings implements Serializable
 {
 	protected Variable variable;
 	protected Value value;
@@ -22,7 +22,7 @@ public class Antecedent extends Conditional implements Serializable
 	
 	public Antecedent(Variable var,Comparison comp ,Double val)
 	{
-		setIsNumeric(true);
+		
 		numVal = val;
 		comparison = comp;
 		variable = var;
@@ -38,7 +38,6 @@ public class Antecedent extends Conditional implements Serializable
 	public Antecedent(Variable var, Double val)
 	{
 		variable = var;
-		setIsNumeric(true);
 		numVal = val;
 	}
 
@@ -50,13 +49,6 @@ public class Antecedent extends Conditional implements Serializable
 	public Comparison getComparison()
 	{
 		return comparison;
-	}
-
-	public void setComparison(Comparison comparison)
-	{
-		this.comparison = comparison;
-		if(!isNumeric)
-			setIsNumeric(true);
 	}
 
 	public void setLikelihoodOfNecessity(double likelihoodOfNecessity)
@@ -171,4 +163,80 @@ public class Antecedent extends Conditional implements Serializable
 		return comparison.toString();
 	}
 
+	public Variable getVariable()
+	{
+		return variable;
+	}
+
+		
+	public Value getValue()
+	{
+		return value;
+	}
+	
+	public Double getNumVal()
+	{
+		return numVal;
+	}
+	
+	public void setValue(Value v)
+	{
+		value = v;
+		if(!v.getName().equals(""))
+		variable.addPossibleValue(v);			
+	}
+	
+	public void setValue(Double v)
+	{
+		numVal = v;
+	}
+	
+	
+	public void setComparison(Comparison comparison)
+	{
+		if(this.variable instanceof NumericVariable)
+		{
+			this.comparison = comparison;
+		}
+				
+	}
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		result = prime * result
+				+ ((variable == null) ? 0 : variable.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Antecedent other = (Antecedent) obj;
+		if (value == null)
+		{
+			if (other.value != null)
+				return false;
+		}
+		else if (!value.equals(other.value))
+			return false;
+		if (variable == null)
+		{
+			if (other.variable != null)
+				return false;
+		}
+		else if (!variable.equals(other.variable))
+			return false;
+		return true;
+	}
+	
 }
+
