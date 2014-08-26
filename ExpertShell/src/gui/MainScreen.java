@@ -922,6 +922,7 @@ public class MainScreen {
 		tbtmVariables.setText("Variables");
 		
 		VariablesGUI Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
+		Variables.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		tbtmVariables.setControl(Variables);
 		
 	}
