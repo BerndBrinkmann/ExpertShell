@@ -213,10 +213,10 @@ public class MainScreen {
 		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
 		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		GridData gd_lblNewLabel_1 = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_lblNewLabel_1.heightHint = 508;
-		gd_lblNewLabel_1.widthHint = 717;
+		gd_lblNewLabel_1.heightHint = 515;
+		gd_lblNewLabel_1.widthHint = 719;
 		lblNewLabel_1.setLayoutData(gd_lblNewLabel_1);
-		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/MainImageRS.jpg"));
+		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_newsize.jpg"));
 		
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmUserInterface.setText("Run Knowledgebase");
