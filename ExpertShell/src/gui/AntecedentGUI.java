@@ -72,8 +72,6 @@ public class AntecedentGUI {
 	}
 	
 	public void update() {
-		//update variable
-		var.setItems(parent.parent.getKnowledgeBase().getVariablesArrayAsString());
 		
 		// update AND/OR combo if we have one for this ant.
 		if (!(logicComb == null)) {
@@ -84,6 +82,14 @@ public class AntecedentGUI {
 				logicComb.select(1);
 			}
 		}
+		
+		//update variable
+		var.setItems(parent.parent.getKnowledgeBase().getVariablesArrayAsString());
+		System.out.println(parent.parent.getKnowledgeBase().getVariablesArray().indexOf(ant));
+		var.select(parent.parent.getKnowledgeBase().getVariablesArray().indexOf(ant.getVariable()));
+		
+		//update comparison
+		logicComparitor.select(ant.getComparison().getIndex());
 		
 		
 		
