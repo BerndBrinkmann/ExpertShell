@@ -93,7 +93,7 @@ public class MainScreen {
     private Label lblWhyhow;
     private ArrayList<Rule> HowList = new ArrayList<Rule>();
     static Rule tRule; // a hack to get this into the description function
-	InferenceEngine Inference = new InferenceEngine(KBase);		
+    private InferenceEngine Inference;
 
 
 	public KnowledgeBase getKnowledgeBase(){
@@ -137,7 +137,7 @@ public class MainScreen {
 		KBase = new KnowledgeBase("default");
 		test = new Test_Case();
 		KBase = test.createBoatKnowlegeBase();
-		
+		Inference = new InferenceEngine(KBase);		
 		
 		//resized
 		shlExpertSystemShell = new Shell();
@@ -496,11 +496,11 @@ public class MainScreen {
 				
 				/**This code cause GUI to close when called - issue somewhere*/
 				
-				//KBase.validate();
+				KBase.validate();
 				
-				//Variable result = Inference.solveForwardChaining();
+				Variable result = Inference.solveForwardChaining();
 				HowList = Inference.getHowList();
-				//IO.displayResults(result, Inference.getHowList(), KBase);	
+				IO.displayResults(result, Inference.getHowList(), KBase);	
 			}
 		});
 		
