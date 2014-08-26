@@ -57,10 +57,10 @@ public class Variable implements Serializable
 	public Variable(String n)
 	{
 		name = n;
-		//possibleValues = new ArrayList<Value>();
-//		certaintyFactors = new ArrayList<Double>();
-//		beliefs = new ArrayList<Double>();
-//		allValues  = new ArrayList<Value>();
+		possibleValues = new ArrayList<Value>();
+		certaintyFactors = new ArrayList<Double>();
+		beliefs = new ArrayList<Double>();
+		allValues  = new ArrayList<Value>();
 	}
 	
 	
@@ -265,7 +265,6 @@ public class Variable implements Serializable
 		//normalise the beliefs?
 		for(int i = 0; i < possibleValues.size(); i++)
 		{
-			
 			sb.append("'"+possibleValues.get(i).getName()+"'("+ String.format("%.2f", getBelief(i)*100)  +"%), \n");
 		}
 		
