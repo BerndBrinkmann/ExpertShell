@@ -56,9 +56,10 @@ public class VariablesGUI extends Composite {
 		super(parent, style);
 
 		KBase = kb;
-		setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+		setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		setLayout(new GridLayout(2, false));
 		variableList = new List(this, SWT.BORDER | SWT.V_SCROLL);
+		variableList.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		
 		setVariableList();
 		Group GroupAddDelete = new Group(this, SWT.NONE);
