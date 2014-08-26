@@ -469,7 +469,23 @@ public class MainScreen {
 					NoRunV noVar = new NoRunV(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
 					noVar.open();
 				}
-			
+				
+				//There are issues with this... causes screen to crash
+			    if(btnForwardChaining.getSelection()==true || btnDefault.getSelection()==true){
+					KBase.validate();
+					Variable result = Inference.solveForwardChaining();
+					HowList = Inference.getHowList();
+					IO.displayResults(result, Inference.getHowList(), KBase);	
+			    	
+				}else if(btnBackwardChaining.getSelection()==true){
+					KBase.validate();
+					Variable result = Inference.solveBackwardChaining();
+					HowList = Inference.getHowList();
+					IO.displayResults(result, Inference.getHowList(), KBase);		
+			    }
+				
+				
+				// this should not be handled by run button, KBase needs to tell it when to ask a new question
 			    btnCertainityFactor.getSelection();
 			    btnRun.getSelection();
 				if (btnCertainityFactor.getSelection()==true){
@@ -489,15 +505,14 @@ public class MainScreen {
 					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 					CompQ.layout();
 					btnCertainityFactor.setSelection(false);
+					//End of section that needs to be moved
 					
-					//questionGroup.layout();
 				}
 				//IO.setMainFrame(OKButton);
-				
+
 				/**This code cause GUI to close when called - issue somewhere*/
 				
 				//KBase.validate();
-				
 				//Variable result = Inference.solveForwardChaining();
 				HowList = Inference.getHowList();
 				//IO.displayResults(result, Inference.getHowList(), KBase);	
