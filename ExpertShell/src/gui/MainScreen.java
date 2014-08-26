@@ -542,7 +542,7 @@ public class MainScreen {
 				/**This code cause GUI to close when called - issue somewhere*/
 			//	FileManager.saveKnowledgeFile(KBase);
 				KBase.validate();
-				Variable result = Inference.solveForwardChaining();
+				Variable result = Inference.solveBackwardChaining();
 				HowList = Inference.getHowList();
 				IO.displayResults(result, Inference.getHowList(), KBase);	
 			}
