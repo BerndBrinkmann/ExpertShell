@@ -1,4 +1,13 @@
-package datatypes;
+package removedClasses;
+
+import datatypes.Antecedent;
+import datatypes.Comparison;
+import datatypes.Consequent;
+import datatypes.LinguisticVariable;
+import datatypes.NumericVariable;
+import datatypes.Value;
+import datatypes.Variable;
+import datatypes.getSetKBSettings;
 
 public class Conditional extends getSetKBSettings {
 
