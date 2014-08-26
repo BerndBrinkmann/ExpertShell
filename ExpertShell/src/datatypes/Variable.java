@@ -340,12 +340,12 @@ public class Variable implements Serializable
 	//used to shorten the calls in convert to get and set the comparison value
 	public void ComparisonSetter(int i, Comparison compare)
 	{
-		allValues.get(i).conditionalPointer.setComparison(compare);
+		allValues.get(i).antPointer.setComparison(compare);
 	}
 	
 	public Comparison ComparisonGetter(int i)
 	{
-		return allValues.get(i).conditionalPointer.getComparison();	
+		return allValues.get(i).antPointer.getComparison();	
 	}
 	
 }

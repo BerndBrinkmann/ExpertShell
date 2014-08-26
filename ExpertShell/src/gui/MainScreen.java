@@ -172,10 +172,8 @@ public class MainScreen {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-				
 			    HelpDialog about = new HelpDialog(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
-			    about.open();
-				
+			    about.open();	
 			}
 			
 		});
@@ -216,6 +214,8 @@ public class MainScreen {
 		gl_composite.marginWidth = 3;
 		composite.setLayout(gl_composite);
 		
+		
+		
 		Group grpKnowledgeBaseSelected = new Group(composite, SWT.NONE);
 		grpKnowledgeBaseSelected.setLayout(new GridLayout(3, false));
 		GridData gd_grpKnowledgeBaseSelected = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
@@ -237,60 +237,11 @@ public class MainScreen {
 				targetvariablecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 				targetvariablecombo.setVisible(false);
 				this.setVariableCombo();
-
 				
 				btnRun = new Button(grpKnowledgeBaseSelected, SWT.NONE);
-				
-						btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-						btnRun.setText("Run");
-						
-						btnRun.addSelectionListener(new SelectionAdapter() {
-							@Override
-							public void widgetSelected(SelectionEvent e) {
-								e.getSource();
-								
-								if(text.getText()==""){
-									
-									NoRun noKB = new NoRun(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
-									noKB.open();	
-								}
-								
-								if(targetvariablecombo.isVisible()==true && targetvariablecombo.getText()==""){
-									
-									NoRunV noVar = new NoRunV(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
-									noVar.open();
-								}
-								//KnowledgeBase.validate();
-							    btnCertainityFactor.getSelection();
-							    btnRun.getSelection();
-								if (btnCertainityFactor.getSelection()==true){
-									QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
-									askCFQuestion.addQuestion();
-									//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-									scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-									CompQ.layout();
-									//scrolledComposite.layout();
-									button.setSelection(false);
-									btnBayesianReasoning.setSelection(false);
-								}else
-								{
-									QuestionGUI askQuestion = new QuestionGUI(CompQ);
-									askQuestion.addQuestion();
-									//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-									scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-									CompQ.layout();
-									btnCertainityFactor.setSelection(false);
-									
-									//questionGroup.layout();
-								}
-								//IO.setMainFrame(OKButton);
-								KBase.validate();
-								
-								Variable result = Inference.solveForwardChaining();
-								HowList = Inference.getHowList();
-								IO.displayResults(result, Inference.getHowList(), KBase);	
-							}
-						});
+				btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+				btnRun.setText("Run");
+							
 		
 		Group grpSelectRunMethod = new Group(composite, SWT.NONE);
 		GridData gd_grpSelectRunMethod = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -366,10 +317,12 @@ public class MainScreen {
 		btnCertainityFactor = new Button(grpSelectReasoningMethod, SWT.RADIO);
 		btnCertainityFactor.setText("Certainty Factors");
 		btnCertainityFactor.setBounds(10, 62, 145, 16);
+		btnCertainityFactor.setSelection(false);
 		
 		btnBayesianReasoning = new Button(grpSelectReasoningMethod, SWT.RADIO);
 		btnBayesianReasoning.setText("Bayesian Reasoning");
 		btnBayesianReasoning.setBounds(10, 40, 145, 16);
+		btnBayesianReasoning.setSelection(false);
 		
 		
 		scrolledComposite = new ScrolledComposite(composite, SWT.V_SCROLL);
@@ -498,6 +451,62 @@ public class MainScreen {
 		}	
 			}
 		});
+		
+		
+		btnRun.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+				
+				if(text.getText()==""){
+					
+					NoRun noKB = new NoRun(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
+					noKB.open();	
+				}
+				
+				if(targetvariablecombo.isVisible()==true && targetvariablecombo.getText()==""){
+					
+					NoRunV noVar = new NoRunV(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
+					noVar.open();
+				}
+			
+			    btnCertainityFactor.getSelection();
+			    btnRun.getSelection();
+				if (btnCertainityFactor.getSelection()==true){
+					QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
+					askCFQuestion.addQuestion();
+					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+					CompQ.layout();
+					//scrolledComposite.layout();
+					button.setSelection(false);
+					btnBayesianReasoning.setSelection(false);
+				}else
+				{
+					QuestionGUI askQuestion = new QuestionGUI(CompQ);
+					askQuestion.addQuestion();
+					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+					CompQ.layout();
+					btnCertainityFactor.setSelection(false);
+					
+					//questionGroup.layout();
+				}
+				//IO.setMainFrame(OKButton);
+				
+				/**This code cause GUI to close when called - issue somewhere*/
+				
+				KBase.validate();
+				
+				Variable result = Inference.solveForwardChaining();
+				HowList = Inference.getHowList();
+				IO.displayResults(result, Inference.getHowList(), KBase);	
+			}
+		});
+		
+		
+		
+		
 		ScrolledComposite scrolledComposite_1 = new ScrolledComposite(composite, SWT.BORDER | SWT.V_SCROLL);
 		scrolledComposite_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		GridData gd_scrolledComposite_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
@@ -580,6 +589,7 @@ public class MainScreen {
 		scrolledComposite.setContent(CompQ);
 		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
+
 		
 /*
 		ScrolledComposite scrolledComposite_1 = new ScrolledComposite(composite, SWT.BORDER | SWT.V_SCROLL);

@@ -47,23 +47,15 @@ public class NoRunV extends Dialog {
 	 */
 	private void createContents() {
 		shell = new Shell(getParent(), SWT.DIALOG_TRIM);
-		/*shell.addControlListener(new ControlAdapter() {
-			@Override
-			public void controlResized(ControlEvent e) {
-				e.getSource();
-			}
-		});*/
 		shell.setImage(SWTResourceManager.getImage(NoRun.class, "/resources/exclamation_sign.png"));
 		shell.setSize(365, 150);
 		shell.setText("Error");
 		
-		Composite CompError2 = new Composite(shell, SWT.NONE);
-		CompError2.setBounds(0, 0, 359, 122);
-		
-		Label lblNoKnowledgeBase = new Label(CompError2, SWT.WRAP);
+		Label lblNoKnowledgeBase = new Label(shell, SWT.WRAP);
+		lblNoKnowledgeBase.setLocation(10, 10);
+		lblNoKnowledgeBase.setSize(341, 105);
 		lblNoKnowledgeBase.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		lblNoKnowledgeBase.setText("Unable to Run. You have chosen Backward Chaining as the run method. Either:\r\n\r\nSelect a Target Variable from the drop down list; or\r\n\r\nSelect Default or Forward Chaining  at the top left of the screen.\r\n\r\n");
-		lblNoKnowledgeBase.setBounds(10, 10, 341, 105);
 
 	}
 }
