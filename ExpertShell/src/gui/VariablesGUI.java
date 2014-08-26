@@ -39,7 +39,8 @@ public class VariablesGUI extends Composite {
 	 private Variable currentvariable = new Variable();
 	 private KnowledgeBase KBase;
 	 private Text QuestionPrompt;
-
+	 private Button btnRadioButtonYes;
+	 private Button btnRadioButtonNo;
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -67,9 +68,19 @@ public class VariablesGUI extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				if (variableList.getSelection()[0] != null)
 				{
-
+					
 					possibleValuesList.removeAll();
 					currentvariable = KBase.getVariable(variableList.getSelection()[0]);
+					if (currentvariable.isUserInput() == false) 
+					{
+						btnRadioButtonYes.setSelection(false); 
+						btnRadioButtonNo.setSelection(true);
+					}
+					else
+					{	
+						btnRadioButtonYes.setSelection(true) ;
+						btnRadioButtonNo.setSelection(false);
+					}
 					descriptionTxt.setText(currentvariable.getDescription());
 					txtVariableName.setText(currentvariable.getName());
 					QuestionPrompt.setText(currentvariable.getQueryPrompt());
@@ -118,12 +129,12 @@ public class VariablesGUI extends Composite {
 		Group group = new Group(GroupAddDelete, SWT.NONE);
 		group.setBounds(103, 369, 105, 31);
 		
-		Button btnRadioButtonYes = new Button(group, SWT.RADIO);
+		btnRadioButtonYes = new Button(group, SWT.RADIO);
 		btnRadioButtonYes.setSelection(true);
 		btnRadioButtonYes.setBounds(10, 10, 39, 16);
 		btnRadioButtonYes.setText("Yes");
 		
-		Button btnRadioButtonNo = new Button(group, SWT.RADIO);
+		btnRadioButtonNo = new Button(group, SWT.RADIO);
 		btnRadioButtonNo.setBounds(55, 10, 39, 16);
 		btnRadioButtonNo.setText("No");
 		
@@ -153,6 +164,7 @@ public class VariablesGUI extends Composite {
 						TempVariable = KBase.getVariablesArray().get(i);
 						}
 					}
+					TempVariable.setUserInput(btnRadioButtonYes.getSelection());
 					TempVariable.setName(txtVariableName.getText());
 					TempVariable.setDescription(descriptionTxt.getText());
 					TempVariable.setQueryPrompt(QuestionPrompt.getText());
