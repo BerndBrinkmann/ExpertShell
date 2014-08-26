@@ -827,7 +827,7 @@ public class MainScreen {
 		compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 		compRuleEditorHolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase);
+		ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase.getRule(0), KBase);
 		compRuleEditorHolder.layout();
 		
 		TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);

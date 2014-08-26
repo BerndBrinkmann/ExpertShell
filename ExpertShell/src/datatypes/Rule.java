@@ -21,10 +21,6 @@ public class Rule extends getSetKBSettings implements Serializable
 	
 	UncertaintyManagement uncertaintyType = UncertaintyManagement.NONE;
 	
-	public UncertaintyManagement getUncertaintyManagement() {
-		return uncertaintyType;
-	}
-	
 	@Override
 	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)
 	{

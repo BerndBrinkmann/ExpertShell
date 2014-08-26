@@ -52,8 +52,11 @@ public class RuleGUI_temp extends Composite {
 				System.out.println(e.toString());
 			}
 		});
+		
+		
 		combo.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
+				//
 				System.out.println(e.toString());
 			}
 		});

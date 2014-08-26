@@ -29,11 +29,12 @@ public class ConsequentListGUI {
 		//container is the composite where we're adding controls
 		container = p.ruleGrid;
 		
+		//get the click listener from parent class
 		SelectionAdapter s = p.selAdaptor;
 		
 		addFiller();
 		thenLabel = RuleGUIFactory.createLabelThen(container);
-		conseqents.add(new ConsequentGUI(this,true));
+		conseqents.add(new ConsequentGUI(this,true,null));
 		addButton = RuleGUIFactory.createButtonAdd(container);
 				
 		addButton.addSelectionListener(s);
@@ -60,7 +61,7 @@ public class ConsequentListGUI {
 	
 	public void updateUncertainty() {
 		
-		UncertaintyManagement u = parent.kb.getUncertaintyMethod();
+		UncertaintyManagement u = parent.rule.getUncertaintyMethod();
 		
 		boolean showLNLS;
 		boolean showPrior;
