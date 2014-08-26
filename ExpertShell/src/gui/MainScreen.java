@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -43,6 +44,7 @@ import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.custom.StyledText;
+
 
 
 //import STUART.ADT.Rule;
@@ -100,6 +102,12 @@ public class MainScreen {
 		return KBase ;
 	}
 
+	public SelectionAdapter WhyListener;
+	public SelectionAdapter HowListener;
+	public SelectionAdapter OKListener;
+	public SelectionAdapter AnswerComboListener;
+	public SelectionAdapter CFListener;
+	public SelectionAdapter CFScaleListener;
 
 	/**
 	 * Launch the application.
@@ -482,16 +490,16 @@ public class MainScreen {
 				
 				//There are issues with this... causes screen to crash
 			    if(btnForwardChaining.getSelection()==true || btnDefault.getSelection()==true){
-					KBase.validate();
-					Variable result = Inference.solveForwardChaining();
-					HowList = Inference.getHowList();
-					IO.displayResults(result, Inference.getHowList(), KBase);	
+					//KBase.validate();
+					//Variable result = Inference.solveForwardChaining();
+					//HowList = Inference.getHowList();
+					//IO.displayResults(result, Inference.getHowList(), KBase);	
 			    	
 				}else if(btnBackwardChaining.getSelection()==true){
-					KBase.validate();
-					Variable result = Inference.solveBackwardChaining();
-					HowList = Inference.getHowList();
-					IO.displayResults(result, Inference.getHowList(), KBase);		
+					//KBase.validate();
+					//Variable result = Inference.solveBackwardChaining();
+					//HowList = Inference.getHowList();
+					//IO.displayResults(result, Inference.getHowList(), KBase);		
 			    }
 				
 				
@@ -499,7 +507,7 @@ public class MainScreen {
 			    btnCertainityFactor.getSelection();
 			    btnRun.getSelection();
 				if (btnCertainityFactor.getSelection()==true){
-					QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
+					QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
 					askCFQuestion.addQuestion();
 					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
 					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -509,7 +517,7 @@ public class MainScreen {
 					btnBayesianReasoning.setSelection(false);
 				}else
 				{
-					QuestionGUI askQuestion = new QuestionGUI(CompQ);
+					QuestionGUI askQuestion = new QuestionGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
 					askQuestion.addQuestion();
 					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
 					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -757,6 +765,64 @@ public class MainScreen {
 		mntmExit.setText("Exit");
 		
 		
+
+		WhyListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();	
+				StringBuilder s = new StringBuilder();
+				s.append("\nI am trying to evaluate the rule\n");
+				s.append(tRule != null ? tRule.toString() : "null");
+				s.toString();
+				lblWhyhow.setText(""+s);
+			}
+		};
+		HowListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+				if(HowList.isEmpty())
+				{
+					lblWhyhow.setText("\nA result was not reached\n");
+				}
+				else
+				{
+				
+					lblWhyhow.setText("\nThe result was reached by firing these rules in this order\n");
+					for(Rule r : HowList)
+					{
+						lblWhyhow.setText(r.toString());
+					}
+				}	
+			}	
+		};
+		OKListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+			}
+		};
+		AnswerComboListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+				//needs to find where varaibles are!!!
+				System.out.println(combo_1.getText());
+			}	
+		};
+		CFListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+			}
+		};
+		CFScaleListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+				/*int perspectivevalue=scale.getSelection();
+				GridData gd_lblCf = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+				gd_lblCf.widthHint = 101;
+				lblCf.setLayoutData(gd_lblCf);
+				lblCf.setText(""+(perspectivevalue));*/
+			}
+		};
+		
+
 		
 		
 	/*	text_1 = new Text(scrolledComposite, SWT.WRAP | SWT.V_SCROLL);
@@ -827,7 +893,7 @@ public class MainScreen {
 		compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 		compRuleEditorHolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase);
+		ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase.getRule(0), KBase);
 		compRuleEditorHolder.layout();
 		
 		TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);

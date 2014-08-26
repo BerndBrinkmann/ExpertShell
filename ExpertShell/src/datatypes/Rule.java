@@ -19,7 +19,7 @@ public class Rule extends getSetKBSettings implements Serializable
 	protected int priority = 1;
 	protected int ruleNum;
 	
-	KBSettings.UncertaintyManagement uncertaintyType = UncertaintyManagement.NONE;
+	UncertaintyManagement uncertaintyType = UncertaintyManagement.NONE;
 	
 	@Override
 	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)

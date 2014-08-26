@@ -10,8 +10,10 @@ import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 
+import datatypes.Antecedent;
 import datatypes.KBSettings.UncertaintyManagement;
 import datatypes.KnowledgeBase;
+import datatypes.Rule;
 
 public class RuleEditorGUI {
 	
@@ -21,13 +23,15 @@ public class RuleEditorGUI {
 	AntecedentListGUI antList;
 	ConsequentListGUI consList;
 	final KnowledgeBase kb;
+	final Rule rule;
 	
 	public SelectionAdapter selAdaptor;
 	public FocusAdapter focAdaptor;
 	
-	public RuleEditorGUI(Composite p, KnowledgeBase k) {
+	public RuleEditorGUI(Composite p, Rule r, KnowledgeBase k) {
 		
 		kb = k;
+		rule = r;
 		
 		//for button 'clicks'
 		selAdaptor = new SelectionAdapter() {
@@ -49,13 +53,17 @@ public class RuleEditorGUI {
 		
 		antList = new AntecedentListGUI(this);
 		consList = new ConsequentListGUI(this);
-		
+		updateUncertainty();
 		ruleGrid.getParent().getParent().layout(true,true);
 	}
 	
 	public void updateUncertainty() {
 		antList.updateUncertainty();
 		consList.updateUncertainty();
+	}
+	
+	public KnowledgeBase getKnowledgeBase() {
+		return kb;
 	}
 	
 	public void debug(String s) {
@@ -81,7 +89,7 @@ public class RuleEditorGUI {
 		if (group == Group.ANTECEDENT) {
 			if (source == Source.ADD) {
 				debug("Add antecedent");
-				antList.add();
+				antList.add(new Antecedent());
 				ruleGrid.getParent().getParent().layout(true,true);
 				//add code to modify KB here!
 			} else if (source == Source.DELETE) {
