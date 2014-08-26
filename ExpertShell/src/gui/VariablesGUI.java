@@ -56,9 +56,10 @@ public class VariablesGUI extends Composite {
 		super(parent, style);
 
 		KBase = kb;
-		setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+		setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		setLayout(new GridLayout(2, false));
 		variableList = new List(this, SWT.BORDER | SWT.V_SCROLL);
+		variableList.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		
 		setVariableList();
 		Group GroupAddDelete = new Group(this, SWT.NONE);
@@ -114,17 +115,20 @@ public class VariablesGUI extends Composite {
 		GridData gd_GroupAddDelete = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		gd_GroupAddDelete.heightHint = 423;
 		GroupAddDelete.setLayoutData(gd_GroupAddDelete);
-		GroupAddDelete.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+		GroupAddDelete.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		
 		Label lblName = new Label(GroupAddDelete, SWT.NONE);
+		lblName.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		lblName.setBounds(26, 25, 80, 15);
 		lblName.setText("Variable Name:");
 		
 		Label lblDescription = new Label(GroupAddDelete, SWT.NONE);
+		lblDescription.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		lblDescription.setBounds(43, 52, 63, 21);
 		lblDescription.setText("Description:");
 		
 		Label lblAskUser = new Label(GroupAddDelete, SWT.NONE);
+		lblAskUser.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		lblAskUser.setBounds(42, 369, 48, 15);
 		lblAskUser.setText("Ask User:");
 		
@@ -145,18 +149,22 @@ public class VariablesGUI extends Composite {
 		
 		
 		Group group = new Group(GroupAddDelete, SWT.NONE);
+		group.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		group.setBounds(103, 369, 105, 31);
 		
 		btnRadioButtonYes = new Button(group, SWT.RADIO);
+		btnRadioButtonYes.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnRadioButtonYes.setSelection(true);
 		btnRadioButtonYes.setBounds(10, 10, 39, 16);
 		btnRadioButtonYes.setText("Yes");
 		
 		btnRadioButtonNo = new Button(group, SWT.RADIO);
+		btnRadioButtonNo.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnRadioButtonNo.setBounds(55, 10, 39, 16);
 		btnRadioButtonNo.setText("No");
 		
 		Label lblPossibleValues = new Label(GroupAddDelete, SWT.NONE);
+		lblPossibleValues.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		lblPossibleValues.setBounds(19, 219, 87, 15);
 		lblPossibleValues.setText("Possible Values:");
 		
@@ -175,6 +183,7 @@ public class VariablesGUI extends Composite {
 		QuestionPrompt.setBounds(113, 159, 368, 50);
 		
 		Label lblQuestionPrompt = new Label(GroupAddDelete, SWT.NONE);
+		lblQuestionPrompt.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		lblQuestionPrompt.setBounds(10, 159, 97, 15);
 		lblQuestionPrompt.setText("Question Prompt:");
 		

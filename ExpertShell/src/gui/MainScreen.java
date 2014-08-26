@@ -213,10 +213,24 @@ public class MainScreen {
 		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
 		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		GridData gd_lblNewLabel_1 = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_lblNewLabel_1.heightHint = 508;
-		gd_lblNewLabel_1.widthHint = 717;
+		gd_lblNewLabel_1.heightHint = 515;
+		gd_lblNewLabel_1.widthHint = 719;
 		lblNewLabel_1.setLayoutData(gd_lblNewLabel_1);
-		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/MainImageRS.jpg"));
+		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_newsize.jpg"));
+		
+		TabItem tbtmQuickStart = new TabItem(tabFolder, SWT.NONE);
+		tbtmQuickStart.setText("Quick Start Guide");
+		
+		Composite composite_2 = new Composite(tabFolder, SWT.NONE);
+		tbtmQuickStart.setControl(composite_2);
+		composite_2.setLayout(new GridLayout(1, false));
+		
+		Label lblNewLabel_2 = new Label(composite_2, SWT.WRAP);
+		GridData gd_lblNewLabel_2 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_lblNewLabel_2.heightHint = 517;
+		gd_lblNewLabel_2.widthHint = 723;
+		lblNewLabel_2.setLayoutData(gd_lblNewLabel_2);
+		lblNewLabel_2.setText("Welcome to Expert System Shell. The following is a quick description of the purope of each page in this program and how to get started.\r\n\r\nRun Knowledgebase:\r\n\r\nOpen a knowledgebase that you would like to run:  File > Open Knowledgebase > Knowledgebase. \r\nThe name of the knowlegebase should be displayed in the top left hand side of the screen. \r\n\r\nSelect a run method from radio buttons: Default (Runs Forward Chaining), Forward Chaining, or Backward Chaining");
 		
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmUserInterface.setText("Run Knowledgebase");
@@ -381,8 +395,8 @@ public class MainScreen {
 
 		//composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		
-		questionGroup = new Group(CompQ, SWT.NONE);
+		/**Original question box for reference*/
+		/*questionGroup = new Group(CompQ, SWT.NONE);
 		questionGroup.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		questionGroup.setLayout(new GridLayout(3, false));
 		lblNewLabel = new Label(questionGroup, SWT.NONE);
@@ -390,7 +404,7 @@ public class MainScreen {
 		gd_lblNewLabel.widthHint = 303;
 		gd_lblNewLabel.heightHint = 65;
 		lblNewLabel.setLayoutData(gd_lblNewLabel);
-		String[] ITEMS = {"A", "B"};   /*Test*/
+		String[] ITEMS = {"A", "B"};   /*Test
 		combo_1 = new Combo(questionGroup, SWT.NONE);
 		//different from QuestionGUI
 		GridData gd_combo_1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1);
@@ -433,10 +447,11 @@ public class MainScreen {
 				lblCf.setText(""+(perspectivevalue));
 			}
 		});
+		
 		GridData gd_scale = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gd_scale.widthHint = 216;
 		scale.setLayoutData(gd_scale);
-		scale.setVisible(false);
+		scale.setVisible(false);*/
 		
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -444,8 +459,8 @@ public class MainScreen {
 				e.getSource();
 				button.getSelection();
 				if (button.getSelection()==true){
-					scale.setVisible(false);
-					lblCf.setVisible(false);
+					//scale.setVisible(false);
+					//lblCf.setVisible(false);
 					btnCertainityFactor.setSelection(false);
 					btnBayesianReasoning.setSelection(false);
 		}
@@ -458,8 +473,8 @@ public class MainScreen {
 				e.getSource();
 				btnBayesianReasoning.getSelection();
 				if (btnBayesianReasoning.getSelection()==true){
-					scale.setVisible(false);
-					lblCf.setVisible(false);
+					//scale.setVisible(false);
+					//lblCf.setVisible(false);
 					btnCertainityFactor.setSelection(false);
 					button.setSelection(false);
 		}
@@ -473,8 +488,8 @@ public class MainScreen {
 				e.getSource();
 				btnCertainityFactor.getSelection();
 				if (btnCertainityFactor.getSelection()==true){
-					scale.setVisible(true);
-					lblCf.setVisible(true);
+					//scale.setVisible(true);
+					//lblCf.setVisible(true);
 					button.setSelection(false);
 					btnBayesianReasoning.setSelection(false);
 		}	
@@ -501,16 +516,16 @@ public class MainScreen {
 				
 				//There are issues with this... causes screen to crash
 			    if(btnForwardChaining.getSelection()==true || btnDefault.getSelection()==true){
-					//KBase.validate();
-					//Variable result = Inference.solveForwardChaining();
-					//HowList = Inference.getHowList();
-					//IO.displayResults(result, Inference.getHowList(), KBase);	
+					KBase.validate();
+					Variable result = Inference.solveForwardChaining();
+					HowList = Inference.getHowList();
+					IO.displayResults(result, Inference.getHowList(), KBase);	
 			    	
 				}else if(btnBackwardChaining.getSelection()==true){
-					//KBase.validate();
-					//Variable result = Inference.solveBackwardChaining();
-					//HowList = Inference.getHowList();
-					//IO.displayResults(result, Inference.getHowList(), KBase);		
+					KBase.validate();
+					Variable result = Inference.solveBackwardChaining();
+					HowList = Inference.getHowList();
+					IO.displayResults(result, Inference.getHowList(), KBase);		
 			    }
 				
 				
@@ -541,10 +556,12 @@ public class MainScreen {
 
 				/**This code cause GUI to close when called - issue somewhere*/
 			//	FileManager.saveKnowledgeFile(KBase);
-				KBase.validate();
-				Variable result = Inference.solveBackwardChaining();
-				HowList = Inference.getHowList();
-				IO.displayResults(result, Inference.getHowList(), KBase);	
+
+				//KBase.validate();
+				//Variable result = Inference.solveForwardChaining();
+				//HowList = Inference.getHowList();
+				//IO.displayResults(result, Inference.getHowList(), KBase);	
+
 			}
 		});
 		
@@ -560,6 +577,7 @@ public class MainScreen {
 		scrolledComposite_1.setExpandHorizontal(true);
 		scrolledComposite_1.setExpandVertical(true);
 		
+		
 		lblWhyhow = new Label(scrolledComposite_1, SWT.WRAP);
 		lblWhyhow.setText("Why/How");
 		scrolledComposite_1.setContent(lblWhyhow);
@@ -568,7 +586,8 @@ public class MainScreen {
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
-		
+		/**Original Question Box for reference*/
+		/*
 		WhyButton = new Button(questionGroup, SWT.NONE);
 		WhyButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -628,13 +647,11 @@ public class MainScreen {
 				
 					  
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		OKButton.setText("OK");
+		OKButton.setText("OK");*/
 		
 		scrolledComposite.setContent(CompQ);
 		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-
-		
+			
 /*
 		ScrolledComposite scrolledComposite_1 = new ScrolledComposite(composite, SWT.BORDER | SWT.V_SCROLL);
 		scrolledComposite_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
@@ -759,8 +776,6 @@ public class MainScreen {
 		});
 		mntmSave.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/Save-icon.png"));
 		mntmSave.setText("Save");
-		
-		
 		
 		MenuItem mntmExit = new MenuItem(menu_1, SWT.NONE);
 		mntmExit.addSelectionListener(new SelectionAdapter() {
@@ -923,6 +938,7 @@ public class MainScreen {
 		tbtmVariables.setText("Variables");
 		
 		VariablesGUI Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
+		Variables.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		tbtmVariables.setControl(Variables);
 		
 	}
@@ -1080,6 +1096,5 @@ public class MainScreen {
 		s.append(rule != null ? rule.toString() : "null");
 		System.out.println(s.toString());
 	}
-	
 }
 
