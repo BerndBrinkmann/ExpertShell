@@ -1,6 +1,15 @@
 package gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -145,7 +154,9 @@ public class MainScreen {
 		KBase = new KnowledgeBase("default");
 		test = new Test_Case();
 		KBase = test.createBoatKnowlegeBase();
-		Inference = new InferenceEngine(KBase);		
+		//KBase = FileManager.loadKnowledgeFile();
+		//KBase.SetName("boat_kb");
+		Inference = new InferenceEngine(KBase);	
 		
 		//resized
 		shlExpertSystemShell = new Shell();
@@ -529,7 +540,7 @@ public class MainScreen {
 				//IO.setMainFrame(OKButton);
 
 				/**This code cause GUI to close when called - issue somewhere*/
-				
+			//	FileManager.saveKnowledgeFile(KBase);
 				KBase.validate();
 				Variable result = Inference.solveForwardChaining();
 				HowList = Inference.getHowList();
@@ -966,6 +977,96 @@ public class MainScreen {
 	}
 	public Combo getCombo() {
 		return combo;
+	}
+	
+	public static Variable AskUserForInput(Variable var, Rule rule)
+	{
+	
+			if(var instanceof NumericVariable)
+			{
+//				JPanel panel = new JPanel();
+//				
+//				if(var.getQueryPrompt().trim().equals(""))
+//				{
+//					panel.add(new JLabel("Input a value for "+var.getName()));
+//				}
+//				else
+//				{
+//					panel.add(new JLabel(var.getQueryPrompt()));
+//				}
+//				
+//				JTextField field = new JTextField("0.0", 10);
+//				
+//				JButton why = new JButton("Why?");
+//				why.addActionListener(new ActionListener() { 
+//					  public void actionPerformed(ActionEvent e) { 
+//						  displayWhyMessage();
+//					  } 
+//					} );
+//				
+//				panel.add(field);
+//				panel.add(why);
+//
+//				JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
+//				
+//				boolean invalid = true;
+//				while(invalid)
+//				{
+//					try
+//					{	
+//						var.userSetCurrentValue(Double.parseDouble(field.getText()));
+//						invalid = false;
+//					}
+//					catch(NumberFormatException ex)
+//					{
+//						System.out.println("Please enter a valid number.");
+//						invalid = true;
+//						JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
+//					}	
+//				}
+			}
+			else
+			{
+				
+				
+				JPanel panel = new JPanel();
+				
+				if(var.getQueryPrompt().trim().equals(""))
+				{
+					panel.add(new JLabel("Input a value for "+var.getName()));
+				}
+				else
+				{
+					panel.add(new JLabel(var.getQueryPrompt()));
+				}
+				
+				JComboBox combox = new JComboBox(var.getArrayOfPossibleValues());
+				
+				JButton why = new JButton("Why?");
+				why.addActionListener(new ActionListener() { 
+					  public void actionPerformed(ActionEvent e) { 
+						  //displayWhyMessage(rule);
+					  } 
+					} );
+				
+				panel.add(combox);
+				panel.add(why);
+
+				JOptionPane.showMessageDialog(null, panel,"",JOptionPane.PLAIN_MESSAGE);
+				Value val =  (Value) combox.getSelectedItem();
+				var.userSetCurrentValue(val);
+			}
+		
+		
+		return var;
+	}
+	
+	public static void displayWhyMessage(Rule rule)
+	{
+		StringBuilder s = new StringBuilder();
+		s.append("\nI am trying to evaluate the rule\n");
+		s.append(rule != null ? rule.toString() : "null");
+		System.out.println(s.toString());
 	}
 	
 }

@@ -1,5 +1,7 @@
 package datatypes;
 
+import gui.MainScreen;
+
 import java.io.Serializable;
 
 import datatypes.KBSettings;
@@ -191,7 +193,7 @@ public class Rule extends getSetKBSettings implements Serializable
 					 if(var.isUserInput())
 					 {
 						//get the input from the user
-						var = ImportExport.userSetVaraible(var,this);
+						var = MainScreen.AskUserForInput(var,this);
 						
 						//get the certainty if required
 						if(umethod == KBSettings.UncertaintyManagement.CF)
@@ -230,7 +232,7 @@ public class Rule extends getSetKBSettings implements Serializable
 					 if(var.isUserInput())
 					 {
 						//get the input from the user
-						var = ImportExport.userSetVaraible(var,this);
+						var = MainScreen.AskUserForInput(var,this);
 						
 						//get the certainty if required
 						if(umethod == UncertaintyManagement.CF)
@@ -282,7 +284,8 @@ public class Rule extends getSetKBSettings implements Serializable
 						 if(var.isUserInput())
 						 {
 							//get the input from the user
-							var = ImportExport.userSetVaraible(var,this);
+							 var = MainScreen.AskUserForInput(var,this);
+							//var = ImportExport.userSetVaraible(var,this);
 							
 							//get the certainty if required				TODO added this condition
 							if(umethod == UncertaintyManagement.CF && !(var instanceof NumericVariable))
