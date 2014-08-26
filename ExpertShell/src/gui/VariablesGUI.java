@@ -69,6 +69,7 @@ public class VariablesGUI extends Composite {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				//selection
 				if (e.getSource() == variableList && variableList.getSelection().length !=0)
 				{
 					
