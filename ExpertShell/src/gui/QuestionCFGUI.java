@@ -1,6 +1,7 @@
 package gui;
 
 import org.eclipse.swt.SWT;
+
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -11,6 +12,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
+
 public class QuestionCFGUI {
 	
 Group questionGroup;
@@ -24,14 +26,26 @@ Group questionGroup;
 	Label QforUser;
 	Label CFPercentage;
 	Scale CFScale;
+	//Label lblCF;
+	//Scale scale;
+	SelectionAdapter WhyL;
+	SelectionAdapter HowL;
+	SelectionAdapter OKL;
+	SelectionAdapter CFL;
+	SelectionAdapter AnswerComboL;
+	SelectionAdapter CFScaleL;
 	
-		public SelectionAdapter selAdaptor;
-	
-	public QuestionCFGUI(Composite CompQ){
-		
+	public QuestionCFGUI(Composite CompQ, SelectionAdapter WhyListener, SelectionAdapter HowListener, SelectionAdapter OKListener, SelectionAdapter CFListener, SelectionAdapter CFScaleListener, SelectionAdapter AnswerComboListener){
+		WhyL= WhyListener;
+		HowL= HowListener;
+		OKL= OKListener;
+		CFL = CFListener;
+		CFScaleL = CFScaleListener;
+		AnswerComboL= AnswerComboListener;
 		questionGroup = UserFactoryGUI.createQuestionGroup(CompQ);
 		questionGroup.getParent().layout();
 		CompQ.update();
+		
 	}
 	
 	public void addQuestion(){
@@ -52,9 +66,13 @@ Group questionGroup;
 		
 		CFPercentage = UserFactoryGUI.createCFLabel(questionGroup);
 		CFPercentage.setVisible(true);
-		
+		//lblCF = UserFactoryGUI.createCFLabel(questionGroup);
+		//lblCF.setVisible(true);
 		
 		CFScale = UserFactoryGUI.createCFScale(questionGroup);
+		//scale= UserFactoryGUI.createCFScale(questionGroup);
+		//scale.addSelectionListener(CFScaleL);
+		
 		CFScale.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -64,32 +82,26 @@ Group questionGroup;
 				gd_lblCf.widthHint = 101;
 				CFPercentage.setLayoutData(gd_lblCf);
 				CFPercentage.setText(""+(perspectivevalue));
+				//lblCF.setLayoutData(gd_lblCf);
+				//lblCF.setText(""+(perspectivevalue));
 			}
 		});
 		GridData gd_scale = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gd_scale.widthHint = 216;
 		CFScale.setLayoutData(gd_scale);
 		CFScale.setVisible(true);
+		//scale.setLayoutData(gd_scale);
+		//scale.setVisible(true);
 		
 		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
-		WhyButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-			}
-		});
+		WhyButton.addSelectionListener(WhyL);
 		GridData gd_WhyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_WhyButton.widthHint = 54;
 		WhyButton.setLayoutData(gd_WhyButton);
 		WhyButton.setText("Why?");
 		
 		HowButton = UserFactoryGUI.createHowButton(questionGroup);
-		HowButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-			}
-		});
+		HowButton.addSelectionListener(HowL);
 		GridData gd_HowButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_HowButton.widthHint = 54;
 		HowButton.setLayoutData(gd_HowButton);
@@ -97,22 +109,9 @@ Group questionGroup;
 		
 		OKButton = UserFactoryGUI.createOKButton(questionGroup);
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		OKButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-				// Attempt at creating new Question box...
-					    QforUser.setText("OK Pressed"); //test to see if button working
-						//QuestionGUI askQuestion = new QuestionGUI(CompQ);
-						//askQuestion.addQuestion();
-						//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-						//CompQ.layout();
-						//questionGroup.layout();
+		OKButton.addSelectionListener(OKL);
 
-				//notes: scrolled composite doesnt scroll with additional frames
-			    // creates tiny box
-			}
-		});
+		
 	}
 	
 
