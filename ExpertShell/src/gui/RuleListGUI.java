@@ -3,6 +3,7 @@ package gui;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.layout.GridData;
@@ -50,7 +51,6 @@ public class RuleListGUI extends Composite {
 		selectable = false;
 		setupComposite();
 		setupListener();
-		
 		
 		
 		for(Rule r : rulelist) {

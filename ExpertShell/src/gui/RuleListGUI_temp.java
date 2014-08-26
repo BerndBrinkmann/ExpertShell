@@ -9,6 +9,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.custom.ScrolledComposite;
 
 public class RuleListGUI_temp extends Composite {
 
@@ -21,9 +22,16 @@ public class RuleListGUI_temp extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
-		Composite compList = new Composite(this, SWT.NONE);
+		ScrolledComposite scrolledComposite = new ScrolledComposite(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite.setExpandHorizontal(true);
+		scrolledComposite.setExpandVertical(true);
+		scrolledComposite.setMinHeight(50);
+		GridData gd_scrolledComposite = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		gd_scrolledComposite.heightHint = 115;
+		scrolledComposite.setLayoutData(gd_scrolledComposite);
+		
+		Composite compList = new Composite(scrolledComposite, SWT.NONE);
 		compList.setLayout(new GridLayout(1, false));
-		compList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
 		Group group = RuleGUIFactory.createGroupRuleContainer(compList, "1.");
 		
@@ -39,6 +47,8 @@ public class RuleListGUI_temp extends Composite {
 		styledText_1.setText("IF\t\t\t\tthingy is blue\r\nTHEN\t\tother_thing is yes\r\n\t\t\t\tblah is no");
 		styledText_1.setEnabled(false);
 		styledText_1.setEditable(false);
+		scrolledComposite.setContent(compList);
+		scrolledComposite.setMinSize(compList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
 		Composite composite_2 = new Composite(this, SWT.NONE);
 		composite_2.setLayout(new GridLayout(5, false));

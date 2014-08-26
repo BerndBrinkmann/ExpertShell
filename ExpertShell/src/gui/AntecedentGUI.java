@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Widget;
 
 import datatypes.Antecedent;
 import datatypes.Connectives;
+import datatypes.Value;
 
 public class AntecedentGUI {
 	
@@ -91,8 +92,13 @@ public class AntecedentGUI {
 		//update comparison
 		logicComparitor.select(ant.getComparison().getIndex());
 		
-		
-		
+		//(add numeric!!!!!!!!!!!!!!)
+		//update value
+		value.removeAll();
+		for (Value v : ant.getVariable().getArrayOfPossibleValues()) {
+			value.add(v.toString());
+		}
+		value.select(ant.getVariable().getValueIndex(ant.getValue()));
 	}
 	
 	public void destroy() {

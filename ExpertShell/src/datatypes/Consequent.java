@@ -127,12 +127,21 @@ public class Consequent extends getSetKBSettings implements Serializable
 		return variable;
 	}
 
-	
-	
+	public String getVariableAsString() {
+		return variable.getName();
+	}
 	
 	public Value getValue()
 	{
 		return value;
+	}
+	
+	public String getValueAsString() {
+		if(isNumeric) {
+			return numVal.toString();
+		} else {
+			return value.getName();
+		}
 	}
 	
 	public Double getNumVal()
@@ -191,4 +200,7 @@ public class Consequent extends getSetKBSettings implements Serializable
 		return true;
 	}
 	
+	public boolean isNumeric() {
+		return isNumeric;
+	}
 }

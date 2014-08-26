@@ -43,7 +43,7 @@ public class ConsequentListGUI {
 	}
 	
 	public void add() {
-		conseqents.add(new ConsequentGUI(this, addButton));
+		conseqents.add(new ConsequentGUI(this, false, addButton));
 		updateUncertainty();
 	}
 	
