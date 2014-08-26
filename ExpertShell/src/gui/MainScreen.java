@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Menu;
@@ -43,6 +45,10 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.custom.StyledText;
 
 
+//import STUART.ADT.Rule;
+import gui.IO;
+
+
 
 //note - to reference a widget it must be 'exposed' by right-clicking on it in windowbuilder and selecting 'expose component' --Arie
 
@@ -84,6 +90,10 @@ public class MainScreen {
     private String selectedVariableString;
     private Test_Case test;
     private Label lblSelectTargetVariable;
+    private Label lblWhyhow;
+    private ArrayList<Rule> HowList = new ArrayList<Rule>();
+    static Rule tRule; // a hack to get this into the description function
+	InferenceEngine Inference = new InferenceEngine(KBase);		
 
 
 	public KnowledgeBase getKnowledgeBase(){
@@ -162,10 +172,8 @@ public class MainScreen {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-				
 			    HelpDialog about = new HelpDialog(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
-			    about.open();
-				
+			    about.open();	
 			}
 			
 		});
@@ -192,7 +200,7 @@ public class MainScreen {
 		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/MainImageRS.jpg"));
 		
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
-		tbtmUserInterface.setText("User Interface");
+		tbtmUserInterface.setText("Run Knowledgebase");
 
 		
 		Composite composite = new Composite(tabFolder, SWT.NONE);
@@ -205,6 +213,8 @@ public class MainScreen {
 		GridLayout gl_composite = new GridLayout(4, false);
 		gl_composite.marginWidth = 3;
 		composite.setLayout(gl_composite);
+		
+		
 		
 		Group grpKnowledgeBaseSelected = new Group(composite, SWT.NONE);
 		grpKnowledgeBaseSelected.setLayout(new GridLayout(3, false));
@@ -227,66 +237,11 @@ public class MainScreen {
 				targetvariablecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 				targetvariablecombo.setVisible(false);
 				this.setVariableCombo();
-
 				
 				btnRun = new Button(grpKnowledgeBaseSelected, SWT.NONE);
-				
-						
-								
+				btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+				btnRun.setText("Run");
 							
-						btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-						btnRun.setText("Run");
-						
-						btnRun.addSelectionListener(new SelectionAdapter() {
-							@Override
-							public void widgetSelected(SelectionEvent e) {
-								e.getSource();
-								
-								if(text.getText()==""){
-									
-									NoRun noKB = new NoRun(shlExpertSystemShell, SWT.ICON_ERROR|SWT.OK);
-									noKB.open();
-									
-								}
-								
-								if(targetvariablecombo.isVisible()==true && targetvariablecombo.getText()==""){
-									
-									NoRunV noVar = new NoRunV(shlExpertSystemShell, SWT.ICON_ERROR|SWT.OK);
-									noVar.open();
-									
-								}
-								//KnowledgeBase.validate();
-							    btnCertainityFactor.getSelection();
-							    btnRun.getSelection();
-								if (btnCertainityFactor.getSelection()==true){
-									QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
-									askCFQuestion.addQuestion();
-									//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-									scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-									CompQ.layout();
-									//scrolledComposite.layout();
-									button.setSelection(false);
-									btnBayesianReasoning.setSelection(false);
-								}else
-								{
-									QuestionGUI askQuestion = new QuestionGUI(CompQ);
-									askQuestion.addQuestion();
-									//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-									scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-									CompQ.layout();
-									btnCertainityFactor.setSelection(false);
-									;
-									//questionGroup.layout();
-								}
-								//IO.setMainFrame(OKButton);
-								KBase.validate();
-								
-								InferenceEngine Inference = new InferenceEngine(KBase);		
-								Variable result = Inference.solveForwardChaining();
-								
-								IO.displayResults(result, Inference.getHowList(), KBase);	
-							}
-						});
 		
 		Group grpSelectRunMethod = new Group(composite, SWT.NONE);
 		GridData gd_grpSelectRunMethod = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -362,10 +317,12 @@ public class MainScreen {
 		btnCertainityFactor = new Button(grpSelectReasoningMethod, SWT.RADIO);
 		btnCertainityFactor.setText("Certainty Factors");
 		btnCertainityFactor.setBounds(10, 62, 145, 16);
+		btnCertainityFactor.setSelection(false);
 		
 		btnBayesianReasoning = new Button(grpSelectReasoningMethod, SWT.RADIO);
 		btnBayesianReasoning.setText("Bayesian Reasoning");
 		btnBayesianReasoning.setBounds(10, 40, 145, 16);
+		btnBayesianReasoning.setSelection(false);
 		
 		
 		scrolledComposite = new ScrolledComposite(composite, SWT.V_SCROLL);
@@ -496,24 +453,118 @@ public class MainScreen {
 		});
 		
 		
+		btnRun.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+				
+				if(text.getText()==""){
+					
+					NoRun noKB = new NoRun(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
+					noKB.open();	
+				}
+				
+				if(targetvariablecombo.isVisible()==true && targetvariablecombo.getText()==""){
+					
+					NoRunV noVar = new NoRunV(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
+					noVar.open();
+				}
+			
+			    btnCertainityFactor.getSelection();
+			    btnRun.getSelection();
+				if (btnCertainityFactor.getSelection()==true){
+					QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ);
+					askCFQuestion.addQuestion();
+					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+					CompQ.layout();
+					//scrolledComposite.layout();
+					button.setSelection(false);
+					btnBayesianReasoning.setSelection(false);
+				}else
+				{
+					QuestionGUI askQuestion = new QuestionGUI(CompQ);
+					askQuestion.addQuestion();
+					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+					CompQ.layout();
+					btnCertainityFactor.setSelection(false);
+					
+					//questionGroup.layout();
+				}
+				//IO.setMainFrame(OKButton);
+				
+				/**This code cause GUI to close when called - issue somewhere*/
+				
+				//KBase.validate();
+				
+				//Variable result = Inference.solveForwardChaining();
+				HowList = Inference.getHowList();
+				//IO.displayResults(result, Inference.getHowList(), KBase);	
+			}
+		});
+		
+		
+		
+		
+		ScrolledComposite scrolledComposite_1 = new ScrolledComposite(composite, SWT.BORDER | SWT.V_SCROLL);
+		scrolledComposite_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
+		GridData gd_scrolledComposite_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
+		gd_scrolledComposite_1.heightHint = 377;
+		gd_scrolledComposite_1.widthHint = 320;
+		scrolledComposite_1.setLayoutData(gd_scrolledComposite_1);
+		scrolledComposite_1.setExpandHorizontal(true);
+		scrolledComposite_1.setExpandVertical(true);
+		
+		lblWhyhow = new Label(scrolledComposite_1, SWT.WRAP);
+		lblWhyhow.setText("Why/How");
+		scrolledComposite_1.setContent(lblWhyhow);
+		scrolledComposite_1.setMinSize(lblWhyhow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
 		
 		WhyButton = new Button(questionGroup, SWT.NONE);
 		WhyButton.addSelectionListener(new SelectionAdapter() {
 			@Override
+			//I Don't understand what "thisRule" is doing - returns Null, need to replace with actual rule?
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				//lblWhyhow.setText(IO.displayWhyMessage());
+				StringBuilder s = new StringBuilder();
+				s.append("\nI am trying to evaluate the rule\n");
+				s.append(tRule != null ? tRule.toString() : "null");
+				s.toString();
+				lblWhyhow.setText(""+s);
 			}
 		});
 		GridData gd_WhyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_WhyButton.widthHint = 54;
 		WhyButton.setLayoutData(gd_WhyButton);
 		WhyButton.setText("Why?");
-		
+
 		HowButton = new Button(questionGroup, SWT.NONE);
 		HowButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				//lblWhyhow.setText(IO.displayHowMessage(howList);
+				
+				if(HowList.isEmpty())
+				{
+					lblWhyhow.setText("\nA result was not reached\n");
+				}
+				else
+				{
+				
+					lblWhyhow.setText("\nThe result was reached by firing these rules in this order\n");
+					for(Rule r : HowList)
+					{
+						lblWhyhow.setText(r.toString());
+					}
+				}	
+				
 			}
 		});
 		GridData gd_HowButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -538,8 +589,9 @@ public class MainScreen {
 		scrolledComposite.setContent(CompQ);
 		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
-		
 
+		
+/*
 		ScrolledComposite scrolledComposite_1 = new ScrolledComposite(composite, SWT.BORDER | SWT.V_SCROLL);
 		scrolledComposite_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		GridData gd_scrolledComposite_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
@@ -549,7 +601,7 @@ public class MainScreen {
 		scrolledComposite_1.setExpandHorizontal(true);
 		scrolledComposite_1.setExpandVertical(true);
 		
-		Label lblWhyhow = new Label(scrolledComposite_1, SWT.WRAP);
+		lblWhyhow = new Label(scrolledComposite_1, SWT.WRAP);
 		lblWhyhow.setText("Why/How");
 		scrolledComposite_1.setContent(lblWhyhow);
 		scrolledComposite_1.setMinSize(lblWhyhow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -557,7 +609,7 @@ public class MainScreen {
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
-		
+	*/	
 		
 		MenuItem mntmOpenKnowledgeBase = new MenuItem(menu_1, SWT.CASCADE);
 		mntmOpenKnowledgeBase.setText("Open Knowledge Base");
@@ -571,6 +623,7 @@ public class MainScreen {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				//want to actually open boat KB when this is pressed
 				text.setText("Boat");
 				btnDefault.setSelection(true);
 				button.setSelection(true);
@@ -714,7 +767,7 @@ public class MainScreen {
 				
 			}
 		});
-		tbtmDeveloperInterface.setText("Developer Interface");
+		tbtmDeveloperInterface.setText("Create/Edit Knowledgebase");
 		
 		Composite composite_3 = new Composite(tabFolder, SWT.NONE);
 		tbtmDeveloperInterface.setControl(composite_3);

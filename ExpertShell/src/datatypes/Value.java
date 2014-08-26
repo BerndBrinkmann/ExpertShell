@@ -6,16 +6,23 @@ import java.util.ArrayList;
 public class Value implements Serializable
 {
 	protected String name;
-	protected Conditional conditionalPointer;
+	protected Consequent conPointer;
+	protected Antecedent antPointer;
 	
 	
 	
 	
-	public Value(String n, Conditional cond)
+	public Value(String n, Consequent con)
 	{
 		name = n;
-		conditionalPointer = cond;
+		conPointer = con;
 		
+	}
+	
+	public Value(String n, Antecedent ant)
+	{
+		name = n;
+		antPointer = ant;
 	}
 	
 	public Value(String n)

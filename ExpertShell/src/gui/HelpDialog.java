@@ -59,7 +59,7 @@ public class HelpDialog extends Dialog {
 		txtThisExpertSystem.setText("This Expert System Shell was designed by: \r\n\r\nArie Westland, Bernd Brinkmann, Jessica Taylor, Mandy Bester, and Nathan Cortes.\r\n\r\nFor the partial requirements of KNE441: Computational Intelligence, at the University of Tasmania, 2014.");
 		txtThisExpertSystem.setBounds(10, 10, 353, 132);
 		
-	/**	Button btnClose = new Button(shlAbout, SWT.NONE);
+	/*	Button btnClose = new Button(shlAbout, SWT.NONE);
 		btnClose.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
