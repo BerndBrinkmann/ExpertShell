@@ -212,7 +212,7 @@ public class MainScreen {
 		
 		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
 		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		GridData gd_lblNewLabel_1 = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		GridData gd_lblNewLabel_1 = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_lblNewLabel_1.heightHint = 508;
 		gd_lblNewLabel_1.widthHint = 717;
 		lblNewLabel_1.setLayoutData(gd_lblNewLabel_1);
@@ -879,8 +879,20 @@ public class MainScreen {
 		compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		compListEditor.setLayout(new GridLayout(1, false));
 		
-		RuleListGUI ruleList = new RuleListGUI(compListEditor, SWT.NONE, KBase);
+		ScrolledComposite scrolledComposite = new ScrolledComposite(compListEditor, SWT.BORDER | SWT.V_SCROLL);
+		gd_scrolledComposite.heightHint = 428;
+		GridData gd_scrolledComposite_2 = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		gd_scrolledComposite_2.heightHint = 400;
+		scrolledComposite.setLayoutData(gd_scrolledComposite_2);
+		
+		RuleListGUI ruleList = new RuleListGUI(scrolledComposite, SWT.NONE, KBase);
+		scrolledComposite.setContent(ruleList);
+		ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		//scrolledComposite.setMinSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
 		composite_3.getParent().getParent().layout(true,true);
+		
+		
 		
 		Composite compEditorControls = new Composite(compListEditor, SWT.NONE);
 		compEditorControls.setLayout(new GridLayout(5, false));
@@ -904,7 +916,7 @@ public class MainScreen {
 		compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 		compRuleEditorHolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase.getRule(0), KBase);
+		ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase.getRule(2), KBase);
 		compRuleEditorHolder.layout();
 		
 		TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);

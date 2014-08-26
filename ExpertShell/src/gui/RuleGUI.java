@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
 import datatypes.Antecedent;
+import datatypes.Consequent;
 import datatypes.Rule;
 
 public class RuleGUI extends Group {
@@ -58,10 +59,26 @@ public class RuleGUI extends Group {
 		for(Antecedent a : rule.getAntecedentArray()) {
 			appendWithStyle(a.getVariableAsString(),styleVar);  //the variable name
 			append(" "); //space
-			appendWithStyle("=is",styleCompareAssign);  //comparison
-			//appendWithStyle(a.getComparisonAsString(),styleCompareAssign);  //comparison
+			appendWithStyle(a.getComparisonAsString(),styleCompareAssign);  //comparison
 			append(" "); //space
 			appendWithStyle(a.getValueAsString(),styleValue);
+			append("\r\n");
+		}
+		appendWithStyle("THEN",styleIFTHEN);
+		append("\t\t\t"); //three tabs
+		
+		for(Consequent c : rule.getConsequentArray()) {
+			appendWithStyle(c.getVariableAsString(),styleVar);  //the variable name
+			append(" "); //space
+			if(c.isNumeric())
+			{
+				appendWithStyle("=",styleCompareAssign);  //comparison
+			} else {
+				appendWithStyle("is",styleCompareAssign);  //comparison
+			}
+			
+			append(" "); //space
+			appendWithStyle(c.getValueAsString(),styleValue);
 			append("\r\n");
 		}
 		

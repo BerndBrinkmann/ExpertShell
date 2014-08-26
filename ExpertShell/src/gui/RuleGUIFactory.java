@@ -34,7 +34,7 @@ public final class RuleGUIFactory {
 	 */
 	public static Combo createComboComparitor(Composite parent) {
 		Combo combo = new Combo(parent, SWT.READ_ONLY);
-		combo.setItems(new String[] {"is", "is not", "=", "!=", ">", "<", ">=", "<="});
+		combo.setItems(new String[] {"=", "!=", ">", "<", "<=", ">=", "is", "is not", });
 		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		combo.select(0);
 		return combo;

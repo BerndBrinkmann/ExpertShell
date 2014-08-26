@@ -59,9 +59,11 @@ public class AntecedentListGUI {
 		//add the rest of the antecedents
 		boolean first = true;
 		for(Antecedent a : parent.rule.getAntecedentArray()) {
-			if (first) continue; //skip the first one - this is already added above!
+			if (first) {
+				first = false;
+				continue; //skip the first one - this is already added above!
+			}
 			antecedents.add(new AntecedentGUI(this,false,addButton,a));
-			first = false;
 		}
 		
 	}

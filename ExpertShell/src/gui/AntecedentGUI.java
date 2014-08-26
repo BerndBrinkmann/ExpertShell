@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Widget;
 
 import datatypes.Antecedent;
 import datatypes.Connectives;
+import datatypes.Value;
 
 public class AntecedentGUI {
 	
@@ -72,8 +73,6 @@ public class AntecedentGUI {
 	}
 	
 	public void update() {
-		//update variable
-		var.setItems(parent.parent.getKnowledgeBase().getVariablesArrayAsString());
 		
 		// update AND/OR combo if we have one for this ant.
 		if (!(logicComb == null)) {
@@ -85,8 +84,21 @@ public class AntecedentGUI {
 			}
 		}
 		
+		//update variable
+		var.setItems(parent.parent.getKnowledgeBase().getVariablesArrayAsString());
+		System.out.println(parent.parent.getKnowledgeBase().getVariablesArray().indexOf(ant));
+		var.select(parent.parent.getKnowledgeBase().getVariablesArray().indexOf(ant.getVariable()));
 		
+		//update comparison
+		logicComparitor.select(ant.getComparison().getIndex());
 		
+		//(add numeric!!!!!!!!!!!!!!)
+		//update value
+		value.removeAll();
+		for (Value v : ant.getVariable().getArrayOfPossibleValues()) {
+			value.add(v.toString());
+		}
+		value.select(ant.getVariable().getValueIndex(ant.getValue()));
 	}
 	
 	public void destroy() {

@@ -17,6 +17,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	public Antecedent()
 	{
 		variable = new Variable("default");
+		comparison = Comparison.IS;
 		value = new Value("default",this);
 	}
 	
@@ -32,12 +33,14 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	public Antecedent(Variable var, Value val)
 	{
 		variable = var;
+		comparison = Comparison.IS;
 		value = val;
 	}
 	
 	public Antecedent(Variable var, Double val)
 	{
 		variable = var;
+		comparison = Comparison.EQ;
 		numVal = val;
 	}
 
