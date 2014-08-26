@@ -218,6 +218,20 @@ public class MainScreen {
 		lblNewLabel_1.setLayoutData(gd_lblNewLabel_1);
 		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_newsize.jpg"));
 		
+		TabItem tbtmQuickStart = new TabItem(tabFolder, SWT.NONE);
+		tbtmQuickStart.setText("Quick Start Guide");
+		
+		Composite composite_2 = new Composite(tabFolder, SWT.NONE);
+		tbtmQuickStart.setControl(composite_2);
+		composite_2.setLayout(new GridLayout(1, false));
+		
+		Label lblNewLabel_2 = new Label(composite_2, SWT.WRAP);
+		GridData gd_lblNewLabel_2 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_lblNewLabel_2.heightHint = 517;
+		gd_lblNewLabel_2.widthHint = 723;
+		lblNewLabel_2.setLayoutData(gd_lblNewLabel_2);
+		lblNewLabel_2.setText("Welcome to Expert System Shell. The following is a quick description of the purope of each page in this program and how to get started.\r\n\r\nRun Knowledgebase:\r\n\r\nOpen a knowledgebase that you would like to run:  File > Open Knowledgebase > Knowledgebase. \r\nThe name of the knowlegebase should be displayed in the top left hand side of the screen. \r\n\r\nSelect a run method from radio buttons: Default (Runs Forward Chaining), Forward Chaining, or Backward Chaining");
+		
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmUserInterface.setText("Run Knowledgebase");
 
@@ -502,16 +516,16 @@ public class MainScreen {
 				
 				//There are issues with this... causes screen to crash
 			    if(btnForwardChaining.getSelection()==true || btnDefault.getSelection()==true){
-					//KBase.validate();
-					//Variable result = Inference.solveForwardChaining();
-					//HowList = Inference.getHowList();
-					//IO.displayResults(result, Inference.getHowList(), KBase);	
+					KBase.validate();
+					Variable result = Inference.solveForwardChaining();
+					HowList = Inference.getHowList();
+					IO.displayResults(result, Inference.getHowList(), KBase);	
 			    	
 				}else if(btnBackwardChaining.getSelection()==true){
-					//KBase.validate();
-					//Variable result = Inference.solveBackwardChaining();
-					//HowList = Inference.getHowList();
-					//IO.displayResults(result, Inference.getHowList(), KBase);		
+					KBase.validate();
+					Variable result = Inference.solveBackwardChaining();
+					HowList = Inference.getHowList();
+					IO.displayResults(result, Inference.getHowList(), KBase);		
 			    }
 				
 				
@@ -542,10 +556,10 @@ public class MainScreen {
 
 				/**This code cause GUI to close when called - issue somewhere*/
 			//	FileManager.saveKnowledgeFile(KBase);
-				KBase.validate();
-				Variable result = Inference.solveForwardChaining();
-				HowList = Inference.getHowList();
-				IO.displayResults(result, Inference.getHowList(), KBase);	
+				//KBase.validate();
+				//Variable result = Inference.solveForwardChaining();
+				//HowList = Inference.getHowList();
+				//IO.displayResults(result, Inference.getHowList(), KBase);	
 			}
 		});
 		
@@ -1080,6 +1094,5 @@ public class MainScreen {
 		s.append(rule != null ? rule.toString() : "null");
 		System.out.println(s.toString());
 	}
-	
 }
 
