@@ -94,6 +94,11 @@ public class VariablesGUI extends Composite {
 							possibleValuesList.add(i.toString());
 						}
 					}
+//TODO adjust so if numeric shows a range of values instead of possible values					
+					if(currentvariable instanceof NumericVariable)
+					{
+						
+					}
 					variableList.deselectAll();
 				}
 				
