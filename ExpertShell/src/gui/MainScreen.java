@@ -381,8 +381,8 @@ public class MainScreen {
 
 		//composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		
-		questionGroup = new Group(CompQ, SWT.NONE);
+		/**Original question box for reference*/
+		/*questionGroup = new Group(CompQ, SWT.NONE);
 		questionGroup.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		questionGroup.setLayout(new GridLayout(3, false));
 		lblNewLabel = new Label(questionGroup, SWT.NONE);
@@ -390,7 +390,7 @@ public class MainScreen {
 		gd_lblNewLabel.widthHint = 303;
 		gd_lblNewLabel.heightHint = 65;
 		lblNewLabel.setLayoutData(gd_lblNewLabel);
-		String[] ITEMS = {"A", "B"};   /*Test*/
+		String[] ITEMS = {"A", "B"};   /*Test
 		combo_1 = new Combo(questionGroup, SWT.NONE);
 		//different from QuestionGUI
 		GridData gd_combo_1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1);
@@ -433,10 +433,11 @@ public class MainScreen {
 				lblCf.setText(""+(perspectivevalue));
 			}
 		});
+		
 		GridData gd_scale = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gd_scale.widthHint = 216;
 		scale.setLayoutData(gd_scale);
-		scale.setVisible(false);
+		scale.setVisible(false);*/
 		
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -444,8 +445,8 @@ public class MainScreen {
 				e.getSource();
 				button.getSelection();
 				if (button.getSelection()==true){
-					scale.setVisible(false);
-					lblCf.setVisible(false);
+					//scale.setVisible(false);
+					//lblCf.setVisible(false);
 					btnCertainityFactor.setSelection(false);
 					btnBayesianReasoning.setSelection(false);
 		}
@@ -458,8 +459,8 @@ public class MainScreen {
 				e.getSource();
 				btnBayesianReasoning.getSelection();
 				if (btnBayesianReasoning.getSelection()==true){
-					scale.setVisible(false);
-					lblCf.setVisible(false);
+					//scale.setVisible(false);
+					//lblCf.setVisible(false);
 					btnCertainityFactor.setSelection(false);
 					button.setSelection(false);
 		}
@@ -473,8 +474,8 @@ public class MainScreen {
 				e.getSource();
 				btnCertainityFactor.getSelection();
 				if (btnCertainityFactor.getSelection()==true){
-					scale.setVisible(true);
-					lblCf.setVisible(true);
+					//scale.setVisible(true);
+					//lblCf.setVisible(true);
 					button.setSelection(false);
 					btnBayesianReasoning.setSelection(false);
 		}	
@@ -560,7 +561,8 @@ public class MainScreen {
 		scrolledComposite_1.setExpandHorizontal(true);
 		scrolledComposite_1.setExpandVertical(true);
 		
-		lblWhyhow = new Label(scrolledComposite_1, SWT.WRAP);
+		/**Original Question Box for reference*/
+		/*lblWhyhow = new Label(scrolledComposite_1, SWT.WRAP);
 		lblWhyhow.setText("Why/How");
 		scrolledComposite_1.setContent(lblWhyhow);
 		scrolledComposite_1.setMinSize(lblWhyhow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -628,13 +630,11 @@ public class MainScreen {
 				
 					  
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		OKButton.setText("OK");
+		OKButton.setText("OK");*/
 		
 		scrolledComposite.setContent(CompQ);
 		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-
-		
+			
 /*
 		ScrolledComposite scrolledComposite_1 = new ScrolledComposite(composite, SWT.BORDER | SWT.V_SCROLL);
 		scrolledComposite_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
@@ -759,8 +759,6 @@ public class MainScreen {
 		});
 		mntmSave.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/Save-icon.png"));
 		mntmSave.setText("Save");
-		
-		
 		
 		MenuItem mntmExit = new MenuItem(menu_1, SWT.NONE);
 		mntmExit.addSelectionListener(new SelectionAdapter() {
