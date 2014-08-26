@@ -493,6 +493,9 @@ public class MainScreen {
 					//questionGroup.layout();
 				}
 				//IO.setMainFrame(OKButton);
+				
+				/**This code cause GUI to close when called - issue somewhere*/
+				
 				KBase.validate();
 				
 				Variable result = Inference.solveForwardChaining();
