@@ -236,7 +236,7 @@ public class MainScreen {
 				targetvariablecombo = new Combo(grpKnowledgeBaseSelected, SWT.NONE);
 				targetvariablecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 				targetvariablecombo.setVisible(false);
-				this.setVariableCombo();
+				this.getTargetVariableCombo();
 				
 				btnRun = new Button(grpKnowledgeBaseSelected, SWT.NONE);
 				btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -469,7 +469,23 @@ public class MainScreen {
 					NoRunV noVar = new NoRunV(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
 					noVar.open();
 				}
-			
+				
+				//There are issues with this... causes screen to crash
+			    if(btnForwardChaining.getSelection()==true || btnDefault.getSelection()==true){
+					KBase.validate();
+					Variable result = Inference.solveForwardChaining();
+					HowList = Inference.getHowList();
+					IO.displayResults(result, Inference.getHowList(), KBase);	
+			    	
+				}else if(btnBackwardChaining.getSelection()==true){
+					KBase.validate();
+					Variable result = Inference.solveBackwardChaining();
+					HowList = Inference.getHowList();
+					IO.displayResults(result, Inference.getHowList(), KBase);		
+			    }
+				
+				
+				// this should not be handled by run button, KBase needs to tell it when to ask a new question
 			    btnCertainityFactor.getSelection();
 			    btnRun.getSelection();
 				if (btnCertainityFactor.getSelection()==true){
@@ -489,15 +505,14 @@ public class MainScreen {
 					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 					CompQ.layout();
 					btnCertainityFactor.setSelection(false);
+					//End of section that needs to be moved
 					
-					//questionGroup.layout();
 				}
 				//IO.setMainFrame(OKButton);
-				
+
 				/**This code cause GUI to close when called - issue somewhere*/
 				
 				KBase.validate();
-				
 				Variable result = Inference.solveForwardChaining();
 				HowList = Inference.getHowList();
 				IO.displayResults(result, Inference.getHowList(), KBase);	
@@ -771,7 +786,7 @@ public class MainScreen {
 		
 		Composite composite_3 = new Composite(tabFolder, SWT.NONE);
 		tbtmDeveloperInterface.setControl(composite_3);
-		composite_3.setLayout(new GridLayout(3, false));
+		composite_3.setLayout(new GridLayout(2, false));
 		
 		Composite compListEditor = new Composite(composite_3, SWT.NONE);
 		compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
@@ -798,44 +813,6 @@ public class MainScreen {
 		Button button_5 = new Button(compEditorControls, SWT.NONE);
 		button_5.setText("Copy");
 		
-		Composite composite_4 = new Composite(composite_3, SWT.NONE);
-		composite_4.setLayout(new GridLayout(1, false));
-		
-		Button btnNewButton_1 = new Button(composite_4, SWT.NONE);
-		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				KBase.setUncertaintyMethod(UncertaintyManagement.NONE);
-				ruleEditor.updateUncertainty();
-				ruleEditor.ruleGrid.getParent().getParent().layout(true,true);
-			}
-		});
-		btnNewButton_1.setBounds(0, 0, 75, 25);
-		btnNewButton_1.setText("none");
-		
-		Button btnNewButton_2 = new Button(composite_4, SWT.NONE);
-		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				KBase.setUncertaintyMethod(UncertaintyManagement.CF);
-				ruleEditor.updateUncertainty();
-				ruleEditor.ruleGrid.getParent().getParent().layout(true,true);
-			}
-		});
-		btnNewButton_2.setBounds(0, 0, 75, 25);
-		btnNewButton_2.setText("cf");
-		
-		Button btnNewButton = new Button(composite_4, SWT.NONE);
-		btnNewButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				KBase.setUncertaintyMethod(UncertaintyManagement.BAYESIAN);
-				ruleEditor.updateUncertainty();
-				ruleEditor.ruleGrid.getParent().getParent().layout(true,true);
-			}
-		});
-		btnNewButton.setText("bays");
-		
 		Composite compRuleEditorHolder = new Composite(composite_3, SWT.NONE);
 		compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 		compRuleEditorHolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -850,8 +827,8 @@ public class MainScreen {
 		tbtmVariables.setControl(Variables);
 		
 	}
-	//variable combooo
-	public void setVariableCombo()
+	
+	/*public void setVariableCombo()
 	{
 	listChangeFlag = true;
 	targetvariablecombo.removeAll();
@@ -874,6 +851,21 @@ public class MainScreen {
 	
 	
 	listChangeFlag = false;	
+	}*/
+
+	public void getTargetVariableCombo()
+	{
+		if(KBase.getConsequentVariablesArray().length !=0)
+		{
+//			System.out.println("enters if statement");
+			String consequentArrayString[] = new String[KBase.getConsequentVariablesArray().length];
+					for (int i=0; i<consequentArrayString.length; i++)
+					{
+						consequentArrayString[i]= KBase.getConsequentVariablesArray()[i].toString();
+					}
+			targetvariablecombo.setItems(consequentArrayString);
+		}
+//			System.out.println("runs get target var combo");
 	}
 
 	
