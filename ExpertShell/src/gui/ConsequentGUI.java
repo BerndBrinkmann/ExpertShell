@@ -29,17 +29,7 @@ public class ConsequentGUI {
 	Label labelPrior,labelCF;
 	Spinner spinPrior,spinCF;	
 	
-	ArrayList<Widget> widgets = new ArrayList<Widget>();
-	
-	public ConsequentGUI(ConsequentListGUI p, boolean first) {
-		createConsequentGUI(p, null, true);
-	}
-	
-	public ConsequentGUI(ConsequentListGUI p, Control stopper) {
-		createConsequentGUI(p, stopper, false);
-	}
-	
-	private void createConsequentGUI(ConsequentListGUI p, Control stopper, boolean first) {
+	public ConsequentGUI(ConsequentListGUI p, boolean first, Control stopper) {
 		
 		parent = p;
 		

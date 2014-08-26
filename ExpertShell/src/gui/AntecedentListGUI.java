@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 
+import datatypes.Antecedent;
 import datatypes.KBSettings.UncertaintyManagement;
 
 public class AntecedentListGUI {
@@ -39,7 +40,11 @@ public class AntecedentListGUI {
 		
 		addFiller();
 		ifLabel = RuleGUIFactory.createLabelIf(container);
-		antecedents.add(new AntecedentGUI(this,true));
+		
+		//add the first antecedent
+		antecedents.add(new AntecedentGUI(this,true,null,parent.rule.getAntecedentArray()[0]));
+		
+		
 		uncertaintyContainer = RuleGUIFactory.createCompositeLNLS(container);
 		lnLabel = RuleGUIFactory.createLabelLN(uncertaintyContainer);
 		spinLN = RuleGUIFactory.createSpinnerLN(uncertaintyContainer);
@@ -51,11 +56,18 @@ public class AntecedentListGUI {
 		
 		addButton.addSelectionListener(s);
 		
-		updateUncertainty();
+		//add the rest of the antecedents
+		boolean first = true;
+		for(Antecedent a : parent.rule.getAntecedentArray()) {
+			if (first) continue; //skip the first one - this is already added above!
+			antecedents.add(new AntecedentGUI(this,false,addButton,a));
+			first = false;
+		}
+		
 	}
 	
-	public void add() {
-		antecedents.add(new AntecedentGUI(this, addButton));
+	public void add(Antecedent a) {
+		antecedents.add(new AntecedentGUI(this, false, addButton, a));
 		parent.updateUncertainty();
 	}
 	
@@ -86,7 +98,7 @@ public class AntecedentListGUI {
 	
 	public void updateUncertainty() {
 		
-		UncertaintyManagement u = parent.kb.getUncertaintyMethod();
+		UncertaintyManagement u = parent.rule.getUncertaintyMethod();
 
 		boolean showLNLS;
 		boolean showPrior;

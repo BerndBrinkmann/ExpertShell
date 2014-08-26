@@ -34,7 +34,6 @@ public class RuleListGUI extends Composite {
 		setupListener();
 		
 		
-		
 		ruleGUIs = new ArrayList<RuleGUI>();
 		//for each rule in the knowledge base
 		for(Rule r : kb.getRuleArray()) {

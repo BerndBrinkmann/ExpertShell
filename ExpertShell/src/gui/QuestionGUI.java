@@ -3,6 +3,7 @@ package gui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -23,14 +24,24 @@ public class QuestionGUI {
 	Button OKButton;
 	Combo ans;
 	Label QforUser;
+	//Label lblCF;
 	Label CFPercentage;
+	//Scale scale;
 	Scale CFScale;
+	SelectionAdapter WhyL;
+	SelectionAdapter HowL;
+	SelectionAdapter OKL;
+	SelectionAdapter CFL;
+	SelectionAdapter AnswerComboL;
+	SelectionAdapter CFScaleL;
 	
-	
-	public SelectionAdapter selAdaptor;
-	
-	public QuestionGUI(Composite CompQ){
-		
+	public QuestionGUI(Composite CompQ, SelectionAdapter WhyListener, SelectionAdapter HowListener, SelectionAdapter OKListener, SelectionAdapter CFListener, SelectionAdapter CFScaleListener, SelectionAdapter AnswerComboListener){
+		WhyL= WhyListener;
+		HowL= HowListener;
+		OKL= OKListener;
+		CFL = CFListener;
+		CFScaleL = CFScaleListener;
+		AnswerComboL= AnswerComboListener;
 		questionGroup = UserFactoryGUI.createQuestionGroup(CompQ);
 		questionGroup.getParent().getParent().layout(true);
 		CompQ.update();
@@ -45,8 +56,6 @@ public class QuestionGUI {
 		gd_label.heightHint=65;
 		QforUser.setLayoutData(gd_label);
 
-		
-		
 		ans = UserFactoryGUI.createAnswerCombo(questionGroup);
 		GridData gd_combo_1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1);
 		gd_combo_1.widthHint = 276;
@@ -56,9 +65,14 @@ public class QuestionGUI {
 		
 		CFPercentage = UserFactoryGUI.createCFLabel(questionGroup);
 		CFPercentage.setVisible(false);
-		
+		//lblCF = UserFactoryGUI.createCFLabel(questionGroup);
+		//lblCF.setVisible(false);
 		
 		CFScale = UserFactoryGUI.createCFScale(questionGroup);
+		//CFScale.addSelectionListener(CFScaleL);
+		//scale = UserFactoryGUI.createCFScale(questionGroup);
+		//scale.addSelectionListener(CFScaleL);
+	
 		CFScale.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -68,32 +82,26 @@ public class QuestionGUI {
 				gd_lblCf.widthHint = 101;
 				CFPercentage.setLayoutData(gd_lblCf);
 				CFPercentage.setText(""+(perspectivevalue));
+				//lblCF.setLayoutData(gd_lblCf);
+				//lblCF.setText(""+(perspectivevalue));
 			}
 		});
 		GridData gd_scale = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gd_scale.widthHint = 216;
 		CFScale.setLayoutData(gd_scale);
 		CFScale.setVisible(false);
+		//scale.setLayoutData(gd_scale);
+		//scale.setVisible(false);
 		
 		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
-		WhyButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-			}
-		});
+		WhyButton.addSelectionListener(WhyL);
 		GridData gd_WhyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_WhyButton.widthHint = 54;
 		WhyButton.setLayoutData(gd_WhyButton);
 		WhyButton.setText("Why?");
 		
 		HowButton = UserFactoryGUI.createHowButton(questionGroup);
-		HowButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-			}
-		});
+		HowButton.addSelectionListener(HowL);
 		GridData gd_HowButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_HowButton.widthHint = 54;
 		HowButton.setLayoutData(gd_HowButton);
@@ -101,22 +109,9 @@ public class QuestionGUI {
 		
 		OKButton = UserFactoryGUI.createOKButton(questionGroup);
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		OKButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-				// Attempt at creating new Question box...
-					    //QforUser.setText("OK Pressed"); //test to see if button working
-						//QuestionGUI askQuestion = new QuestionGUI(CompQ);
-						//askQuestion.addQuestion();
-						//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-						//CompQ.layout();
-						//questionGroup.layout();
-
-				//notes: scrolled composite doesnt scroll with additional frames
-			    // creates tiny box
-			}
-		});
+		OKButton.addSelectionListener(OKL);
+		
+		
 	}
 	
 

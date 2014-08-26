@@ -13,9 +13,13 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Widget;
 
+import datatypes.Antecedent;
+import datatypes.Connectives;
+
 public class AntecedentGUI {
 	
 	AntecedentListGUI parent;
+	Antecedent ant;
 	Button delButton;
 	Combo var;
 	Combo logicComparitor;
@@ -23,35 +27,10 @@ public class AntecedentGUI {
 	Combo logicComb;
 	Label filler;
 	
-	ArrayList<Widget> widgets = new ArrayList<Widget>();
-	
-	public AntecedentGUI(AntecedentListGUI p, boolean first) {
-		
-		//assign parent of this antGUI
-		parent = p;
-		
-		//get where to draw controls
-		Composite c = p.container;
-		
-		//get listeners
-		FocusAdapter f = p.parent.focAdaptor;
-		
-		var = RuleGUIFactory.createComboVar(c);
-		var.addFocusListener(f);
-		
-		logicComparitor = RuleGUIFactory.createComboComparitor(c);
-		logicComparitor.addFocusListener(f);
-		
-		value = RuleGUIFactory.createComboValue(c);
-		value.addFocusListener(f);
-		
-		filler = new Label(c, SWT.NONE);
-		
-	}
-	
-	public AntecedentGUI(AntecedentListGUI p, Control stopper) {
+	public AntecedentGUI(AntecedentListGUI p, boolean first, Control stopper, Antecedent a) {
 		
 		parent = p;
+		ant = a;
 		
 		//get where to draw controls
 		Composite c = p.container;
@@ -60,11 +39,13 @@ public class AntecedentGUI {
 		SelectionAdapter s = p.parent.selAdaptor;
 		FocusAdapter f = p.parent.focAdaptor;
 		
-		delButton = RuleGUIFactory.createButtonDelete(c);
-		delButton.addSelectionListener(s);
-		
-		logicComb = RuleGUIFactory.createComboComLogic(c);
-		logicComb.addFocusListener(f);
+		if (!first) {
+			delButton = RuleGUIFactory.createButtonDelete(c);
+			delButton.addSelectionListener(s);
+			
+			logicComb = RuleGUIFactory.createComboComLogic(c);
+			logicComb.addFocusListener(f);
+		}
 		
 		var = RuleGUIFactory.createComboVar(c);
 		var.addFocusListener(f);
@@ -77,16 +58,36 @@ public class AntecedentGUI {
 		
 		filler = new Label(c, SWT.NONE);
 		
-		//move these new controls above the 'stopper'. usually the add button
-		delButton.moveAbove(stopper);
-		logicComb.moveAbove(stopper);
-		var.moveAbove(stopper);
-		logicComparitor.moveAbove(stopper);
-		value.moveAbove(stopper);
-		filler.moveAbove(stopper);
+		if (!first) {
+			//move these new controls above the 'stopper'. usually the add button
+			delButton.moveAbove(stopper);
+			logicComb.moveAbove(stopper);
+			var.moveAbove(stopper);
+			logicComparitor.moveAbove(stopper);
+			value.moveAbove(stopper);
+			filler.moveAbove(stopper);
+		}
 		
+		update();
 	}
 	
+	public void update() {
+		//update variable
+		var.setItems(parent.parent.getKnowledgeBase().getVariablesArrayAsString());
+		
+		// update AND/OR combo if we have one for this ant.
+		if (!(logicComb == null)) {
+			if (parent.parent.rule.getConnective() == Connectives.AND) {
+				logicComb.select(0);
+			} else {
+				//must be OR
+				logicComb.select(1);
+			}
+		}
+		
+		
+		
+	}
 	
 	public void destroy() {
 		
