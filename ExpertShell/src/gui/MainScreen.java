@@ -718,7 +718,7 @@ public class MainScreen {
 		
 		Composite composite_3 = new Composite(tabFolder, SWT.NONE);
 		tbtmDeveloperInterface.setControl(composite_3);
-		composite_3.setLayout(new GridLayout(3, false));
+		composite_3.setLayout(new GridLayout(2, false));
 		
 		Composite compListEditor = new Composite(composite_3, SWT.NONE);
 		compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
@@ -744,44 +744,6 @@ public class MainScreen {
 		
 		Button button_5 = new Button(compEditorControls, SWT.NONE);
 		button_5.setText("Copy");
-		
-		Composite composite_4 = new Composite(composite_3, SWT.NONE);
-		composite_4.setLayout(new GridLayout(1, false));
-		
-		Button btnNewButton_1 = new Button(composite_4, SWT.NONE);
-		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				KBase.setUncertaintyMethod(UncertaintyManagement.NONE);
-				ruleEditor.updateUncertainty();
-				ruleEditor.ruleGrid.getParent().getParent().layout(true,true);
-			}
-		});
-		btnNewButton_1.setBounds(0, 0, 75, 25);
-		btnNewButton_1.setText("none");
-		
-		Button btnNewButton_2 = new Button(composite_4, SWT.NONE);
-		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				KBase.setUncertaintyMethod(UncertaintyManagement.CF);
-				ruleEditor.updateUncertainty();
-				ruleEditor.ruleGrid.getParent().getParent().layout(true,true);
-			}
-		});
-		btnNewButton_2.setBounds(0, 0, 75, 25);
-		btnNewButton_2.setText("cf");
-		
-		Button btnNewButton = new Button(composite_4, SWT.NONE);
-		btnNewButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				KBase.setUncertaintyMethod(UncertaintyManagement.BAYESIAN);
-				ruleEditor.updateUncertainty();
-				ruleEditor.ruleGrid.getParent().getParent().layout(true,true);
-			}
-		});
-		btnNewButton.setText("bays");
 		
 		Composite compRuleEditorHolder = new Composite(composite_3, SWT.NONE);
 		compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
