@@ -93,7 +93,7 @@ public class MainScreen {
     private Label lblWhyhow;
     private ArrayList<Rule> HowList = new ArrayList<Rule>();
     static Rule tRule; // a hack to get this into the description function
-	InferenceEngine Inference = new InferenceEngine(KBase);		
+    private InferenceEngine Inference;
 
 
 	public KnowledgeBase getKnowledgeBase(){
@@ -137,7 +137,7 @@ public class MainScreen {
 		KBase = new KnowledgeBase("default");
 		test = new Test_Case();
 		KBase = test.createBoatKnowlegeBase();
-		
+		Inference = new InferenceEngine(KBase);		
 		
 		//resized
 		shlExpertSystemShell = new Shell();
@@ -233,10 +233,20 @@ public class MainScreen {
 				lblSelectTargetVariable.setText("Select Target Variable");
 				lblSelectTargetVariable.setVisible(false);
 				
-				targetvariablecombo = new Combo(grpKnowledgeBaseSelected, SWT.NONE);
+				targetvariablecombo = new Combo(grpKnowledgeBaseSelected, SWT.READ_ONLY);
+				targetvariablecombo.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						if(targetvariablecombo.getSelectionIndex() != -1)
+						{
+							selectedVariable = KBase.getConsequentVariablesArray()[targetvariablecombo.getSelectionIndex()];
+						}
+					}
+				});
 				targetvariablecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 				targetvariablecombo.setVisible(false);
-				this.setVariableCombo();
+				this.getTargetVariableCombo();
+				
 				
 				btnRun = new Button(grpKnowledgeBaseSelected, SWT.NONE);
 				btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -469,7 +479,23 @@ public class MainScreen {
 					NoRunV noVar = new NoRunV(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
 					noVar.open();
 				}
-			
+				
+				//There are issues with this... causes screen to crash
+			    if(btnForwardChaining.getSelection()==true || btnDefault.getSelection()==true){
+					KBase.validate();
+					Variable result = Inference.solveForwardChaining();
+					HowList = Inference.getHowList();
+					IO.displayResults(result, Inference.getHowList(), KBase);	
+			    	
+				}else if(btnBackwardChaining.getSelection()==true){
+					KBase.validate();
+					Variable result = Inference.solveBackwardChaining();
+					HowList = Inference.getHowList();
+					IO.displayResults(result, Inference.getHowList(), KBase);		
+			    }
+				
+				
+				// this should not be handled by run button, KBase needs to tell it when to ask a new question
 			    btnCertainityFactor.getSelection();
 			    btnRun.getSelection();
 				if (btnCertainityFactor.getSelection()==true){
@@ -489,18 +515,17 @@ public class MainScreen {
 					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 					CompQ.layout();
 					btnCertainityFactor.setSelection(false);
+					//End of section that needs to be moved
 					
-					//questionGroup.layout();
 				}
 				//IO.setMainFrame(OKButton);
-				
+
 				/**This code cause GUI to close when called - issue somewhere*/
 				
-				//KBase.validate();
-				
-				//Variable result = Inference.solveForwardChaining();
+				KBase.validate();
+				Variable result = Inference.solveForwardChaining();
 				HowList = Inference.getHowList();
-				//IO.displayResults(result, Inference.getHowList(), KBase);	
+				IO.displayResults(result, Inference.getHowList(), KBase);	
 			}
 		});
 		
@@ -812,8 +837,8 @@ public class MainScreen {
 		tbtmVariables.setControl(Variables);
 		
 	}
-	//variable combooo
-	public void setVariableCombo()
+	
+	/*public void setVariableCombo()
 	{
 	listChangeFlag = true;
 	targetvariablecombo.removeAll();
@@ -836,6 +861,21 @@ public class MainScreen {
 	
 	
 	listChangeFlag = false;	
+	}*/
+
+	public void getTargetVariableCombo()
+	{
+		if(KBase.getConsequentVariablesArray().length !=0)
+		{
+//			System.out.println("enters if statement");
+			String consequentArrayString[] = new String[KBase.getConsequentVariablesArray().length];
+					for (int i=0; i<consequentArrayString.length; i++)
+					{
+						consequentArrayString[i]= KBase.getConsequentVariablesArray()[i].toString();
+					}
+			targetvariablecombo.setItems(consequentArrayString);
+		}
+//			System.out.println("runs get target var combo");
 	}
 
 	

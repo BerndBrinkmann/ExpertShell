@@ -69,9 +69,10 @@ public class InferenceEngine {
 				}
 				else
 				{
-					if(rule.evaluate(KBase.getsetSettings.getUncertaintyMethod()))
+					if(rule.evaluate(KBase.getUncertaintyMethod()))
 					{
 						howList.add(rule);
+						nRulesFired +=1;
 					}
 				}
 			}
