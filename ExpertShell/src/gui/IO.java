@@ -50,7 +50,7 @@ public class IO
 			s = (String)JOptionPane.showInputDialog(
 	                frame,
 	                message,
-	                "STUART requires input",
+	                "requires input",
 	                JOptionPane.PLAIN_MESSAGE,
 	                null,
 	                possibleValues,
@@ -73,7 +73,7 @@ public class IO
 			val = (Value)JOptionPane.showInputDialog(
 	                frame,
 	                message,
-	                "STUART requires input",
+	                " requires input",
 	                JOptionPane.PLAIN_MESSAGE,
 	                null,
 	                possibleValues,
@@ -161,7 +161,7 @@ public class IO
 			var = (Variable)JOptionPane.showInputDialog(
 	                frame,
 	                message,
-	                "STUART requires input",
+	                "requires input",
 	                JOptionPane.PLAIN_MESSAGE,
 	                null,
 	                variables,

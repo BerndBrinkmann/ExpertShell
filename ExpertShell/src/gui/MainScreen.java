@@ -95,7 +95,7 @@ public class MainScreen {
     private Label lblWhyhow;
     private ArrayList<Rule> HowList = new ArrayList<Rule>();
     static Rule tRule; // a hack to get this into the description function
-	InferenceEngine Inference = new InferenceEngine(KBase);		
+    private InferenceEngine Inference;
 
 
 	public KnowledgeBase getKnowledgeBase(){
@@ -145,7 +145,7 @@ public class MainScreen {
 		KBase = new KnowledgeBase("default");
 		test = new Test_Case();
 		KBase = test.createBoatKnowlegeBase();
-		
+		Inference = new InferenceEngine(KBase);		
 		
 		//resized
 		shlExpertSystemShell = new Shell();
@@ -241,10 +241,20 @@ public class MainScreen {
 				lblSelectTargetVariable.setText("Select Target Variable");
 				lblSelectTargetVariable.setVisible(false);
 				
-				targetvariablecombo = new Combo(grpKnowledgeBaseSelected, SWT.NONE);
+				targetvariablecombo = new Combo(grpKnowledgeBaseSelected, SWT.READ_ONLY);
+				targetvariablecombo.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						if(targetvariablecombo.getSelectionIndex() != -1)
+						{
+							selectedVariable = KBase.getConsequentVariablesArray()[targetvariablecombo.getSelectionIndex()];
+						}
+					}
+				});
 				targetvariablecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 				targetvariablecombo.setVisible(false);
 				this.getTargetVariableCombo();
+				
 				
 				btnRun = new Button(grpKnowledgeBaseSelected, SWT.NONE);
 				btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -520,10 +530,10 @@ public class MainScreen {
 
 				/**This code cause GUI to close when called - issue somewhere*/
 				
-				//KBase.validate();
-				//Variable result = Inference.solveForwardChaining();
+				KBase.validate();
+				Variable result = Inference.solveForwardChaining();
 				HowList = Inference.getHowList();
-				//IO.displayResults(result, Inference.getHowList(), KBase);	
+				IO.displayResults(result, Inference.getHowList(), KBase);	
 			}
 		});
 		
