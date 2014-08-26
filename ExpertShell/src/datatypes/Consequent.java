@@ -2,7 +2,7 @@ package datatypes;
 
 import java.io.Serializable;
 
-public class Consequent extends Conditional implements Serializable
+public class Consequent extends getSetKBSettings implements Serializable
 {
 	protected Variable variable;
 	protected Value value;
@@ -44,8 +44,6 @@ public class Consequent extends Conditional implements Serializable
 	{
 		variable = var;
 		numVal = d;
-		setIsNumeric(true);
-		
 	}
 	
 	public void setCertaintyFactor(Double cert)
