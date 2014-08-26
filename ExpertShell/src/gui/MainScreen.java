@@ -236,7 +236,7 @@ public class MainScreen {
 				targetvariablecombo = new Combo(grpKnowledgeBaseSelected, SWT.NONE);
 				targetvariablecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 				targetvariablecombo.setVisible(false);
-				this.setVariableCombo();
+				this.getTargetVariableCombo();
 				
 				btnRun = new Button(grpKnowledgeBaseSelected, SWT.NONE);
 				btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -812,8 +812,8 @@ public class MainScreen {
 		tbtmVariables.setControl(Variables);
 		
 	}
-	//variable combooo
-	public void setVariableCombo()
+	
+	/*public void setVariableCombo()
 	{
 	listChangeFlag = true;
 	targetvariablecombo.removeAll();
@@ -836,6 +836,21 @@ public class MainScreen {
 	
 	
 	listChangeFlag = false;	
+	}*/
+
+	public void getTargetVariableCombo()
+	{
+		if(KBase.getConsequentVariablesArray().length !=0)
+		{
+//			System.out.println("enters if statement");
+			String consequentArrayString[] = new String[KBase.getConsequentVariablesArray().length];
+					for (int i=0; i<consequentArrayString.length; i++)
+					{
+						consequentArrayString[i]= KBase.getConsequentVariablesArray()[i].toString();
+					}
+			targetvariablecombo.setItems(consequentArrayString);
+		}
+//			System.out.println("runs get target var combo");
 	}
 
 	
