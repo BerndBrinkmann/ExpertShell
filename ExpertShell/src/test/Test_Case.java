@@ -164,7 +164,7 @@ public class Test_Case {
 		}
 
 		boat_kb.setTarget(boat);
-		boat_kb.setUncertaintyMethod(KBSettings.UncertaintyManagement.BAYESIAN);
+		//boat_kb.setUncertaintyMethod(boat_kb);
 		
 		return boat_kb;
 

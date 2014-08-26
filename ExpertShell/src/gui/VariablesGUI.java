@@ -26,6 +26,8 @@ import datatypes.*;
 
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
 
 
 public class VariablesGUI extends Composite {
@@ -41,7 +43,8 @@ public class VariablesGUI extends Composite {
 	 private Text QuestionPrompt;
 	 private Button btnRadioButtonYes;
 	 private Button btnRadioButtonNo;
-	/**
+	 private Button btnSave;
+	 /**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
@@ -55,20 +58,20 @@ public class VariablesGUI extends Composite {
 		KBase = kb;
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		setLayout(new GridLayout(2, false));
-		variableList = new List(this, SWT.BORDER);
+		variableList = new List(this, SWT.BORDER | SWT.V_SCROLL);
 		
 		setVariableList();
 		Group GroupAddDelete = new Group(this, SWT.NONE);
-		possibleValuesList = new List(GroupAddDelete, SWT.BORDER);
+		possibleValuesList = new List(GroupAddDelete, SWT.BORDER | SWT.V_SCROLL);
 		possibleValuesList.setBounds(112, 215, 369, 148);
 		
-		variableList.addSelectionListener(new SelectionAdapter() {
-			
+		variableList.addSelectionListener(new SelectionAdapter() {	
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (variableList.getSelection()[0] != null)
+				//selection
+				if (e.getSource() == variableList && variableList.getSelection().length !=0)
 				{
-					
+					setForInput(true);
 					possibleValuesList.removeAll();
 					currentvariable = KBase.getVariable(variableList.getSelection()[0]);
 					if (currentvariable.isUserInput() == false) 
@@ -91,7 +94,14 @@ public class VariablesGUI extends Composite {
 							possibleValuesList.add(i.toString());
 						}
 					}
+//TODO adjust so if numeric shows a range of values instead of possible values					
+					if(currentvariable instanceof NumericVariable)
+					{
+						
+					}
+					variableList.deselectAll();
 				}
+				
 			}
 		});
 
@@ -119,12 +129,20 @@ public class VariablesGUI extends Composite {
 		lblAskUser.setText("Ask User:");
 		
 		descriptionTxt = new Text(GroupAddDelete, SWT.BORDER);
+		descriptionTxt.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				
+				currentvariable.setDescription(descriptionTxt.getText());
+			}
+		});
 		descriptionTxt.setBounds(112, 49, 369, 104);
 		
 
 		
 		txtVariableName = new Text(GroupAddDelete, SWT.BORDER);
 		txtVariableName.setBounds(113, 22, 192, 21);
+		
+		
 		
 		Group group = new Group(GroupAddDelete, SWT.NONE);
 		group.setBounds(103, 369, 105, 31);
@@ -142,46 +160,18 @@ public class VariablesGUI extends Composite {
 		lblPossibleValues.setBounds(19, 219, 87, 15);
 		lblPossibleValues.setText("Possible Values:");
 		
-		Button btnSave = new Button(GroupAddDelete, SWT.NONE);
-		btnSave.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(MouseEvent e) {
-				// Save button was pressed
-
-				Variable TempVariable = new Variable();
-				if(txtVariableName.getText()=="")
-				{
-					//checks is a name for a variable was entered
-					JOptionPane.showMessageDialog(null, "Please enter a Variable Name");
-					txtVariableName.setFocus();
-				}
-				else
-				{
-					for (int i = 0;i< KBase.getVariablesArray().size();i++)
-					{
-						if (KBase.getVariablesArray().get(i).getName().equals(txtVariableName.getText()))
-						{
-						TempVariable = KBase.getVariablesArray().get(i);
-						}
-					}
-					TempVariable.setUserInput(btnRadioButtonYes.getSelection());
-					TempVariable.setName(txtVariableName.getText());
-					TempVariable.setDescription(descriptionTxt.getText());
-					TempVariable.setQueryPrompt(QuestionPrompt.getText());
-					KBase.saveVariable(TempVariable);
-					variableList.removeAll();
-					for (Variable v: KBase.getVariablesArray())
-					{
-						variableList.add(v.getName());
-					}
-				}
-				
-			}
-		});
+		btnSave = new Button(GroupAddDelete, SWT.NONE);
 		btnSave.setBounds(103, 406, 75, 25);
 		btnSave.setText("Save");
 		
 		QuestionPrompt = new Text(GroupAddDelete, SWT.BORDER);
+		QuestionPrompt.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+			
+				currentvariable.setQueryPrompt(QuestionPrompt.getText());
+			
+			}
+		});
 		QuestionPrompt.setBounds(113, 159, 368, 50);
 		
 		Label lblQuestionPrompt = new Label(GroupAddDelete, SWT.NONE);
@@ -190,8 +180,71 @@ public class VariablesGUI extends Composite {
 		
 		new Label(this, SWT.NONE);
 		
+		setForInput(false);
+		
+		btnSave.addMouseListener(new MouseAdapter() {
+			
+			
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// Save button was pressed
+				if(e.getSource() == btnSave && currentvariable != null)
+				{
+					Variable TempVariable = new Variable();
+// TODO change to grey out fields if no variable is selected					
+					
+					Boolean flag = false;
+					for (int i = 0;i< KBase.getVariablesArray().size();i++)
+					{
+						if (KBase.getVariablesArray().get(i).getName().equals(txtVariableName.getText()) && !(currentvariable.getName().equals(txtVariableName.getText())))
+						{
+							flag = true;
+							JOptionPane.showMessageDialog(null, "Variable with that name already exists");
+						}
+					 
+					}
+					if(!flag)
+					{
+					currentvariable.setUserInput(btnRadioButtonYes.getSelection());
+					currentvariable.setName(txtVariableName.getText().trim());
+					currentvariable.setDescription(descriptionTxt.getText());
+					currentvariable.setQueryPrompt(QuestionPrompt.getText());
+					}
+					
+					variableList.removeAll();
+					for (Variable v: KBase.getVariablesArray())
+					{
+						variableList.add(v.getName());
+						setVariableList();
+					}
+				}
+					
+				
+				
+				if(e.getSource() == btnRadioButtonYes && currentvariable!=null)
+				{
+					currentvariable.setUserInput(true);
+					
+				}
+				
+				if(e.getSource() == btnRadioButtonNo && currentvariable!=null)
+				{
+					currentvariable.setUserInput(false);
+				}
+			}
+		});
+		
+		
+	}
 
-
+	public void setForInput(Boolean enable)
+	{
+		txtVariableName.setEnabled(enable);
+		btnRadioButtonYes.setEnabled(enable);
+		btnRadioButtonNo.setEnabled(enable);
+		descriptionTxt.setEnabled(enable);
+		QuestionPrompt.setEnabled(enable);
+		possibleValuesList.setEnabled(enable);
 	}
 
 	@Override
