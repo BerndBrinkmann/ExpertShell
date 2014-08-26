@@ -561,8 +561,8 @@ public class MainScreen {
 		scrolledComposite_1.setExpandHorizontal(true);
 		scrolledComposite_1.setExpandVertical(true);
 		
-		/**Original Question Box for reference*/
-		/*lblWhyhow = new Label(scrolledComposite_1, SWT.WRAP);
+		
+		lblWhyhow = new Label(scrolledComposite_1, SWT.WRAP);
 		lblWhyhow.setText("Why/How");
 		scrolledComposite_1.setContent(lblWhyhow);
 		scrolledComposite_1.setMinSize(lblWhyhow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -570,7 +570,8 @@ public class MainScreen {
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
-		
+		/**Original Question Box for reference*/
+		/*
 		WhyButton = new Button(questionGroup, SWT.NONE);
 		WhyButton.addSelectionListener(new SelectionAdapter() {
 			@Override
