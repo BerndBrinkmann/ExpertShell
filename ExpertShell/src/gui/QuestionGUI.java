@@ -48,7 +48,7 @@ public class QuestionGUI {
 		
 	}
 	
-	public void addQuestion(){
+	public void addQuestion(String message){
 		
 		QforUser= UserFactoryGUI.createQuestionLabel(questionGroup);
 		GridData gd_label = new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1);

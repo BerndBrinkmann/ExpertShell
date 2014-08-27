@@ -33,7 +33,7 @@ import org.eclipse.swt.events.ModifyEvent;
 public class VariablesGUI extends Composite {
 	
 
-	private String Name;
+	 private String Name;
 	 private Text descriptionTxt;
 	 private Text txtVariableName;
 	 private List variableList;
