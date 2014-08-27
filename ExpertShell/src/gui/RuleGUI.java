@@ -26,6 +26,7 @@ public class RuleGUI extends Group {
 		
 		styledRule = RuleGUIFactory.createStyledTextRule(this, "");
 		if (!(listen == null)) {
+			this.addMouseListener(listen);
 			styledRule.addMouseListener(listen);
 		}
 		

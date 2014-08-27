@@ -15,6 +15,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Scale;
@@ -53,6 +55,8 @@ import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.custom.StyledText;
+
+
 
 
 
@@ -904,11 +908,26 @@ public class MainScreen {
 		compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		compListEditor.setLayout(new GridLayout(1, false));
 		
-		ScrolledComposite scrolledComposite = new ScrolledComposite(compListEditor, SWT.BORDER | SWT.V_SCROLL);
+		scrolledComposite = new ScrolledComposite(compListEditor, SWT.BORDER | SWT.V_SCROLL);
 		gd_scrolledComposite.heightHint = 428;
 		GridData gd_scrolledComposite_2 = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		gd_scrolledComposite_2.heightHint = 400;
 		scrolledComposite.setLayoutData(gd_scrolledComposite_2);
+		scrolledComposite.addListener(SWT.MouseWheel, new Listener() {
+            public void handleEvent(Event event) {
+                int wheelCount = event.count;
+                wheelCount = (int) Math.ceil(wheelCount / 3.0f);
+                while (wheelCount < 0) {
+                    scrolledComposite.getVerticalBar().setIncrement(4);
+                    wheelCount++;
+                }
+
+                while (wheelCount > 0) {
+                    scrolledComposite.getVerticalBar().setIncrement(-4);
+                    wheelCount--;
+                }
+            }
+        });
 		
 		RuleListGUI ruleList = new RuleListGUI(scrolledComposite, SWT.NONE, KBase);
 		scrolledComposite.setContent(ruleList);
@@ -941,7 +960,8 @@ public class MainScreen {
 		compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 		compRuleEditorHolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase.getRule(2), KBase);
+		ruleList.setEditorHolder(compRuleEditorHolder);
+		//ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase.getRule(2), KBase);
 		compRuleEditorHolder.layout();
 		
 		TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);

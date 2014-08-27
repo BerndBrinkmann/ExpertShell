@@ -14,11 +14,14 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Widget;
 
+import datatypes.Consequent;
 import datatypes.KBSettings.UncertaintyManagement;
+import datatypes.Value;
 
 public class ConsequentGUI {
 	
 	ConsequentListGUI parent;
+	Consequent con;
 	Button delButton;
 	Combo var;
 	Combo assign;
@@ -27,11 +30,12 @@ public class ConsequentGUI {
 	Label filler,filler1;
 	Composite uncertaintyContainer;
 	Label labelPrior,labelCF;
-	Spinner spinPrior,spinCF;	
+	Spinner spinPrior,spinCF;
 	
-	public ConsequentGUI(ConsequentListGUI p, boolean first, Control stopper) {
+	public ConsequentGUI(ConsequentListGUI p, boolean first, Control stopper, Consequent co) {
 		
 		parent = p;
+		con = co;
 		
 		//get where to draw controls
 		Composite c = p.container;
@@ -71,8 +75,36 @@ public class ConsequentGUI {
 			value.moveAbove(stopper);
 			uncertaintyContainer.moveAbove(stopper);
 		}
+		
+		update();
 	}
 	
+	public void update() {
+		//update variable box
+		var.setItems(parent.parent.getKnowledgeBase().getVariablesArrayAsString());
+		var.select(parent.parent.getKnowledgeBase().getVariablesArray().indexOf(con.getVariable()));
+		
+		//update assignment
+		if(con.isNumeric()) {
+			assign.select(1);
+		} else {
+			assign.select(0);
+		}
+		
+		//add numeric!!!
+		//update value
+		value.removeAll();
+		for(Value v: con.getVariable().getArrayOfPossibleValues()) {
+			value.add(v.toString());
+		}
+		value.select(con.getVariable().getValueIndex(con.getValue()));
+		
+		//update prior
+		//double select = con.getVariable().getBelief(con.getValue());
+						
+		//spinPrior.setSelection( (int) (select*(Math.pow(10, spinPrior.getDigits()))) );
+		
+	}
 	
 	public void destroy() {
 		Composite c = parent.container;

@@ -10,6 +10,7 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class RuleListGUI_temp extends Composite {
 
@@ -36,6 +37,8 @@ public class RuleListGUI_temp extends Composite {
 		Group group = RuleGUIFactory.createGroupRuleContainer(compList, "1.");
 		
 		StyledText styledText = RuleGUIFactory.createStyledTextRule(group, "IF\t\t\t\tthingy is blue\r\nTHEN\t\tother_thing is yes\r\n\t\t\t\tblah is no");
+		styledText.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
+		styledText.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION));
 		
 		Group group_1 = new Group(compList, SWT.NONE);
 		group_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
@@ -21,14 +23,16 @@ public class RuleListGUI extends Composite {
 	private ArrayList<RuleGUI> ruleGUIs;
 	private final KnowledgeBase kb;
 	private boolean selectable;
-	private int selectedIndex;
+	private int selected;
 	private MouseListener listen;
+	private Composite editorHolder;
+	private RuleEditorGUI editor;
 	
 	//create an editable/selectable rulelistGUI linked to a knowledgebase
 	public RuleListGUI(Composite parent, int style, KnowledgeBase k) {
 		super(parent, style);
 		kb = k;
-		selectedIndex = -1;
+		selected = -1;
 		selectable = true;
 		
 		setupComposite();
@@ -73,26 +77,80 @@ public class RuleListGUI extends Composite {
 				Object source;
 				int index;
 				source = e.getSource();
-				index = getIndexFromWidget(source);
-				
+				index = getIndexFromControl(source);
+			
+				if(index == selected) {
+					//user has clicked the rule that is already selected
+					//ie they want to close the editor
+					deselect(index);
+				} else if (selected == -1){
+					//user has clicked another rule and nothing is selected yet
+					select(index);
+				} else {
+					deselect(selected);
+					select(index);
+				}
 			}
 
 			public void mouseUp(MouseEvent e) {	}
 		};
 	}
 	
-	private int getIndexFromWidget(Object source) {
+	protected void select(int index) {
+		
+		StyledText st;
+		
+		st = (StyledText) getControlFromIndex(index);
+		
+		st.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
+		st.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION));
+		
+		//make a new editor
+		editor = new RuleEditorGUI(editorHolder, kb.getRule(index), kb);
+		
+		
+		//set the new index
+		selected = index;
+	}
+
+	protected void deselect(int index) {
+		
+		StyledText st = (StyledText) getControlFromIndex(index);
+		
+		st.setForeground(null);
+		st.setBackground(null);
+		
+		if (!(editor == null)) {
+			editor.destroy();  //remove gui elements
+			editor = null; //remove reference
+		}
+		
+		
+		
+		selected = -1;
+		
+	}
+	
+	private Control getControlFromIndex(int index) {
+		return (Control) ruleGUIs.get(index).getStyledTextWidget();
+	}
+
+	private int getIndexFromControl(Object source) {
 		int i = -1;
 		
 		//loop through each ruleGUI element
 		for(RuleGUI r: ruleGUIs) {
 			i++;
-			if (r.getStyledTextWidget() == source)
+			if (source == r)
 			{
 				return i;
 			}
 		}
 		return i;
+	}
+
+	public void setEditorHolder(Composite compRuleEditorHolder) {
+		editorHolder = compRuleEditorHolder;
 	}
 	
 }
