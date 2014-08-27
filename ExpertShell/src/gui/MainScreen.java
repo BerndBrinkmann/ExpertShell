@@ -75,7 +75,8 @@ import gui.IO;
 
 
 
-public class MainScreen implements Serializable {
+
+public class MainScreen  implements Serializable {
 
 	protected Shell shlExpertSystemShell;
 	private Label text;
@@ -114,7 +115,7 @@ public class MainScreen implements Serializable {
     private Label lblWhyhow;
     private ArrayList<Rule> HowList = new ArrayList<Rule>();
     static Rule tRule; // a hack to get this into the description function
-
+    private InferenceEngine Inference;
 
 
 	public KnowledgeBase getKnowledgeBase(){
@@ -167,7 +168,7 @@ public class MainScreen implements Serializable {
 		KBase = test.createBoatKnowlegeBase(this);
 		//KBase = FileManager.loadKnowledgeFile();
 		//KBase.SetName("boat_kb");
-		
+		//Inference = new InferenceEngine(KBase);
 		
 		//resized
 		shlExpertSystemShell = new Shell();
@@ -564,4 +565,11 @@ public static Double getCertainty(String message)
 	return  (Double)(((double)slider.getValue())/100);
 }
 
+
+//public static InferenceEngine createInferenceEngine(KnowledgeBase kb)
+//{
+//    InferenceEngine Inference;
+//    Inference = new InferenceEngine(kb);
+//    return Inference;
+///}
 }

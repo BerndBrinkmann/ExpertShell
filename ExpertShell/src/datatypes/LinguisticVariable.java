@@ -1,8 +1,9 @@
 package datatypes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class LinguisticVariable extends Variable {
+public class LinguisticVariable extends Variable implements Serializable {
 
 	protected String name;
 	protected String description = "";

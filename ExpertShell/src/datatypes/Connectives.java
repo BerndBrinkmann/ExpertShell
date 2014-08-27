@@ -1,6 +1,8 @@
 package datatypes;
 
-public enum Connectives
+import java.io.Serializable;
+
+public enum Connectives implements Serializable 
 {
 	AND,OR
 }

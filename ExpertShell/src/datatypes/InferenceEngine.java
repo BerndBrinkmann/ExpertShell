@@ -21,7 +21,7 @@ import org.apache.commons.lang3.SerializationUtils;
 
 import datatypes.*;
 
-public class InferenceEngine implements Serializable  {
+public class InferenceEngine implements Serializable {
 
  KnowledgeBase KBase;
 
@@ -32,6 +32,7 @@ public class InferenceEngine implements Serializable  {
 		 
 		//create a deep copy of the knowledge base object to operate on
 		//KBase = (KnowledgeBase) SerializationUtils.clone(kb);
+		KBase = kb;
 	}
 		
 	public Variable solveForwardChaining()
