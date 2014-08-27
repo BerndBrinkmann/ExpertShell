@@ -397,6 +397,7 @@ public class runGUI extends Composite implements Serializable {
 				//lblCf.setVisible(false);
 				btnCertainityFactor.setSelection(false);
 				btnBayesianReasoning.setSelection(false);
+				KBase.setUncertaintyMethod(KBSettings.UncertaintyManagement.NONE);
 	}
 		}
 	});
@@ -411,6 +412,7 @@ public class runGUI extends Composite implements Serializable {
 				//lblCf.setVisible(false);
 				btnCertainityFactor.setSelection(false);
 				button.setSelection(false);
+				KBase.setUncertaintyMethod(KBSettings.UncertaintyManagement.BAYESIAN);
 	}
 		}
 	});
@@ -426,6 +428,7 @@ public class runGUI extends Composite implements Serializable {
 				//lblCf.setVisible(true);
 				button.setSelection(false);
 				btnBayesianReasoning.setSelection(false);
+				KBase.setUncertaintyMethod(KBSettings.UncertaintyManagement.CF);
 	}	
 		}
 	});
