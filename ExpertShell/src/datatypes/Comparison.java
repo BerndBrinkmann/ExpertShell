@@ -1,6 +1,8 @@
 package datatypes;
 
-public enum Comparison
+import java.io.Serializable;
+
+public enum Comparison implements Serializable 
 {
 	EQ("=",0),
 	NEQ("!=",1),
