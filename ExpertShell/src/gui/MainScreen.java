@@ -753,6 +753,15 @@ public class MainScreen {
 		});
 		mntmForecast.setText("Forecast");
 		
+		MenuItem mntmLoad = new MenuItem(menu_1, SWT.NONE);
+		mntmLoad.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			KBase = FileManager.loadKnowledgeFile();
+			}
+		});
+		mntmLoad.setText("Load");
+		
 		
 		
 		MenuItem mntmSave = new MenuItem(menu_1, SWT.NONE);
@@ -760,18 +769,19 @@ public class MainScreen {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				
 			//Creating menu items dynamically for new knowledge base
 			// needs save all rules and settings etc. - look for FileManager
-				newKB = new MenuItem(menu_4, SWT.NONE);
-				//newKB.addSelectionListener(this);
-				newKB.addSelectionListener(new SelectionAdapter() {
-					@Override
-					public void widgetSelected(SelectionEvent e) {
-						e.getSource();
-			}
-		});
-				newKB.setText("newKB"+ KBase.getName());
-				
+//				newKB = new MenuItem(menu_4, SWT.NONE);
+//				//newKB.addSelectionListener(this);
+//				newKB.addSelectionListener(new SelectionAdapter() {
+//					@Override
+//					public void widgetSelected(SelectionEvent e) {
+//						e.getSource();
+//			}
+//		});
+//				newKB.setText("newKB"+ KBase.getName());
+				FileManager.saveKnowledgeFile(KBase);
 			}
 		});
 		mntmSave.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/Save-icon.png"));
