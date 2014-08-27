@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -12,6 +14,9 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.custom.ScrolledComposite;
+
+import datatypes.InferenceEngine;
+import datatypes.Rule;
 
 public class QuestionGUI {
 	
@@ -35,17 +40,24 @@ public class QuestionGUI {
 	SelectionAdapter AnswerComboL;
 	SelectionAdapter CFScaleL;
 	
-	public QuestionGUI(Composite CompQ, SelectionAdapter WhyListener, SelectionAdapter HowListener, SelectionAdapter OKListener, SelectionAdapter CFListener, SelectionAdapter CFScaleListener, SelectionAdapter AnswerComboListener){
+	public SelectionAdapter WhyListener;
+	public SelectionAdapter HowListener;
+	public SelectionAdapter OKListener;
+	public SelectionAdapter AnswerComboListener;
+	public ArrayList<Rule> howlist;
+	
+	static Rule tRule;
+	
+	public QuestionGUI(Composite CompQ, InferenceEngine Inference){
 		WhyL= WhyListener;
 		HowL= HowListener;
 		OKL= OKListener;
-		CFL = CFListener;
-		CFScaleL = CFScaleListener;
+
 		AnswerComboL= AnswerComboListener;
 		questionGroup = UserFactoryGUI.createQuestionGroup(CompQ);
 		questionGroup.getParent().getParent().layout(true);
 		CompQ.update();
-		
+		howlist  = Inference.getHowList();
 	}
 	
 	public void addQuestion(String message){
@@ -110,9 +122,64 @@ public class QuestionGUI {
 		OKButton = UserFactoryGUI.createOKButton(questionGroup);
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		OKButton.addSelectionListener(OKL);
-		
+		WhyListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();	
+				StringBuilder s = new StringBuilder();
+				s.append("\nI am trying to evaluate the rule\n");
+				s.append(tRule != null ? tRule.toString() : "null");
+				s.toString();
+//TODO				lblWhyhow.setText(""+s);
+			}
+		};
+		HowListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+				displayHowMessage(howlist);
+				if(howlist.isEmpty())
+				{
+//TODO					lblWhyhow.setText("\nA result was not reached\n");
+				}
+				else
+				{
+				
+//TODO					lblWhyhow.setText("\nThe result was reached by firing these rules in this order\n");
+					for(Rule r : howlist)
+					{
+//TODO						lblWhyhow.setText(r.toString());
+					}
+				}	
+			}	
+		};
+		OKListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+			}
+		};
+		AnswerComboListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+				//needs to find where varaibles are!!!
+				System.out.println(ans.getText());
+			}	
+		};
 		
 	}
-	
+	public static void displayHowMessage(ArrayList<Rule> howList)
+	{
+		if(howList.isEmpty())
+		{
+			System.out.println("\nA result was not reached\n");
+		}
+		else
+		{
+		
+			System.out.println("\nThe result was reached by firing these rules in this order\n");
+			for(Rule r : howList)
+			{
+				System.out.println(r.toString());
+			}
+		}
+	}	
 
 }

@@ -1,6 +1,11 @@
 package gui;
 
 import java.awt.Component;
+
+import org.eclipse.swt.*;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.widgets.Composite;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -27,6 +32,9 @@ public class IO
 {
 	static Component frame;
 	static Rule thisRule; // a hack to get this into the description function
+	static Composite compQ;
+	static ScrolledComposite sc1;
+	static ScrolledComposite sc;
 	
 	public static void setMainFrame(Component cpm)
 	{
@@ -311,6 +319,120 @@ public class IO
 		return  (Double)(((double)slider.getValue())/100);
 	}
 	
+	public static Variable AskUserForInput(Variable var, Rule rule, KnowledgeBase kb, Composite CompQ, ScrolledComposite scrolled_composite_1, ScrolledComposite scrolledComposite, InferenceEngine Inference)
+	{
+	compQ = CompQ;
+	sc1= scrolled_composite_1;
+	sc = scrolledComposite;
+	
+		
+	QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference);
+	askCFQuestion.addQuestion("Input a value for "+var.getName());
+	scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	CompQ.layout();	
+		
+		
+		
+		
+		
+		thisRule = rule;
+
+		if(var instanceof NumericVariable)
+		{
+			JPanel panel = new JPanel();
+			
+			if(var.getQueryPrompt().trim().equals(""))
+			{
+				panel.add(new JLabel("Input a value for "+var.getName()));
+			}
+			else
+			{
+				panel.add(new JLabel(var.getQueryPrompt()));
+			}
+			
+			JTextField field = new JTextField("0.0", 10);
+			
+			JButton why = new JButton("Why?");
+			why.addActionListener(new ActionListener() { 
+				  public void actionPerformed(ActionEvent e) { 
+					  displayWhyMessage();
+				  } 
+				} );
+			
+			panel.add(field);
+			panel.add(why);
+
+			JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
+			
+			boolean invalid = true;
+			while(invalid)
+			{
+				try
+				{	
+					var.userSetCurrentValue(Double.parseDouble(field.getText()));
+					invalid = false;
+				}
+				catch(NumberFormatException ex)
+				{
+					System.out.println("Please enter a valid number.");
+					invalid = true;
+					JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
+				}	
+			}
+		}
+		else
+		{
+			//btnCertainityFactor.getSelection();
+		   // btnRun.getSelection();
+			if(var.getQueryPrompt().trim().equals(""))
+			{
+
+			if (btnCertainityFactor.getSelection()==true){
+				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
+				askCFQuestion.addQuestion("Input a value for "+var.getName());
+				//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+				scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				CompQ.layout();
+				//scrolledComposite.layout();
+				button.setSelection(false);
+				btnBayesianReasoning.setSelection(false);
+			}else
+			{
+				QuestionGUI askQuestion = new QuestionGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
+				askQuestion.addQuestion("Input a value for "+var.getName());
+				//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+				scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				CompQ.layout();
+				btnCertainityFactor.setSelection(false);
+				//End of section that needs to be moved
+				
+			}
+			}
+			else
+			{
+				if (btnCertainityFactor.getSelection()==true){
+					QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
+					askCFQuestion.addQuestion(var.getQueryPrompt());
+					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+					CompQ.layout();
+					//scrolledComposite.layout();
+					button.setSelection(false);
+					btnBayesianReasoning.setSelection(false);
+				}else
+				{
+					QuestionGUI askQuestion = new QuestionGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
+					askQuestion.addQuestion(var.getQueryPrompt());
+					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+					CompQ.layout();
+					btnCertainityFactor.setSelection(false);
+					//End of section that needs to be moved
+					
+				}	
+			}
+	return var;
+	}
 
 
 }

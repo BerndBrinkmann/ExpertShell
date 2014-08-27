@@ -37,7 +37,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import test.Test_Case;
 import datatypes.*;
 
-public class runGUI extends Composite implements Serializable {
+public class runGUI extends Composite {
 	protected Shell shlExpertSystemShell;
 	private Label text;
 	private Text text_1;
@@ -329,7 +329,6 @@ public class runGUI extends Composite implements Serializable {
 				//lblCf.setVisible(false);
 				btnCertainityFactor.setSelection(false);
 				btnBayesianReasoning.setSelection(false);
-				KBase.setUncertaintyMethod(KBSettings.UncertaintyManagement.NONE);
 	}
 		}
 	});
@@ -344,7 +343,6 @@ public class runGUI extends Composite implements Serializable {
 				//lblCf.setVisible(false);
 				btnCertainityFactor.setSelection(false);
 				button.setSelection(false);
-				KBase.setUncertaintyMethod(KBSettings.UncertaintyManagement.BAYESIAN);
 	}
 		}
 	});
@@ -360,7 +358,6 @@ public class runGUI extends Composite implements Serializable {
 				//lblCf.setVisible(true);
 				button.setSelection(false);
 				btnBayesianReasoning.setSelection(false);
-				KBase.setUncertaintyMethod(KBSettings.UncertaintyManagement.CF);
 	}	
 		}
 	});
