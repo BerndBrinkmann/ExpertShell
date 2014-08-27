@@ -91,7 +91,7 @@ public class Rule extends getSetKBSettings implements Serializable
 		}
 		else if(conditional instanceof Consequent)
 		{
-				consequents.remove(conditional);
+				consequents.remove((Consequent) conditional);
 		}
 	}
 	
