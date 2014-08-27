@@ -3,13 +3,17 @@ package gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -53,6 +57,7 @@ import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.custom.StyledText;
+
 
 
 
@@ -1102,5 +1107,57 @@ public class MainScreen {
 		s.append(rule != null ? rule.toString() : "null");
 		System.out.println(s.toString());
 	}
+
+
+public static Double getCertainty(String message)
+{
+	JPanel panel = new JPanel();
+	panel.add(new JLabel(message));
+	JTextField cfField = new JTextField("0.5", 10);
+	
+	Hashtable labelTable = new Hashtable();
+	labelTable.put( new Integer( 0 ), new JLabel("0.0") );
+	labelTable.put( new Integer( 50 ), new JLabel("0.5") );
+	labelTable.put( new Integer( 100 ), new JLabel("1.0") );
+	
+	JSlider slider = new JSlider(0,100,50);
+	slider.setLabelTable( labelTable );
+	slider.setPaintLabels(true);
+	slider.setPaintTicks(true);
+	
+	class SliderListener implements ChangeListener
+	{
+		JSlider s; JTextField f;
+		public SliderListener(JSlider s, JTextField f)
+		{
+			this.s = s; this.f = f;
+		}
+		public void stateChanged(ChangeEvent e)
+		{
+			f.setText("" + ((double)s.getValue())/100);
+		}
+	}
+	class FieldListener implements ActionListener
+	{
+		JSlider s; JTextField f;
+		public FieldListener(JSlider s, JTextField f)
+		{
+			this.s = s; this.f = f;
+		}
+		public void actionPerformed(ActionEvent e)
+		{
+			s.setValue((int) (Double.parseDouble(f.getText()) * 100));
+		}
+	}
+	
+	slider.addChangeListener(new SliderListener(slider, cfField));
+	cfField.addActionListener(new FieldListener(slider, cfField));
+
+	panel.add(slider);
+	panel.add(cfField);
+
+	JOptionPane.showMessageDialog(null, panel,"",JOptionPane.PLAIN_MESSAGE);
+	return  (Double)(((double)slider.getValue())/100);
 }
 
+}

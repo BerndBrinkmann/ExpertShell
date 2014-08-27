@@ -198,7 +198,7 @@ public class Rule extends getSetKBSettings implements Serializable
 						//get the certainty if required
 						if(umethod == KBSettings.UncertaintyManagement.CF)
 						{
-							var.setCertaintyFactor(var.getCurrentValue(), ImportExport.getCertainty("Input a certainty for "+var.toString()));
+							var.setCertaintyFactor(var.getCurrentValue(), MainScreen.getCertainty("Input a certainty for "+var.toString()));
 						}
 					 }
 					 else
@@ -237,7 +237,7 @@ public class Rule extends getSetKBSettings implements Serializable
 						//get the certainty if required
 						if(umethod == UncertaintyManagement.CF)
 						{
-							var.setCertaintyFactor(var.getCurrentValue(), ImportExport.getCertainty("Input a certainty for "+var.toString()));
+							var.setCertaintyFactor(var.getCurrentValue(), MainScreen.getCertainty("Input a certainty for "+var.toString()));
 						}
 					 }
 					 else
@@ -290,7 +290,7 @@ public class Rule extends getSetKBSettings implements Serializable
 							//get the certainty if required				TODO added this condition
 							if(umethod == UncertaintyManagement.CF && !(var instanceof NumericVariable))
 							{
-								var.setCertaintyFactor(var.getCurrentValue(), ImportExport.getCertainty("Input a certainty for "+var.toString()));
+								var.setCertaintyFactor(var.getCurrentValue(), MainScreen.getCertainty("Input a certainty for "+var.toString()));
 							}
 						 }
 
