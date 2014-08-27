@@ -26,14 +26,16 @@ public class RuleEditorGUI {
 	ConsequentListGUI consList;
 	final KnowledgeBase kb;
 	final Rule rule;
+	private RuleListGUI ruleListGUI;
 	
 	public SelectionAdapter selAdaptor;
 	public FocusAdapter focAdaptor;
 	
-	public RuleEditorGUI(Composite p, Rule r, KnowledgeBase k) {
+	public RuleEditorGUI(Composite p, int index, KnowledgeBase k, RuleListGUI rl) {
 		
 		kb = k;
-		rule = r;
+		rule = kb.getRule(index);
+		ruleListGUI = rl;
 		
 		//for button 'clicks'
 		selAdaptor = new SelectionAdapter() {
@@ -78,6 +80,9 @@ public class RuleEditorGUI {
 		}
 	}
 	
+	public RuleListGUI getParentRuleList() {
+		return ruleListGUI;
+	}
 	public void updateUncertainty() {
 		antList.updateUncertainty();
 		consList.updateUncertainty();
@@ -109,18 +114,38 @@ public class RuleEditorGUI {
 		
 		if (group == Group.ANTECEDENT) {
 			if (source == Source.ADD) {
+				
 				debug("Add antecedent");
-				antList.add(new Antecedent());
+				Antecedent toAdd = new Antecedent();
+				
+				//update KB
+				rule.addAntecedent(toAdd);
+				
+				//update GUI
+				antList.add(toAdd);
+				this.getParentRuleList().updateTextOfSelected(); //update styledtextbox
 				ruleGrid.getParent().getParent().layout(true,true);
-				//add code to modify KB here!
+				
+				
 			} else if (source == Source.DELETE) {
+				
 				debug("Delete antecedent: " + index);
+				Antecedent toDelete = rule.getAntecedent(index);
+				
+				//update KB
+				rule.removeConditional(toDelete);
+				
+				//update GUI
 				antList.delete(index);
+				this.getParentRuleList().updateTextOfSelected();
+				
 				ruleGrid.getParent().getParent().layout(true,true);
-				//add code to modify KB here!
+				
 			} else if (source == Source.VARIABLE) {
 				debug("Change antecedent variable: " + index);
-				//add code to modify KB here!
+				
+				
+				
 			} else if (source == Source.COMPARE) {
 				debug("Change antecedent comparitor logic: " + index);
 				//add code to modify KB here!
@@ -134,16 +159,34 @@ public class RuleEditorGUI {
 		} else if (group == Group.CONSEQUENT) {
 			if (source == Source.ADD) {
 				debug("Add consequent");
-				consList.add(new Consequent());
+				
+				Consequent toAdd = new Consequent();
+				
+				//update KB
+				rule.addConsequent(toAdd);
+				
+				//update GUI
+				consList.add(toAdd);
+				this.getParentRuleList().updateTextOfSelected();
 				ruleGrid.getParent().getParent().layout(true,true);
-				//add code to modify KB here!
+				
 			} else if (source == Source.DELETE) {
 				debug("Delete consequent: " + index);
+				Consequent toDelete = rule.getConsequent(index);
+				
+				//update KB
+				rule.removeConditional(toDelete);
+				
+				//update GUI
 				consList.delete(index);
+				this.getParentRuleList().updateTextOfSelected();
 				ruleGrid.getParent().getParent().layout(true,true);
-				//add code to modify KB here!
+				
 			} else if (source == Source.VARIABLE) {
 				debug("Change consequent variable: " + index);
+				
+				
+				
 				//add code to modify KB here!
 			} else if (source == Source.COMPARE) {
 				debug("Change consequent assignment: " + index);

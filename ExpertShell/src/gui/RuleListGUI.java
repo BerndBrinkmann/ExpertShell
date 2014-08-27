@@ -106,7 +106,7 @@ public class RuleListGUI extends Composite {
 		st.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION));
 		
 		//make a new editor
-		editor = new RuleEditorGUI(editorHolder, kb.getRule(index), kb);
+		editor = new RuleEditorGUI(editorHolder, index, kb, this);
 		
 		
 		//set the new index
@@ -134,7 +134,10 @@ public class RuleListGUI extends Composite {
 	private Control getControlFromIndex(int index) {
 		return (Control) ruleGUIs.get(index).getStyledTextWidget();
 	}
-
+	
+	public void updateTextOfSelected() {
+		ruleGUIs.get(selected).updateText();
+	}
 	private int getIndexFromControl(Object source) {
 		int i = -1;
 		

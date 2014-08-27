@@ -4,6 +4,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -12,6 +13,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
 import datatypes.Antecedent;
+import datatypes.Connectives;
 import datatypes.Consequent;
 import datatypes.Rule;
 
@@ -33,10 +35,10 @@ public class RuleGUI extends Group {
 		setupGroup();
 		updateText();
 		
-		
 	}
 	
 	public void updateText() {
+		boolean first;
 		
 		StyleRange styleIFTHEN = new StyleRange();
 		StyleRange styleVar = new StyleRange();
@@ -56,8 +58,18 @@ public class RuleGUI extends Group {
 		
 		//set the text of the styled rulebox thingy
 		appendWithStyle("IF",styleIFTHEN);
-		append("\t\t\t"); //three tabs
+		append("\t\t\t\t");
+		first = true;
 		for(Antecedent a : rule.getAntecedentArray()) {
+			if (first) {
+				first = false;
+			} else {
+				if (rule.getConnective() == Connectives.AND) {
+					append("AND\t\t");
+				} else {
+					append("OR\t\t");
+				}
+			}
 			appendWithStyle(a.getVariableAsString(),styleVar);  //the variable name
 			append(" "); //space
 			appendWithStyle(a.getComparisonAsString(),styleCompareAssign);  //comparison
@@ -66,16 +78,24 @@ public class RuleGUI extends Group {
 			append("\r\n");
 		}
 		appendWithStyle("THEN",styleIFTHEN);
-		append("\t\t\t"); //three tabs
+		append("\t\t"); //three tabs
 		
+		first = true;
 		for(Consequent c : rule.getConsequentArray()) {
+			if (first) {
+				first = false;
+			} else {
+				append("\t\t\t\t");
+			}
 			appendWithStyle(c.getVariableAsString(),styleVar);  //the variable name
 			append(" "); //space
+			
+			//comparison
 			if(c.isNumeric())
 			{
-				appendWithStyle("=",styleCompareAssign);  //comparison
+				appendWithStyle("=",styleCompareAssign);  
 			} else {
-				appendWithStyle("is",styleCompareAssign);  //comparison
+				appendWithStyle("is",styleCompareAssign); 
 			}
 			
 			append(" "); //space

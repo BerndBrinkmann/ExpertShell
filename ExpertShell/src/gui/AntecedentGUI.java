@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Widget;
 import datatypes.Antecedent;
 import datatypes.Connectives;
 import datatypes.Value;
+import datatypes.Variable;
 
 public class AntecedentGUI {
 	
@@ -85,8 +86,11 @@ public class AntecedentGUI {
 		}
 		
 		//update variable
-		var.setItems(parent.parent.getKnowledgeBase().getVariablesArrayAsString());
-		//System.out.println(parent.parent.getKnowledgeBase().getVariablesArray().indexOf(ant));
+		var.removeAll();
+		for (Variable v : parent.parent.getKnowledgeBase().getVariablesArray()) {
+			if(!v.getName().equals("default"));
+				var.add(v.toString());
+		}
 		var.select(parent.parent.getKnowledgeBase().getVariablesArray().indexOf(ant.getVariable()));
 		
 		//update comparison

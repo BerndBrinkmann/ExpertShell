@@ -68,11 +68,6 @@ public class AntecedentListGUI {
 		
 	}
 	
-	public void delete() {
-		//this deletes the entire AntecedentListGUI instance
-		
-	}
-	
 	public void add(Antecedent a) {
 		antecedents.add(new AntecedentGUI(this, false, addButton, a));
 		parent.updateUncertainty();
