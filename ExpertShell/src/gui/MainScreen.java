@@ -117,6 +117,7 @@ public class MainScreen {
 	public SelectionAdapter AnswerComboListener;
 	public SelectionAdapter CFListener;
 	public SelectionAdapter CFScaleListener;
+	private GridData gd_SC_QuickStart;
 
 	/**
 	 * Launch the application.
@@ -225,12 +226,20 @@ public class MainScreen {
 		tbtmQuickStart.setControl(composite_2);
 		composite_2.setLayout(new GridLayout(1, false));
 		
-		Label lblNewLabel_2 = new Label(composite_2, SWT.WRAP);
-		GridData gd_lblNewLabel_2 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_lblNewLabel_2.heightHint = 517;
-		gd_lblNewLabel_2.widthHint = 723;
-		lblNewLabel_2.setLayoutData(gd_lblNewLabel_2);
-		lblNewLabel_2.setText("Welcome to Expert System Shell. The following is a quick description of the purope of each page in this program and how to get started.\r\n\r\nRun Knowledgebase:\r\n\r\nOpen a knowledgebase that you would like to run:  File > Open Knowledgebase > Knowledgebase. \r\nThe name of the knowlegebase should be displayed in the top left hand side of the screen. \r\n\r\nSelect a run method from radio buttons: Default (Runs Forward Chaining), Forward Chaining, or Backward Chaining");
+		ScrolledComposite SC_QuickStart = new ScrolledComposite(composite_2, SWT.BORDER | SWT.V_SCROLL);
+		SC_QuickStart.setExpandHorizontal(true);
+		SC_QuickStart.setAlwaysShowScrollBars(true);
+		GridData gd_SC_QuickStart;
+		gd_SC_QuickStart = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_SC_QuickStart.heightHint = 514;
+		gd_SC_QuickStart.widthHint = 699;
+		SC_QuickStart.setLayoutData(gd_SC_QuickStart);
+		SC_QuickStart.setExpandVertical(true);
+		
+		Label lblNewLabel_2 = new Label(SC_QuickStart, SWT.WRAP | SWT.HORIZONTAL);
+		lblNewLabel_2.setText("Welcome to Expert System Shell. \r\nThe following is a quick description of the purope of each page in this program and how to get started.\r\n\r\nRun Knowledgebase:\r\n* Open a knowledgebase that you would like to run:  File > Open Knowledgebase > Knowledgebase.  \r\nThe name of the knowlegebase should be displayed in the top left hand side of the screen. \r\n* Select a run method: Default (Runs Forward Chaining), Forward Chaining, or Backward Chaining.\r\n* Select a reasoning method: Default (no uncertainty), Bayesian Reasoning, or Certainty Factors.\r\n* If backward chaining is selected for the run method, the user will also be required to enter a target value from the drop down list\r\nthat will appear at the top left of the screen.\r\n* Press Run to start execution process. The Expert System Shell will ask the user to input a value for a given variable if needed. If \r\ncertainty factor is set as the reasoning method, the user will also be required to enter a certainity with the slider that will appear. \r\nThe user can ask the system \"Why?\" if they would like to ask the system why it needs that value - this will be displayed on the right \r\nside of the screen, otherwise they can press \"OK\" to continue the evaluation process. This process will continue, asking the user \r\nmore questions if required, until an answer is reached.\r\n* The Expert System will produce an answer in the same space as the question boxes. The user can ask the system \"How?\" it \r\nreached that conclusion - this will be displayed on the right side of the screen, or press \"OK\" to end the evaluation process. \r\nThe user can then re-run the knowledgebase, or open a different knowledgebase to run.\r\n\r\nCreate/Edit Knowledgebase:\r\n\r\n\r\nVariables:\r\n*Displays a list of variables on the left hand side of the screen. A user can click on these variables to select one, and it will be \r\ndisplayed in the main control box under \"Variable Name\". A user is not permitted to create a new variable in this tab.\r\n* The user can change the name of these variables, add a description, and provide it possible values. The user is also permitted to \r\nadd a Question Prompt. If no question prompt is selected, whilst running the expert system shell in the Run Knowledgebase tab, \r\nany questions related to this varaible will state: \"Enter a value for *variable*\". The user can customise this prompt if desired, \r\nfor example: \"How is the weather today?\"\r\n* The Yes/No buttons at the bottom of the screen enable the user to select whether or not to ask the user for an input value for \r\nthis variable when running the system.\r\n* The save button saves any changes made to the variables.");
+		SC_QuickStart.setContent(lblNewLabel_2);
+		SC_QuickStart.setMinSize(lblNewLabel_2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmUserInterface.setText("Run Knowledgebase");
