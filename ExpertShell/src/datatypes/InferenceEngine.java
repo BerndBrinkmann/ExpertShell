@@ -128,7 +128,7 @@ public class InferenceEngine {
 			//get the set of rule at the top of the stack
 			Rule rule = stack.peek();
 								
-			if(rule.evaluate(KBase.getsetSettings.getUncertaintyMethod()))
+			if(rule.evaluate(KBase.getUncertaintyMethod()))
 			{
 				//if a rule is evaluated then drop the set off the stack and look at the rule set below
 				howList.add(stack.pop());
@@ -185,7 +185,7 @@ public class InferenceEngine {
 		{
 			for(int j = 0; j < KBase.getRule(i).getNumberOfConsequents(); j++)
 			{
-				if(cons.equals(KBase.getRule(i).getConsequent(j)))
+				if(cons.value.name.equals(KBase.getRule(i).getConsequent(j).value.name))
 				{
 					rules.add(KBase.getRule(i));
 				}
