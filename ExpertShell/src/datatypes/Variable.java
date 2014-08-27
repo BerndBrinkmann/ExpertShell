@@ -24,7 +24,7 @@ public class Variable implements Serializable
 	protected Boolean isNumeric = false;
 	protected Double numVal = null;
 	
-	protected ArrayList<Double> certaintyFactors = new ArrayList<Double>();;  //by our convention certainty factors are stored as 0-1
+	protected ArrayList<Double> certaintyFactors ;  //by our convention certainty factors are stored as 0-1
 	protected ArrayList<Double> beliefs = new ArrayList<Double>();
 		
 	
