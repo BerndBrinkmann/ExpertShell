@@ -20,6 +20,7 @@ public class Rule extends getSetKBSettings implements Serializable
 	protected Boolean fired = false;
 	protected int priority = 1;
 	protected int ruleNum;
+	protected MainScreen mainsc;
 	
 	UncertaintyManagement uncertaintyType = UncertaintyManagement.NONE;
 	
@@ -39,8 +40,9 @@ public class Rule extends getSetKBSettings implements Serializable
 		}
 	}
 
-	public Rule()
+	public Rule(MainScreen mains)
 	{
+		mainsc = mains;
 		antecedents = new ArrayList<Antecedent>();
 		consequents  = new ArrayList<Consequent>();
 	}
@@ -193,7 +195,7 @@ public class Rule extends getSetKBSettings implements Serializable
 					 if(var.isUserInput())
 					 {
 						//get the input from the user
-						var = MainScreen.AskUserForInput(var,this);
+						var = mainsc.AskUserForInput(var,this);
 						
 						//get the certainty if required
 						if(umethod == KBSettings.UncertaintyManagement.CF)
@@ -232,7 +234,7 @@ public class Rule extends getSetKBSettings implements Serializable
 					 if(var.isUserInput())
 					 {
 						//get the input from the user
-						var = MainScreen.AskUserForInput(var,this);
+						var = mainsc.AskUserForInput(var,this);
 						
 						//get the certainty if required
 						if(umethod == UncertaintyManagement.CF)
@@ -284,7 +286,7 @@ public class Rule extends getSetKBSettings implements Serializable
 						 if(var.isUserInput())
 						 {
 							//get the input from the user
-							 var = MainScreen.AskUserForInput(var,this);
+							 var = mainsc.AskUserForInput(var,this);
 							//var = ImportExport.userSetVaraible(var,this);
 							
 							//get the certainty if required				TODO added this condition

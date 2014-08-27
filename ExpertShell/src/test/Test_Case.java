@@ -1,5 +1,6 @@
 package test;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import datatypes.Antecedent;
@@ -11,14 +12,17 @@ import datatypes.Rule;
 import datatypes.KBSettings;
 import datatypes.Value;
 import datatypes.Variable;
+import gui.*;
 
-public class Test_Case {
+public class Test_Case implements Serializable {
 
-	
+
+	MainScreen mainsc;
 
 	//hard coded knowledge base for testing purposes
-	public KnowledgeBase createBoatKnowlegeBase()
+	public KnowledgeBase createBoatKnowlegeBase(MainScreen mains)
 	{
+		mainsc = mains;
 		KnowledgeBase boat_kb = new KnowledgeBase("Boat Knowlege Base");
 		
 		//define the variables
@@ -83,14 +87,14 @@ public class Test_Case {
 		//create the rule set
 		Rule[] rules = new Rule[8];
 		
-		rules[0] = new Rule();
+		rules[0] = new Rule(mainsc);
 		rules[0].setConnective(Connectives.AND);
 		rules[0].addAntecedent(new Antecedent(numberOfMasts,one));
 		rules[0].addAntecedent(new Antecedent(shapeOfMain,tri));
 		rules[0].addConsequent(new Consequent(boat,jibCutter));
 		rules[0].getConsequent(0).setCertaintyFactor(0.4);
 		
-		rules[1] = new Rule();
+		rules[1] = new Rule(mainsc);
 		rules[1].setConnective(Connectives.AND);
 		rules[1].addAntecedent(new Antecedent(numberOfMasts,one));
 		rules[1].addAntecedent(new Antecedent(shapeOfMain,quad));
@@ -98,7 +102,7 @@ public class Test_Case {
 		rules[1].getConsequent(0).setCertaintyFactor(0.9);
 
 		
-		rules[2] = new Rule();
+		rules[2] = new Rule(mainsc);
 		rules[2].setConnective(Connectives.AND);
 		rules[2].addAntecedent(new Antecedent(numberOfMasts,two));
 		rules[2].addAntecedent(new Antecedent(mainMastPosition,fwrdShortMast));
@@ -108,7 +112,7 @@ public class Test_Case {
 		rules[2].getConsequent(0).setCertaintyFactor(0.9);
 
 		
-		rules[3] = new Rule();
+		rules[3] = new Rule(mainsc);
 		rules[3].setConnective(Connectives.AND);
 		rules[3].addAntecedent(new Antecedent(numberOfMasts,two));
 		rules[3].addAntecedent(new Antecedent(mainMastPosition,fwrdShortMast));
@@ -118,7 +122,7 @@ public class Test_Case {
 		rules[3].getConsequent(0).setCertaintyFactor(0.8);
 
 		
-		rules[4] = new Rule();
+		rules[4] = new Rule(mainsc);
 		rules[4].setConnective(Connectives.AND);
 		rules[4].addAntecedent(new Antecedent(numberOfMasts,two));
 		rules[4].addAntecedent(new Antecedent(mainMastPosition,fwrdShortMast));
@@ -128,7 +132,7 @@ public class Test_Case {
 		rules[4].getConsequent(0).setCertaintyFactor(0.7);
 
 		
-		rules[5] = new Rule();
+		rules[5] = new Rule(mainsc);
 		rules[5].setConnective(Connectives.AND);
 		rules[5].addAntecedent(new Antecedent(numberOfMasts,two));
 		rules[5].addAntecedent(new Antecedent(mainMastPosition,fwrdShortMast));
@@ -138,7 +142,7 @@ public class Test_Case {
 		rules[5].getConsequent(0).setCertaintyFactor(0.6);
 
 		
-		rules[6] = new Rule();
+		rules[6] = new Rule(mainsc);
 		rules[6].setConnective(Connectives.AND);
 		rules[6].addAntecedent(new Antecedent(numberOfMasts,two));
 		rules[6].addAntecedent(new Antecedent(mainMastPosition,aftShortMast));
@@ -147,7 +151,7 @@ public class Test_Case {
 		rules[6].getConsequent(0).setCertaintyFactor(0.5);
 
 		
-		rules[7] = new Rule();
+		rules[7] = new Rule(mainsc);
 		rules[7].setConnective(Connectives.AND);
 		rules[7].addAntecedent(new Antecedent(numberOfMasts,two));
 		rules[7].addAntecedent(new Antecedent(mainMastPosition,aftShortMast));

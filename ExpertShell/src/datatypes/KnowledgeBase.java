@@ -7,6 +7,7 @@ import datatypes.Variable;
 //
 public class KnowledgeBase extends getSetKBSettings implements Serializable 
 {
+
 	protected String Name;
 	protected String Description;
 	protected ArrayList<Rule> RuleList;
