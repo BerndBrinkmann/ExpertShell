@@ -182,7 +182,7 @@ public class Consequent extends getSetKBSettings implements Serializable
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Antecedent other = (Antecedent) obj;
+		Consequent other = (Consequent) obj;
 		if (value == null)
 		{
 			if (other.value != null)

@@ -68,6 +68,11 @@ public class AntecedentListGUI {
 		
 	}
 	
+	public void delete() {
+		//this deletes the entire AntecedentListGUI instance
+		
+	}
+	
 	public void add(Antecedent a) {
 		antecedents.add(new AntecedentGUI(this, false, addButton, a));
 		parent.updateUncertainty();
@@ -131,7 +136,7 @@ public class AntecedentListGUI {
 		((GridData) uncertaintyContainer.getLayoutData()).exclude = !showLNLS;
 		uncertaintyContainer.setVisible(showLNLS);
 		
-		//set the height of the LN/LS container
+		//set the height (span) of the LN/LS container
 		
 		((GridData) uncertaintyContainer.getLayoutData()).verticalSpan = antecedents.size();
 		
@@ -151,6 +156,10 @@ public class AntecedentListGUI {
 	{
 		return addButton;
 	}
+
+	
+
+	
 	
 	
 }

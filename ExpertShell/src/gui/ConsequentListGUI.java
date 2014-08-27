@@ -10,6 +10,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import datatypes.Antecedent;
+import datatypes.Consequent;
 import datatypes.KBSettings.UncertaintyManagement;
 
 public class ConsequentListGUI {
@@ -34,16 +36,31 @@ public class ConsequentListGUI {
 		
 		addFiller();
 		thenLabel = RuleGUIFactory.createLabelThen(container);
-		conseqents.add(new ConsequentGUI(this,true,null));
+		
+		//add the first conseq
+		conseqents.add(new ConsequentGUI(this,true,null,parent.rule.getConsequentArray()[0]));
+		
 		addButton = RuleGUIFactory.createButtonAdd(container);
 				
 		addButton.addSelectionListener(s);
 		
+		//add the rest of the antecedents
+		boolean first = true;
+		for(Consequent c : parent.rule.getConsequentArray()) {
+			if (first) {
+				first = false;
+				continue; //skip the first one - this is already added above!
+			}
+			conseqents.add(new ConsequentGUI(this,false,addButton,c));
+		}
+		
 		updateUncertainty();
 	}
 	
-	public void add() {
-		conseqents.add(new ConsequentGUI(this, false, addButton));
+	public void add(Consequent c) {
+		ConsequentGUI cg = new ConsequentGUI(this, false, addButton, c);
+		conseqents.add(cg);
+		cg.update();
 		updateUncertainty();
 	}
 	

@@ -86,7 +86,7 @@ public class AntecedentGUI {
 		
 		//update variable
 		var.setItems(parent.parent.getKnowledgeBase().getVariablesArrayAsString());
-		System.out.println(parent.parent.getKnowledgeBase().getVariablesArray().indexOf(ant));
+		//System.out.println(parent.parent.getKnowledgeBase().getVariablesArray().indexOf(ant));
 		var.select(parent.parent.getKnowledgeBase().getVariablesArray().indexOf(ant.getVariable()));
 		
 		//update comparison
@@ -99,11 +99,11 @@ public class AntecedentGUI {
 			value.add(v.toString());
 		}
 		value.select(ant.getVariable().getValueIndex(ant.getValue()));
+		
 	}
 	
 	public void destroy() {
 		
-		Composite c = parent.container;
 		
 		delButton.dispose();
 		var.dispose();

@@ -4,18 +4,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Scale;
@@ -58,6 +64,8 @@ import org.eclipse.swt.custom.StyledText;
 
 
 
+
+
 //import STUART.ADT.Rule;
 import gui.IO;
 
@@ -67,7 +75,7 @@ import gui.IO;
 
 
 
-public class MainScreen implements Serializable {
+public class MainScreen  {
 
 	protected Shell shlExpertSystemShell;
 	private Label text;
@@ -338,26 +346,11 @@ public class MainScreen implements Serializable {
 			}
 		});
 		mntmLoad.setText("Load");
-		
-		
-		
 		MenuItem mntmSave = new MenuItem(menu_1, SWT.NONE);
 		mntmSave.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-				
-			//Creating menu items dynamically for new knowledge base
-			// needs save all rules and settings etc. - look for FileManager
-//				newKB = new MenuItem(menu_4, SWT.NONE);
-//				//newKB.addSelectionListener(this);
-//				newKB.addSelectionListener(new SelectionAdapter() {
-//					@Override
-//					public void widgetSelected(SelectionEvent e) {
-//						e.getSource();
-//			}
-//		});
-//				newKB.setText("newKB"+ KBase.getName());
 				FileManager.saveKnowledgeFile(KBase);
 			}
 		});
@@ -426,11 +419,26 @@ public class MainScreen implements Serializable {
 		compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		compListEditor.setLayout(new GridLayout(1, false));
 		
-		ScrolledComposite scrolledComposite = new ScrolledComposite(compListEditor, SWT.BORDER | SWT.V_SCROLL);
+		scrolledComposite = new ScrolledComposite(compListEditor, SWT.BORDER | SWT.V_SCROLL);
 	//	gd_scrolledComposite.heightHint = 428;
 		GridData gd_scrolledComposite_2 = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		gd_scrolledComposite_2.heightHint = 400;
 		scrolledComposite.setLayoutData(gd_scrolledComposite_2);
+		scrolledComposite.addListener(SWT.MouseWheel, new Listener() {
+            public void handleEvent(Event event) {
+                int wheelCount = event.count;
+                wheelCount = (int) Math.ceil(wheelCount / 3.0f);
+                while (wheelCount < 0) {
+                    scrolledComposite.getVerticalBar().setIncrement(4);
+                    wheelCount++;
+                }
+
+                while (wheelCount > 0) {
+                    scrolledComposite.getVerticalBar().setIncrement(-4);
+                    wheelCount--;
+                }
+            }
+        });
 		
 		RuleListGUI ruleList = new RuleListGUI(scrolledComposite, SWT.NONE, KBase);
 		scrolledComposite.setContent(ruleList);
@@ -463,7 +471,8 @@ public class MainScreen implements Serializable {
 		compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 		compRuleEditorHolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase.getRule(2), KBase);
+		ruleList.setEditorHolder(compRuleEditorHolder);
+		//ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase.getRule(2), KBase);
 		compRuleEditorHolder.layout();
 		
 		TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);
@@ -502,5 +511,57 @@ public class MainScreen implements Serializable {
 
 	
 
+
+
+public static Double getCertainty(String message)
+{
+	JPanel panel = new JPanel();
+	panel.add(new JLabel(message));
+	JTextField cfField = new JTextField("0.5", 10);
+	
+	Hashtable labelTable = new Hashtable();
+	labelTable.put( new Integer( 0 ), new JLabel("0.0") );
+	labelTable.put( new Integer( 50 ), new JLabel("0.5") );
+	labelTable.put( new Integer( 100 ), new JLabel("1.0") );
+	
+	JSlider slider = new JSlider(0,100,50);
+	slider.setLabelTable( labelTable );
+	slider.setPaintLabels(true);
+	slider.setPaintTicks(true);
+	
+	class SliderListener implements ChangeListener
+	{
+		JSlider s; JTextField f;
+		public SliderListener(JSlider s, JTextField f)
+		{
+			this.s = s; this.f = f;
+		}
+		public void stateChanged(ChangeEvent e)
+		{
+			f.setText("" + ((double)s.getValue())/100);
+		}
+	}
+	class FieldListener implements ActionListener
+	{
+		JSlider s; JTextField f;
+		public FieldListener(JSlider s, JTextField f)
+		{
+			this.s = s; this.f = f;
+		}
+		public void actionPerformed(ActionEvent e)
+		{
+			s.setValue((int) (Double.parseDouble(f.getText()) * 100));
+		}
+	}
+	
+	slider.addChangeListener(new SliderListener(slider, cfField));
+	cfField.addActionListener(new FieldListener(slider, cfField));
+
+	panel.add(slider);
+	panel.add(cfField);
+
+	JOptionPane.showMessageDialog(null, panel,"",JOptionPane.PLAIN_MESSAGE);
+	return  (Double)(((double)slider.getValue())/100);
 }
 
+}

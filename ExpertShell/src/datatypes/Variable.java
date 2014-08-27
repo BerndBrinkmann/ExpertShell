@@ -24,7 +24,7 @@ public class Variable implements Serializable
 	protected Boolean isNumeric = false;
 	protected Double numVal = null;
 	
-	protected ArrayList<Double> certaintyFactors = new ArrayList<Double>();;  //by our convention certainty factors are stored as 0-1
+	protected ArrayList<Double> certaintyFactors ;  //by our convention certainty factors are stored as 0-1
 	protected ArrayList<Double> beliefs = new ArrayList<Double>();
 		
 	
@@ -110,12 +110,13 @@ public class Variable implements Serializable
 		if(!possibleValues.contains(val))
 		{
 			possibleValues.add(val);
+			
 		}
 		//certainty factors should be initialised to zero
-	//	certaintyFactors.add(new Double(0));
+		certaintyFactors.add(new Double(0));
 		allValues.add(val);
 		//beliefs can be initilised to 0.5
-//		beliefs.add(new Double(0.5));
+		beliefs.add(new Double(0.5));
 
 	}
 	
@@ -126,6 +127,7 @@ public class Variable implements Serializable
 	
 	public void setCertaintyFactor(Value val, Double certainty)
 	{
+		
 		certaintyFactors.set(getValueIndex(val), certainty);
 	}
 	

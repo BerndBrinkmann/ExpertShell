@@ -8,9 +8,11 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Widget;
 
 import datatypes.Antecedent;
+import datatypes.Consequent;
 import datatypes.KBSettings.UncertaintyManagement;
 import datatypes.KnowledgeBase;
 import datatypes.Rule;
@@ -55,6 +57,25 @@ public class RuleEditorGUI {
 		consList = new ConsequentListGUI(this);
 		updateUncertainty();
 		ruleGrid.getParent().getParent().layout(true,true);
+	}
+	
+	public void destroy() {
+		//remove/delete all GUI objects in the editor
+		destroy(ruleGrid);
+		ruleGrid.dispose();
+		
+	}
+	
+	public void destroy(Control c) {
+		//if its a composite then delete its children
+		if (c instanceof Composite) {
+			for (Control con: ((Composite) c).getChildren()) {
+				//recursive.  such recursion.  much programming skill. wow.
+				destroy(con);
+			}
+		} else { //an actual control rather than a container
+			c.dispose();
+		}
 	}
 	
 	public void updateUncertainty() {
@@ -113,7 +134,7 @@ public class RuleEditorGUI {
 		} else if (group == Group.CONSEQUENT) {
 			if (source == Source.ADD) {
 				debug("Add consequent");
-				consList.add();
+				consList.add(new Consequent());
 				ruleGrid.getParent().getParent().layout(true,true);
 				//add code to modify KB here!
 			} else if (source == Source.DELETE) {
@@ -136,4 +157,6 @@ public class RuleEditorGUI {
 			}
 		}
 	}
+
+	
 }

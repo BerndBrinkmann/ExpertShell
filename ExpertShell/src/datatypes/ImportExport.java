@@ -283,63 +283,7 @@ public class ImportExport
 			}
 		}
 	}
-	
-	/**
-	 * returns a value for a certainty factor
-	 * @param message
-	 * @return
-	 */
-	public static Double getCertainty(String message)
-	{
-		JPanel panel = new JPanel();
-		panel.add(new JLabel(message));
-		JTextField cfField = new JTextField("0.5", 10);
-		
-		Hashtable labelTable = new Hashtable();
-		labelTable.put( new Integer( 0 ), new JLabel("0.0") );
-		labelTable.put( new Integer( 50 ), new JLabel("0.5") );
-		labelTable.put( new Integer( 100 ), new JLabel("1.0") );
-		
-		JSlider slider = new JSlider(0,100,50);
-		slider.setLabelTable( labelTable );
-		slider.setPaintLabels(true);
-		slider.setPaintTicks(true);
-		
-		class SliderListener implements ChangeListener
-		{
-			JSlider s; JTextField f;
-			public SliderListener(JSlider s, JTextField f)
-			{
-				this.s = s; this.f = f;
-			}
-			public void stateChanged(ChangeEvent e)
-			{
-				f.setText("" + ((double)s.getValue())/100);
-			}
-		}
-		class FieldListener implements ActionListener
-		{
-			JSlider s; JTextField f;
-			public FieldListener(JSlider s, JTextField f)
-			{
-				this.s = s; this.f = f;
-			}
-			public void actionPerformed(ActionEvent e)
-			{
-				s.setValue((int) (Double.parseDouble(f.getText()) * 100));
-			}
-		}
-		
-		slider.addChangeListener(new SliderListener(slider, cfField));
-		cfField.addActionListener(new FieldListener(slider, cfField));
 
-		panel.add(slider);
-		panel.add(cfField);
-
-		JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
-		return  (Double)(((double)slider.getValue())/100);
-	}
-	
 
 
 }

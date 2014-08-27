@@ -154,6 +154,9 @@ public final class RuleGUIFactory {
 	 */
 	public static Spinner createSpinnerPrior(Composite parent) {
 		Spinner spinner = new Spinner(parent, SWT.BORDER);
+		spinner.setDigits(2);
+		spinner.setMaximum(100);
+		spinner.setMinimum(1);
 		return spinner;
 	}
 	/**
