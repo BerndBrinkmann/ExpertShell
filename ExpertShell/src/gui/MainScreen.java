@@ -156,7 +156,7 @@ public class MainScreen {
 		KBase = test.createBoatKnowlegeBase();
 		//KBase = FileManager.loadKnowledgeFile();
 		//KBase.SetName("boat_kb");
-		Inference = new InferenceEngine(KBase);	
+		
 		
 		//resized
 		shlExpertSystemShell = new Shell();
@@ -516,12 +516,14 @@ public class MainScreen {
 				
 				//There are issues with this... causes screen to crash
 			    if(btnForwardChaining.getSelection()==true || btnDefault.getSelection()==true){
-					KBase.validate();
+			    	Inference = new InferenceEngine(KBase);	
+			    	KBase.validate();
 					Variable result = Inference.solveForwardChaining();
 					HowList = Inference.getHowList();
 					IO.displayResults(result, Inference.getHowList(), KBase);	
 			    	
 				}else if(btnBackwardChaining.getSelection()==true){
+					Inference = new InferenceEngine(KBase);	
 					KBase.validate();
 					Variable result = Inference.solveBackwardChaining();
 					HowList = Inference.getHowList();
@@ -761,26 +763,11 @@ public class MainScreen {
 			}
 		});
 		mntmLoad.setText("Load");
-		
-		
-		
 		MenuItem mntmSave = new MenuItem(menu_1, SWT.NONE);
 		mntmSave.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-				
-			//Creating menu items dynamically for new knowledge base
-			// needs save all rules and settings etc. - look for FileManager
-//				newKB = new MenuItem(menu_4, SWT.NONE);
-//				//newKB.addSelectionListener(this);
-//				newKB.addSelectionListener(new SelectionAdapter() {
-//					@Override
-//					public void widgetSelected(SelectionEvent e) {
-//						e.getSource();
-//			}
-//		});
-//				newKB.setText("newKB"+ KBase.getName());
 				FileManager.saveKnowledgeFile(KBase);
 			}
 		});
