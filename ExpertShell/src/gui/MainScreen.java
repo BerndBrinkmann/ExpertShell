@@ -75,7 +75,7 @@ import gui.IO;
 
 
 
-public class MainScreen  {
+public class MainScreen implements Serializable {
 
 	protected Shell shlExpertSystemShell;
 	private Label text;
