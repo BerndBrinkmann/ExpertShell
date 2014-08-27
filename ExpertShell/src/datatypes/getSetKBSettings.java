@@ -1,6 +1,8 @@
 package datatypes;
 
-public class getSetKBSettings {
+import java.io.Serializable;
+
+public class getSetKBSettings implements Serializable  { 
 
 	protected KBSettings.InferenceType inferenceType;
 	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;

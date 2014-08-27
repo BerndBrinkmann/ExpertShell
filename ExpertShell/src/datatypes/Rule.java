@@ -295,7 +295,6 @@ public class Rule extends getSetKBSettings implements Serializable
 						 }
 
 					 }
-					 	 
 				}
 				
 				switch(umethod)
