@@ -116,17 +116,16 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	
 	public Variable getVariable(String VarString)
 	{
-		int x =0;
 		
 		for (int i =0 ; i < VariableList.size() ; i +=1)
 		{
 			
 			if(VariableList.get(i).name.equals(VarString))
 			{
-				x = i;
+				return VariableList.get(i);
 			}
 		}
-		return VariableList.get(x);
+		return null;
 	}
 	
 	public void updateVariableList()
@@ -261,6 +260,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		return OutputString.toString();
 	}
 	
+	//is this used?? - Arie
 	public Boolean isVariable(Variable v)
 	{
 		int inList = -1;
