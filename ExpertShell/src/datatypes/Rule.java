@@ -1,12 +1,14 @@
 package datatypes;
 
 import gui.MainScreen;
+import gui.runGUI;
 
 import java.io.Serializable;
 
 import datatypes.KBSettings;
 import datatypes.KBSettings.UncertaintyManagement;
 import datatypes.getSetKBSettings;
+
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -20,7 +22,6 @@ public class Rule extends getSetKBSettings implements Serializable
 	protected Boolean fired = false;
 	protected int priority = 1;
 	protected int ruleNum;
-	protected MainScreen mainsc;
 	
 	UncertaintyManagement uncertaintyType = UncertaintyManagement.NONE;
 	
@@ -40,9 +41,8 @@ public class Rule extends getSetKBSettings implements Serializable
 		}
 	}
 
-	public Rule(MainScreen mains)
+	public Rule()
 	{
-		mainsc = mains;
 		antecedents = new ArrayList<Antecedent>();
 		consequents  = new ArrayList<Consequent>();
 	}
@@ -157,7 +157,7 @@ public class Rule extends getSetKBSettings implements Serializable
 	}
 	
 	//returns the result of evaluating the required antecedents in a rule and also fires if required
-	public Boolean evaluate(UncertaintyManagement umethod)
+	public Boolean evaluate(UncertaintyManagement umethod, runGUI rg)
 	{
 		//evaluate all antecedents in the case of Bayesian and Certainty factor reasoning. Otherwise minimise user interaction
 		switch(umethod)
@@ -195,7 +195,7 @@ public class Rule extends getSetKBSettings implements Serializable
 					 if(var.isUserInput())
 					 {
 						//get the input from the user
-						var = mainsc.AskUserForInput(var,this);
+						var = rg.AskUserForInput(var,this);
 						
 						//get the certainty if required
 						if(umethod == KBSettings.UncertaintyManagement.CF)
