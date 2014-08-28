@@ -1,6 +1,7 @@
 package datatypes;
 
 import gui.IO;
+import gui.runGUI;
 
 import java.io.IOException;
 
@@ -23,16 +24,17 @@ import datatypes.*;
 
 public class InferenceEngine implements Serializable {
 
- KnowledgeBase KBase;
+    KnowledgeBase KBase;
+    runGUI theRunGUI;
 
 	protected ArrayList<Rule> howList;
 	
-	public InferenceEngine( KnowledgeBase kb)
+	public InferenceEngine( KnowledgeBase kb, runGUI rg)
 	{
 		 
 		//create a deep copy of the knowledge base object to operate on
-		//KBase = (KnowledgeBase) SerializationUtils.clone(kb);
-		KBase = kb;
+		KBase = (KnowledgeBase) SerializationUtils.clone(kb);
+		//KBase = kb;
 	}
 		
 	public Variable solveForwardChaining()
@@ -67,7 +69,7 @@ public class InferenceEngine implements Serializable {
 				}
 				else
 				{
-					if(rule.evaluate(KBase.getUncertaintyMethod()))
+					if(rule.evaluate(KBase.getUncertaintyMethod(), theRunGUI))
 					{
 						howList.add(rule);
 					}
@@ -129,7 +131,7 @@ public class InferenceEngine implements Serializable {
 			//get the set of rule at the top of the stack
 			Rule rule = stack.peek();
 								
-			if(rule.evaluate(KBase.getUncertaintyMethod()))
+			if(rule.evaluate(KBase.getUncertaintyMethod(),theRunGUI))
 			{
 				//if a rule is evaluated then drop the set off the stack and look at the rule set below
 				howList.add(stack.pop());
