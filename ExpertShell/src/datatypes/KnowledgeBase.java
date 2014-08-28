@@ -1,7 +1,5 @@
 package datatypes;
 
-import gui.runGUI;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -21,12 +19,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	protected KBSettings.ConflictResolution conflictResolution = KBSettings.ConflictResolution.NONE;
 	protected Variable VarTemp;
 	protected Variable target;
-	protected runGUI rungui;
 
-	public void setRunGui(runGUI rung)
-	{
-		rungui = rung;
-	}
 	public KnowledgeBase(String name)
 	{
 		Name = name;
