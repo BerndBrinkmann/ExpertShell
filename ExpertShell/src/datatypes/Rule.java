@@ -163,9 +163,9 @@ public class Rule extends getSetKBSettings implements Serializable
 		switch(umethod)
 		{
 			case BAYESIAN:
-				return evaluateAll(umethod);
+				return evaluateAll(umethod,rg);
 			case CF:
-				return evaluateAll(umethod);
+				return evaluateAll(umethod,rg);
 			default:
 				break;
 		}
@@ -234,7 +234,7 @@ public class Rule extends getSetKBSettings implements Serializable
 					 if(var.isUserInput())
 					 {
 						//get the input from the user
-						var = mainsc.AskUserForInput(var,this);
+						var = rg.AskUserForInput(var,this);
 						
 						//get the certainty if required
 						if(umethod == UncertaintyManagement.CF)
@@ -261,8 +261,9 @@ public class Rule extends getSetKBSettings implements Serializable
 		return false;
 	}
 	
+	
 	//returns the result of evaluating the required antecedents in a rule and also fires if required
-	public Boolean evaluateAll(UncertaintyManagement umethod)
+	public Boolean evaluateAll(UncertaintyManagement umethod, runGUI rg)
 		{
 			// there must be at least a single antecedent to evaluate
 			Boolean result = false;
@@ -286,7 +287,7 @@ public class Rule extends getSetKBSettings implements Serializable
 						 if(var.isUserInput())
 						 {
 							//get the input from the user
-							 var = mainsc.AskUserForInput(var,this);
+							 var = rg.AskUserForInput(var,this);
 							//var = ImportExport.userSetVaraible(var,this);
 							
 							//get the certainty if required				TODO added this condition
