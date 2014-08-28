@@ -1,14 +1,20 @@
 package datatypes;
 
 import gui.MainScreen;
+import gui.IO;
+
 
 import java.io.Serializable;
 
 import datatypes.KBSettings;
 import datatypes.KBSettings.UncertaintyManagement;
 import datatypes.getSetKBSettings;
+
 import java.util.ArrayList;
 import java.util.Stack;
+
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.widgets.Composite;
 
 import removedClasses.UncertaintyMethod;
 
@@ -21,6 +27,7 @@ public class Rule extends getSetKBSettings implements Serializable
 	protected int priority = 1;
 	protected int ruleNum;
 	protected MainScreen mainsc;
+	
 	
 	UncertaintyManagement uncertaintyType = UncertaintyManagement.NONE;
 	
@@ -157,15 +164,15 @@ public class Rule extends getSetKBSettings implements Serializable
 	}
 	
 	//returns the result of evaluating the required antecedents in a rule and also fires if required
-	public Boolean evaluate(UncertaintyManagement umethod)
+	public Boolean evaluate(UncertaintyManagement umethod, InferenceEngine Inference, KnowledgeBase KBase)
 	{
 		//evaluate all antecedents in the case of Bayesian and Certainty factor reasoning. Otherwise minimise user interaction
 		switch(umethod)
 		{
 			case BAYESIAN:
-				return evaluateAll(umethod);
+				return evaluateAll(umethod, Inference, KBase);
 			case CF:
-				return evaluateAll(umethod);
+				return evaluateAll(umethod, Inference, KBase);
 			default:
 				break;
 		}
@@ -195,12 +202,16 @@ public class Rule extends getSetKBSettings implements Serializable
 					 if(var.isUserInput())
 					 {
 						//get the input from the user
-						var = mainsc.AskUserForInput(var,this);
+						//var = IO.AskUserForInput(var,this, KBase, mainsc.composite.CompQ, mainsc.composite.scrolledComposite_1, mainsc.composite.scrolledComposite, mainsc.Inference);
 						
-						//get the certainty if required
+						 KBase.rungui.AskUserForInput(var,this,KBase,Inference);
+						 
+						 
+						 
+						 //get the certainty if required
 						if(umethod == KBSettings.UncertaintyManagement.CF)
 						{
-							var.setCertaintyFactor(var.getCurrentValue(), MainScreen.getCertainty("Input a certainty for "+var.toString()));
+							//var.setCertaintyFactor(var.getCurrentValue(), MainScreen.getCertainty("Input a certainty for "+var.toString()));
 						}
 					 }
 					 else
@@ -234,12 +245,12 @@ public class Rule extends getSetKBSettings implements Serializable
 					 if(var.isUserInput())
 					 {
 						//get the input from the user
-						var = mainsc.AskUserForInput(var,this);
-						
+						//var = IO.AskUserForInput(var,this, mainsc.KBase, mainsc.composite.CompQ, mainsc.composite.scrolledComposite_1, mainsc.composite.scrolledComposite, mainsc.Inference);
+						KBase.rungui.AskUserForInput(var,this,KBase,Inference);
 						//get the certainty if required
 						if(umethod == UncertaintyManagement.CF)
 						{
-							var.setCertaintyFactor(var.getCurrentValue(), MainScreen.getCertainty("Input a certainty for "+var.toString()));
+					//		var.setCertaintyFactor(var.getCurrentValue(), MainScreen.getCertainty("Input a certainty for "+var.toString()));
 						}
 					 }
 					 else
@@ -262,7 +273,7 @@ public class Rule extends getSetKBSettings implements Serializable
 	}
 	
 	//returns the result of evaluating the required antecedents in a rule and also fires if required
-	public Boolean evaluateAll(UncertaintyManagement umethod)
+	public Boolean evaluateAll(UncertaintyManagement umethod, InferenceEngine Inference, KnowledgeBase KBase)
 		{
 			// there must be at least a single antecedent to evaluate
 			Boolean result = false;
@@ -286,13 +297,14 @@ public class Rule extends getSetKBSettings implements Serializable
 						 if(var.isUserInput())
 						 {
 							//get the input from the user
-							 var = mainsc.AskUserForInput(var,this);
+							 //var = IO.AskUserForInput(var,this, mainsc.KBase, mainsc.composite.CompQ, mainsc.composite.scrolledComposite_1, mainsc.composite.scrolledComposite, mainsc.Inference);
+							 var = KBase.rungui.AskUserForInput(var,this,KBase,Inference);
 							//var = ImportExport.userSetVaraible(var,this);
 							
 							//get the certainty if required				TODO added this condition
 							if(umethod == UncertaintyManagement.CF && !(var instanceof NumericVariable))
 							{
-								var.setCertaintyFactor(var.getCurrentValue(), MainScreen.getCertainty("Input a certainty for "+var.toString()));
+					//			var.setCertaintyFactor(var.getCurrentValue(), MainScreen.getCertainty("Input a certainty for "+var.toString()));
 							}
 						 }
 

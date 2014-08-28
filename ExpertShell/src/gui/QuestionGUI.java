@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -17,12 +16,13 @@ import org.eclipse.swt.custom.ScrolledComposite;
 
 import datatypes.InferenceEngine;
 import datatypes.Rule;
+import datatypes.Value;
+import datatypes.Variable;
 
 public class QuestionGUI {
 	
-	Group questionGroup;
-	Composite CompQ;
-	ScrolledComposite scrolledComposite;
+	//Composite CompQ;
+	//ScrolledComposite scrolledComposite;
 	
 	Button WhyButton;
 	Button HowButton;
@@ -45,22 +45,34 @@ public class QuestionGUI {
 	public SelectionAdapter OKListener;
 	public SelectionAdapter AnswerComboListener;
 	public ArrayList<Rule> howlist;
+	public Value[] possibleValues;
+	public Boolean okayPress = false;
 	
 	static Rule tRule;
 	
-	public QuestionGUI(Composite CompQ, InferenceEngine Inference){
+	public QuestionGUI(Composite CompQ, InferenceEngine Inference, Group questionGroup, String message, Variable var, ScrolledComposite scrolledComposite){
 		WhyL= WhyListener;
 		HowL= HowListener;
 		OKL= OKListener;
 
 		AnswerComboL= AnswerComboListener;
-		questionGroup = UserFactoryGUI.createQuestionGroup(CompQ);
-		questionGroup.getParent().getParent().layout(true);
-		CompQ.update();
 		howlist  = Inference.getHowList();
+		possibleValues = var.getArrayOfPossibleValues();
+		addQuestion(message,questionGroup);
+		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		CompQ.layout();
+		CompQ.update();
+		while(var.currentValue == null)
+		{
+			try
+			{
+				wait();
+			} catch (InterruptedException e){};
+			
+		}
 	}
 	
-	public void addQuestion(String message){
+	public void addQuestion(String message, Group questionGroup){
 		
 		QforUser= UserFactoryGUI.createQuestionLabel(questionGroup);
 		GridData gd_label = new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1);
@@ -72,7 +84,16 @@ public class QuestionGUI {
 		GridData gd_combo_1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1);
 		gd_combo_1.widthHint = 276;
 		ans.setLayoutData(gd_combo_1);
-		ans.setItems(new String[] {"A", "B"}); //TEST
+		
+		if(possibleValues.length !=0)
+		{
+			String possiblevString[] = new String[possibleValues.length];
+					for (int i=0; i<possibleValues.length; i++)
+					{
+						possiblevString[i]= possibleValues[i].toString();
+					}
+			ans.setItems(possiblevString);
+		}
 		ans.setText("Answer");
 		
 		CFPercentage = UserFactoryGUI.createCFLabel(questionGroup);
@@ -154,6 +175,7 @@ public class QuestionGUI {
 		OKListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				okayPress=true;
 			}
 		};
 		AnswerComboListener = new SelectionAdapter() {
@@ -180,6 +202,19 @@ public class QuestionGUI {
 				System.out.println(r.toString());
 			}
 		}
-	}	
+	}
+	
+	public Boolean getOkayPress()
+	{
+		return okayPress;
+	}
+	
+	public static void displayWhyMessage()
+	{
+		StringBuilder s = new StringBuilder();
+		s.append("\nI am trying to evaluate the rule\n");
+		s.append(tRule != null ? tRule.toString() : "null");
+		System.out.println(s.toString());
+	}
 
 }

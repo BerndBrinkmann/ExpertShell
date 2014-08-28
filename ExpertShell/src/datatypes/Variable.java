@@ -17,7 +17,7 @@ public class Variable implements Serializable
 	protected ArrayList<Value> allValues = new ArrayList<Value>();
 	protected ArrayList<Integer> numOfValueInstances;
 	protected ArrayList<String> numericOperators;
-	protected Value currentValue;
+	public Value currentValue = null;
 	protected Rule derivedFrom;
 	protected String queryPrompt = "";
 	

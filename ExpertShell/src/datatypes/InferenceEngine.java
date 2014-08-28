@@ -27,7 +27,7 @@ public class InferenceEngine implements Serializable {
 
 	protected ArrayList<Rule> howList;
 	
-	public InferenceEngine( KnowledgeBase kb)
+	public InferenceEngine(KnowledgeBase kb)
 	{
 		 
 		//create a deep copy of the knowledge base object to operate on
@@ -35,11 +35,11 @@ public class InferenceEngine implements Serializable {
 		KBase = kb;
 	}
 		
-	public Variable solveForwardChaining()
+	public Variable solveForwardChaining(Variable selectedVariable)
 	{			
 		// obtain the target variable
 		howList = new ArrayList<Rule>();
-		Variable target = IO.getVariable("Choose the target variable", KBase.getConsequentVariablesArray());
+		Variable target = selectedVariable;
 		if(target == null)
 		{
 		System.out.println("Operation Cancelled by User");
@@ -67,7 +67,7 @@ public class InferenceEngine implements Serializable {
 				}
 				else
 				{
-					if(rule.evaluate(KBase.getUncertaintyMethod()))
+					if(rule.evaluate(KBase.getUncertaintyMethod(),this,KBase))
 					{
 						howList.add(rule);
 					}
@@ -83,9 +83,9 @@ public class InferenceEngine implements Serializable {
 		return howList;
 	}
 	
-	public Variable solveBackwardChaining()
+	public Variable solveBackwardChaining(Variable selectedVariable)
 	{
-		Variable targetVar = IO.getVariable("Input the target variable", KBase.getConsequentVariablesArray());
+		Variable targetVar = selectedVariable;
 		Value targetVal = IO.getValue("Input a value to search for", targetVar.getArrayOfPossibleValues());
 		if(targetVar == null || targetVal == null)
 		{
@@ -129,7 +129,7 @@ public class InferenceEngine implements Serializable {
 			//get the set of rule at the top of the stack
 			Rule rule = stack.peek();
 								
-			if(rule.evaluate(KBase.getUncertaintyMethod()))
+			if(rule.evaluate(KBase.getUncertaintyMethod(),this,KBase))
 			{
 				//if a rule is evaluated then drop the set off the stack and look at the rule set below
 				howList.add(stack.pop());

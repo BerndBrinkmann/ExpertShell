@@ -65,6 +65,8 @@ import org.eclipse.swt.custom.StyledText;
 
 
 
+
+
 //import STUART.ADT.Rule;
 import gui.IO;
 
@@ -106,7 +108,7 @@ import test.Test_Case;
 import datatypes.*;
 
 public class runGUI extends Composite {
-	protected Shell shlExpertSystemShell;
+	protected static Shell shlExpertSystemShell;
 	private Label text;
 	private Text text_1;
 	private Text text_2;
@@ -125,10 +127,10 @@ public class runGUI extends Composite {
 	private Button OKButton;
 	private Button HowButton;
 	private Button WhyButton;
-    private Composite CompQ;
+    public static Composite CompQ;
     private Group questionGroup;
     private Label lblNewLabel;
-    private ScrolledComposite scrolledComposite;
+    public static ScrolledComposite scrolledComposite;
     private Menu menu_4;
     private MenuItem newKB;
     private RuleEditorGUI ruleEditor;
@@ -144,7 +146,9 @@ public class runGUI extends Composite {
     private ArrayList<Rule> HowList = new ArrayList<Rule>();
     static Rule tRule; // a hack to get this into the description function
     private InferenceEngine Inference;
-	
+    public static ScrolledComposite scrolledComposite_1;
+	static Rule thisRule;
+    
     public SelectionAdapter WhyListener;
 	public SelectionAdapter HowListener;
 	public SelectionAdapter OKListener;
@@ -152,20 +156,23 @@ public class runGUI extends Composite {
 	public SelectionAdapter CFListener;
 	public SelectionAdapter CFScaleListener;
 	private GridData gd_SC_QuickStart;
+	private Boolean okayFlag;
+	
+	static Display display;
     
     /**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public runGUI(Composite parent, int style,KnowledgeBase kb,Shell sh) {
+	public runGUI(Composite parent, int style,KnowledgeBase kb,Shell sh, Display disp) {
 		
 		super(parent, style);
 		shlExpertSystemShell = sh;
 		KBase = kb;
 		//Inference = MainScreen.createInferenceEngine(KBase);	
 		Inference = new InferenceEngine(KBase);
-	
+		display = disp;
 	
 	this.addControlListener(new ControlAdapter() {
 		@Override
@@ -192,11 +199,12 @@ public class runGUI extends Composite {
 	text = new Label(grpKnowledgeBaseSelected, SWT.NONE);
 	GridData gd_text = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
 	gd_text.widthHint = 323;
+	text.setText(KBase.getName());
 	text.setLayoutData(gd_text);
 			
 			lblSelectTargetVariable = new Label(grpKnowledgeBaseSelected, SWT.NONE);
 			lblSelectTargetVariable.setText("Select Target Variable");
-			lblSelectTargetVariable.setVisible(false);
+			lblSelectTargetVariable.setVisible(true);
 			
 			targetvariablecombo = new Combo(grpKnowledgeBaseSelected, SWT.READ_ONLY);
 			targetvariablecombo.addSelectionListener(new SelectionAdapter() {
@@ -209,7 +217,7 @@ public class runGUI extends Composite {
 				}
 			});
 			targetvariablecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			targetvariablecombo.setVisible(false);
+			targetvariablecombo.setVisible(true);
 			this.getTargetVariableCombo();
 			
 			
@@ -451,13 +459,13 @@ public class runGUI extends Composite {
 			//There are issues with this... causes screen to crash
 		    if(btnForwardChaining.getSelection()==true || btnDefault.getSelection()==true){
 				KBase.validate();
-				Variable result = Inference.solveForwardChaining();
+				Variable result = Inference.solveForwardChaining(selectedVariable);
 				HowList = Inference.getHowList();
 				IO.displayResults(result, Inference.getHowList(), KBase);	
 		    	
 			}else if(btnBackwardChaining.getSelection()==true){
 				KBase.validate();
-				Variable result = Inference.solveBackwardChaining();
+				Variable result = Inference.solveBackwardChaining(selectedVariable);
 				HowList = Inference.getHowList();
 				IO.displayResults(result, Inference.getHowList(), KBase);		
 		    }
@@ -504,7 +512,7 @@ public class runGUI extends Composite {
 	
 	
 	
-	ScrolledComposite scrolledComposite_1 = new ScrolledComposite(this, SWT.BORDER | SWT.V_SCROLL);
+	scrolledComposite_1 = new ScrolledComposite(this, SWT.BORDER | SWT.V_SCROLL);
 	scrolledComposite_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 	GridData gd_scrolledComposite_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 	gd_scrolledComposite_1.heightHint = 377;
@@ -704,145 +712,84 @@ public class runGUI extends Composite {
 		return combo;
 	}
 	
-	public Variable AskUserForInput(Variable var, Rule rule)
+	
+	public static Variable AskUserForInput(Variable var, Rule rule, KnowledgeBase kb,InferenceEngine Inference)
 	{
 	
-			if(var instanceof NumericVariable)
+	Group questionGroup;
+	questionGroup = UserFactoryGUI.createQuestionGroup(CompQ);
+	questionGroup.getParent().getParent().layout(true);
+	
+	
+	/*	
+	QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference);
+	askCFQuestion.addQuestion("Input a value for "+var.getName());
+	scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	CompQ.layout();
+		*/	
+		thisRule = rule;
+//TODO
+		/*	
+		boolean invalid = true;
+		while(invalid)
+		{
+			try
+			{	
+				var.userSetCurrentValue(Double.parseDouble(field.getText()));
+				invalid = false;
+			}
+			catch(NumberFormatException ex)
 			{
-//				JPanel panel = new JPanel();
-//				
-//				if(var.getQueryPrompt().trim().equals(""))
-//				{
-//					panel.add(new JLabel("Input a value for "+var.getName()));
-//				}
-//				else
-//				{
-//					panel.add(new JLabel(var.getQueryPrompt()));
-//				}
-//				
-//				JTextField field = new JTextField("0.0", 10);
-//				
-//				JButton why = new JButton("Why?");
-//				why.addActionListener(new ActionListener() { 
-//					  public void actionPerformed(ActionEvent e) { 
-//						  displayWhyMessage();
-//					  } 
-//					} );
-//				
-//				panel.add(field);
-//				panel.add(why);
-//
-//				JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
-//				
-//				boolean invalid = true;
-//				while(invalid)
-//				{
-//					try
-//					{	
-//						var.userSetCurrentValue(Double.parseDouble(field.getText()));
-//						invalid = false;
-//					}
-//					catch(NumberFormatException ex)
-//					{
-//						System.out.println("Please enter a valid number.");
-//						invalid = true;
-//						JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
-//					}	
-//				}
+				System.out.println("Please enter a valid number.");
+				invalid = true;
+				JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
+			}	
+		} */
+		
+			
+	
+			//btnCertainityFactor.getSelection();
+		   // btnRun.getSelection();
+		if(var.getQueryPrompt().trim().equals(""))
+		{
+			if (kb.getUncertaintyMethod()==KBSettings.UncertaintyManagement.CF)
+			{
+				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference,questionGroup,"Input a value for "+var.getName(), var, scrolledComposite);
+				//((Display) this).sleep();
 			}
 			else
 			{
-				//btnCertainityFactor.getSelection();
-			   // btnRun.getSelection();
-				if(var.getQueryPrompt().trim().equals(""))
-				{
-	
-				if (btnCertainityFactor.getSelection()==true){
-					QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
-					askCFQuestion.addQuestion("Input a value for "+var.getName());
-					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-					CompQ.layout();
-					//scrolledComposite.layout();
-					button.setSelection(false);
-					btnBayesianReasoning.setSelection(false);
-				}else
-				{
-					QuestionGUI askQuestion = new QuestionGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
-					askQuestion.addQuestion("Input a value for "+var.getName());
-					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-					CompQ.layout();
-					btnCertainityFactor.setSelection(false);
-					//End of section that needs to be moved
-					
-				}
-				}
-				else
-				{
-					if (btnCertainityFactor.getSelection()==true){
-						QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
-						askCFQuestion.addQuestion(var.getQueryPrompt());
-						//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-						scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						CompQ.layout();
-						//scrolledComposite.layout();
-						button.setSelection(false);
-						btnBayesianReasoning.setSelection(false);
-					}else
-					{
-						QuestionGUI askQuestion = new QuestionGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
-						askQuestion.addQuestion(var.getQueryPrompt());
-						//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-						scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						CompQ.layout();
-						btnCertainityFactor.setSelection(false);
-						//End of section that needs to be moved
-						
-					}	
-				}
-				
-				JPanel panel = new JPanel();
-				
-				if(var.getQueryPrompt().trim().equals(""))
-				{
-					panel.add(new JLabel("Input a value for "+var.getName()));
-				}
-				else
-				{
-					panel.add(new JLabel(var.getQueryPrompt()));
-				}
-				
-				JComboBox combox = new JComboBox(var.getArrayOfPossibleValues());
-				
-				JButton why = new JButton("Why?");
-				why.addActionListener(new ActionListener() { 
-					  public void actionPerformed(ActionEvent e) { 
-						  //displayWhyMessage(rule);
-					  } 
-					} );
-				
-				panel.add(combox);
-				panel.add(why);
-
-				JOptionPane.showMessageDialog(null, panel,"",JOptionPane.PLAIN_MESSAGE);
-				Value val =  (Value) combox.getSelectedItem();
-				var.userSetCurrentValue(val);
+				QuestionGUI askQuestion = new QuestionGUI(CompQ, Inference,questionGroup,"Input a value for "+var.getName(), var,scrolledComposite);
 			}
-		
-		
-		return var;
-	}
-	public static void displayWhyMessage(Rule rule)
-	{
-		StringBuilder s = new StringBuilder();
-		s.append("\nI am trying to evaluate the rule\n");
-		s.append(rule != null ? rule.toString() : "null");
-		System.out.println(s.toString());
+		}
+		else
+		{
+			if (kb.getUncertaintyMethod()==KBSettings.UncertaintyManagement.CF)
+			{
+				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference,questionGroup,var.getQueryPrompt(), var,scrolledComposite);
+			}
+			else
+			{
+				QuestionGUI askQuestion = new QuestionGUI(CompQ, Inference,questionGroup,var.getQueryPrompt(), var,scrolledComposite);
+			}
+		}
+	CompQ.update();
+	while (var.currentValue== null) {
+        if (!display.readAndDispatch ())
+           display.sleep ();
+     }
+     display.wake();
+
+	return var;
 	}
 	
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}	
+	
+	public Boolean okayPress()
+	{
+		return okayFlag;
+	}
 }

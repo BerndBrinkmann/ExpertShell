@@ -252,7 +252,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 			}
 			
 			if(!(uncertaintyType == KBSettings.UncertaintyManagement.CF))
-				var.addPossibleValue(new Value("Other"));
+				var.addPossibleValue(new Value("Unknown"));
 		}
 	}
 	

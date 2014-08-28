@@ -80,44 +80,46 @@ public class MainScreen  implements Serializable {
 
 	protected Shell shlExpertSystemShell;
 	private Label text;
-	private Text text_1;
-	private Text text_2;
+//	private Text text_1;
+//	private Text text_2;
 	private Button btnBackwardChaining;
 	private Button btnBayesianReasoning;
 	private Button btnCertainityFactor;
 	private Button btnDefault;
 	private Button btnForwardChaining;
 	private Button button;
-	private Button btnRun;
-	private Combo combo;
-	private Combo combo_1;
+//	private Button btnRun;
+//	private Combo combo;
+//	private Combo combo_1;
 	private Scale scale;
 	private Label lblCf;
 	public KnowledgeBase KBase;
-	private Button OKButton;
-	private Button HowButton;
-	private Button WhyButton;
-    private Composite CompQ;
-    private Group questionGroup;
-    private Label lblNewLabel;
+//	private Button OKButton;
+//	private Button HowButton;
+//	private Button WhyButton;
+//    private Composite CompQ;
+//    private Group questionGroup;
+//    private Label lblNewLabel;
     private ScrolledComposite scrolledComposite;
     private Menu menu_4;
-    private MenuItem newKB;
-    private RuleEditorGUI ruleEditor;
-    private RuleListGUI ruleList;
-    private Combo targetvariablecombo;
-    private Boolean listChangeFlag = false;
-    private String variableListLabel = "";
-    private Variable selectedVariable;
-    private String selectedVariableString;
+ //   private MenuItem newKB;
+   // private RuleEditorGUI ruleEditor;
+//    private RuleListGUI ruleList;
+  //  private Combo targetvariablecombo;
+//    private Boolean listChangeFlag = false;
+  //  private String variableListLabel = "";
+ //   private Variable selectedVariable;
+   // private String selectedVariableString;
     private Test_Case test;
-    private Label lblSelectTargetVariable;
-    private Label lblWhyhow;
-    private ArrayList<Rule> HowList = new ArrayList<Rule>();
+   // private Label lblSelectTargetVariable;
+   // private Label lblWhyhow;
+ //   private ArrayList<Rule> HowList = new ArrayList<Rule>();
     static Rule tRule; // a hack to get this into the description function
-    private InferenceEngine Inference;
-
-
+    public InferenceEngine Inference;
+    public runGUI composite; 
+    static MainScreen window;
+    Display display;
+    
 	public KnowledgeBase getKnowledgeBase(){
 		return KBase ;
 	}
@@ -136,7 +138,7 @@ public class MainScreen  implements Serializable {
 	 */
 	public static void main(String[] args) {
 		try {
-			MainScreen window = new MainScreen();
+			window = new MainScreen();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,7 +149,7 @@ public class MainScreen  implements Serializable {
 	 * Open the window.
 	 */
 	public void open() {
-		Display display = Display.getDefault();
+		display = new Display ();
 		createContents();
 		shlExpertSystemShell.open();
 		shlExpertSystemShell.layout();
@@ -165,7 +167,6 @@ public class MainScreen  implements Serializable {
 		//create default KnowledgeBase
 		KBase = new KnowledgeBase("default");
 		test = new Test_Case();
-		KBase = test.createBoatKnowlegeBase(this);
 		//KBase = FileManager.loadKnowledgeFile();
 		//KBase.SetName("boat_kb");
 		//Inference = new InferenceEngine(KBase);
@@ -255,9 +256,12 @@ public class MainScreen  implements Serializable {
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmUserInterface.setText("Run Knowledgebase");
 
+		KBase = test.createBoatKnowlegeBase(this);
 		
-		runGUI composite = new runGUI(tabFolder, SWT.NONE,KBase,shlExpertSystemShell);
+		composite = new runGUI(tabFolder, SWT.NONE,KBase,shlExpertSystemShell, display);
 		tbtmUserInterface.setControl(composite);
+		KBase.setRunGui(composite);
+		
 		MenuItem mntmOpenKnowledgeBase = new MenuItem(menu_1, SWT.CASCADE);
 		mntmOpenKnowledgeBase.setText("Open Knowledge Base");
 		
@@ -338,6 +342,8 @@ public class MainScreen  implements Serializable {
 			}
 		});
 		mntmForecast.setText("Forecast");
+		
+		KBase = test.createBoatKnowlegeBase(this);
 		
 		MenuItem mntmLoad = new MenuItem(menu_1, SWT.NONE);
 		mntmLoad.addSelectionListener(new SelectionAdapter() {
@@ -441,6 +447,7 @@ public class MainScreen  implements Serializable {
             }
         });
 		
+		
 		RuleListGUI ruleList = new RuleListGUI(scrolledComposite, SWT.NONE, KBase);
 		scrolledComposite.setContent(ruleList);
 		ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -479,9 +486,12 @@ public class MainScreen  implements Serializable {
 		TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);
 		tbtmVariables.setText("Variables");
 		
+		
+		
 		VariablesGUI Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
 		Variables.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		tbtmVariables.setControl(Variables);
+		
 		
 	}
 	
@@ -513,7 +523,7 @@ public class MainScreen  implements Serializable {
 	
 
 
-
+/*
 public static Double getCertainty(String message)
 {
 	JPanel panel = new JPanel();
@@ -564,7 +574,7 @@ public static Double getCertainty(String message)
 	JOptionPane.showMessageDialog(null, panel,"",JOptionPane.PLAIN_MESSAGE);
 	return  (Double)(((double)slider.getValue())/100);
 }
-
+*/
 
 //public static InferenceEngine createInferenceEngine(KnowledgeBase kb)
 //{

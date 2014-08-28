@@ -5,6 +5,7 @@ import java.awt.Component;
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -96,66 +97,9 @@ public class IO
 	 * @param var
 	 * @return
 	 */
-	public static Variable userSetVaraible(Variable var, Rule rule)
-	{
-		thisRule = rule;
-
-			if(var instanceof NumericVariable)
-			{
-				JPanel panel = new JPanel();
-				
-				if(var.getQueryPrompt().trim().equals(""))
-				{
-					panel.add(new JLabel("Input a value for "+var.getName()));
-				}
-				else
-				{
-					panel.add(new JLabel(var.getQueryPrompt()));
-				}
-				
-				JTextField field = new JTextField("0.0", 10);
-				
-				JButton why = new JButton("Why?");
-				why.addActionListener(new ActionListener() { 
-					  public void actionPerformed(ActionEvent e) { 
-						  displayWhyMessage();
-					  } 
-					} );
-				
-				panel.add(field);
-				panel.add(why);
-
-				JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
-				
-				boolean invalid = true;
-				while(invalid)
-				{
-					try
-					{	
-						var.userSetCurrentValue(Double.parseDouble(field.getText()));
-						invalid = false;
-					}
-					catch(NumberFormatException ex)
-					{
-						System.out.println("Please enter a valid number.");
-						invalid = true;
-						JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
-					}	
-				}
-			}
+	
+	
 		
-		return var;
-	}
-	
-	public static void displayWhyMessage()
-	{
-		StringBuilder s = new StringBuilder();
-		s.append("\nI am trying to evaluate the rule\n");
-		s.append(thisRule != null ? thisRule.toString() : "null");
-		System.out.println(s.toString());
-	}
-	
-	
 	/**
 	 * returns a variable object from a set of possible variables
 	 * @param message
@@ -319,120 +263,82 @@ public class IO
 		return  (Double)(((double)slider.getValue())/100);
 	}
 	
-	public static Variable AskUserForInput(Variable var, Rule rule, KnowledgeBase kb, Composite CompQ, ScrolledComposite scrolled_composite_1, ScrolledComposite scrolledComposite, InferenceEngine Inference)
+/*	public static Variable AskUserForInput(Variable var, Rule rule, KnowledgeBase kb, Composite CompQ, ScrolledComposite scrolledComposite_1, ScrolledComposite scrolledComposite, InferenceEngine Inference)
 	{
 	compQ = CompQ;
-	sc1= scrolled_composite_1;
+	sc1= scrolledComposite_1;
 	sc = scrolledComposite;
+	Group questionGroup;
+	questionGroup = UserFactoryGUI.createQuestionGroup(CompQ);
+	questionGroup.getParent().getParent().layout(true);
 	
-		
+	
+	/*	
 	QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference);
 	askCFQuestion.addQuestion("Input a value for "+var.getName());
 	scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-	CompQ.layout();	
-		
-		
-		
-		
-		
-		thisRule = rule;
-
-		if(var instanceof NumericVariable)
+	CompQ.layout();
+		*/	
+	//	thisRule = rule;
+//TODO
+		/*	
+		boolean invalid = true;
+		while(invalid)
 		{
-			JPanel panel = new JPanel();
-			
-			if(var.getQueryPrompt().trim().equals(""))
+			try
+			{	
+				var.userSetCurrentValue(Double.parseDouble(field.getText()));
+				invalid = false;
+			}
+			catch(NumberFormatException ex)
 			{
-				panel.add(new JLabel("Input a value for "+var.getName()));
+				System.out.println("Please enter a valid number.");
+				invalid = true;
+				JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
+			}	
+		} */
+		
+			
+	
+			//btnCertainityFactor.getSelection();
+		   // btnRun.getSelection();
+/*		if(var.getQueryPrompt().trim().equals(""))
+		{
+
+			if (kb.getUncertaintyMethod()==KBSettings.UncertaintyManagement.CF){
+				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference,questionGroup,"Input a value for "+var.getName());
+				scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				CompQ.layout();
+				
 			}
 			else
 			{
-				panel.add(new JLabel(var.getQueryPrompt()));
-			}
-			
-			JTextField field = new JTextField("0.0", 10);
-			
-			JButton why = new JButton("Why?");
-			why.addActionListener(new ActionListener() { 
-				  public void actionPerformed(ActionEvent e) { 
-					  displayWhyMessage();
-				  } 
-				} );
-			
-			panel.add(field);
-			panel.add(why);
-
-			JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
-			
-			boolean invalid = true;
-			while(invalid)
-			{
-				try
-				{	
-					var.userSetCurrentValue(Double.parseDouble(field.getText()));
-					invalid = false;
-				}
-				catch(NumberFormatException ex)
-				{
-					System.out.println("Please enter a valid number.");
-					invalid = true;
-					JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
-				}	
+				QuestionGUI askQuestion = new QuestionGUI(CompQ, Inference,questionGroup,"Input a value for "+var.getName());
+				scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				CompQ.layout();
 			}
 		}
 		else
 		{
-			//btnCertainityFactor.getSelection();
-		   // btnRun.getSelection();
-			if(var.getQueryPrompt().trim().equals(""))
+			if (kb.getUncertaintyMethod()==KBSettings.UncertaintyManagement.CF)
 			{
-
-			if (btnCertainityFactor.getSelection()==true){
-				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
-				askCFQuestion.addQuestion("Input a value for "+var.getName());
-				//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
+				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference,questionGroup,var.getQueryPrompt());
 				scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				CompQ.layout();
-				//scrolledComposite.layout();
-				button.setSelection(false);
-				btnBayesianReasoning.setSelection(false);
-			}else
-			{
-				QuestionGUI askQuestion = new QuestionGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
-				askQuestion.addQuestion("Input a value for "+var.getName());
-				//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-				scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				CompQ.layout();
-				btnCertainityFactor.setSelection(false);
-				//End of section that needs to be moved
-				
-			}
 			}
 			else
 			{
-				if (btnCertainityFactor.getSelection()==true){
-					QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
-					askCFQuestion.addQuestion(var.getQueryPrompt());
-					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-					CompQ.layout();
-					//scrolledComposite.layout();
-					button.setSelection(false);
-					btnBayesianReasoning.setSelection(false);
-				}else
-				{
-					QuestionGUI askQuestion = new QuestionGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
-					askQuestion.addQuestion(var.getQueryPrompt());
-					//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-					scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-					CompQ.layout();
-					btnCertainityFactor.setSelection(false);
-					//End of section that needs to be moved
-					
-				}	
+				QuestionGUI askQuestion = new QuestionGUI(CompQ, Inference,questionGroup,var.getQueryPrompt());
+				scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				CompQ.layout();
+				
 			}
+			
+			CompQ.update();
+			
+		}
 	return var;
 	}
-
+*/
 
 }

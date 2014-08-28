@@ -2,6 +2,11 @@ package gui;
 
 import java.util.ArrayList;
 
+
+
+
+
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -14,13 +19,16 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
 
-import datatypes.*;
+import datatypes.Rule;
+import datatypes.InferenceEngine;
+import datatypes.Variable;
+import datatypes.Value;
 
 public class QuestionCFGUI {
 	
-Group questionGroup;
-	Composite CompQ;
-	ScrolledComposite scrolledComposite;
+
+//	Composite CompQ;
+//	ScrolledComposite scrolledComposite;
 	
 	Button WhyButton;
 	Button HowButton;
@@ -31,9 +39,8 @@ Group questionGroup;
 	Scale CFScale;
 	//Label lblCF;
 	//Scale scale;
-	SelectionAdapter WhyL;
-	SelectionAdapter HowL;
-	SelectionAdapter OKL;
+	//SelectionAdapter HowL;
+	//SelectionAdapter OKL;
 	SelectionAdapter CFL;
 	SelectionAdapter AnswerComboL;
 	SelectionAdapter CFScaleL;
@@ -46,36 +53,64 @@ Group questionGroup;
 	public SelectionAdapter CFScaleListener;
 	
 	public ArrayList<Rule> howlist;
+	public Value[] possibleValues;
+	public Boolean okayPress = false;
+	
+	private Variable var;
 	
 	static Rule tRule;
 	
-	public QuestionCFGUI(Composite CompQ, InferenceEngine Inference){
-		WhyL= WhyListener;
-		HowL= HowListener;
-		OKL= OKListener;
+	public QuestionCFGUI(Composite CompQ, InferenceEngine Inference, Group questionGroup, String message, Variable var, ScrolledComposite scrolledComposite){
+		//HowL= HowListener;
+		//OKL= OKListener;
 		CFL = CFListener;
 		CFScaleL = CFScaleListener;
 		AnswerComboL= AnswerComboListener;
-		questionGroup = UserFactoryGUI.createQuestionGroup(CompQ);
-		questionGroup.getParent().layout();
-		CompQ.update();
 		howlist  = Inference.getHowList();
+		this.var = var;
+		possibleValues = var.getArrayOfPossibleValues();
+		
+		addQuestion(message,questionGroup);
+		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		CompQ.layout();
+		CompQ.update();
+		
+		
+		/*while(var.currentValue == null)
+		{
+			try
+			{
+				wait();
+			} catch (InterruptedException e){};
+			
+		}*/
 	}
 	
-	public void addQuestion(String message){
+	public void addQuestion(String message, Group questionGroup){
 		
 		QforUser= UserFactoryGUI.createQuestionLabel(questionGroup);
+		QforUser.setText(message);
 		GridData gd_label = new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1);
 		gd_label.widthHint=303;
 		gd_label.heightHint=65;
 		QforUser.setLayoutData(gd_label);
 		
 		
+		
 		ans = UserFactoryGUI.createAnswerCombo(questionGroup);
 		GridData gd_combo_1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1);
 		gd_combo_1.widthHint = 276;
 		ans.setLayoutData(gd_combo_1);
-		ans.setItems(new String[] {"A", "B"}); //TEST
+		
+		if(possibleValues.length !=0)
+		{
+			String possiblevString[] = new String[possibleValues.length];
+					for (int i=0; i<possibleValues.length; i++)
+					{
+						possiblevString[i]= possibleValues[i].toString();
+					}
+			ans.setItems(possiblevString);
+		}
 		ans.setText("Answer");
 		
 		CFPercentage = UserFactoryGUI.createCFLabel(questionGroup);
@@ -107,26 +142,6 @@ Group questionGroup;
 		//scale.setLayoutData(gd_scale);
 		//scale.setVisible(true);
 		
-		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
-		WhyButton.addSelectionListener(WhyL);
-		GridData gd_WhyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_WhyButton.widthHint = 54;
-		WhyButton.setLayoutData(gd_WhyButton);
-		WhyButton.setText("Why?");
-		
-		HowButton = UserFactoryGUI.createHowButton(questionGroup);
-		HowButton.addSelectionListener(HowL);
-		GridData gd_HowButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_HowButton.widthHint = 54;
-		HowButton.setLayoutData(gd_HowButton);
-		HowButton.setText("How?");
-		
-		OKButton = UserFactoryGUI.createOKButton(questionGroup);
-		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		OKButton.addSelectionListener(OKL);
-		
-		
-		
 		WhyListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();	
@@ -143,15 +158,15 @@ Group questionGroup;
 				displayHowMessage(howlist);
 				if(howlist.isEmpty())
 				{
-//TODO					lblWhyhow.setText("\nA result was not reached\n");
+//TODO					//lblWhyhow.setText("\nA result was not reached\n");
 				}
 				else
 				{
 				
-//TODO					lblWhyhow.setText("\nThe result was reached by firing these rules in this order\n");
+//TODO					//lblWhyhow.setText("\nThe result was reached by firing these rules in this order\n");
 					for(Rule r : howlist)
 					{
-//TODO						lblWhyhow.setText(r.toString());
+//TODO						//lblWhyhow.setText(r.toString());
 					}
 				}	
 			}	
@@ -159,7 +174,11 @@ Group questionGroup;
 		OKListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-			}
+				if(ans.getSelectionIndex() != -1)
+				{
+					var.setCurrentValue(possibleValues[ans.getSelectionIndex()]);
+				}
+			}	
 		};
 		AnswerComboListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -183,6 +202,29 @@ Group questionGroup;
 				lblCf.setText(""+(perspectivevalue));*/
 			}
 		};
+		
+		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
+		WhyButton.addSelectionListener(WhyListener);
+		GridData gd_WhyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_WhyButton.widthHint = 54;
+		WhyButton.setLayoutData(gd_WhyButton);
+		WhyButton.setText("Why?");
+		
+		HowButton = UserFactoryGUI.createHowButton(questionGroup);
+		HowButton.addSelectionListener(HowListener);
+		GridData gd_HowButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_HowButton.widthHint = 54;
+		HowButton.setLayoutData(gd_HowButton);
+		HowButton.setText("How?");
+		
+		OKButton = UserFactoryGUI.createOKButton(questionGroup);
+		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		OKButton.addSelectionListener(OKListener);
+		OKButton.setText("OK");
+		
+		
+		
+		
 	
 		
 	}
@@ -203,7 +245,18 @@ Group questionGroup;
 			}
 		}
 	}
+	public static void displayWhyMessage()
+	{
+		StringBuilder s = new StringBuilder();
+		s.append("\nI am trying to evaluate the rule\n");
+		s.append(tRule != null ? tRule.toString() : "null");
+		System.out.println(s.toString());
+	}
 	
+	public Boolean getOkayPress()
+	{
+		return okayPress;
+	}
 
 }
 
