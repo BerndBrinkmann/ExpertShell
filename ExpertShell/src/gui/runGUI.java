@@ -67,6 +67,12 @@ import org.eclipse.swt.custom.StyledText;
 
 
 
+
+
+
+
+
+
 //import STUART.ADT.Rule;
 import gui.IO;
 
@@ -104,6 +110,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import gui.AnswerGUI;
+import datatypes.Variable;
+import gui.NoRun;
+import gui.NoRunV;
 import test.Test_Case;
 import datatypes.*;
 
@@ -142,9 +152,10 @@ public class runGUI extends Composite {
     private String selectedVariableString;
     private Test_Case test;
     private Label lblSelectTargetVariable;
-    private Label lblWhyhow;
+    private static Label lblWhyhow;
     private ArrayList<Rule> HowList = new ArrayList<Rule>();
     static Rule tRule; // a hack to get this into the description function
+    
     private InferenceEngine Inference;
     public static ScrolledComposite scrolledComposite_1;
 	static Rule thisRule;
@@ -337,6 +348,7 @@ public class runGUI extends Composite {
 	
 	//composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
 
+
 	/**Original question box for reference*/
 	/*questionGroup = new Group(CompQ, SWT.NONE);
 	questionGroup.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
@@ -444,6 +456,16 @@ public class runGUI extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			e.getSource();
 			
+			Inference = new InferenceEngine(KBase);
+			if(btnRun.getText().equals("Run"))
+			{
+			resetVariablecValues();
+			for(Control i: CompQ.getChildren())
+			{
+				i.dispose();
+			}
+			btnRun.setText("Stop");
+			
 			if(text.getText()==""){
 				
 				NoRun noKB = new NoRun(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
@@ -455,22 +477,38 @@ public class runGUI extends Composite {
 				NoRunV noVar = new NoRunV(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
 				noVar.open();
 			}
-			
 			//There are issues with this... causes screen to crash
 		    if(btnForwardChaining.getSelection()==true || btnDefault.getSelection()==true){
 				KBase.validate();
+				//grpSelectRunMethod.setEnabled(false);
+				setRCMethod(false);
 				Variable result = Inference.solveForwardChaining(selectedVariable);
 				HowList = Inference.getHowList();
-				IO.displayResults(result, Inference.getHowList(), KBase);	
+				AnswerGUI showAnswer = new AnswerGUI(CompQ, result, scrolledComposite , lblWhyhow, Inference.getHowList(), KBase);
+				IO.displayResults(result, Inference.getHowList(), KBase);
+				setRCMethod(true);
+				btnRun.setText("Run");
 		    	
 			}else if(btnBackwardChaining.getSelection()==true){
 				KBase.validate();
+				//grpSelectRunMethod.setEnabled(false);
+				setRCMethod(false);
 				Variable result = Inference.solveBackwardChaining(selectedVariable);
 				HowList = Inference.getHowList();
-				IO.displayResults(result, Inference.getHowList(), KBase);		
+				IO.displayResults(result, Inference.getHowList(), KBase);
+				setRCMethod(true);
+				btnRun.setText("Run");
 		    }
-			
-			
+		}
+		else
+		{resetVariablecValues();
+		for(Control i: CompQ.getChildren())
+		{
+			i.dispose();
+		}
+		btnRun.setText("Run");
+		Inference = new InferenceEngine(null);
+		}
 			// this should not be handled by run button, KBase needs to tell it when to ask a new question
 		    /*
 		    btnCertainityFactor.getSelection();
@@ -671,6 +709,13 @@ public class runGUI extends Composite {
 		}
 	};
 	
+	AnswerComboListener = new SelectionAdapter() {
+		public void widgetSelected(SelectionEvent e) {
+			e.getSource();
+			//needs to find where varaibles are!!!
+			System.out.println(combo_1.getText());
+		}	
+	};
 }
 
 	public void getTargetVariableCombo()
@@ -712,6 +757,15 @@ public class runGUI extends Composite {
 		return combo;
 	}
 	
+	public void setRCMethod(Boolean enable)
+	{
+		btnBackwardChaining.setEnabled(enable);
+		btnBayesianReasoning.setEnabled(enable);
+		btnCertainityFactor.setEnabled(enable);
+		btnDefault.setEnabled(enable);
+		btnForwardChaining.setEnabled(enable);
+		button.setEnabled(enable);	
+	}
 	
 	public static Variable AskUserForInput(Variable var, Rule rule, KnowledgeBase kb,InferenceEngine Inference)
 	{
@@ -754,7 +808,7 @@ public class runGUI extends Composite {
 		{
 			if (kb.getUncertaintyMethod()==KBSettings.UncertaintyManagement.CF)
 			{
-				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference,questionGroup,"Input a value for "+var.getName(), var, scrolledComposite);
+				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference,questionGroup,"Input a value for "+var.getName(), var, scrolledComposite, rule,lblWhyhow);
 				//((Display) this).sleep();
 			}
 			else
@@ -766,7 +820,7 @@ public class runGUI extends Composite {
 		{
 			if (kb.getUncertaintyMethod()==KBSettings.UncertaintyManagement.CF)
 			{
-				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference,questionGroup,var.getQueryPrompt(), var,scrolledComposite);
+				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference,questionGroup,var.getQueryPrompt(), var,scrolledComposite, rule,lblWhyhow);
 			}
 			else
 			{
@@ -791,5 +845,13 @@ public class runGUI extends Composite {
 	public Boolean okayPress()
 	{
 		return okayFlag;
+	}
+	
+	public void resetVariablecValues()
+	{
+		for(Variable v : KBase.getVariablesArray())
+		{
+			v.setCurrentValue((Value) null);
+		}
 	}
 }

@@ -66,6 +66,7 @@ import org.eclipse.swt.custom.StyledText;
 
 
 
+
 //import STUART.ADT.Rule;
 import gui.IO;
 
@@ -158,6 +159,17 @@ public class MainScreen  implements Serializable {
 				display.sleep();
 			}
 		}
+		//System.exit(0);
+		//display.dispose();
+		shlExpertSystemShell.dispose();
+		System.exit(0);
+		/*shlExpertSystemShell.addDisposeListener(new DisposeListener(){
+			public void widgetDisposed(DisposeEvent e)
+			{
+				System.out.println("trying to exit now");
+				System.exit(0);
+			}
+		});*/
 	}
 
 	/**

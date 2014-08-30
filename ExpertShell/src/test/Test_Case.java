@@ -85,7 +85,7 @@ public class Test_Case implements Serializable {
 		
 		
 		//create the rule set
-		Rule[] rules = new Rule[8];
+/*		Rule[] rules = new Rule[8];
 		
 		rules[0] = new Rule(mainsc);
 		rules[0].setConnective(Connectives.AND);
@@ -158,7 +158,122 @@ public class Test_Case implements Serializable {
 		rules[7].addAntecedent(new Antecedent(shapeOfMain,triw2fore));
 		rules[7].addConsequent(new Consequent(boat,staySchooner));
 		rules[7].getConsequent(0).setCertaintyFactor(0.9);
+*/
+		Rule[] rules = new Rule[11];
+		
+		rules[0] = new Rule(mainsc);
+		rules[0].setConnective(Connectives.AND);
+		rules[0].addAntecedent(new Antecedent(numberOfMasts,one));
+		rules[0].addConsequent(new Consequent(boat,jibCutter));
+		rules[0].addConsequent(new Consequent(boat,gaffSloop));
+		rules[0].getConsequent(0).setCertaintyFactor(0.4);
+		rules[0].getConsequent(1).setCertaintyFactor(0.4);
+		
+		rules[1] = new Rule(mainsc);
+		rules[1].setConnective(Connectives.AND);
+		rules[1].addAntecedent(new Antecedent(numberOfMasts,one));
+		rules[1].addAntecedent(new Antecedent(shapeOfMain,tri));
+		rules[1].addConsequent(new Consequent(boat,jibCutter));
+		rules[1].getConsequent(0).setCertaintyFactor(1.0);
+		
+		rules[2] = new Rule(mainsc);
+		rules[2].setConnective(Connectives.AND);
+		rules[2].addAntecedent(new Antecedent(numberOfMasts,one));
+		rules[2].addAntecedent(new Antecedent(shapeOfMain,quad));
+		rules[2].addConsequent(new Consequent(boat,gaffSloop));
+		rules[2].getConsequent(0).setCertaintyFactor(1.0);
 
+		rules[3] = new Rule(mainsc);
+		rules[3].setConnective(Connectives.AND);
+		rules[3].addAntecedent(new Antecedent(numberOfMasts,two));
+		rules[3].addConsequent(new Consequent(boat,jibKetch));
+		rules[3].addConsequent(new Consequent(boat,gaffKetch));
+		rules[3].addConsequent(new Consequent(boat,jibYawl));
+		rules[3].addConsequent(new Consequent(boat,gaffYawl));
+		rules[3].addConsequent(new Consequent(boat,gaffScooner));
+		rules[3].addConsequent(new Consequent(boat,staySchooner));
+		rules[3].getConsequent(0).setCertaintyFactor(0.1);
+		rules[3].getConsequent(1).setCertaintyFactor(0.1);
+		rules[3].getConsequent(2).setCertaintyFactor(0.1);
+		rules[3].getConsequent(3).setCertaintyFactor(0.1);
+		rules[3].getConsequent(4).setCertaintyFactor(0.1);
+		rules[3].getConsequent(5).setCertaintyFactor(0.1);
+
+		
+		rules[4] = new Rule(mainsc);
+		rules[4].setConnective(Connectives.AND);
+		rules[4].addAntecedent(new Antecedent(numberOfMasts,two));
+		rules[4].addAntecedent(new Antecedent(mainMastPosition,fwrdShortMast));
+		rules[4].addConsequent(new Consequent(boat,jibKetch));
+		rules[4].addConsequent(new Consequent(boat,gaffKetch));
+		rules[4].addConsequent(new Consequent(boat,jibYawl));
+		rules[4].addConsequent(new Consequent(boat,gaffYawl));
+		rules[4].getConsequent(0).setCertaintyFactor(0.2);
+		rules[4].getConsequent(1).setCertaintyFactor(0.2);
+		rules[4].getConsequent(2).setCertaintyFactor(0.2);
+		rules[4].getConsequent(3).setCertaintyFactor(0.2);
+
+		
+		rules[5] = new Rule(mainsc);
+		rules[5].setConnective(Connectives.AND);
+		rules[5].addAntecedent(new Antecedent(numberOfMasts,two));
+		rules[5].addAntecedent(new Antecedent(mainMastPosition,aftShortMast));
+		rules[5].addConsequent(new Consequent(boat,gaffScooner));
+		rules[5].addConsequent(new Consequent(boat,staySchooner));
+		rules[5].getConsequent(0).setCertaintyFactor(0.4);
+		rules[5].getConsequent(1).setCertaintyFactor(0.4);
+		
+		rules[6] = new Rule(mainsc);
+		rules[6].setConnective(Connectives.AND);
+		rules[6].addAntecedent(new Antecedent(numberOfMasts,two));
+		rules[6].addAntecedent(new Antecedent(shortMastPosition,fwrdHelm));
+		rules[6].addConsequent(new Consequent(boat,jibKetch));
+		rules[6].addConsequent(new Consequent(boat,gaffKetch));
+		rules[6].getConsequent(0).setCertaintyFactor(0.4);
+		rules[6].getConsequent(0).setCertaintyFactor(0.4);
+
+		rules[7] = new Rule(mainsc);
+		rules[7].setConnective(Connectives.AND);
+		rules[7].addAntecedent(new Antecedent(numberOfMasts,two));
+		rules[7].addAntecedent(new Antecedent(shortMastPosition,aftHelm));
+		rules[7].addConsequent(new Consequent(boat,jibYawl));
+		rules[7].addConsequent(new Consequent(boat,gaffYawl));
+		rules[7].addConsequent(new Consequent(boat,gaffScooner));
+		rules[7].addConsequent(new Consequent(boat,staySchooner));
+		rules[7].getConsequent(0).setCertaintyFactor(0.2);
+		rules[7].getConsequent(1).setCertaintyFactor(0.2);
+		rules[7].getConsequent(2).setCertaintyFactor(0.2);
+		rules[7].getConsequent(3).setCertaintyFactor(0.2);
+		
+		
+		
+		rules[8] = new Rule(mainsc);
+		rules[8].setConnective(Connectives.AND);
+		rules[8].addAntecedent(new Antecedent(numberOfMasts,two));
+		rules[8].addAntecedent(new Antecedent(shapeOfMain,tri));
+		rules[8].addConsequent(new Consequent(boat,jibKetch));
+		rules[8].addConsequent(new Consequent(boat,jibYawl));
+		rules[8].getConsequent(0).setCertaintyFactor(0.4);
+		rules[8].getConsequent(0).setCertaintyFactor(0.4);
+		
+		rules[9] = new Rule(mainsc);
+		rules[9].setConnective(Connectives.AND);
+		rules[9].addAntecedent(new Antecedent(numberOfMasts,two));
+		rules[9].addAntecedent(new Antecedent(shapeOfMain,quad));
+		rules[9].addConsequent(new Consequent(boat,gaffKetch));
+		rules[9].addConsequent(new Consequent(boat,gaffYawl));
+		rules[9].addConsequent(new Consequent(boat,gaffScooner));
+		rules[9].getConsequent(0).setCertaintyFactor(0.3);
+		rules[9].getConsequent(1).setCertaintyFactor(0.3);
+		rules[9].getConsequent(2).setCertaintyFactor(0.3);
+
+		rules[10] = new Rule(mainsc);
+		rules[10].setConnective(Connectives.AND);
+		rules[10].addAntecedent(new Antecedent(numberOfMasts,two));
+		rules[10].addAntecedent(new Antecedent(shapeOfMain,triw2fore));
+		rules[10].addConsequent(new Consequent(boat,gaffSloop));
+		rules[10].getConsequent(0).setCertaintyFactor(1.0);		
+		
 		
 		
 		for(int i = 0; i < 8; i++)

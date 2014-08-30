@@ -33,10 +33,17 @@ public class QuestionCFGUI {
 	Button WhyButton;
 	Button HowButton;
 	Button OKButton;
+	Button WhyButton1;
+	Button HowButton1;
+	Button OKButton1;
 	Combo ans;
+	Combo ans1;
 	Label QforUser;
+	Label AforUser;
 	Label CFPercentage;
+	Label CFPercentage1;
 	Scale CFScale;
+	Scale CFScale1;
 	//Label lblCF;
 	//Scale scale;
 	//SelectionAdapter HowL;
@@ -48,6 +55,7 @@ public class QuestionCFGUI {
 	public SelectionAdapter WhyListener;
 	public SelectionAdapter HowListener;
 	public SelectionAdapter OKListener;
+	public SelectionAdapter OKListener1;
 	public SelectionAdapter AnswerComboListener;
 	public SelectionAdapter CFListener;
 	public SelectionAdapter CFScaleListener;
@@ -57,10 +65,11 @@ public class QuestionCFGUI {
 	public Boolean okayPress = false;
 	
 	private Variable var;
-	
+	private InferenceEngine infer;
 	static Rule tRule;
+	static Label lblWhyHow;
 	
-	public QuestionCFGUI(Composite CompQ, InferenceEngine Inference, Group questionGroup, String message, Variable var, ScrolledComposite scrolledComposite){
+	public QuestionCFGUI(Composite CompQ, InferenceEngine Inference, Group questionGroup, String message, Variable var, ScrolledComposite scrolledComposite, Rule currentRule, Label whyhow){
 		//HowL= HowListener;
 		//OKL= OKListener;
 		CFL = CFListener;
@@ -69,10 +78,13 @@ public class QuestionCFGUI {
 		howlist  = Inference.getHowList();
 		this.var = var;
 		possibleValues = var.getArrayOfPossibleValues();
-		
+		tRule = currentRule;
+		lblWhyHow = whyhow;
 		addQuestion(message,questionGroup);
 		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite.showControl(questionGroup);
 		CompQ.layout();
+		questionGroup.setFocus();
 		CompQ.update();
 		
 		
@@ -111,7 +123,7 @@ public class QuestionCFGUI {
 					}
 			ans.setItems(possiblevString);
 		}
-		ans.setText("Answer");
+		ans.setText("Choose Value");
 		
 		CFPercentage = UserFactoryGUI.createCFLabel(questionGroup);
 		CFPercentage.setVisible(true);
@@ -145,38 +157,22 @@ public class QuestionCFGUI {
 		WhyListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();	
-				StringBuilder s = new StringBuilder();
-				s.append("\nI am trying to evaluate the rule\n");
-				s.append(tRule != null ? tRule.toString() : "null");
-				s.toString();
-//TODO				lblWhyhow.setText(""+s);
+				displayWhyMessage();
+				//lblWhyhow.setText(""+s);
 			}
 		};
-		HowListener = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-				displayHowMessage(howlist);
-				if(howlist.isEmpty())
-				{
-//TODO					//lblWhyhow.setText("\nA result was not reached\n");
-				}
-				else
-				{
-				
-//TODO					//lblWhyhow.setText("\nThe result was reached by firing these rules in this order\n");
-					for(Rule r : howlist)
-					{
-//TODO						//lblWhyhow.setText(r.toString());
-					}
-				}	
-			}	
-		};
+	
 		OKListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				if(ans.getSelectionIndex() != -1)
 				{
+					Double CFSelection = (double) CFScale.getSelection();
+					CFSelection = CFSelection/100;
 					var.setCurrentValue(possibleValues[ans.getSelectionIndex()]);
+					var.setCertaintyFactor(var.getCurrentValue(),CFSelection);
+					setQueryBoxEnabled(false);
+					
 				}
 			}	
 		};
@@ -200,6 +196,7 @@ public class QuestionCFGUI {
 				gd_lblCf.widthHint = 101;
 				lblCf.setLayoutData(gd_lblCf);
 				lblCf.setText(""+(perspectivevalue));*/
+				
 			}
 		};
 		
@@ -211,11 +208,11 @@ public class QuestionCFGUI {
 		WhyButton.setText("Why?");
 		
 		HowButton = UserFactoryGUI.createHowButton(questionGroup);
-		HowButton.addSelectionListener(HowListener);
 		GridData gd_HowButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_HowButton.widthHint = 54;
 		HowButton.setLayoutData(gd_HowButton);
 		HowButton.setText("How?");
+		HowButton.setVisible(false);
 		
 		OKButton = UserFactoryGUI.createOKButton(questionGroup);
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -233,7 +230,7 @@ public class QuestionCFGUI {
 	{
 		if(howList.isEmpty())
 		{
-			System.out.println("\nA result was not reached\n");
+			lblWhyHow.setText("\nA result was not reached\n");
 		}
 		else
 		{
@@ -241,23 +238,119 @@ public class QuestionCFGUI {
 			System.out.println("\nThe result was reached by firing these rules in this order\n");
 			for(Rule r : howList)
 			{
-				System.out.println(r.toString());
+				lblWhyHow.setText(r.toString());
 			}
 		}
 	}
-	public static void displayWhyMessage()
+	public void displayWhyMessage()
 	{
+		
 		StringBuilder s = new StringBuilder();
-		s.append("\nI am trying to evaluate the rule\n");
+		s.append("\nInference Engine is currently trying to fire Rule " + (tRule.getRuleNum()+1) + ":\n\n");
 		s.append(tRule != null ? tRule.toString() : "null");
-		System.out.println(s.toString());
+		s.append("\nIt needs the value of Variable: \n\n" + var.getName() + " from user.");
+		lblWhyHow.setText(s.toString());
 	}
 	
 	public Boolean getOkayPress()
 	{
 		return okayPress;
 	}
+	
+	public void setQueryBoxEnabled(Boolean enable)
+	{
+		WhyButton.setEnabled(enable);
+		HowButton.setEnabled(enable);
+		OKButton.setEnabled(enable);
+		ans.setEnabled(enable);
+		QforUser.setEnabled(enable);
+		CFPercentage.setEnabled(enable);
+		CFScale.setEnabled(enable);
+	}
 
+public void showAnswer(String message, Group questionGroup){
+		
+		AforUser = UserFactoryGUI.createQuestionLabel(questionGroup);
+		AforUser.setText(message);
+		GridData gd_label2 = new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1);
+		gd_label2.widthHint=303;
+		gd_label2.heightHint=65;
+		AforUser.setLayoutData(gd_label2);
+		
+		
+		ans1 = UserFactoryGUI.createAnswerCombo(questionGroup);
+		GridData gd_combo_11 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1);
+		gd_combo_11.widthHint = 276;
+		ans1.setLayoutData(gd_combo_11);
+		ans1.setVisible(false);
+		
+		ans1.setText("Choose Value");
+		
+		CFPercentage1 = UserFactoryGUI.createCFLabel(questionGroup);
+		CFPercentage1.setVisible(false);
+		//lblCF = UserFactoryGUI.createCFLabel(questionGroup);
+		//lblCF.setVisible(true);
+		
+		CFScale1 = UserFactoryGUI.createCFScale(questionGroup);
+		//scale= UserFactoryGUI.createCFScale(questionGroup);
+		//scale.addSelectionListener(CFScaleL);
+		GridData gd_scale1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
+		gd_scale1.widthHint = 216;
+		CFScale1.setLayoutData(gd_scale1);
+		CFScale1.setVisible(false);
+		//scale.setLayoutData(gd_scale);
+		//scale.setVisible(true);
+		
+		HowListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+				displayHowMessage(howlist);
+				if(howlist.isEmpty())
+				{
+//TODO					//lblWhyhow.setText("\nA result was not reached\n");
+				}
+				else
+				{
+				
+//TODO					//lblWhyhow.setText("\nThe result was reached by firing these rules in this order\n");
+					for(Rule r : howlist)
+					{
+//TODO						//lblWhyhow.setText(r.toString());
+					}
+				}	
+			}	
+		};
+		
+		OKListener1 = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+				
+			}		
+		};
+		
+		
+		
+		WhyButton1 = UserFactoryGUI.createWhyButton(questionGroup);
+		GridData gd_WhyButton1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_WhyButton1.widthHint = 54;
+		WhyButton1.setLayoutData(gd_WhyButton1);
+		WhyButton1.setText("Why?");
+		WhyButton1.setVisible(false);
+		
+		HowButton1 = UserFactoryGUI.createHowButton(questionGroup);
+		HowButton1.addSelectionListener(HowListener);
+		GridData gd_HowButton1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_HowButton1.widthHint = 54;
+		HowButton1.setLayoutData(gd_HowButton1);
+		HowButton1.setText("How?");
+		
+		OKButton1 = UserFactoryGUI.createOKButton(questionGroup);
+		OKButton1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		OKButton1.addSelectionListener(OKListener1);
+		OKButton1.setText("OK");
+	
+	
+}
 }
 
 
