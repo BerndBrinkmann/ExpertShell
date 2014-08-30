@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 
 
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -68,6 +69,8 @@ public class QuestionCFGUI {
 	private InferenceEngine infer;
 	static Rule tRule;
 	static Label lblWhyHow;
+	private Boolean OkayFlag1 =false;
+	private Boolean OkayFlag2 = false;
 	
 	public QuestionCFGUI(Composite CompQ, InferenceEngine Inference, Group questionGroup, String message, Variable var, ScrolledComposite scrolledComposite, Rule currentRule, Label whyhow){
 		//HowL= HowListener;
@@ -114,6 +117,7 @@ public class QuestionCFGUI {
 		gd_combo_1.widthHint = 276;
 		ans.setLayoutData(gd_combo_1);
 		
+		
 		if(possibleValues.length !=0)
 		{
 			String possiblevString[] = new String[possibleValues.length];
@@ -134,17 +138,23 @@ public class QuestionCFGUI {
 		//scale= UserFactoryGUI.createCFScale(questionGroup);
 		//scale.addSelectionListener(CFScaleL);
 		
+				
 		CFScale.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				int perspectivevalue=CFScale.getSelection();
-				GridData gd_lblCf = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-				gd_lblCf.widthHint = 101;
+				GridData gd_lblCf = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+				//gd_lblCf.widthHint = 101;
 				CFPercentage.setLayoutData(gd_lblCf);
-				CFPercentage.setText(""+(perspectivevalue));
+				CFPercentage.setText(Integer.toString(perspectivevalue));
 				//lblCF.setLayoutData(gd_lblCf);
 				//lblCF.setText(""+(perspectivevalue));
+				OkayFlag2=true;
+				if(OkayFlag1 && OkayFlag2)
+				{
+					OKButton.setEnabled(true);
+				}
 			}
 		});
 		GridData gd_scale = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
@@ -181,6 +191,7 @@ public class QuestionCFGUI {
 				e.getSource();
 				//needs to find where varaibles are!!!
 				System.out.println(ans.getText());
+				
 			}	
 		};
 		CFListener = new SelectionAdapter() {
@@ -191,6 +202,7 @@ public class QuestionCFGUI {
 		CFScaleListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				
 				/*int perspectivevalue=scale.getSelection();
 				GridData gd_lblCf = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 				gd_lblCf.widthHint = 101;
@@ -199,6 +211,21 @@ public class QuestionCFGUI {
 				
 			}
 		};
+		
+		ans.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if(ans.getSelectionIndex() != -1)
+				{
+					OkayFlag1=true;
+				}
+				if(OkayFlag1 && OkayFlag2)
+				{
+					OKButton.setEnabled(true);
+				}
+			}
+		});
+		
 		
 		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
 		WhyButton.addSelectionListener(WhyListener);
@@ -218,7 +245,7 @@ public class QuestionCFGUI {
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		OKButton.addSelectionListener(OKListener);
 		OKButton.setText("OK");
-		
+		OKButton.setEnabled(false);	
 		
 		
 		
@@ -267,100 +294,4 @@ public class QuestionCFGUI {
 		CFPercentage.setEnabled(enable);
 		CFScale.setEnabled(enable);
 	}
-
-public void showAnswer(String message, Group questionGroup){
-		
-		AforUser = UserFactoryGUI.createQuestionLabel(questionGroup);
-		AforUser.setText(message);
-		GridData gd_label2 = new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1);
-		gd_label2.widthHint=303;
-		gd_label2.heightHint=65;
-		AforUser.setLayoutData(gd_label2);
-		
-		
-		ans1 = UserFactoryGUI.createAnswerCombo(questionGroup);
-		GridData gd_combo_11 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1);
-		gd_combo_11.widthHint = 276;
-		ans1.setLayoutData(gd_combo_11);
-		ans1.setVisible(false);
-		
-		ans1.setText("Choose Value");
-		
-		CFPercentage1 = UserFactoryGUI.createCFLabel(questionGroup);
-		CFPercentage1.setVisible(false);
-		//lblCF = UserFactoryGUI.createCFLabel(questionGroup);
-		//lblCF.setVisible(true);
-		
-		CFScale1 = UserFactoryGUI.createCFScale(questionGroup);
-		//scale= UserFactoryGUI.createCFScale(questionGroup);
-		//scale.addSelectionListener(CFScaleL);
-		GridData gd_scale1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
-		gd_scale1.widthHint = 216;
-		CFScale1.setLayoutData(gd_scale1);
-		CFScale1.setVisible(false);
-		//scale.setLayoutData(gd_scale);
-		//scale.setVisible(true);
-		
-		HowListener = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-				displayHowMessage(howlist);
-				if(howlist.isEmpty())
-				{
-//TODO					//lblWhyhow.setText("\nA result was not reached\n");
-				}
-				else
-				{
-				
-//TODO					//lblWhyhow.setText("\nThe result was reached by firing these rules in this order\n");
-					for(Rule r : howlist)
-					{
-//TODO						//lblWhyhow.setText(r.toString());
-					}
-				}	
-			}	
-		};
-		
-		OKListener1 = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-				
-			}		
-		};
-		
-		
-		
-		WhyButton1 = UserFactoryGUI.createWhyButton(questionGroup);
-		GridData gd_WhyButton1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_WhyButton1.widthHint = 54;
-		WhyButton1.setLayoutData(gd_WhyButton1);
-		WhyButton1.setText("Why?");
-		WhyButton1.setVisible(false);
-		
-		HowButton1 = UserFactoryGUI.createHowButton(questionGroup);
-		HowButton1.addSelectionListener(HowListener);
-		GridData gd_HowButton1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_HowButton1.widthHint = 54;
-		HowButton1.setLayoutData(gd_HowButton1);
-		HowButton1.setText("How?");
-		
-		OKButton1 = UserFactoryGUI.createOKButton(questionGroup);
-		OKButton1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		OKButton1.addSelectionListener(OKListener1);
-		OKButton1.setText("OK");
-	
-	
 }
-}
-
-
-
-
-
-
-
-	
-	
-	
-	
-

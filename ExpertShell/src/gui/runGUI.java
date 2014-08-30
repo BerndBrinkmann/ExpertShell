@@ -149,6 +149,7 @@ public class runGUI extends Composite {
     private Boolean listChangeFlag = false;
     private String variableListLabel = "";
     private Variable selectedVariable;
+    private Value selectedValue;
     private String selectedVariableString;
     private Test_Case test;
     private Label lblSelectTargetVariable;
@@ -223,10 +224,16 @@ public class runGUI extends Composite {
 				public void widgetSelected(SelectionEvent e) {
 					if(targetvariablecombo.getSelectionIndex() != -1)
 					{
-						selectedVariable = KBase.getConsequentVariablesArray()[targetvariablecombo.getSelectionIndex()];
-					}
+						if(KBase.getBCConsequents()[targetvariablecombo.getSelectionIndex()] instanceof Consequent)
+						{
+						selectedVariable = KBase.getBCConsequents()[targetvariablecombo.getSelectionIndex()].getVariable();
+						selectedValue = KBase.getBCConsequents()[targetvariablecombo.getSelectionIndex()].getValue();
+						}
+						else{
+							selectedVariable = KBase.getConsequentVariablesArray()[targetvariablecombo.getSelectionIndex()];	
+						}	
 				}
-			});
+			}});
 			targetvariablecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			targetvariablecombo.setVisible(true);
 			this.getTargetVariableCombo();
@@ -264,8 +271,10 @@ public class runGUI extends Composite {
 			if (btnDefault.getSelection()==true){
 			btnForwardChaining.setSelection(false);
 			btnBackwardChaining.setSelection(false);
-			targetvariablecombo.setVisible(false);
-			lblSelectTargetVariable.setVisible(false);
+			targetvariablecombo.setVisible(true);
+			lblSelectTargetVariable.setVisible(true);
+			lblSelectTargetVariable.setText("Select Target Variable");
+			getTargetVariableCombo();
 			}
 		}
 	});
@@ -277,8 +286,10 @@ public class runGUI extends Composite {
 			if(btnForwardChaining.getSelection()==true){
 			btnDefault.setSelection(false);
 			btnBackwardChaining.setSelection(false);
-			targetvariablecombo.setVisible(false);
-			lblSelectTargetVariable.setVisible(false);
+			targetvariablecombo.setVisible(true);
+			lblSelectTargetVariable.setVisible(true);
+			lblSelectTargetVariable.setText("Select Target Variable");
+			getTargetVariableCombo();
 			}
 		}
 	});
@@ -293,6 +304,8 @@ public class runGUI extends Composite {
 			btnForwardChaining.setSelection(false);
 			targetvariablecombo.setVisible(true);
 			lblSelectTargetVariable.setVisible(true);
+			lblSelectTargetVariable.setText("Select Target");
+			getTargetConsequentCombo();
 			}
 		}
 	});
@@ -495,6 +508,7 @@ public class runGUI extends Composite {
 				setRCMethod(false);
 				Variable result = Inference.solveBackwardChaining(selectedVariable);
 				HowList = Inference.getHowList();
+				AnswerGUI showAnswer = new AnswerGUI(CompQ, result, scrolledComposite , lblWhyhow, Inference.getHowList(), KBase);
 				IO.displayResults(result, Inference.getHowList(), KBase);
 				setRCMethod(true);
 				btnRun.setText("Run");
@@ -733,7 +747,25 @@ public class runGUI extends Composite {
 //			System.out.println("runs get target var combo");
 	}
 
-	
+	public void getTargetConsequentCombo()
+	{
+	if(KBase.getBCConsequents().length !=0)
+		{
+			String consequentArrayString[] = new String[KBase.getBCConsequents().length];
+			for (int i=0; i<consequentArrayString.length; i++)
+			{
+				if(KBase.getBCConsequents()[i].getVariable() instanceof NumericVariable)
+				{			
+					consequentArrayString[i]= new String (KBase.getBCConsequents()[i].getVariableAsString() + " = " +KBase.getBCConsequents()[i].getValueAsString());
+				}
+				else
+				{
+					consequentArrayString[i]= new String (KBase.getBCConsequents()[i].getVariableAsString() + " is " +KBase.getBCConsequents()[i].getValueAsString());
+				}
+			}
+			targetvariablecombo.setItems(consequentArrayString);
+		}
+	}
 	
 	public Button getBtnBackwardChaining() {
 		return btnBackwardChaining;
@@ -813,7 +845,7 @@ public class runGUI extends Composite {
 			}
 			else
 			{
-				QuestionGUI askQuestion = new QuestionGUI(CompQ, Inference,questionGroup,"Input a value for "+var.getName(), var,scrolledComposite);
+				QuestionGUI askQuestion = new QuestionGUI(CompQ, Inference,questionGroup,"Input a value for "+var.getName(), var,scrolledComposite, rule, lblWhyhow);
 			}
 		}
 		else
@@ -824,7 +856,7 @@ public class runGUI extends Composite {
 			}
 			else
 			{
-				QuestionGUI askQuestion = new QuestionGUI(CompQ, Inference,questionGroup,var.getQueryPrompt(), var,scrolledComposite);
+				QuestionGUI askQuestion = new QuestionGUI(CompQ, Inference,questionGroup,var.getQueryPrompt(), var,scrolledComposite, rule, lblWhyhow);
 			}
 		}
 	CompQ.update();

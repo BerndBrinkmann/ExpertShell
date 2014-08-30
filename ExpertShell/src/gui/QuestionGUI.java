@@ -49,18 +49,26 @@ public class QuestionGUI {
 	public Boolean okayPress = false;
 	
 	static Rule tRule;
+	private Variable var;
+	private InferenceEngine infer;
+	static Label lblWhyHow;
 	
-	public QuestionGUI(Composite CompQ, InferenceEngine Inference, Group questionGroup, String message, Variable var, ScrolledComposite scrolledComposite){
+	public QuestionGUI(Composite CompQ, InferenceEngine Inference, Group questionGroup, String message, Variable var, ScrolledComposite scrolledComposite, Rule currentRule, Label whyhow){
 		WhyL= WhyListener;
 		HowL= HowListener;
 		OKL= OKListener;
 
 		AnswerComboL= AnswerComboListener;
 		howlist  = Inference.getHowList();
+		this.var = var;
 		possibleValues = var.getArrayOfPossibleValues();
+		tRule = currentRule;
+		lblWhyHow = whyhow;
 		addQuestion(message,questionGroup);
 		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite.showControl(questionGroup);
 		CompQ.layout();
+		questionGroup.setFocus();
 		CompQ.update();
 		while(var.currentValue == null)
 		{
@@ -94,7 +102,7 @@ public class QuestionGUI {
 					}
 			ans.setItems(possiblevString);
 		}
-		ans.setText("Answer");
+		ans.setText("Choose Value");
 		
 		CFPercentage = UserFactoryGUI.createCFLabel(questionGroup);
 		CFPercentage.setVisible(false);
@@ -125,24 +133,6 @@ public class QuestionGUI {
 		CFScale.setVisible(false);
 		//scale.setLayoutData(gd_scale);
 		//scale.setVisible(false);
-		
-		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
-		WhyButton.addSelectionListener(WhyL);
-		GridData gd_WhyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_WhyButton.widthHint = 54;
-		WhyButton.setLayoutData(gd_WhyButton);
-		WhyButton.setText("Why?");
-		
-		HowButton = UserFactoryGUI.createHowButton(questionGroup);
-		HowButton.addSelectionListener(HowL);
-		GridData gd_HowButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_HowButton.widthHint = 54;
-		HowButton.setLayoutData(gd_HowButton);
-		HowButton.setText("How?");
-		
-		OKButton = UserFactoryGUI.createOKButton(questionGroup);
-		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		OKButton.addSelectionListener(OKL);
 		WhyListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();	
@@ -185,13 +175,33 @@ public class QuestionGUI {
 				System.out.println(ans.getText());
 			}	
 		};
+
+
+		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
+		WhyButton.addSelectionListener(WhyL);
+		GridData gd_WhyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_WhyButton.widthHint = 54;
+		WhyButton.setLayoutData(gd_WhyButton);
+		WhyButton.setText("Why?");
+		
+		HowButton = UserFactoryGUI.createHowButton(questionGroup);
+		HowButton.addSelectionListener(HowL);
+		GridData gd_HowButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_HowButton.widthHint = 54;
+		HowButton.setLayoutData(gd_HowButton);
+		HowButton.setText("How?");
+		
+		OKButton = UserFactoryGUI.createOKButton(questionGroup);
+		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		OKButton.addSelectionListener(OKL);
+	
 		
 	}
 	public static void displayHowMessage(ArrayList<Rule> howList)
 	{
 		if(howList.isEmpty())
 		{
-			System.out.println("\nA result was not reached\n");
+			lblWhyHow.setText("\nA result was not reached\n");
 		}
 		else
 		{
@@ -199,7 +209,7 @@ public class QuestionGUI {
 			System.out.println("\nThe result was reached by firing these rules in this order\n");
 			for(Rule r : howList)
 			{
-				System.out.println(r.toString());
+				lblWhyHow.setText(r.toString());
 			}
 		}
 	}
@@ -209,12 +219,13 @@ public class QuestionGUI {
 		return okayPress;
 	}
 	
-	public static void displayWhyMessage()
+	public  void displayWhyMessage()
 	{
 		StringBuilder s = new StringBuilder();
-		s.append("\nI am trying to evaluate the rule\n");
+		s.append("\nInference Engine is currently trying to fire Rule " + (tRule.getRuleNum()+1) + ":\n\n");
 		s.append(tRule != null ? tRule.toString() : "null");
-		System.out.println(s.toString());
+		s.append("\nIt needs the value of Variable: \n\n" + var.getName() + " from user.");
+		lblWhyHow.setText(s.toString());
 	}
 
 }

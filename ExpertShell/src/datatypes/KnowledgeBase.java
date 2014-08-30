@@ -327,4 +327,19 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		
 		target=tgt;
 	}
+	
+	public Consequent[] getBCConsequents()
+	{
+	ArrayList<Consequent> consequents = new ArrayList<Consequent>();
+	
+	for(Rule rule : getRuleArray())
+	{
+		for(Consequent c : rule.getConsequentArray())
+		{
+			if(!consequents.contains(c)&& c !=null)
+				consequents.add(c);
+		}
+	}
+	return consequents.toArray(new Consequent[consequents.size()]);
+	}
 }

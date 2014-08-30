@@ -103,6 +103,12 @@ public class InferenceEngine implements Serializable {
 	
 	public Variable solveBackwardChaining(Variable targetVar, Value targetVal)
 	{
+		if(targetVar == null || targetVal == null)
+		{
+			System.out.println("Operation Cancelled by User");
+			return null;
+		}
+		
 		howList = new ArrayList<Rule>();
 		
 		Consequent cons = new Consequent(targetVar,targetVal);
