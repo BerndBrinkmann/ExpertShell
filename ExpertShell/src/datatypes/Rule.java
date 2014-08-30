@@ -1,7 +1,11 @@
 package datatypes;
 
 import gui.MainScreen;
+
 import gui.IO;
+
+
+import gui.runGUI;
 
 
 import java.io.Serializable;
@@ -26,8 +30,7 @@ public class Rule extends getSetKBSettings implements Serializable
 	protected Boolean fired = false;
 	protected int priority = 1;
 	protected int ruleNum;
-	protected MainScreen mainsc;
-	
+
 	
 	UncertaintyManagement uncertaintyType = UncertaintyManagement.NONE;
 	
@@ -47,9 +50,8 @@ public class Rule extends getSetKBSettings implements Serializable
 		}
 	}
 
-	public Rule(MainScreen mains)
+	public Rule()
 	{
-		mainsc = mains;
 		antecedents = new ArrayList<Antecedent>();
 		consequents  = new ArrayList<Consequent>();
 	}
@@ -164,15 +166,21 @@ public class Rule extends getSetKBSettings implements Serializable
 	}
 	
 	//returns the result of evaluating the required antecedents in a rule and also fires if required
+
 	public Boolean evaluate(UncertaintyManagement umethod, InferenceEngine Inference, KnowledgeBase KBase)
+
 	{
 		//evaluate all antecedents in the case of Bayesian and Certainty factor reasoning. Otherwise minimise user interaction
 		switch(umethod)
 		{
 			case BAYESIAN:
+
 				return evaluateAll(umethod, Inference, KBase);
+
 			case CF:
+
 				return evaluateAll(umethod, Inference, KBase);
+
 			default:
 				break;
 		}
@@ -202,7 +210,9 @@ public class Rule extends getSetKBSettings implements Serializable
 					 if(var.isUserInput())
 					 {
 						//get the input from the user
+
 						//var = IO.AskUserForInput(var,this, KBase, mainsc.composite.CompQ, mainsc.composite.scrolledComposite_1, mainsc.composite.scrolledComposite, mainsc.Inference);
+
 						
 						 KBase.rungui.AskUserForInput(var,this,KBase,Inference);
 						 
@@ -245,8 +255,10 @@ public class Rule extends getSetKBSettings implements Serializable
 					 if(var.isUserInput())
 					 {
 						//get the input from the user
+
 						//var = IO.AskUserForInput(var,this, mainsc.KBase, mainsc.composite.CompQ, mainsc.composite.scrolledComposite_1, mainsc.composite.scrolledComposite, mainsc.Inference);
 						KBase.rungui.AskUserForInput(var,this,KBase,Inference);
+
 						//get the certainty if required
 						if(umethod == UncertaintyManagement.CF)
 						{
@@ -272,8 +284,11 @@ public class Rule extends getSetKBSettings implements Serializable
 		return false;
 	}
 	
+	
 	//returns the result of evaluating the required antecedents in a rule and also fires if required
+
 	public Boolean evaluateAll(UncertaintyManagement umethod, InferenceEngine Inference, KnowledgeBase KBase)
+
 		{
 			// there must be at least a single antecedent to evaluate
 			Boolean result = false;
@@ -297,8 +312,10 @@ public class Rule extends getSetKBSettings implements Serializable
 						 if(var.isUserInput())
 						 {
 							//get the input from the user
+
 							 //var = IO.AskUserForInput(var,this, mainsc.KBase, mainsc.composite.CompQ, mainsc.composite.scrolledComposite_1, mainsc.composite.scrolledComposite, mainsc.Inference);
 							 var = KBase.rungui.AskUserForInput(var,this,KBase,Inference);
+
 							//var = ImportExport.userSetVaraible(var,this);
 							
 							//get the certainty if required				TODO added this condition

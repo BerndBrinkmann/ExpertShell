@@ -1,11 +1,10 @@
 package datatypes;
 
-import gui.runGUI;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import datatypes.Variable;
+import gui.runGUI;
 //
 public class KnowledgeBase extends getSetKBSettings implements Serializable 
 {
@@ -25,8 +24,9 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 
 	public void setRunGui(runGUI rung)
 	{
-		rungui = rung;
+		rungui=rung;
 	}
+	
 	public KnowledgeBase(String name)
 	{
 		Name = name;
