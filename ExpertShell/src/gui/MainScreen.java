@@ -160,16 +160,17 @@ public class MainScreen  implements Serializable {
 			}
 		}
 		//System.exit(0);
-		//display.dispose();
-		shlExpertSystemShell.dispose();
-		System.exit(0);
-		/*shlExpertSystemShell.addDisposeListener(new DisposeListener(){
+		display.dispose();
+		shlExpertSystemShell.addDisposeListener(new DisposeListener(){
 			public void widgetDisposed(DisposeEvent e)
 			{
 				System.out.println("trying to exit now");
 				System.exit(0);
 			}
-		});*/
+		});
+		shlExpertSystemShell.dispose();
+		System.exit(0);
+		
 	}
 
 	/**
@@ -273,6 +274,16 @@ public class MainScreen  implements Serializable {
 		composite = new runGUI(tabFolder, SWT.NONE,KBase,shlExpertSystemShell, display);
 		tbtmUserInterface.setControl(composite);
 		KBase.setRunGui(composite);
+		
+		composite.addDisposeListener(new DisposeListener(){
+			public void widgetDisposed(DisposeEvent e)
+			{
+				composite.dispose();
+				System.out.println("trying to exit now");
+				System.exit(0);
+			}
+		});
+		
 		
 		MenuItem mntmOpenKnowledgeBase = new MenuItem(menu_1, SWT.CASCADE);
 		mntmOpenKnowledgeBase.setText("Open Knowledge Base");

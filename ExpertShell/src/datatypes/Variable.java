@@ -252,8 +252,12 @@ public class Variable implements Serializable
 		sb.append("\n");
 		for(int i = 0; i < possibleValues.size(); i++)
 		{
-			sb.append("'"+possibleValues.get(i).getName()+"'("+ String.format("%.2f", getCertaintyFactor(i)*100) +"%), \n");
+			if(getCertaintyFactor(i) !=0)
+			{
+				sb.append("'"+possibleValues.get(i).getName()+"' with "+ String.format("%.2f", getCertaintyFactor(i)*100) +"% Certainty \n");
+			}
 		}
+		sb.append("\n[Note: Results with zero certainty(0%) are not shown]");
 		
 		
 		return sb.toString();

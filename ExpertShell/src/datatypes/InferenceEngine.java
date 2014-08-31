@@ -26,6 +26,7 @@ public class InferenceEngine implements Serializable {
 
     KnowledgeBase KBase;
     runGUI theRunGUI;
+    public Boolean stopFlag = false;
 
 	protected ArrayList<Rule> howList;
 	
@@ -72,10 +73,15 @@ public class InferenceEngine implements Serializable {
 				else
 				{
 
+					//stopFlag = rule.evaluate(KBase.getUncertaintyMethod(),this,KBase);
 					if(rule.evaluate(KBase.getUncertaintyMethod(),this,KBase))
 
 					{
 						howList.add(rule);
+					}
+					else
+					{
+						return null;
 					}
 				}
 			}
@@ -92,7 +98,7 @@ public class InferenceEngine implements Serializable {
 	public Variable solveBackwardChaining(Variable selectedVariable)
 	{
 		Variable targetVar = selectedVariable;
-		Value targetVal = IO.getValue("Input a value to search for", targetVar.getArrayOfPossibleValues());
+		Value targetVal = IO.getValue("Input a value to search for111", targetVar.getArrayOfPossibleValues());
 		if(targetVar == null || targetVal == null)
 		{
 			System.out.println("Operation Cancelled by User");

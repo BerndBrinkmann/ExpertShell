@@ -71,10 +71,12 @@ public class QuestionCFGUI {
 	static Label lblWhyHow;
 	private Boolean OkayFlag1 =false;
 	private Boolean OkayFlag2 = false;
+	static ScrolledComposite scrolledComposite_1;
 	
-	public QuestionCFGUI(Composite CompQ, InferenceEngine Inference, Group questionGroup, String message, Variable var, ScrolledComposite scrolledComposite, Rule currentRule, Label whyhow){
+	public QuestionCFGUI(Composite CompQ, InferenceEngine Inference, Group questionGroup, String message, Variable var, ScrolledComposite scrolledComposite, Rule currentRule, Label whyhow, ScrolledComposite ScrolledComposite_1){
 		//HowL= HowListener;
 		//OKL= OKListener;
+		scrolledComposite_1 = ScrolledComposite_1;
 		CFL = CFListener;
 		CFScaleL = CFScaleListener;
 		AnswerComboL= AnswerComboListener;
@@ -277,6 +279,9 @@ public class QuestionCFGUI {
 		s.append(tRule != null ? tRule.toString() : "null");
 		s.append("\nIt needs the value of Variable: \n\n" + var.getName() + " from user.");
 		lblWhyHow.setText(s.toString());
+		scrolledComposite_1.setMinSize(lblWhyHow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite_1.layout();
+		scrolledComposite_1.update();
 	}
 	
 	public Boolean getOkayPress()

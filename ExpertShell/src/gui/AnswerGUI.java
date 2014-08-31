@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 
 
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -83,8 +84,10 @@ public class AnswerGUI {
 	private InferenceEngine infer;
 	static Rule tRule;
 	static Label lblWhyHow;
+	static ScrolledComposite ScrolledComposite_1;
+	static KnowledgeBase KBase;
 	
-	public AnswerGUI(Composite CompQ, Variable var, ScrolledComposite scrolledComposite , Label whyhow, ArrayList<Rule> howList, KnowledgeBase kb){
+	public AnswerGUI(Composite CompQ, Variable var, ScrolledComposite scrolledComposite , Label whyhow, ArrayList<Rule> howList, KnowledgeBase kb, ScrolledComposite scrolledComposite_1){
 		
 		Group questionGroup;
 		questionGroup = UserFactoryGUI.createQuestionGroup(CompQ);
@@ -93,6 +96,7 @@ public class AnswerGUI {
 		
 		//HowL= HowListener;
 		//OKL= OKListener;
+		KBase = kb;
 		CFL = CFListener;
 		CFScaleL = CFScaleListener;
 		AnswerComboL= AnswerComboListener;
@@ -104,10 +108,15 @@ public class AnswerGUI {
 		showAnswer(questionGroup, message);
 		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		scrolledComposite.showControl(questionGroup);
+		//scrolledComposite_1.showControl(questionGroup);
+		
 		CompQ.layout();
 		questionGroup.setFocus();
 		CompQ.update();
-		
+		ScrolledComposite_1 = scrolledComposite_1;
+		scrolledComposite_1.setMinSize(lblWhyHow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite_1.layout();
+		scrolledComposite_1.update();
 		
 		/*while(var.currentValue == null)
 		{
@@ -121,19 +130,28 @@ public class AnswerGUI {
 	
 	public static void displayHowMessage(ArrayList<Rule> howList)
 	{
+		
+		
 		if(howList.isEmpty())
 		{
 			lblWhyHow.setText("\nA result was not reached\n");
 		}
 		else
 		{
-		
-			System.out.println("\nThe result was reached by firing these rules in this order\n");
+			StringBuilder sb = new StringBuilder();
+			sb.append("Rules were fired in the following order: \n\n");
+			//System.out.println("\nThe result was reached by firing these rules in this order\n");
 			for(Rule r : howList)
 			{
-				lblWhyHow.setText(r.toString());
+				sb.append("Rule " + (r.getRuleNum()+1)+ "\n");
+				sb.append(r.toString());
+				sb.append("\n");
 			}
+			lblWhyHow.setText(sb.toString());
 		}
+		ScrolledComposite_1.setMinSize(lblWhyHow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		ScrolledComposite_1.layout();
+		ScrolledComposite_1.update();
 	}
 	public void displayWhyMessage()
 	{
@@ -165,7 +183,7 @@ public void showAnswer(Group questionGroup, String message){
 		
 		
 	lblAns= UserFactoryGUI.createQuestionLabel(questionGroup);
-	lblAns.setText("Evaluation Complete \n");
+	lblAns.setText("[Evaluation Complete] \n");
 	GridData gd_label3 = new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1);
 	gd_label3.widthHint=303;
 	gd_label3.heightHint=15;

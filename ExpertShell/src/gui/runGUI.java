@@ -73,6 +73,7 @@ import org.eclipse.swt.custom.StyledText;
 
 
 
+
 //import STUART.ADT.Rule;
 import gui.IO;
 
@@ -169,6 +170,7 @@ public class runGUI extends Composite {
 	public SelectionAdapter CFScaleListener;
 	private GridData gd_SC_QuickStart;
 	private Boolean okayFlag;
+	public static Variable resultVar;
 	
 	static Display display;
     
@@ -183,7 +185,6 @@ public class runGUI extends Composite {
 		shlExpertSystemShell = sh;
 		KBase = kb;
 		//Inference = MainScreen.createInferenceEngine(KBase);	
-		Inference = new InferenceEngine(KBase);
 		display = disp;
 	
 	this.addControlListener(new ControlAdapter() {
@@ -430,6 +431,7 @@ public class runGUI extends Composite {
 				//lblCf.setVisible(false);
 				btnCertainityFactor.setSelection(false);
 				btnBayesianReasoning.setSelection(false);
+				KBase.setUncertaintyMethod(KBSettings.UncertaintyManagement.NONE);
 	}
 		}
 	});
@@ -444,6 +446,7 @@ public class runGUI extends Composite {
 				//lblCf.setVisible(false);
 				btnCertainityFactor.setSelection(false);
 				button.setSelection(false);
+				KBase.setUncertaintyMethod(KBSettings.UncertaintyManagement.BAYESIAN);
 	}
 		}
 	});
@@ -459,6 +462,7 @@ public class runGUI extends Composite {
 				//lblCf.setVisible(true);
 				button.setSelection(false);
 				btnBayesianReasoning.setSelection(false);
+				KBase.setUncertaintyMethod(KBSettings.UncertaintyManagement.CF);
 	}	
 		}
 	});
@@ -469,9 +473,11 @@ public class runGUI extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			e.getSource();
 			
-			Inference = new InferenceEngine(KBase);
+			
 			if(btnRun.getText().equals("Run"))
 			{
+			Inference = new InferenceEngine(KBase);
+			Inference.stopFlag = false;
 			resetVariablecValues();
 			for(Control i: CompQ.getChildren())
 			{
@@ -497,8 +503,11 @@ public class runGUI extends Composite {
 				setRCMethod(false);
 				Variable result = Inference.solveForwardChaining(selectedVariable);
 				HowList = Inference.getHowList();
-				AnswerGUI showAnswer = new AnswerGUI(CompQ, result, scrolledComposite , lblWhyhow, Inference.getHowList(), KBase);
-				IO.displayResults(result, Inference.getHowList(), KBase);
+				if(result != null)
+				{
+					AnswerGUI showAnswer = new AnswerGUI(CompQ, result, scrolledComposite , lblWhyhow, Inference.getHowList(), KBase, scrolledComposite_1);	
+				}
+				//IO.displayResults(result, Inference.getHowList(), KBase);
 				setRCMethod(true);
 				btnRun.setText("Run");
 		    	
@@ -506,10 +515,13 @@ public class runGUI extends Composite {
 				KBase.validate();
 				//grpSelectRunMethod.setEnabled(false);
 				setRCMethod(false);
-				Variable result = Inference.solveBackwardChaining(selectedVariable);
+				Variable result = Inference.solveBackwardChaining(selectedVariable, selectedValue);
 				HowList = Inference.getHowList();
-				AnswerGUI showAnswer = new AnswerGUI(CompQ, result, scrolledComposite , lblWhyhow, Inference.getHowList(), KBase);
-				IO.displayResults(result, Inference.getHowList(), KBase);
+				if(result != null)
+				{
+					AnswerGUI showAnswer = new AnswerGUI(CompQ, result, scrolledComposite , lblWhyhow, Inference.getHowList(), KBase, scrolledComposite_1);	
+				}
+				//IO.displayResults(result, Inference.getHowList(), KBase);
 				setRCMethod(true);
 				btnRun.setText("Run");
 		    }
@@ -521,7 +533,9 @@ public class runGUI extends Composite {
 			i.dispose();
 		}
 		btnRun.setText("Run");
-		Inference = new InferenceEngine(null);
+		Inference.stopFlag = true;
+		resultVar = null;
+		//Inference = null;
 		}
 			// this should not be handled by run button, KBase needs to tell it when to ask a new question
 		    /*
@@ -799,7 +813,7 @@ public class runGUI extends Composite {
 		button.setEnabled(enable);	
 	}
 	
-	public static Variable AskUserForInput(Variable var, Rule rule, KnowledgeBase kb,InferenceEngine Inference)
+	public static void AskUserForInput(Variable var, Rule rule, KnowledgeBase kb,InferenceEngine Inference)
 	{
 	
 	Group questionGroup;
@@ -840,23 +854,23 @@ public class runGUI extends Composite {
 		{
 			if (kb.getUncertaintyMethod()==KBSettings.UncertaintyManagement.CF)
 			{
-				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference,questionGroup,"Input a value for "+var.getName(), var, scrolledComposite, rule,lblWhyhow);
+				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference,questionGroup,"Input a value for "+var.getName(), var, scrolledComposite, rule,lblWhyhow, scrolledComposite_1);
 				//((Display) this).sleep();
 			}
 			else
 			{
-				QuestionGUI askQuestion = new QuestionGUI(CompQ, Inference,questionGroup,"Input a value for "+var.getName(), var,scrolledComposite, rule, lblWhyhow);
+				QuestionGUI askQuestion = new QuestionGUI(CompQ, Inference,questionGroup,"Input a value for "+var.getName(), var,scrolledComposite, rule, lblWhyhow,scrolledComposite_1);
 			}
 		}
 		else
 		{
 			if (kb.getUncertaintyMethod()==KBSettings.UncertaintyManagement.CF)
 			{
-				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference,questionGroup,var.getQueryPrompt(), var,scrolledComposite, rule,lblWhyhow);
+				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference,questionGroup,var.getQueryPrompt(), var,scrolledComposite, rule,lblWhyhow,scrolledComposite_1);
 			}
 			else
 			{
-				QuestionGUI askQuestion = new QuestionGUI(CompQ, Inference,questionGroup,var.getQueryPrompt(), var,scrolledComposite, rule, lblWhyhow);
+				QuestionGUI askQuestion = new QuestionGUI(CompQ, Inference,questionGroup,var.getQueryPrompt(), var,scrolledComposite, rule, lblWhyhow,scrolledComposite_1);
 			}
 		}
 	CompQ.update();
@@ -865,8 +879,16 @@ public class runGUI extends Composite {
            display.sleep ();
      }
      display.wake();
-
-	return var;
+     if (Inference.stopFlag)
+     {
+    	 resultVar = null;
+    	 
+     }
+     else
+     {
+    	 resultVar = var;
+     }
+	//return var;
 	}
 	
 	@Override

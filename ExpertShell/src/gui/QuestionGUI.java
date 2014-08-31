@@ -52,8 +52,10 @@ public class QuestionGUI {
 	private Variable var;
 	private InferenceEngine infer;
 	static Label lblWhyHow;
+	static ScrolledComposite scrolledComposite_1;
 	
-	public QuestionGUI(Composite CompQ, InferenceEngine Inference, Group questionGroup, String message, Variable var, ScrolledComposite scrolledComposite, Rule currentRule, Label whyhow){
+	public QuestionGUI(Composite CompQ, InferenceEngine Inference, Group questionGroup, String message, Variable var, ScrolledComposite scrolledComposite, Rule currentRule, Label whyhow,ScrolledComposite ScrolledComposite_1){
+		scrolledComposite_1 = ScrolledComposite_1;
 		WhyL= WhyListener;
 		HowL= HowListener;
 		OKL= OKListener;
@@ -178,14 +180,14 @@ public class QuestionGUI {
 
 
 		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
-		WhyButton.addSelectionListener(WhyL);
+		WhyButton.addSelectionListener(WhyListener);
 		GridData gd_WhyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_WhyButton.widthHint = 54;
 		WhyButton.setLayoutData(gd_WhyButton);
 		WhyButton.setText("Why?");
 		
 		HowButton = UserFactoryGUI.createHowButton(questionGroup);
-		HowButton.addSelectionListener(HowL);
+		HowButton.addSelectionListener(HowListener);
 		GridData gd_HowButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_HowButton.widthHint = 54;
 		HowButton.setLayoutData(gd_HowButton);
@@ -193,7 +195,7 @@ public class QuestionGUI {
 		
 		OKButton = UserFactoryGUI.createOKButton(questionGroup);
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		OKButton.addSelectionListener(OKL);
+		OKButton.addSelectionListener(OKListener);
 	
 		
 	}
@@ -226,6 +228,9 @@ public class QuestionGUI {
 		s.append(tRule != null ? tRule.toString() : "null");
 		s.append("\nIt needs the value of Variable: \n\n" + var.getName() + " from user.");
 		lblWhyHow.setText(s.toString());
+		scrolledComposite_1.setMinSize(lblWhyHow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite_1.layout();
+		scrolledComposite_1.update();
 	}
 
 }

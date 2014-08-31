@@ -16,7 +16,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	protected getSetKBSettings getsetSettings;
 	protected KBSettings kbSettings = new KBSettings();
 	protected KBSettings.InferenceType inferenceType;
-//	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
+	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
 	protected KBSettings.ConflictResolution conflictResolution = KBSettings.ConflictResolution.NONE;
 	protected Variable VarTemp;
 	protected Variable target;

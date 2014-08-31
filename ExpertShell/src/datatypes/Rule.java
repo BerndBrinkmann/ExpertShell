@@ -215,8 +215,14 @@ public class Rule extends getSetKBSettings implements Serializable
 
 						
 						 KBase.rungui.AskUserForInput(var,this,KBase,Inference);
-						 
-						 
+						 if(KBase.rungui.resultVar == null)
+						 {
+							return false; 
+						 }
+						 else
+						 {
+							 
+						 }
 						 
 						 //get the certainty if required
 						if(umethod == KBSettings.UncertaintyManagement.CF)
@@ -258,7 +264,14 @@ public class Rule extends getSetKBSettings implements Serializable
 
 						//var = IO.AskUserForInput(var,this, mainsc.KBase, mainsc.composite.CompQ, mainsc.composite.scrolledComposite_1, mainsc.composite.scrolledComposite, mainsc.Inference);
 						KBase.rungui.AskUserForInput(var,this,KBase,Inference);
-
+						if(KBase.rungui.resultVar == null)
+						 {
+							return false; 
+						 }
+						 else
+						 {
+							 
+						 }
 						//get the certainty if required
 						if(umethod == UncertaintyManagement.CF)
 						{
@@ -314,8 +327,15 @@ public class Rule extends getSetKBSettings implements Serializable
 							//get the input from the user
 
 							 //var = IO.AskUserForInput(var,this, mainsc.KBase, mainsc.composite.CompQ, mainsc.composite.scrolledComposite_1, mainsc.composite.scrolledComposite, mainsc.Inference);
-							 var = KBase.rungui.AskUserForInput(var,this,KBase,Inference);
-
+							 KBase.rungui.AskUserForInput(var,this,KBase,Inference);
+							 if(KBase.rungui.resultVar == null)
+							 {
+								return false; 
+							 }
+							 else
+							 {
+								 
+							 }
 							//var = ImportExport.userSetVaraible(var,this);
 							
 							//get the certainty if required				TODO added this condition
