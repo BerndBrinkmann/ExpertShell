@@ -20,7 +20,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	protected KBSettings.ConflictResolution conflictResolution = KBSettings.ConflictResolution.NONE;
 	protected Variable VarTemp;
 	protected Variable target;
-	protected runGUI rungui;
+	public runGUI rungui;
 
 	public void setRunGui(runGUI rung)
 	{

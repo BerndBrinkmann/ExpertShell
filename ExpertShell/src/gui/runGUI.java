@@ -117,6 +117,8 @@ import gui.NoRun;
 import gui.NoRunV;
 import test.Test_Case;
 import datatypes.*;
+import org.eclipse.swt.events.MouseTrackAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 public class runGUI extends Composite {
 	protected static Shell shlExpertSystemShell;
@@ -171,6 +173,7 @@ public class runGUI extends Composite {
 	private GridData gd_SC_QuickStart;
 	private Boolean okayFlag;
 	public static Variable resultVar;
+	public Variable result;
 	
 	static Display display;
     
@@ -259,10 +262,32 @@ public class runGUI extends Composite {
 	btnForwardChaining = new Button(grpSelectRunMethod, SWT.RADIO);
 	btnForwardChaining.setBounds(10, 40, 145, 16);
 	btnForwardChaining.setText("Forward Chaining");
+	btnForwardChaining.setSelection(false);
 	
 	btnBackwardChaining = new Button(grpSelectRunMethod, SWT.RADIO);
 	btnBackwardChaining.setBounds(10, 62, 145, 16);
 	btnBackwardChaining.setText("Backward Chaining");
+	btnBackwardChaining.setSelection(false);
+	
+	System.out.println(kb.getInferenceMethod());
+	switch(kb.getInferenceMethod())
+	{
+	case F_CHAINING:
+		btnForwardChaining.setSelection(true);
+		btnDefault.setSelection(false);
+		btnBackwardChaining.setSelection(false);
+		break;
+	case B_CHAINING:
+		btnBackwardChaining.setSelection(true);
+		btnDefault.setSelection(false);
+		btnForwardChaining.setSelection(false);
+		break;
+	default:
+		btnBackwardChaining.setSelection(false);
+		btnDefault.setSelection(true);
+		btnForwardChaining.setSelection(false);
+		break;	
+	}
 	
 	btnDefault.addSelectionListener(new SelectionAdapter() {
 		@Override
@@ -501,7 +526,7 @@ public class runGUI extends Composite {
 				KBase.validate();
 				//grpSelectRunMethod.setEnabled(false);
 				setRCMethod(false);
-				Variable result = Inference.solveForwardChaining(selectedVariable);
+				result = Inference.solveForwardChaining(selectedVariable);
 				HowList = Inference.getHowList();
 				if(result != null)
 				{
@@ -515,7 +540,7 @@ public class runGUI extends Composite {
 				KBase.validate();
 				//grpSelectRunMethod.setEnabled(false);
 				setRCMethod(false);
-				Variable result = Inference.solveBackwardChaining(selectedVariable, selectedValue);
+				result = Inference.solveBackwardChaining(selectedVariable, selectedValue);
 				HowList = Inference.getHowList();
 				if(result != null)
 				{
@@ -533,8 +558,10 @@ public class runGUI extends Composite {
 			i.dispose();
 		}
 		btnRun.setText("Run");
+		setRCMethod(true);
 		Inference.stopFlag = true;
 		resultVar = null;
+		result = null;
 		//Inference = null;
 		}
 			// this should not be handled by run button, KBase needs to tell it when to ask a new question
@@ -579,6 +606,7 @@ public class runGUI extends Composite {
 	
 	
 	scrolledComposite_1 = new ScrolledComposite(this, SWT.BORDER | SWT.V_SCROLL);
+		
 	scrolledComposite_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 	GridData gd_scrolledComposite_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 	gd_scrolledComposite_1.heightHint = 377;

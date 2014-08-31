@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 
 
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,6 +28,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
@@ -105,7 +107,7 @@ public class AnswerGUI {
 		possibleValues = var.getArrayOfPossibleValues();
 		lblWhyHow = whyhow;
 		String message = getMessage(var,kb,HowList);
-		showAnswer(questionGroup, message);
+		showAnswer(questionGroup, message,kb,CompQ);
 		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		scrolledComposite.showControl(questionGroup);
 		//scrolledComposite_1.showControl(questionGroup);
@@ -179,7 +181,7 @@ public class AnswerGUI {
 		CFScale.setEnabled(enable);
 	}
 
-public void showAnswer(Group questionGroup, String message){
+public void showAnswer(Group questionGroup, String message, final KnowledgeBase kb, final Composite CompQ){
 		
 		
 	lblAns= UserFactoryGUI.createQuestionLabel(questionGroup);
@@ -251,9 +253,16 @@ public void showAnswer(Group questionGroup, String message){
 		OKListener1 = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				{kb.rungui.resetVariablecValues();
+				for(Control i: CompQ.getChildren())
+				{
+					i.dispose();
+				}
+				var = null;
+				kb.rungui.result = null;
 				
 			}		
-		};
+		}};
 		
 		
 		
@@ -274,7 +283,7 @@ public void showAnswer(Group questionGroup, String message){
 		OKButton1 = UserFactoryGUI.createOKButton(questionGroup);
 		OKButton1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		OKButton1.addSelectionListener(OKListener1);
-		OKButton1.setText("OK");
+		OKButton1.setText("Clear");
 	
 	
 }
