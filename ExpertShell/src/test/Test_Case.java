@@ -230,7 +230,7 @@ public class Test_Case implements Serializable {
 		rules[6].addConsequent(new Consequent(boat,jibKetch));
 		rules[6].addConsequent(new Consequent(boat,gaffKetch));
 		rules[6].getConsequent(0).setCertaintyFactor(0.4);
-		rules[6].getConsequent(0).setCertaintyFactor(0.4);
+		rules[6].getConsequent(1).setCertaintyFactor(0.4);
 
 		rules[7] = new Rule();
 		rules[7].setConnective(Connectives.AND);
@@ -254,7 +254,7 @@ public class Test_Case implements Serializable {
 		rules[8].addConsequent(new Consequent(boat,jibKetch));
 		rules[8].addConsequent(new Consequent(boat,jibYawl));
 		rules[8].getConsequent(0).setCertaintyFactor(0.4);
-		rules[8].getConsequent(0).setCertaintyFactor(0.4);
+		rules[8].getConsequent(1).setCertaintyFactor(0.4);
 		
 		rules[9] = new Rule();
 		rules[9].setConnective(Connectives.AND);

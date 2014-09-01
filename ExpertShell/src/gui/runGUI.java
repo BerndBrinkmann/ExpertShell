@@ -269,7 +269,7 @@ public class runGUI extends Composite {
 	btnBackwardChaining.setText("Backward Chaining");
 	btnBackwardChaining.setSelection(false);
 	
-	System.out.println(kb.getInferenceMethod());
+	//System.out.println(kb.getInferenceMethod());
 	switch(kb.getInferenceMethod())
 	{
 	case F_CHAINING:
@@ -356,6 +356,28 @@ public class runGUI extends Composite {
 	btnBayesianReasoning.setText("Bayesian Reasoning");
 	btnBayesianReasoning.setBounds(10, 40, 145, 16);
 	btnBayesianReasoning.setSelection(false);
+	
+switch(kb.getUncertaintyMethod())
+	{
+	case NONE:
+		button.setSelection(true);
+		btnCertainityFactor.setSelection(false);
+		btnBayesianReasoning.setSelection(false);
+		break;
+	case BAYESIAN:
+		button.setSelection(true);
+		btnCertainityFactor.setSelection(false);
+		btnBayesianReasoning.setSelection(false);
+		break;
+	
+	case CF:
+		button.setSelection(false);
+		btnCertainityFactor.setSelection(true);
+		btnBayesianReasoning.setSelection(false);
+		break;
+		
+	default:		
+	}
 	
 	
 	scrolledComposite = new ScrolledComposite(this, SWT.V_SCROLL);
