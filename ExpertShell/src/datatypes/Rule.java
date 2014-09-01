@@ -49,7 +49,11 @@ public class Rule extends getSetKBSettings implements Serializable
 			c.setUncertaintyMethod(uncertainty);
 		}
 	}
-
+	
+	public KBSettings.UncertaintyManagement getUncertaintyMethod() {
+		return uncertaintyType;
+	}
+	
 	public Rule()
 	{
 		antecedents = new ArrayList<Antecedent>();
