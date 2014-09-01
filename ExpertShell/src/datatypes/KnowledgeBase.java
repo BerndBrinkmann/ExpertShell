@@ -14,14 +14,25 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	protected ArrayList<Rule> RuleList;
 	protected ArrayList<Variable> VariableList = new ArrayList<Variable>();
 	protected getSetKBSettings getsetSettings;
-	protected KBSettings kbSettings = new KBSettings();
-	protected KBSettings.InferenceType inferenceType;
-	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
-	protected KBSettings.ConflictResolution conflictResolution = KBSettings.ConflictResolution.NONE;
+	//protected KBSettings kbSettings = new KBSettings();
+	
+	//these are declared in the parent class (getSetKBSettings) - Arie
+	//protected KBSettings.InferenceType inferenceType;
+	//protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
+	//protected KBSettings.ConflictResolution conflictResolution = KBSettings.ConflictResolution.NONE;
 	protected Variable VarTemp;
 	protected Variable target;
 	public runGUI rungui;
-
+	
+	@Override
+	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty) {
+		this.uncertaintyType = uncertainty;
+		
+		for(Rule r : RuleList) {
+			r.setUncertaintyMethod(uncertainty);
+		}
+	}
+	
 	public void setRunGui(runGUI rung)
 	{
 		rungui=rung;

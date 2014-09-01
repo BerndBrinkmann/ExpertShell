@@ -152,6 +152,19 @@ public class AntecedentListGUI {
 		return addButton;
 	}
 
+	public void update() {
+		// TODO update uncertainty values
+		
+		//update the GUI values of all antecedents
+		for (AntecedentGUI a : antecedents) {
+			a.update();
+		}
+		
+	}
+	
+	public ArrayList<AntecedentGUI> getAntGUIList() {
+		return antecedents;
+	}
 	
 
 	

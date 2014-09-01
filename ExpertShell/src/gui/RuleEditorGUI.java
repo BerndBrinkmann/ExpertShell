@@ -7,6 +7,7 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TypedEvent;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Widget;
@@ -16,6 +17,7 @@ import datatypes.Consequent;
 import datatypes.KBSettings.UncertaintyManagement;
 import datatypes.KnowledgeBase;
 import datatypes.Rule;
+import datatypes.Variable;
 
 public class RuleEditorGUI {
 	
@@ -144,7 +146,38 @@ public class RuleEditorGUI {
 			} else if (source == Source.VARIABLE) {
 				debug("Change antecedent variable: " + index);
 				
+				Combo combo = (Combo)w;
 				
+				String comboText;
+				
+				comboText = combo.getText().trim();
+				
+				if (combo.getSelectionIndex() == -1 && !(comboText.equals(""))) {
+					//ie. combo was changed (typed into) but they didn't select an existing var from the list
+					//ignore blank text
+					
+					//see if the variable already exists in kb
+					Variable var = kb.getVariable(comboText);
+					
+					//the variable name doesn't exist in kb (yet!)
+					if (var == null) {
+						//make a new variable with this name
+						var = new Variable(comboText);
+						
+						//add it to the kb
+						kb.addVariable(var);
+					}
+					
+					rule.getAntecedent(index).setVariable(var);
+					
+				} else { //user has selected an existing variable
+					
+					//set the var in the kb
+					rule.getAntecedent(index).setVariable(kb.getVariable(comboText));
+				}
+				
+				//update values of GUI elements for this antecedent
+				antList.getAntGUIList().get(index).update();
 				
 			} else if (source == Source.COMPARE) {
 				debug("Change antecedent comparitor logic: " + index);
@@ -184,6 +217,7 @@ public class RuleEditorGUI {
 				
 			} else if (source == Source.VARIABLE) {
 				debug("Change consequent variable: " + index);
+				
 				
 				
 				
