@@ -32,7 +32,7 @@ public class Rule extends getSetKBSettings implements Serializable
 	protected int ruleNum;
 
 	
-	UncertaintyManagement uncertaintyType = UncertaintyManagement.NONE;
+	//UncertaintyManagement uncertaintyType = UncertaintyManagement.NONE;
 	
 	@Override
 	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)
@@ -49,7 +49,7 @@ public class Rule extends getSetKBSettings implements Serializable
 			c.setUncertaintyMethod(uncertainty);
 		}
 	}
-
+	
 	public Rule()
 	{
 		antecedents = new ArrayList<Antecedent>();

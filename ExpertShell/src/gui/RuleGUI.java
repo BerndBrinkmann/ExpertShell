@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Group;
 import datatypes.Antecedent;
 import datatypes.Connectives;
 import datatypes.Consequent;
+import datatypes.KBSettings;
 import datatypes.Rule;
 
 public class RuleGUI extends Group {
@@ -100,6 +101,10 @@ public class RuleGUI extends Group {
 			
 			append(" "); //space
 			appendWithStyle(c.getValueAsString(),styleValue);
+			
+			if (rule.getUncertaintyMethod() == KBSettings.UncertaintyManagement.CF) {
+				append("(CF: " + c.getCertaintyFactor() + ")");
+			}
 			append("\r\n");
 		}
 		
