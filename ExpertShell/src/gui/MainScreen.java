@@ -262,10 +262,86 @@ public class MainScreen  implements Serializable {
 		SC_QuickStart.setLayoutData(gd_SC_QuickStart);
 		SC_QuickStart.setExpandVertical(true);
 		
-		Label lblNewLabel_2 = new Label(SC_QuickStart, SWT.WRAP | SWT.HORIZONTAL);
-		lblNewLabel_2.setText("Welcome to Expert System Shell. \r\nThe following is a quick description of the purope of each page in this program and how to get started.\r\n\r\nRun Knowledgebase:\r\n* Open a knowledgebase that you would like to run:  File > Open Knowledgebase > Knowledgebase.  \r\nThe name of the knowlegebase should be displayed in the top left hand side of the screen. \r\n* Select a run method: Default (Runs Forward Chaining), Forward Chaining, or Backward Chaining.\r\n* Select a reasoning method: Default (no uncertainty), Bayesian Reasoning, or Certainty Factors.\r\n* If backward chaining is selected for the run method, the user will also be required to enter a target value from the drop down list\r\nthat will appear at the top left of the screen.\r\n* Press Run to start execution process. The Expert System Shell will ask the user to input a value for a given variable if needed. If \r\ncertainty factor is set as the reasoning method, the user will also be required to enter a certainity with the slider that will appear. \r\nThe user can ask the system \"Why?\" if they would like to ask the system why it needs that value - this will be displayed on the right \r\nside of the screen, otherwise they can press \"OK\" to continue the evaluation process. This process will continue, asking the user \r\nmore questions if required, until an answer is reached.\r\n* The Expert System will produce an answer in the same space as the question boxes. The user can ask the system \"How?\" it \r\nreached that conclusion - this will be displayed on the right side of the screen, or press \"OK\" to end the evaluation process. \r\nThe user can then re-run the knowledgebase, or open a different knowledgebase to run.\r\n\r\nCreate/Edit Knowledgebase:\r\n\r\n\r\nVariables:\r\n*Displays a list of variables on the left hand side of the screen. A user can click on these variables to select one, and it will be \r\ndisplayed in the main control box under \"Variable Name\". A user is not permitted to create a new variable in this tab.\r\n* The user can change the name of these variables, add a description, and provide it possible values. The user is also permitted to \r\nadd a Question Prompt. If no question prompt is selected, whilst running the expert system shell in the Run Knowledgebase tab, \r\nany questions related to this varaible will state: \"Enter a value for *variable*\". The user can customise this prompt if desired, \r\nfor example: \"How is the weather today?\"\r\n* The Yes/No buttons at the bottom of the screen enable the user to select whether or not to ask the user for an input value for \r\nthis variable when running the system.\r\n* The save button saves any changes made to the variables.");
-		SC_QuickStart.setContent(lblNewLabel_2);
-		SC_QuickStart.setMinSize(lblNewLabel_2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		Composite composite_4 = new Composite(SC_QuickStart, SWT.NONE);
+		composite_4.setLayout(new GridLayout(1, false));
+		
+		Label lblNewLabel = new Label(composite_4, SWT.WRAP);
+		GridData gd_lblNewLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_lblNewLabel.widthHint = 682;
+		lblNewLabel.setLayoutData(gd_lblNewLabel);
+		lblNewLabel.setText("Welcome to The Expert System Shell. The following is a quick description of each page in this program and how to get started.\r\n");
+		
+		Label lblNewLabelOpen = new Label(composite_4, SWT.NONE);
+		lblNewLabelOpen.setText("\r\nOpen/Save a Knowledgebase:");
+		
+		Label lblNewLabelOpenPic = new Label(composite_4, SWT.NONE);
+		lblNewLabelOpenPic.setText("\r\n open/save image needs inserting here:");
+		SC_QuickStart.setContent(composite_4);
+		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		Label lblRunKnowledgebase = new Label(composite_4, SWT.NONE);
+		lblRunKnowledgebase.setText("\r\nRun Knowledgebase:");
+		SC_QuickStart.setContent(composite_4);
+		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		Label lblStartingTheEvaluation = new Label(composite_4, SWT.NONE);
+		lblStartingTheEvaluation.setText("Starting the Evaluation Process");
+		SC_QuickStart.setContent(composite_4);
+		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		Label lblNewLabel_2 = new Label(composite_4, SWT.NONE);
+		lblNewLabel_2.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/runpic.PNG"));
+		SC_QuickStart.setContent(composite_4);
+		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		Label lblNewLabel_3 = new Label(composite_4, SWT.NONE);
+		GridData gd_lblNewLabel_3 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_lblNewLabel_3.heightHint = 287;
+		gd_lblNewLabel_3.widthHint = 643;
+		lblNewLabel_3.setLayoutData(gd_lblNewLabel_3);
+		lblNewLabel_3.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/runInfo.PNG"));
+		SC_QuickStart.setContent(composite_4);
+		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		Label lblNewLabel_4 = new Label(composite_4, SWT.NONE);
+		lblNewLabel_4.setText("Finalising the Evaluation Process\r\n");
+		SC_QuickStart.setContent(composite_4);
+		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		Label lblNewLabel_4Pic = new Label(composite_4, SWT.NONE);
+		lblNewLabel_4Pic.setText("How image needs to be inserted here\r\n");
+		SC_QuickStart.setContent(composite_4);
+		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		Label lblNewLabel_5 = new Label(composite_4, SWT.NONE);
+		lblNewLabel_5.setText("\r\nCreate/Edit Knowledgebase:");
+		SC_QuickStart.setContent(composite_4);
+		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		Label lblNewLabel_5Pic = new Label(composite_4, SWT.NONE);
+		lblNewLabel_5Pic.setText("rule editor page image needs to be inserted here\r\n");
+		SC_QuickStart.setContent(composite_4);
+		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		Label lblNewLabel_5Info = new Label(composite_4, SWT.NONE);
+		lblNewLabel_5Info.setText("rule editor page info needs to be inserted here\r\n");
+		SC_QuickStart.setContent(composite_4);
+		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		Label lblNewLabel_6 = new Label(composite_4, SWT.NONE);
+		lblNewLabel_6.setText("\r\nVariables:");
+		SC_QuickStart.setContent(composite_4);
+		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		Label lblNewLabel_6Pic = new Label(composite_4, SWT.NONE);
+		lblNewLabel_6Pic.setText("variables page image needs to be inserted here\r\n");
+		SC_QuickStart.setContent(composite_4);
+		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		Label lblNewLabel_6Info = new Label(composite_4, SWT.NONE);
+		lblNewLabel_6Info.setText("varaibles page info needs to be inserted here\r\n");
+		SC_QuickStart.setContent(composite_4);
+		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmUserInterface.setText("Run Knowledgebase");
@@ -401,6 +477,18 @@ public class MainScreen  implements Serializable {
 		mntmExit.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/exit_new.jpg"));
 		mntmExit.setText("Exit");
 		
+		MenuItem mntmOpenKnowlledgebase = new MenuItem(menu, SWT.CASCADE);
+		mntmOpenKnowlledgebase.setText("Open Knowledgebase");
+		
+		Menu menu_2 = new Menu(mntmOpenKnowlledgebase);
+		mntmOpenKnowlledgebase.setMenu(menu_2);
+		
+		MenuItem mntmSaveKnowledgebase = new MenuItem(menu, SWT.CASCADE);
+		mntmSaveKnowledgebase.setText("Save Knowledgebase");
+		
+		Menu menu_5 = new Menu(mntmSaveKnowledgebase);
+		mntmSaveKnowledgebase.setMenu(menu_5);
+		
 		
 
 
@@ -518,92 +606,4 @@ public class MainScreen  implements Serializable {
 		
 		
 	}
-	
-	/*public void setVariableCombo()
-	{
-	listChangeFlag = true;
-	targetvariablecombo.removeAll();
-	
-	if(KBase.getConsequentVariablesArray().length ==0)
-	{
-	for (Variable v : KBase.getConsequentVariablesArray())
-		{
-		if(v != null)
-		{	
-		variableListLabel = v.toString();
-			targetvariablecombo.add(variableListLabel);
-		}
-		}
-	if(targetvariablecombo.getSelectionIndex() != -1){
-	selectedVariable = KBase.getConsequentVariablesArray()[targetvariablecombo.getSelectionIndex()];
-	}
-	
-	}
-	
-	
-	listChangeFlag = false;	
-	}*/
-
-	
-
-
-/*
-public static Double getCertainty(String message)
-{
-	JPanel panel = new JPanel();
-	panel.add(new JLabel(message));
-	JTextField cfField = new JTextField("0.5", 10);
-	
-	Hashtable labelTable = new Hashtable();
-	labelTable.put( new Integer( 0 ), new JLabel("0.0") );
-	labelTable.put( new Integer( 50 ), new JLabel("0.5") );
-	labelTable.put( new Integer( 100 ), new JLabel("1.0") );
-	
-	JSlider slider = new JSlider(0,100,50);
-	slider.setLabelTable( labelTable );
-	slider.setPaintLabels(true);
-	slider.setPaintTicks(true);
-	
-	class SliderListener implements ChangeListener
-	{
-		JSlider s; JTextField f;
-		public SliderListener(JSlider s, JTextField f)
-		{
-			this.s = s; this.f = f;
-		}
-		public void stateChanged(ChangeEvent e)
-		{
-			f.setText("" + ((double)s.getValue())/100);
-		}
-	}
-	class FieldListener implements ActionListener
-	{
-		JSlider s; JTextField f;
-		public FieldListener(JSlider s, JTextField f)
-		{
-			this.s = s; this.f = f;
-		}
-		public void actionPerformed(ActionEvent e)
-		{
-			s.setValue((int) (Double.parseDouble(f.getText()) * 100));
-		}
-	}
-	
-	slider.addChangeListener(new SliderListener(slider, cfField));
-	cfField.addActionListener(new FieldListener(slider, cfField));
-
-	panel.add(slider);
-	panel.add(cfField);
-
-	JOptionPane.showMessageDialog(null, panel,"",JOptionPane.PLAIN_MESSAGE);
-	return  (Double)(((double)slider.getValue())/100);
-}
-*/
-
-//public static InferenceEngine createInferenceEngine(KnowledgeBase kb)
-//{
-//    InferenceEngine Inference;
-//    Inference = new InferenceEngine(kb);
-//    return Inference;
-///}
 }
