@@ -243,7 +243,7 @@ public class MainScreen  implements Serializable {
 		gd_lblNewLabel_1.heightHint = 515;
 		gd_lblNewLabel_1.widthHint = 719;
 		lblNewLabel_1.setLayoutData(gd_lblNewLabel_1);
-		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_newsize.jpg"));
+		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_final.jpg"));
 		
 		TabItem tbtmQuickStart = new TabItem(tabFolder, SWT.NONE);
 		tbtmQuickStart.setText("Quick Start Guide");
