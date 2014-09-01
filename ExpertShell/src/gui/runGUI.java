@@ -210,7 +210,7 @@ public class runGUI extends Composite {
 	gd_grpKnowledgeBaseSelected.heightHint = 62;
 	gd_grpKnowledgeBaseSelected.widthHint = 345;
 	grpKnowledgeBaseSelected.setLayoutData(gd_grpKnowledgeBaseSelected);
-	grpKnowledgeBaseSelected.setText("Knowledge Base Selected");
+	grpKnowledgeBaseSelected.setText("Knowledge Base Selected/Opened");
 	
 	text = new Label(grpKnowledgeBaseSelected, SWT.NONE);
 	GridData gd_text = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);

@@ -343,6 +343,11 @@ public class MainScreen  implements Serializable {
 		SC_QuickStart.setContent(composite_4);
 		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
+		Label ReferToManual = new Label(composite_4, SWT.NONE);
+		ReferToManual.setText("For further information, the complete manual can be found in\r\nHelp>Manual");
+		SC_QuickStart.setContent(composite_4);
+		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmUserInterface.setText("Run Knowledgebase");
 
