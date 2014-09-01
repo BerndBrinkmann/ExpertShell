@@ -381,7 +381,20 @@ public class runGUI extends Composite {
 	});
 	CompQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	CompQ.setLayout(new GridLayout(1, false));
+	scrolledComposite.setContent(CompQ);
+	scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	
+	/*CompQ = new Composite(scrolledComposite, SWT.NONE);
+	CompQ.addControlListener(new ControlAdapter() {
+		@Override
+		public void controlResized(ControlEvent e) {
+			e.getSource();
+			//CompQ.update();
+		}
+	});
+	CompQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	CompQ.setLayout(new GridLayout(1, false));
+	*/
 
 	
 	
@@ -499,11 +512,14 @@ public class runGUI extends Composite {
 			e.getSource();
 			
 			
+			
 			if(btnRun.getText().equals("Run"))
 			{
+				
+				
 			Inference = new InferenceEngine(KBase);
 			Inference.stopFlag = false;
-			resetVariablecValues();
+			resetVariableValues();
 			for(Control i: CompQ.getChildren())
 			{
 				i.dispose();
@@ -552,7 +568,8 @@ public class runGUI extends Composite {
 		    }
 		}
 		else
-		{resetVariablecValues();
+		{resetVariableValues();
+		
 		for(Control i: CompQ.getChildren())
 		{
 			i.dispose();
@@ -687,8 +704,8 @@ public class runGUI extends Composite {
 	OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 	OKButton.setText("OK");*/
 	
-	scrolledComposite.setContent(CompQ);
-	scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	//scrolledComposite.setContent(CompQ);
+	//scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
 /*
 	ScrolledComposite scrolledComposite_1 = new ScrolledComposite(composite, SWT.BORDER | SWT.V_SCROLL);
@@ -929,11 +946,16 @@ public class runGUI extends Composite {
 		return okayFlag;
 	}
 	
-	public void resetVariablecValues()
+	public void resetVariableValues()
 	{
 		for(Variable v : KBase.getVariablesArray())
 		{
-			v.setCurrentValue((Value) null);
+			//v.setCurrentValue((Value) null);
+			v.clearVariable();
+		}
+		for(Rule r: KBase.getRuleArray())
+		{
+			r.setFired(false);
 		}
 	}
 }

@@ -276,7 +276,7 @@ public class Test_Case implements Serializable {
 		
 		
 		
-		for(int i = 0; i < 8; i++)
+		for(int i = 0; i < 11; i++)
 		{
 			rules[i].setRuleNum(i);
 			boat_kb.AddRule(rules[i]);

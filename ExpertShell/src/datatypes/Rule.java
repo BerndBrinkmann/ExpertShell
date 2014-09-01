@@ -498,4 +498,9 @@ public class Rule extends getSetKBSettings implements Serializable
 		}
 		return sb.toString();
 	}
+	
+	public void setFired(Boolean fire)
+	{
+		fired = fire;
+	}
 }

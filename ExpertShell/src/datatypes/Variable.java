@@ -24,7 +24,7 @@ public class Variable implements Serializable
 	protected Boolean isNumeric = false;
 	protected Double numVal = null;
 	
-	protected ArrayList<Double> certaintyFactors ;  //by our convention certainty factors are stored as 0-1
+	public ArrayList<Double> certaintyFactors ;  //by our convention certainty factors are stored as 0-1
 	protected ArrayList<Double> beliefs = new ArrayList<Double>();
 		
 	
@@ -353,4 +353,16 @@ public class Variable implements Serializable
 		return allValues.get(i).antPointer.getComparison();	
 	}
 	
+	public void clearVariable()
+	{
+		for(int i=0; i< certaintyFactors.size() ; i++)
+		{
+			certaintyFactors.set(i,0.0);
+			beliefs.set(i, 0.5);
+		}
+		
+		//beliefs = new ArrayList<Double>();
+		numVal = (Double) null;
+		currentValue = (Value) null;
+	}
 }
