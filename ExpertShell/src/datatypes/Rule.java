@@ -30,6 +30,9 @@ public class Rule extends getSetKBSettings implements Serializable
 	protected Boolean fired = false;
 	protected int priority = 1;
 	protected int ruleNum;
+	
+	protected double likelihoodOfNecessity = 1;
+	protected double likelihoodOfSufficiency = 1;
 
 	
 	//UncertaintyManagement uncertaintyType = UncertaintyManagement.NONE;
@@ -451,9 +454,34 @@ public class Rule extends getSetKBSettings implements Serializable
 	public void fireBayesian()
 	{
 		fired = true;
-
+		Boolean BayesianFlag = true;
+		int i = 0;
+		while(i < getNumberOfAntecedents() && BayesianFlag)
+		{
+			Antecedent currentAnt = getAntecedent(i);
+			if(!(currentAnt.evaluate()))
+			{
+				BayesianFlag = false;
+			}
+			i++;
+		}
+		if(BayesianFlag)
+		{
+			for(int j = 0; j < getNumberOfConsequents(); j++)
+			{
+				getConsequent(j).executeBayesian(likelihoodOfSufficiency);
+			}
+		}
+		else
+		{
+			for(int j = 0; j < getNumberOfConsequents(); j++)
+			{
+				getConsequent(j).executeBayesian(likelihoodOfNecessity);
+			}
+		}
+		
 		//consider antecedents in order
-		for(int i = 0; i < getNumberOfAntecedents(); i++)
+		/*for(int i = 0; i < getNumberOfAntecedents(); i++)
 		{
 			
 			Antecedent currentAnt = getAntecedent(i);
@@ -475,7 +503,7 @@ public class Rule extends getSetKBSettings implements Serializable
 				}
 			}
 			
-		}
+		}*/
 	}
 	
 	public String toString()
@@ -502,5 +530,25 @@ public class Rule extends getSetKBSettings implements Serializable
 	public void setFired(Boolean fire)
 	{
 		fired = fire;
+	}
+	
+	public void setLikelihoodOfNecessity(double likelihoodOfNecessity)
+	{
+		this.likelihoodOfNecessity = likelihoodOfNecessity;
+	}
+
+	public double getLikelihoodOfSufficiency()
+	{
+		return likelihoodOfSufficiency;
+	}
+
+	public void setLikelihoodOfSufficiency(double likelihoodOfSufficiency)
+	{
+		this.likelihoodOfSufficiency = likelihoodOfSufficiency;
+	}
+	
+	public double getLikelihoodOfNecessity()
+	{
+		return likelihoodOfNecessity;
 	}
 }

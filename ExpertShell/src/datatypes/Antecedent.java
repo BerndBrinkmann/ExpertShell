@@ -6,8 +6,8 @@ public class Antecedent extends getSetKBSettings implements Serializable
 {
 	protected Variable variable;
 	protected Value value;
-	protected double likelihoodOfNecessity = 1;
-	protected double likelihoodOfSufficiency = 1;
+//	protected double likelihoodOfNecessity = 1;
+//	protected double likelihoodOfSufficiency = 1;
 	
 	protected Comparison comparison;
 	protected Boolean isNumeric = false;
@@ -44,16 +44,18 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		numVal = val;
 	}
 
-	public double getLikelihoodOfNecessity()
-	{
-		return likelihoodOfNecessity;
-	}
+	
 	
 	public Comparison getComparison()
 	{
 		return comparison;
 	}
 
+/*	public double getLikelihoodOfNecessity()
+	{
+		return likelihoodOfNecessity;
+	}
+	
 	public void setLikelihoodOfNecessity(double likelihoodOfNecessity)
 	{
 		this.likelihoodOfNecessity = likelihoodOfNecessity;
@@ -68,7 +70,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	{
 		this.likelihoodOfSufficiency = likelihoodOfSufficiency;
 	}
-
+*/
 	public void setVariable(Variable v)
 	{
 		// will null this object's value field on setting of variable - it will no longer be valid
@@ -86,7 +88,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	
 	public Boolean evaluate()
 	{
-		if(!isNumeric)
+		if(!(variable instanceof NumericVariable))
 		{
 			if(variable.getCurrentValue() == value)
 			{
@@ -122,7 +124,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	
 	public Consequent convertToConsequent()
 	{
-		if(isNumeric)
+		if(variable instanceof NumericVariable)
 		{
 			return new Consequent(this.variable, this.numVal);
 		}
@@ -134,18 +136,18 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	
 	public String toString()
 	{
-		if(isNumeric)
+		if(variable instanceof NumericVariable)
 		{
 			return variable.getName() + " " + comparison.toString() + " " + numVal;
 		}
 		else
 		{
-			if(uncertaintyType == KBSettings.UncertaintyManagement.BAYESIAN
+			/*if(uncertaintyType == KBSettings.UncertaintyManagement.BAYESIAN
 					&& (likelihoodOfSufficiency != 1 || likelihoodOfNecessity != 1))
 			{
 				return variable.getName() + " is " + value.getName() + " {ls = "+likelihoodOfSufficiency+"} {ln = "+likelihoodOfNecessity+"}";
 			}
-			else
+			else*/
 				return variable.getName() + " is " + value.getName();
 		}
 	}
@@ -155,7 +157,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	}
 	
 	public String getValueAsString() {
-		if(isNumeric) {
+		if(variable instanceof NumericVariable) {
 			return numVal.toString();
 		} else {
 			return value.getName();
