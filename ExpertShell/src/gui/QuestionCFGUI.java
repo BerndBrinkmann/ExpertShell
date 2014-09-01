@@ -2,6 +2,12 @@ package gui;
 
 import java.util.ArrayList;
 
+
+
+
+
+
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -14,26 +20,35 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
 
-import datatypes.*;
+import datatypes.Rule;
+import datatypes.InferenceEngine;
+import datatypes.Variable;
+import datatypes.Value;
 
 public class QuestionCFGUI {
 	
-Group questionGroup;
-	Composite CompQ;
-	ScrolledComposite scrolledComposite;
+
+//	Composite CompQ;
+//	ScrolledComposite scrolledComposite;
 	
 	Button WhyButton;
 	Button HowButton;
 	Button OKButton;
+	Button WhyButton1;
+	Button HowButton1;
+	Button OKButton1;
 	Combo ans;
+	Combo ans1;
 	Label QforUser;
+	Label AforUser;
 	Label CFPercentage;
+	Label CFPercentage1;
 	Scale CFScale;
+	Scale CFScale1;
 	//Label lblCF;
 	//Scale scale;
-	SelectionAdapter WhyL;
-	SelectionAdapter HowL;
-	SelectionAdapter OKL;
+	//SelectionAdapter HowL;
+	//SelectionAdapter OKL;
 	SelectionAdapter CFL;
 	SelectionAdapter AnswerComboL;
 	SelectionAdapter CFScaleL;
@@ -41,42 +56,80 @@ Group questionGroup;
 	public SelectionAdapter WhyListener;
 	public SelectionAdapter HowListener;
 	public SelectionAdapter OKListener;
+	public SelectionAdapter OKListener1;
 	public SelectionAdapter AnswerComboListener;
 	public SelectionAdapter CFListener;
 	public SelectionAdapter CFScaleListener;
 	
 	public ArrayList<Rule> howlist;
+	public Value[] possibleValues;
+	public Boolean okayPress = false;
 	
+	private Variable var;
+	private InferenceEngine infer;
 	static Rule tRule;
+	static Label lblWhyHow;
+	private Boolean OkayFlag1 =false;
+	private Boolean OkayFlag2 = false;
+	static ScrolledComposite scrolledComposite_1;
 	
-	public QuestionCFGUI(Composite CompQ, InferenceEngine Inference){
-		WhyL= WhyListener;
-		HowL= HowListener;
-		OKL= OKListener;
+	public QuestionCFGUI(Composite CompQ, InferenceEngine Inference, Group questionGroup, String message, Variable var, ScrolledComposite scrolledComposite, Rule currentRule, Label whyhow, ScrolledComposite ScrolledComposite_1){
+		//HowL= HowListener;
+		//OKL= OKListener;
+		scrolledComposite_1 = ScrolledComposite_1;
 		CFL = CFListener;
 		CFScaleL = CFScaleListener;
 		AnswerComboL= AnswerComboListener;
-		questionGroup = UserFactoryGUI.createQuestionGroup(CompQ);
-		questionGroup.getParent().layout();
-		CompQ.update();
 		howlist  = Inference.getHowList();
+		this.var = var;
+		possibleValues = var.getArrayOfPossibleValues();
+		tRule = currentRule;
+		lblWhyHow = whyhow;
+		addQuestion(message,questionGroup);
+		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite.showControl(questionGroup);
+		CompQ.layout();
+		questionGroup.setFocus();
+		CompQ.update();
+		
+		
+		/*while(var.currentValue == null)
+		{
+			try
+			{
+				wait();
+			} catch (InterruptedException e){};
+			
+		}*/
 	}
 	
-	public void addQuestion(String message){
+	public void addQuestion(String message, Group questionGroup){
 		
 		QforUser= UserFactoryGUI.createQuestionLabel(questionGroup);
+		QforUser.setText(message);
 		GridData gd_label = new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1);
 		gd_label.widthHint=303;
 		gd_label.heightHint=65;
 		QforUser.setLayoutData(gd_label);
 		
 		
+		
 		ans = UserFactoryGUI.createAnswerCombo(questionGroup);
 		GridData gd_combo_1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1);
 		gd_combo_1.widthHint = 276;
 		ans.setLayoutData(gd_combo_1);
-		ans.setItems(new String[] {"A", "B"}); //TEST
-		ans.setText("Answer");
+		
+		
+		if(possibleValues.length !=0)
+		{
+			String possiblevString[] = new String[possibleValues.length];
+					for (int i=0; i<possibleValues.length; i++)
+					{
+						possiblevString[i]= possibleValues[i].toString();
+					}
+			ans.setItems(possiblevString);
+		}
+		ans.setText("Choose Value");
 		
 		CFPercentage = UserFactoryGUI.createCFLabel(questionGroup);
 		CFPercentage.setVisible(true);
@@ -87,17 +140,23 @@ Group questionGroup;
 		//scale= UserFactoryGUI.createCFScale(questionGroup);
 		//scale.addSelectionListener(CFScaleL);
 		
+				
 		CFScale.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				int perspectivevalue=CFScale.getSelection();
-				GridData gd_lblCf = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-				gd_lblCf.widthHint = 101;
+				GridData gd_lblCf = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+				//gd_lblCf.widthHint = 101;
 				CFPercentage.setLayoutData(gd_lblCf);
-				CFPercentage.setText(""+(perspectivevalue));
+				CFPercentage.setText(Integer.toString(perspectivevalue));
 				//lblCF.setLayoutData(gd_lblCf);
 				//lblCF.setText(""+(perspectivevalue));
+				OkayFlag2=true;
+				if(OkayFlag1 && OkayFlag2)
+				{
+					OKButton.setEnabled(true);
+				}
 			}
 		});
 		GridData gd_scale = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
@@ -107,65 +166,34 @@ Group questionGroup;
 		//scale.setLayoutData(gd_scale);
 		//scale.setVisible(true);
 		
-		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
-		WhyButton.addSelectionListener(WhyL);
-		GridData gd_WhyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_WhyButton.widthHint = 54;
-		WhyButton.setLayoutData(gd_WhyButton);
-		WhyButton.setText("Why?");
-		
-		HowButton = UserFactoryGUI.createHowButton(questionGroup);
-		HowButton.addSelectionListener(HowL);
-		GridData gd_HowButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_HowButton.widthHint = 54;
-		HowButton.setLayoutData(gd_HowButton);
-		HowButton.setText("How?");
-		
-		OKButton = UserFactoryGUI.createOKButton(questionGroup);
-		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		OKButton.addSelectionListener(OKL);
-		
-		
-		
 		WhyListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();	
-				StringBuilder s = new StringBuilder();
-				s.append("\nI am trying to evaluate the rule\n");
-				s.append(tRule != null ? tRule.toString() : "null");
-				s.toString();
-//TODO				lblWhyhow.setText(""+s);
+				displayWhyMessage();
+				//lblWhyhow.setText(""+s);
 			}
 		};
-		HowListener = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-				displayHowMessage(howlist);
-				if(howlist.isEmpty())
-				{
-//TODO					lblWhyhow.setText("\nA result was not reached\n");
-				}
-				else
-				{
-				
-//TODO					lblWhyhow.setText("\nThe result was reached by firing these rules in this order\n");
-					for(Rule r : howlist)
-					{
-//TODO						lblWhyhow.setText(r.toString());
-					}
-				}	
-			}	
-		};
+	
 		OKListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-			}
+				if(ans.getSelectionIndex() != -1)
+				{
+					Double CFSelection = (double) CFScale.getSelection();
+					CFSelection = CFSelection/100;
+					var.setCurrentValue(possibleValues[ans.getSelectionIndex()]);
+					var.setCertaintyFactor(var.getCurrentValue(),CFSelection);
+					setQueryBoxEnabled(false);
+					
+				}
+			}	
 		};
 		AnswerComboListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				//needs to find where varaibles are!!!
 				System.out.println(ans.getText());
+				
 			}	
 		};
 		CFListener = new SelectionAdapter() {
@@ -176,13 +204,53 @@ Group questionGroup;
 		CFScaleListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				
 				/*int perspectivevalue=scale.getSelection();
 				GridData gd_lblCf = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 				gd_lblCf.widthHint = 101;
 				lblCf.setLayoutData(gd_lblCf);
 				lblCf.setText(""+(perspectivevalue));*/
+				
 			}
 		};
+		
+		ans.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if(ans.getSelectionIndex() != -1)
+				{
+					OkayFlag1=true;
+				}
+				if(OkayFlag1 && OkayFlag2)
+				{
+					OKButton.setEnabled(true);
+				}
+			}
+		});
+		
+		
+		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
+		WhyButton.addSelectionListener(WhyListener);
+		GridData gd_WhyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_WhyButton.widthHint = 54;
+		WhyButton.setLayoutData(gd_WhyButton);
+		WhyButton.setText("Why?");
+		
+		HowButton = UserFactoryGUI.createHowButton(questionGroup);
+		GridData gd_HowButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_HowButton.widthHint = 54;
+		HowButton.setLayoutData(gd_HowButton);
+		HowButton.setText("How?");
+		HowButton.setVisible(false);
+		
+		OKButton = UserFactoryGUI.createOKButton(questionGroup);
+		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		OKButton.addSelectionListener(OKListener);
+		OKButton.setText("OK");
+		OKButton.setEnabled(false);	
+		
+		
+		
 	
 		
 	}
@@ -191,7 +259,7 @@ Group questionGroup;
 	{
 		if(howList.isEmpty())
 		{
-			System.out.println("\nA result was not reached\n");
+			lblWhyHow.setText("\nA result was not reached\n");
 		}
 		else
 		{
@@ -199,22 +267,36 @@ Group questionGroup;
 			System.out.println("\nThe result was reached by firing these rules in this order\n");
 			for(Rule r : howList)
 			{
-				System.out.println(r.toString());
+				lblWhyHow.setText(r.toString());
 			}
 		}
 	}
+	public void displayWhyMessage()
+	{
+		
+		StringBuilder s = new StringBuilder();
+		s.append("\nInference Engine is currently trying to fire Rule " + (tRule.getRuleNum()+1) + ":\n\n");
+		s.append(tRule != null ? tRule.toString() : "null");
+		s.append("\nIt needs the value of Variable: \n\n" + var.getName() + " from user.");
+		lblWhyHow.setText(s.toString());
+		scrolledComposite_1.setMinSize(lblWhyHow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite_1.layout();
+		scrolledComposite_1.update();
+	}
 	
-
+	public Boolean getOkayPress()
+	{
+		return okayPress;
+	}
+	
+	public void setQueryBoxEnabled(Boolean enable)
+	{
+		WhyButton.setEnabled(enable);
+		HowButton.setEnabled(enable);
+		OKButton.setEnabled(enable);
+		ans.setEnabled(enable);
+		QforUser.setEnabled(enable);
+		CFPercentage.setEnabled(enable);
+		CFScale.setEnabled(enable);
+	}
 }
-
-
-
-
-
-
-
-	
-	
-	
-	
-

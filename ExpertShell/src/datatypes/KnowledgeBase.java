@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import datatypes.Variable;
+import gui.runGUI;
 //
 public class KnowledgeBase extends getSetKBSettings implements Serializable 
 {
@@ -15,11 +16,17 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	protected getSetKBSettings getsetSettings;
 	protected KBSettings kbSettings = new KBSettings();
 	protected KBSettings.InferenceType inferenceType;
-//	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
+	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
 	protected KBSettings.ConflictResolution conflictResolution = KBSettings.ConflictResolution.NONE;
 	protected Variable VarTemp;
 	protected Variable target;
+	public runGUI rungui;
 
+	public void setRunGui(runGUI rung)
+	{
+		rungui=rung;
+	}
+	
 	public KnowledgeBase(String name)
 	{
 		Name = name;
@@ -244,7 +251,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 			}
 			
 			if(!(uncertaintyType == KBSettings.UncertaintyManagement.CF))
-				var.addPossibleValue(new Value("Other"));
+				var.addPossibleValue(new Value("Unknown"));
 		}
 	}
 	
@@ -319,5 +326,20 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	public void setTarget(Variable tgt){
 		
 		target=tgt;
+	}
+	
+	public Consequent[] getBCConsequents()
+	{
+	ArrayList<Consequent> consequents = new ArrayList<Consequent>();
+	
+	for(Rule rule : getRuleArray())
+	{
+		for(Consequent c : rule.getConsequentArray())
+		{
+			if(!consequents.contains(c)&& c !=null)
+				consequents.add(c);
+		}
+	}
+	return consequents.toArray(new Consequent[consequents.size()]);
 	}
 }
