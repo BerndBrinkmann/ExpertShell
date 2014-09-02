@@ -134,7 +134,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	
 	public Variable getVariable(String VarString)
 	{
-		
+		updateVariableList();
 		for (int i =0 ; i < VariableList.size() ; i +=1)
 		{
 			
@@ -148,6 +148,8 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	
 	public void updateVariableList()
 	{
+		
+		VariableList.clear();
 		for(Rule rule : getRuleArray())
 		{
 			for(Antecedent a : rule.getAntecedentArray())
@@ -308,25 +310,60 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		VariableList.remove(v);
 	}
     
-	public void saveVariable(Variable Var)
+	public void saveVariable(Variable VarNew, Variable VarOld)
 	{
-		//has to be Fixed: update with all variables in rules
-		//:search all rules for this variable name and if found replace with this variable
 
-		int x=0;
-		for (int i = 0;i< VariableList.size();i++)
+		// save the changes to the Knowledgebase
+		for(Rule rule : getRuleArray())
 		{
-			if (VariableList.get(i).getName().equals(Var.getName()))
+			for(Antecedent a : rule.getAntecedentArray())
 			{
-
-				VariableList.set(i,Var);
-				x=1;
+				if(a.getVariable() ==VarOld)
+					a.setVariable(VarNew);
+			}
+			for(Consequent c : rule.getConsequentArray())
+			{
+				if(c.getVariable() == VarOld)
+					c.setVariable(VarNew);
 			}
 		}
-		if (x==0)
+		//this updates the Variable List
+		VariableList.clear();
+		for(Rule rule : getRuleArray())
 		{
-			VariableList.add(Var);
-		}	
+			for(Antecedent a : rule.getAntecedentArray())
+			{
+				if(!VariableList.contains(a.getVariable())&& a.getVariable() !=null)
+					VariableList.add(a.getVariable());
+			}
+			for(Consequent c : rule.getConsequentArray())
+			{
+				if(!VariableList.contains(c.getVariable())&& c.getVariable() !=null)
+					VariableList.add(c.getVariable());
+			}
+		}
+		
+		
+		
+		
+		
+//		int x=0;
+//		for (int i = 0;i< VariableList.size();i++)
+//		{
+//			if (VariableList.get(i).getName().equals(VarNew.getName()))
+//			{
+//
+//				VariableList.set(i,VarNew);
+//				x=1;
+//			}
+//		}
+//		if (x==0)
+//		{
+//			VariableList.add(VarNew);
+//		}	
+		
+		
+		
 	}
 		
 	public Variable getTarget(){

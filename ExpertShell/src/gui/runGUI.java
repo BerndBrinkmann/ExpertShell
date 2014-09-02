@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Menu;
@@ -60,21 +61,6 @@ import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.custom.StyledText;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//import STUART.ADT.Rule;
 import gui.IO;
 
 import java.awt.event.ActionEvent;
@@ -120,7 +106,7 @@ import datatypes.*;
 import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
-public class runGUI extends Composite {
+public class runGUI extends Composite implements Serializable {
 	protected static Shell shlExpertSystemShell;
 	private Label text;
 	private Text text_1;
@@ -537,8 +523,8 @@ switch(kb.getUncertaintyMethod())
 			
 			if(btnRun.getText().equals("Run"))
 			{
-				
-				
+			
+	//		KBase = (KnowledgeBase)MainScreen.window.CopyKnowledgeBase(KBase);
 			Inference = new InferenceEngine(KBase);
 			Inference.stopFlag = false;
 			resetVariableValues();
@@ -549,7 +535,6 @@ switch(kb.getUncertaintyMethod())
 			btnRun.setText("Stop");
 			
 			if(text.getText()==""){
-				
 				NoRun noKB = new NoRun(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
 				noKB.open();	
 			}
@@ -895,7 +880,7 @@ switch(kb.getUncertaintyMethod())
 	CompQ.layout();
 		*/	
 		thisRule = rule;
-//TODO
+
 		/*	
 		boolean invalid = true;
 		while(invalid)
@@ -979,5 +964,9 @@ switch(kb.getUncertaintyMethod())
 		{
 			r.setFired(false);
 		}
+	}
+	public void updateKBase(KnowledgeBase kb)
+	{
+		KBase = kb;
 	}
 }

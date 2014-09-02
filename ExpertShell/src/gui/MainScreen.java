@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Menu;
@@ -118,6 +119,7 @@ public class MainScreen  implements Serializable {
     static Rule tRule; // a hack to get this into the description function
     public InferenceEngine Inference;
     public runGUI composite; 
+    private VariablesGUI Variables;
     static MainScreen window;
     Display display;
     
@@ -350,9 +352,10 @@ public class MainScreen  implements Serializable {
 		
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmUserInterface.setText("Run Knowledgebase");
-
-		KBase = test.createBoatKnowlegeBase(this);
-		
+		if (KBase.getName() == "default")
+		{
+			KBase = test.createBoatKnowlegeBase(this);
+		}
 		composite = new runGUI(tabFolder, SWT.NONE,KBase,shlExpertSystemShell, display);
 		tbtmUserInterface.setControl(composite);
 		KBase.setRunGui(composite);
@@ -483,16 +486,29 @@ public class MainScreen  implements Serializable {
 		mntmExit.setText("Exit");
 		
 		MenuItem mntmOpenKnowlledgebase = new MenuItem(menu, SWT.CASCADE);
+		mntmOpenKnowlledgebase.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				KBase = FileManager.loadKnowledgeFile();
+				KBase.setRunGui(composite);
+				Variables.updateKBase(KBase);
+				composite.updateKBase(KBase);
+			}
+		});
 		mntmOpenKnowlledgebase.setText("Open Knowledgebase");
 		
-		Menu menu_2 = new Menu(mntmOpenKnowlledgebase);
-		mntmOpenKnowlledgebase.setMenu(menu_2);
-		
 		MenuItem mntmSaveKnowledgebase = new MenuItem(menu, SWT.CASCADE);
+		mntmSaveKnowledgebase.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				//is executed if save knowledgebase is selected
+				e.getSource();
+				FileManager.saveKnowledgeFile(KBase);
+		//		composite;
+			}
+
+		});
 		mntmSaveKnowledgebase.setText("Save Knowledgebase");
-		
-		Menu menu_5 = new Menu(mntmSaveKnowledgebase);
-		mntmSaveKnowledgebase.setMenu(menu_5);
 		
 		
 
@@ -605,10 +621,11 @@ public class MainScreen  implements Serializable {
 		
 		
 		
-		VariablesGUI Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
+		Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
 		Variables.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		tbtmVariables.setControl(Variables);
 		
 		
 	}
+	
 }
