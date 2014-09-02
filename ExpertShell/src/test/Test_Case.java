@@ -299,7 +299,7 @@ public class Test_Case implements Serializable {
 		Value dry = new Value("dry");
 		today.addPossibleValue(rain);
 		today.addPossibleValue(dry);
-		today.setUserInput(false);
+		today.setUserInput(true);
 		
 		Variable tomorrow = new Variable("tomorrow");
 		forecast.addVariable(tomorrow);
@@ -307,7 +307,7 @@ public class Test_Case implements Serializable {
 		Value drytom = new Value("dry");
 		tomorrow.addPossibleValue(raintom);
 		tomorrow.addPossibleValue(drytom);
-		tomorrow.setUserInput(true);
+		tomorrow.setUserInput(false);
 		
 		Variable rainfall = new Variable("rainfall");
 		forecast.addVariable(rainfall);
@@ -331,6 +331,7 @@ public class Test_Case implements Serializable {
 		Value clear = new Value("clear");
 		sky.addPossibleValue(overc);
 		sky.addPossibleValue(clear);
+		sky.setUserInput(true);
 	
 		Rule[] rules = new Rule[6];
 		
