@@ -2,12 +2,7 @@ package datatypes;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import datatypes.Antecedent;
-import datatypes.Consequent;
-import datatypes.Rule;
-import datatypes.KBSettings;
-import datatypes.Value;
-import datatypes.Variable;
+import datatypes.*;
 
 public class Variable implements Serializable
 {
