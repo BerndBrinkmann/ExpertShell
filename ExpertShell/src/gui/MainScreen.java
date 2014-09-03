@@ -557,7 +557,7 @@ public class MainScreen  implements Serializable {
 				ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				//scrolledComposite.setMinSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				
-				composite_3.getParent().getParent().layout(true,true);
+				
 				
 				
 				
@@ -586,6 +586,8 @@ public class MainScreen  implements Serializable {
 				ruleList.setEditorHolder(compRuleEditorHolder);
 				//ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase.getRule(2), KBase);
 				compRuleEditorHolder.layout();
+				composite_3.getParent().getParent().layout(true,true);
+				
 				
 				TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);
 				tbtmVariables.setText("Variables");
