@@ -216,7 +216,18 @@ public class Variable implements Serializable
 		return index;
 	}
 	
-	public Value[] getArrayOfPossibleValues()	//should be able to just use get
+	public int getValueIndex(String s)
+	{
+		int found = -1;
+		for(Value v : getArrayOfPossibleValues()) {
+			found++;
+			if ( s.equals(v.getName()) )
+				return found;
+		}
+		
+		return -1;
+	}
+ 	public Value[] getArrayOfPossibleValues()	//should be able to just use get
 	{
 		return possibleValues.toArray(new Value[possibleValues.size()]);
 	}
