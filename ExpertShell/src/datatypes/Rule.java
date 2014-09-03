@@ -228,13 +228,13 @@ public class Rule extends getSetKBSettings implements Serializable
 					 }
 					 
 				 }
-				 //if the variable has a value
-				/* if(!getAntecedent(i).evaluate())
+				 else
 				 {
-					 // and evaluates to false then return
-					 return false;
-				 }		 
-				 */
+					 if(!getAntecedent(i).evaluate())
+					 {
+						 return false;
+					 }		 
+				 } 	 
 			}
 			fire();
 			return true;

@@ -81,7 +81,7 @@ public class InferenceEngine implements Serializable {
 					}
 					else
 					{
-						return null;
+						
 					}
 				}
 			}

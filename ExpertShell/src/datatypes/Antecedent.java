@@ -61,11 +61,11 @@ public class Antecedent extends getSetKBSettings implements Serializable
 			setValue(new Value(""));
 	}
 	
-	public double getLikelihoodOfNecessity()
+	/*public double getLikelihoodOfNecessity()
 	{
 		return likelihoodOfNecessity;
 	}
-	
+	*/
 	public Comparison getComparison()
 	{
 		return comparison;
@@ -110,7 +110,9 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	{
 		if(!(variable instanceof NumericVariable))
 		{
-			if(variable.getCurrentValue() == value)
+			
+			//System.out.println(variable.getCurrentValue().toString() + "  =?  " + value.toString());
+			if(variable.getCurrentValue().toString().equals(value.toString()))
 			{
 				return true;
 			}
