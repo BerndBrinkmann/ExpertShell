@@ -256,7 +256,10 @@ public class MainScreen  implements Serializable {
 					KBase = (KnowledgeBase) Temp;
 					KBase.setRunGui(composite);
 					Variables.updateKBase(KBase);
-					composite.updateKBase(KBase);
+					if (composite!= null)
+					{
+						composite.updateKBase(KBase);
+					}
 					labelCurrentKb.setText(KBase.getName());
 				}
 			}
@@ -279,7 +282,11 @@ public class MainScreen  implements Serializable {
 					KBase = test.createBoatKnowlegeBase(window);
 					KBase.setRunGui(composite);
 					Variables.updateKBase(KBase);
-					composite.updateKBase(KBase);
+					if (composite!= null)
+					{
+						composite.updateKBase(KBase);
+					}
+					
 					labelCurrentKb.setText(KBase.getName());
 				}
 			}
@@ -302,7 +309,10 @@ public class MainScreen  implements Serializable {
 				KBase = NewKb;
 				KBase.setRunGui(composite);
 				Variables.updateKBase(KBase);
-				composite.updateKBase(KBase);
+				if (composite!= null)
+				{
+					composite.updateKBase(KBase);
+				}
 				labelCurrentKb.setText(textNewKb.getText());
 				}				
 			}
@@ -311,6 +321,39 @@ public class MainScreen  implements Serializable {
 		btnNewButton.setText("Create new");
 		
 		Button btnRun = new Button(composite_1, SWT.NONE);
+		btnRun.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// open run tab
+				if (labelCurrentKb.getText() !="No Knowledgebase loaded")
+				{
+				if (composite == null ) // only one run tab can be created
+				{
+				TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
+				tbtmUserInterface.setText("Run Knowledgebase");
+				
+				composite = new runGUI(tabFolder, SWT.NONE,KBase,shlExpertSystemShell, display);
+				tbtmUserInterface.setControl(composite);
+				KBase.setRunGui(composite);
+				
+				composite.addDisposeListener(new DisposeListener(){
+					public void widgetDisposed(DisposeEvent e)
+					{
+						composite.dispose();
+						System.out.println("trying to exit now");
+						System.exit(0);
+					}
+				});
+				tabFolder.setSelection(tbtmUserInterface);
+				}
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Please choose a Knowledgebase first");
+				}
+				
+			}
+		});
 		btnRun.setBounds(20, 402, 107, 25);
 		btnRun.setText("Run");
 		
@@ -479,27 +522,7 @@ public class MainScreen  implements Serializable {
 		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_final.jpg"));
 		
 
-		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
-		tbtmUserInterface.setText("Run Knowledgebase");
-		
-		if (KBase.getName() == "default")
-		{
-			KBase = test.createBoatKnowlegeBase(this);
-		}
-		
-		composite = new runGUI(tabFolder, SWT.NONE,KBase,shlExpertSystemShell, display);
-		tbtmUserInterface.setControl(composite);
-		KBase.setRunGui(composite);
-		
-		composite.addDisposeListener(new DisposeListener(){
-			public void widgetDisposed(DisposeEvent e)
-			{
-				composite.dispose();
-				System.out.println("trying to exit now");
-				System.exit(0);
-			}
-		});
-		
+
 		
 		MenuItem mntmOpenKnowledgeBase = new MenuItem(menu_1, SWT.CASCADE);
 		mntmOpenKnowledgeBase.setText("Open Knowledge Base");
