@@ -70,6 +70,8 @@ import org.eclipse.swt.custom.StyledText;
 
 //import STUART.ADT.Rule;
 import gui.IO;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 
 
@@ -90,6 +92,7 @@ public class MainScreen  implements Serializable {
 	private Button btnDefault;
 	private Button btnForwardChaining;
 	private Button button;
+	private Combo comboExample;
 //	private Button btnRun;
 //	private Combo combo;
 //	private Combo combo_1;
@@ -237,14 +240,69 @@ public class MainScreen  implements Serializable {
 		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
 		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		tbtmMain.setControl(composite_1);
-		composite_1.setLayout(new GridLayout(1, false));
+		composite_1.setLayout(null);
 		
+		Button btnLoadKbFromFile = new Button(composite_1, SWT.NONE);
+		btnLoadKbFromFile.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				Object Temp;
+				Temp = FileManager.loadKnowledgeFile();
+				if (Temp !=null)
+				{
+					KBase = (KnowledgeBase) Temp;
+					KBase.setRunGui(composite);
+					Variables.updateKBase(KBase);
+					composite.updateKBase(KBase);
+				}
+
+				
+			}
+		});
+		btnLoadKbFromFile.setBounds(58, 274, 86, 25);
+		btnLoadKbFromFile.setText("Load from file");
+		
+		comboExample = new Combo(composite_1, SWT.NONE);
+		comboExample.setBounds(160, 245, 139, 23);
+		comboExample.add("Weather");
+		comboExample.add("Weather Numeric");
+
+		Button btnLoadExample = new Button(composite_1, SWT.NONE);
+		btnLoadExample.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// load an example
+				if (comboExample.getSelectionIndex() == 0)
+				{
+					KBase = test.createBoatKnowlegeBase(window);
+					KBase.setRunGui(composite);
+					Variables.updateKBase(KBase);
+					composite.updateKBase(KBase);
+				}
+			}
+		});
+		btnLoadExample.setBounds(58, 243, 85, 25);
+		btnLoadExample.setText("Load example");
+		
+		Button btnNewButton = new Button(composite_1, SWT.NONE);
+		btnNewButton.setBounds(58, 377, 63, 25);
+		btnNewButton.setText("Edit");
+		
+		Button btnRun = new Button(composite_1, SWT.NONE);
+		btnRun.setBounds(127, 377, 75, 25);
+		btnRun.setText("Run");
+		
+		Button btnNewButton_1 = new Button(composite_1, SWT.NONE);
+		btnNewButton_1.setBounds(492, 35, 102, 25);
+		btnNewButton_1.setText("Quick Start Guide");
+		
+		Button btnNewButton_2 = new Button(composite_1, SWT.NONE);
+		btnNewButton_2.setBounds(622, 35, 75, 25);
+		btnNewButton_2.setText("Manuel");
 		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
+		lblNewLabel_1.setText("Load");
+		lblNewLabel_1.setBounds(0, 0, 730, 528);
 		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		GridData gd_lblNewLabel_1 = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_lblNewLabel_1.heightHint = 515;
-		gd_lblNewLabel_1.widthHint = 719;
-		lblNewLabel_1.setLayoutData(gd_lblNewLabel_1);
 		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_final.jpg"));
 		
 		TabItem tbtmQuickStart = new TabItem(tabFolder, SWT.NONE);
@@ -352,10 +410,12 @@ public class MainScreen  implements Serializable {
 		
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmUserInterface.setText("Run Knowledgebase");
+		
 		if (KBase.getName() == "default")
 		{
 			KBase = test.createBoatKnowlegeBase(this);
 		}
+		
 		composite = new runGUI(tabFolder, SWT.NONE,KBase,shlExpertSystemShell, display);
 		tbtmUserInterface.setControl(composite);
 		KBase.setRunGui(composite);
