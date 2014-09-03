@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -40,6 +41,7 @@ public class AntecedentGUI {
 		//get listeners
 		SelectionAdapter s = p.parent.selAdaptor;
 		FocusAdapter f = p.parent.focAdaptor;
+		KeyAdapter enter = p.parent.enterAdaptor;
 		
 		if (!first) {
 			delButton = RuleGUIFactory.createButtonDelete(c);
@@ -47,16 +49,20 @@ public class AntecedentGUI {
 			
 			logicComb = RuleGUIFactory.createComboComLogic(c);
 			logicComb.addFocusListener(f);
+			logicComb.addKeyListener(enter);
 		}
 		
 		var = RuleGUIFactory.createComboVar(c);
 		var.addFocusListener(f);
+		var.addKeyListener(enter);
 		
 		logicComparitor = RuleGUIFactory.createComboComparitor(c);
 		logicComparitor.addFocusListener(f);
+		logicComparitor.addKeyListener(enter);
 		
 		value = RuleGUIFactory.createComboValue(c);
 		value.addFocusListener(f);
+		value.addKeyListener(enter);
 		
 		filler = new Label(c, SWT.NONE);
 		
@@ -99,10 +105,20 @@ public class AntecedentGUI {
 		//(add numeric!!!!!!!!!!!!!!)
 		//update value
 		value.removeAll();
-		for (Value v : ant.getVariable().getArrayOfPossibleValues()) {
-			value.add(v.toString());
+		if(!ant.getIsNumeric()) {
+			for (Value v : ant.getVariable().getArrayOfPossibleValues()) {
+				value.add(v.toString());
+			}
+			
+			int valueIndex =ant.getVariable().getValueIndex(ant.getValue()); 
+			if(valueIndex != -1){
+				value.select(valueIndex);
+			} else {
+				value.setText(ant.getValue().toString());
+			}
+		} else {
+			value.setText(ant.getNumVal().toString());
 		}
-		value.select(ant.getVariable().getValueIndex(ant.getValue()));
 		
 	}
 	

@@ -19,6 +19,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		variable = new Variable("default");
 		comparison = Comparison.IS;
 		value = new Value("default",this);
+		
 	}
 	
 	public Antecedent(Variable var,Comparison comp ,Double val)
@@ -44,6 +45,22 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		numVal = val;
 	}
 
+	public Boolean getIsNumeric()
+	{
+		return isNumeric;
+	}
+
+	public void setIsNumeric(Boolean isNumeric)
+	{
+		this.isNumeric = isNumeric;
+		if(variable != null)
+			variable.setIsNumeric(isNumeric);
+		if(isNumeric)
+			setValue(0.0);
+		else
+			setValue(new Value(""));
+	}
+	
 	public double getLikelihoodOfNecessity()
 	{
 		return likelihoodOfNecessity;
@@ -197,10 +214,21 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	
 	public void setComparison(Comparison comparison)
 	{
-		if(this.variable instanceof NumericVariable)
-		{
-			this.comparison = comparison;
-		}
+//		if(this.variable instanceof NumericVariable)
+//		{
+//			this.comparison = comparison;
+//		}
+		
+		//see what type of comparison we have
+		boolean comparisonIsNumeric = comparison.numeric;
+		
+		//assign it
+		this.comparison = comparison;
+		
+		//if antecedent is different then set it
+		if(isNumeric != comparisonIsNumeric)
+			setIsNumeric(comparisonIsNumeric);
+		
 				
 	}
 	@Override

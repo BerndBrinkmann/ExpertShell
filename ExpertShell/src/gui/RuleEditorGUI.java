@@ -2,8 +2,11 @@ package gui;
 
 import gui.WidgetTypes.*;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TypedEvent;
@@ -15,8 +18,10 @@ import org.eclipse.swt.widgets.Widget;
 import datatypes.Antecedent;
 import datatypes.Consequent;
 import datatypes.KBSettings.UncertaintyManagement;
+import datatypes.Comparison;
 import datatypes.KnowledgeBase;
 import datatypes.Rule;
+import datatypes.Value;
 import datatypes.Variable;
 
 public class RuleEditorGUI {
@@ -32,6 +37,7 @@ public class RuleEditorGUI {
 	
 	public SelectionAdapter selAdaptor;
 	public FocusAdapter focAdaptor;
+	public KeyAdapter enterAdaptor;
 	
 	public RuleEditorGUI(Composite p, int index, KnowledgeBase k, RuleListGUI rl) {
 		
@@ -52,6 +58,16 @@ public class RuleEditorGUI {
 			@Override
 			public void focusLost(FocusEvent e) {
 				handleUserAction(e);
+			}
+		};
+		
+		//for pressing 'enter' key
+		enterAdaptor = new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.character == SWT.CR) {
+					handleUserAction(e);
+				}
 			}
 		};
 		
@@ -86,6 +102,7 @@ public class RuleEditorGUI {
 		return ruleListGUI;
 	}
 	public void updateUncertainty() {
+		//this just re-calculates the vertical span of the 'lnls' container composite
 		antList.updateUncertainty();
 		consList.updateUncertainty();
 	}
@@ -115,6 +132,7 @@ public class RuleEditorGUI {
 				
 		
 		if (group == Group.ANTECEDENT) {
+			Antecedent antecedent = rule.getAntecedent(index);
 			if (source == Source.ADD) {
 				
 				debug("Add antecedent");
@@ -125,21 +143,19 @@ public class RuleEditorGUI {
 				
 				//update GUI
 				antList.add(toAdd);
-				this.getParentRuleList().updateTextOfSelected(); //update styledtextbox
 				ruleGrid.getParent().getParent().layout(true,true);
 				
 				
 			} else if (source == Source.DELETE) {
 				
 				debug("Delete antecedent: " + index);
-				Antecedent toDelete = rule.getAntecedent(index);
+				Antecedent toDelete = antecedent;
 				
 				//update KB
 				rule.removeConditional(toDelete);
 				
 				//update GUI
 				antList.delete(index);
-				this.getParentRuleList().updateTextOfSelected();
 				
 				ruleGrid.getParent().getParent().layout(true,true);
 				
@@ -168,12 +184,12 @@ public class RuleEditorGUI {
 						kb.addVariable(var);
 					}
 					
-					rule.getAntecedent(index).setVariable(var);
+					antecedent.setVariable(var);
 					
 				} else { //user has selected an existing variable
 					
 					//set the var in the kb
-					rule.getAntecedent(index).setVariable(kb.getVariable(comboText));
+					antecedent.setVariable(kb.getVariable(comboText));
 				}
 				
 				//update values of GUI elements for this antecedent
@@ -181,10 +197,53 @@ public class RuleEditorGUI {
 				
 			} else if (source == Source.COMPARE) {
 				debug("Change antecedent comparitor logic: " + index);
-				//add code to modify KB here!
+				
+				//get a pointer to the combo involved
+				Combo combo = (Combo)w;
+				
+				//get index of item selected
+				Comparison selected = Comparison.values()[combo.getSelectionIndex()];
+				
+				//set in the KB
+				antecedent.setComparison(selected);
+				
+				//update the GUI
+				antList.getAntGUIList().get(index).update();
+			
+				
+				
 			} else if (source == Source.VALUE) {
 				debug("Change antecedent value: " + index);
-				//add code to modify KB here!
+				
+				Combo combo = (Combo)w;
+				
+				boolean numeric = antecedent.getIsNumeric();
+				
+				String comboText = combo.getText().trim();
+			
+				if(!numeric) {
+					
+					//check if it already exists
+					int exists = antecedent.getVariable().getValueIndex(comboText);
+												
+					if (exists != -1) {
+						//already exists - set the value to be the one found
+						antecedent.setValue(antecedent.getVariable().getPossibleValue(exists));
+					} else {
+						//add a new value with this name
+						antecedent.setValue(new Value(comboText,antecedent));
+					}
+					
+				} else if(numeric) {
+					if(!comboText.equals("")) {
+						try {
+							//try and parse the combobox text as a double
+							antecedent.setValue(Double.parseDouble(comboText));
+						} catch (NumberFormatException ex) {}
+					}
+				}
+				
+				
 			} else if (source == Source.COMBINE) {
 				debug("Change antecedent combinational logic: " + index);
 				//add code to modify KB here!
@@ -200,7 +259,6 @@ public class RuleEditorGUI {
 				
 				//update GUI
 				consList.add(toAdd);
-				this.getParentRuleList().updateTextOfSelected();
 				ruleGrid.getParent().getParent().layout(true,true);
 				
 			} else if (source == Source.DELETE) {
@@ -212,7 +270,6 @@ public class RuleEditorGUI {
 				
 				//update GUI
 				consList.delete(index);
-				this.getParentRuleList().updateTextOfSelected();
 				ruleGrid.getParent().getParent().layout(true,true);
 				
 			} else if (source == Source.VARIABLE) {
@@ -233,6 +290,9 @@ public class RuleEditorGUI {
 				//add code to modify KB here!
 			}
 		}
+		
+		//update the list text
+		this.getParentRuleList().updateTextOfSelected();
 	}
 
 	

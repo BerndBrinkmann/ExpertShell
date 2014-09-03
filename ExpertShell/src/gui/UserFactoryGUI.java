@@ -36,6 +36,17 @@ public final class UserFactoryGUI {
 		return label;
 	}
 	
+	public static Group createGroupKbSelect(Composite parent, int style) {
+		Group group = new Group(parent, style);
+		group.setLayout(new GridLayout(3, false));
+		GridData gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
+		gridData.heightHint = 62;
+		gridData.widthHint = 345;
+		group.setLayoutData(gridData);
+		group.setText("Knowledge Base Selected");
+		return group;
+	}
+	
 	/**
 	 * @wbp.factory
 	 * @wbp.factory.parameter.source layoutData gd_combo

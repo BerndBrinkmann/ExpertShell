@@ -85,6 +85,8 @@ public class Rule extends getSetKBSettings implements Serializable
 	
 	public Antecedent getAntecedent(int i)
 	{
+		if (i == -1) return null;
+		//else
 		return antecedents.get(i);
 	}
 	

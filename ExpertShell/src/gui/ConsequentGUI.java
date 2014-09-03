@@ -99,6 +99,9 @@ public class ConsequentGUI {
 		}
 		value.select(con.getVariable().getValueIndex(con.getValue()));
 		
+		//update CF
+		spinCF.setSelection((int) (con.getCertaintyFactor()*100) );
+		
 		//update prior
 		//double select = con.getVariable().getBelief(con.getValue());
 						

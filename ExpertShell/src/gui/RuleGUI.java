@@ -103,7 +103,7 @@ public class RuleGUI extends Group {
 			appendWithStyle(c.getValueAsString(),styleValue);
 			
 			if (rule.getUncertaintyMethod() == KBSettings.UncertaintyManagement.CF) {
-				append("(CF: " + c.getCertaintyFactor() + ")");
+				appendWithStyle("  (CF: " + c.getCertaintyFactor() + ")", styleValue);
 			}
 			append("\r\n");
 		}

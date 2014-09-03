@@ -19,6 +19,8 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 
 
 public class RuleGUI_temp extends Composite {

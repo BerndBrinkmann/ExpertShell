@@ -14,6 +14,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	protected ArrayList<Rule> RuleList;
 	protected ArrayList<Variable> VariableList = new ArrayList<Variable>();
 	protected getSetKBSettings getsetSettings;
+	//not needed - enum classes are static - Arie
 	//protected KBSettings kbSettings = new KBSettings();
 	
 	//these are declared in the parent class (getSetKBSettings) - Arie
@@ -28,6 +29,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty) {
 		this.uncertaintyType = uncertainty;
 		
+		//set uncertainty for all its rules
 		for(Rule r : RuleList) {
 			r.setUncertaintyMethod(uncertainty);
 		}
