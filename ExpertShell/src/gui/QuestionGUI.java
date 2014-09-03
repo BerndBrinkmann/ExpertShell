@@ -52,13 +52,15 @@ public class QuestionGUI {
 	private Variable var;
 	private InferenceEngine infer;
 	static Label lblWhyHow;
+	private Boolean OkayFlag1 =false;
+	private Boolean OkayFlag2 = false;
 	static ScrolledComposite scrolledComposite_1;
 	
 	public QuestionGUI(Composite CompQ, InferenceEngine Inference, Group questionGroup, String message, Variable var, ScrolledComposite scrolledComposite, Rule currentRule, Label whyhow,ScrolledComposite ScrolledComposite_1){
 		scrolledComposite_1 = ScrolledComposite_1;
-		WhyL= WhyListener;
-		HowL= HowListener;
-		OKL= OKListener;
+		//WhyL= WhyListener;
+		//HowL= HowListener;
+		//OKL= OKListener;
 
 		AnswerComboL= AnswerComboListener;
 		howlist  = Inference.getHowList();
@@ -72,22 +74,23 @@ public class QuestionGUI {
 		CompQ.layout();
 		questionGroup.setFocus();
 		CompQ.update();
-		while(var.currentValue == null)
+	/*	while(var.currentValue == null)
 		{
 			try
 			{
 				wait();
 			} catch (InterruptedException e){};
 			
-		}
+		}*/
 	}
 	
 	public void addQuestion(String message, Group questionGroup){
 		
 		QforUser= UserFactoryGUI.createQuestionLabel(questionGroup);
+		QforUser.setText(message);
 		GridData gd_label = new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1);
 		gd_label.widthHint=303;
-		gd_label.heightHint=65;
+		gd_label.heightHint=20;
 		QforUser.setLayoutData(gd_label);
 
 		ans = UserFactoryGUI.createAnswerCombo(questionGroup);
@@ -135,17 +138,15 @@ public class QuestionGUI {
 		CFScale.setVisible(false);
 		//scale.setLayoutData(gd_scale);
 		//scale.setVisible(false);
+		
 		WhyListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();	
-				StringBuilder s = new StringBuilder();
-				s.append("\nI am trying to evaluate the rule\n");
-				s.append(tRule != null ? tRule.toString() : "null");
-				s.toString();
+				displayWhyMessage();
 //TODO				lblWhyhow.setText(""+s);
 			}
 		};
-		HowListener = new SelectionAdapter() {
+		/*HowListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				displayHowMessage(howlist);
@@ -163,11 +164,19 @@ public class QuestionGUI {
 					}
 				}	
 			}	
-		};
+		};*/
 		OKListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-				okayPress=true;
+				if(ans.getSelectionIndex() != -1)
+				{
+					//Double CFSelection = (double) CFScale.getSelection();
+					//CFSelection = CFSelection/100;
+					var.setCurrentValue(possibleValues[ans.getSelectionIndex()]);
+					//var.setCertaintyFactor(var.getCurrentValue(),CFSelection);
+					setQueryBoxEnabled(false);
+					
+				}
 			}
 		};
 		AnswerComboListener = new SelectionAdapter() {
@@ -177,7 +186,17 @@ public class QuestionGUI {
 				System.out.println(ans.getText());
 			}	
 		};
-
+		
+		ans.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if(ans.getSelectionIndex() != -1)
+				{
+					OKButton.setEnabled(true);
+				}
+				
+			}
+		});
 
 		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
 		WhyButton.addSelectionListener(WhyListener);
@@ -187,15 +206,17 @@ public class QuestionGUI {
 		WhyButton.setText("Why?");
 		
 		HowButton = UserFactoryGUI.createHowButton(questionGroup);
-		HowButton.addSelectionListener(HowListener);
+		//HowButton.addSelectionListener(HowListener);
 		GridData gd_HowButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_HowButton.widthHint = 54;
 		HowButton.setLayoutData(gd_HowButton);
 		HowButton.setText("How?");
+		HowButton.setVisible(false);
 		
 		OKButton = UserFactoryGUI.createOKButton(questionGroup);
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		OKButton.addSelectionListener(OKListener);
+		OKButton.setEnabled(false);	
 	
 		
 	}
@@ -231,6 +252,17 @@ public class QuestionGUI {
 		scrolledComposite_1.setMinSize(lblWhyHow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		scrolledComposite_1.layout();
 		scrolledComposite_1.update();
+	}
+	
+	public void setQueryBoxEnabled(Boolean enable)
+	{
+		WhyButton.setEnabled(enable);
+		HowButton.setEnabled(enable);
+		OKButton.setEnabled(enable);
+		ans.setEnabled(enable);
+		QforUser.setEnabled(enable);
+		//CFPercentage.setEnabled(enable);
+		//CFScale.setEnabled(enable);
 	}
 
 }

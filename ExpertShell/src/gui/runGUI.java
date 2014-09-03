@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Menu;
@@ -60,21 +61,6 @@ import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.custom.StyledText;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//import STUART.ADT.Rule;
 import gui.IO;
 
 import java.awt.event.ActionEvent;
@@ -120,7 +106,7 @@ import datatypes.*;
 import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
-public class runGUI extends Composite {
+public class runGUI extends Composite implements Serializable {
 	protected static Shell shlExpertSystemShell;
 	private Label text;
 	private Text text_1;
@@ -210,7 +196,7 @@ public class runGUI extends Composite {
 	gd_grpKnowledgeBaseSelected.heightHint = 62;
 	gd_grpKnowledgeBaseSelected.widthHint = 345;
 	grpKnowledgeBaseSelected.setLayoutData(gd_grpKnowledgeBaseSelected);
-	grpKnowledgeBaseSelected.setText("Knowledge Base Selected");
+	grpKnowledgeBaseSelected.setText("Knowledge Base Selected/Opened");
 	
 	text = new Label(grpKnowledgeBaseSelected, SWT.NONE);
 	GridData gd_text = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
@@ -269,7 +255,7 @@ public class runGUI extends Composite {
 	btnBackwardChaining.setText("Backward Chaining");
 	btnBackwardChaining.setSelection(false);
 	
-	System.out.println(kb.getInferenceMethod());
+	//System.out.println(kb.getInferenceMethod());
 	switch(kb.getInferenceMethod())
 	{
 	case F_CHAINING:
@@ -357,6 +343,28 @@ public class runGUI extends Composite {
 	btnBayesianReasoning.setBounds(10, 40, 145, 16);
 	btnBayesianReasoning.setSelection(false);
 	
+switch(kb.getUncertaintyMethod())
+	{
+	case NONE:
+		button.setSelection(true);
+		btnCertainityFactor.setSelection(false);
+		btnBayesianReasoning.setSelection(false);
+		break;
+	case BAYESIAN:
+		button.setSelection(true);
+		btnCertainityFactor.setSelection(false);
+		btnBayesianReasoning.setSelection(false);
+		break;
+	
+	case CF:
+		button.setSelection(false);
+		btnCertainityFactor.setSelection(true);
+		btnBayesianReasoning.setSelection(false);
+		break;
+		
+	default:		
+	}
+	
 	
 	scrolledComposite = new ScrolledComposite(this, SWT.V_SCROLL);
 	scrolledComposite.addTraverseListener(new TraverseListener() {
@@ -381,7 +389,20 @@ public class runGUI extends Composite {
 	});
 	CompQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	CompQ.setLayout(new GridLayout(1, false));
+	scrolledComposite.setContent(CompQ);
+	scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	
+	/*CompQ = new Composite(scrolledComposite, SWT.NONE);
+	CompQ.addControlListener(new ControlAdapter() {
+		@Override
+		public void controlResized(ControlEvent e) {
+			e.getSource();
+			//CompQ.update();
+		}
+	});
+	CompQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	CompQ.setLayout(new GridLayout(1, false));
+	*/
 
 	
 	
@@ -499,11 +520,14 @@ public class runGUI extends Composite {
 			e.getSource();
 			
 			
+			
 			if(btnRun.getText().equals("Run"))
 			{
+			
+	//		KBase = (KnowledgeBase)MainScreen.window.CopyKnowledgeBase(KBase);
 			Inference = new InferenceEngine(KBase);
 			Inference.stopFlag = false;
-			resetVariablecValues();
+			resetVariableValues();
 			for(Control i: CompQ.getChildren())
 			{
 				i.dispose();
@@ -511,7 +535,6 @@ public class runGUI extends Composite {
 			btnRun.setText("Stop");
 			
 			if(text.getText()==""){
-				
 				NoRun noKB = new NoRun(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
 				noKB.open();	
 			}
@@ -552,7 +575,8 @@ public class runGUI extends Composite {
 		    }
 		}
 		else
-		{resetVariablecValues();
+		{resetVariableValues();
+		
 		for(Control i: CompQ.getChildren())
 		{
 			i.dispose();
@@ -687,8 +711,8 @@ public class runGUI extends Composite {
 	OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 	OKButton.setText("OK");*/
 	
-	scrolledComposite.setContent(CompQ);
-	scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	//scrolledComposite.setContent(CompQ);
+	//scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
 /*
 	ScrolledComposite scrolledComposite_1 = new ScrolledComposite(composite, SWT.BORDER | SWT.V_SCROLL);
@@ -856,7 +880,7 @@ public class runGUI extends Composite {
 	CompQ.layout();
 		*/	
 		thisRule = rule;
-//TODO
+
 		/*	
 		boolean invalid = true;
 		while(invalid)
@@ -929,11 +953,20 @@ public class runGUI extends Composite {
 		return okayFlag;
 	}
 	
-	public void resetVariablecValues()
+	public void resetVariableValues()
 	{
 		for(Variable v : KBase.getVariablesArray())
 		{
-			v.setCurrentValue((Value) null);
+			//v.setCurrentValue((Value) null);
+			v.clearVariable();
 		}
+		for(Rule r: KBase.getRuleArray())
+		{
+			r.setFired(false);
+		}
+	}
+	public void updateKBase(KnowledgeBase kb)
+	{
+		KBase = kb;
 	}
 }

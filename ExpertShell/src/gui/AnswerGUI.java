@@ -89,7 +89,7 @@ public class AnswerGUI {
 	static ScrolledComposite ScrolledComposite_1;
 	static KnowledgeBase KBase;
 	
-	public AnswerGUI(Composite CompQ, Variable var, ScrolledComposite scrolledComposite , Label whyhow, ArrayList<Rule> howList, KnowledgeBase kb, ScrolledComposite scrolledComposite_1){
+	public AnswerGUI(Composite CompQ, Variable result, ScrolledComposite scrolledComposite , Label whyhow, ArrayList<Rule> howList, KnowledgeBase kb, ScrolledComposite scrolledComposite_1){
 		
 		Group questionGroup;
 		questionGroup = UserFactoryGUI.createQuestionGroup(CompQ);
@@ -103,10 +103,10 @@ public class AnswerGUI {
 		CFScaleL = CFScaleListener;
 		AnswerComboL= AnswerComboListener;
 		HowList  = howList;
-		this.var = var;
+		this.var = result;
 		possibleValues = var.getArrayOfPossibleValues();
 		lblWhyHow = whyhow;
-		String message = getMessage(var,kb,HowList);
+		String message = getMessage(result,kb,HowList);
 		showAnswer(questionGroup, message,kb,CompQ);
 		scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		scrolledComposite.showControl(questionGroup);
@@ -253,11 +253,13 @@ public void showAnswer(Group questionGroup, String message, final KnowledgeBase 
 		OKListener1 = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-				{kb.rungui.resetVariablecValues();
+				{
+					kb.rungui.resetVariableValues();
 				for(Control i: CompQ.getChildren())
 				{
 					i.dispose();
 				}
+				//var.certaintyFactors.clear();
 				var = null;
 				kb.rungui.result = null;
 				

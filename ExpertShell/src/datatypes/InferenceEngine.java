@@ -97,6 +97,7 @@ public class InferenceEngine implements Serializable {
 	
 	public Variable solveBackwardChaining(Variable selectedVariable)
 	{
+		
 		Variable targetVar = selectedVariable;
 		Value targetVal = IO.getValue("Input a value to search for111", targetVar.getArrayOfPossibleValues());
 		if(targetVar == null || targetVal == null)
@@ -109,6 +110,7 @@ public class InferenceEngine implements Serializable {
 	
 	public Variable solveBackwardChaining(Variable targetVar, Value targetVal)
 	{
+		
 		if(targetVar == null || targetVal == null)
 		{
 			System.out.println("Operation Cancelled by User");

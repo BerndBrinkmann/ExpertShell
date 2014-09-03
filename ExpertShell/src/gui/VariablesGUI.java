@@ -44,6 +44,7 @@ public class VariablesGUI extends Composite {
 	 private Button btnRadioButtonYes;
 	 private Button btnRadioButtonNo;
 	 private Button btnSave;
+	 private Variable TempVariable = new Variable();		
 	 /**
 	 * Create the composite.
 	 * @param parent
@@ -142,7 +143,7 @@ public class VariablesGUI extends Composite {
 		descriptionTxt.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				
-				currentvariable.setDescription(descriptionTxt.getText());
+				//currentvariable.setDescription(descriptionTxt.getText());
 			}
 		});
 		descriptionTxt.setBounds(112, 49, 369, 104);
@@ -189,7 +190,7 @@ public class VariablesGUI extends Composite {
 		QuestionPrompt.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 			
-				currentvariable.setQueryPrompt(QuestionPrompt.getText());
+				//currentvariable.setQueryPrompt(QuestionPrompt.getText());
 			
 			}
 		});
@@ -213,10 +214,9 @@ public class VariablesGUI extends Composite {
 				// Save button was pressed
 				if(e.getSource() == btnSave && currentvariable != null)
 				{
-					Variable TempVariable = new Variable();
-// TODO change to grey out fields if no variable is selected					
-					
+							
 					Boolean flag = false;
+					TempVariable = currentvariable;
 					for (int i = 0;i< KBase.getVariablesArray().size();i++)
 					{
 						if (KBase.getVariablesArray().get(i).getName().equals(txtVariableName.getText()) && !(currentvariable.getName().equals(txtVariableName.getText())))
@@ -228,31 +228,31 @@ public class VariablesGUI extends Composite {
 					}
 					if(!flag)
 					{
-					currentvariable.setUserInput(btnRadioButtonYes.getSelection());
-					currentvariable.setName(txtVariableName.getText().trim());
-					currentvariable.setDescription(descriptionTxt.getText());
-					currentvariable.setQueryPrompt(QuestionPrompt.getText());
+					TempVariable.setUserInput(btnRadioButtonYes.getSelection());
+					TempVariable.setName(txtVariableName.getText().trim());
+					TempVariable.setDescription(descriptionTxt.getText());
+					TempVariable.setQueryPrompt(QuestionPrompt.getText());
 					}
-					
+					KBase.saveVariable(TempVariable,currentvariable );
 					variableList.removeAll();
 					for (Variable v: KBase.getVariablesArray())
 					{
 						variableList.add(v.getName());
-						setVariableList();
+						//setVariableList();
 					}
 				}
 					
 				
 				
-				if(e.getSource() == btnRadioButtonYes && currentvariable!=null)
+				if(e.getSource() == btnRadioButtonYes && TempVariable!=null)
 				{
-					currentvariable.setUserInput(true);
+					TempVariable.setUserInput(true);
 					
 				}
 				
-				if(e.getSource() == btnRadioButtonNo && currentvariable!=null)
+				if(e.getSource() == btnRadioButtonNo && TempVariable!=null)
 				{
-					currentvariable.setUserInput(false);
+					TempVariable.setUserInput(false);
 				}
 			}
 		});
@@ -290,4 +290,10 @@ public class VariablesGUI extends Composite {
 		}
 		}
 	}
+	public void updateKBase(KnowledgeBase kb)
+	{
+		KBase = kb;
+		setVariableList();
+	}
+	
 }
