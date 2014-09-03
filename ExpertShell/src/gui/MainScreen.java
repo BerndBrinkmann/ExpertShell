@@ -139,6 +139,7 @@ public class MainScreen  implements Serializable {
 	public SelectionAdapter CFListener;
 	public SelectionAdapter CFScaleListener;
 	private GridData gd_SC_QuickStart;
+	private Text textNewKb;
 
 	/**
 	 * Launch the application.
@@ -260,11 +261,11 @@ public class MainScreen  implements Serializable {
 				}
 			}
 		});
-		btnLoadKbFromFile.setBounds(20, 305, 107, 25);
+		btnLoadKbFromFile.setBounds(20, 337, 107, 25);
 		btnLoadKbFromFile.setText("Load from file");
 		
 		comboExample = new Combo(composite_1, SWT.NONE);
-		comboExample.setBounds(144, 245, 139, 23);
+		comboExample.setBounds(144, 277, 139, 23);
 		comboExample.add("Weather");
 		comboExample.add("Weather Numeric");
 
@@ -283,11 +284,30 @@ public class MainScreen  implements Serializable {
 				}
 			}
 		});
-		btnLoadExample.setBounds(20, 243, 107, 25);
+		btnLoadExample.setBounds(20, 275, 107, 25);
 		btnLoadExample.setText("Load example");
 		
 		Button btnNewButton = new Button(composite_1, SWT.NONE);
-		btnNewButton.setBounds(20, 274, 107, 25);
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// create new knowledgebase
+				if (textNewKb.getText()=="")
+				{
+					JOptionPane.showMessageDialog(null, "Please enter Knowledgebase Name");
+				}
+					else
+				{
+				KnowledgeBase NewKb = new KnowledgeBase(textNewKb.getText());
+				KBase = NewKb;
+				KBase.setRunGui(composite);
+				Variables.updateKBase(KBase);
+				composite.updateKBase(KBase);
+				labelCurrentKb.setText(textNewKb.getText());
+				}				
+			}
+		});
+		btnNewButton.setBounds(20, 306, 107, 25);
 		btnNewButton.setText("Create new");
 		
 		Button btnRun = new Button(composite_1, SWT.NONE);
@@ -410,12 +430,12 @@ public class MainScreen  implements Serializable {
 			}
 		});
 		
-		btnOpenQuickStartGuide.setBounds(443, 26, 102, 25);
+		btnOpenQuickStartGuide.setBounds(525, 10, 102, 25);
 		btnOpenQuickStartGuide.setText("Quick Start Guide");
 		
 		Button btnOpenManuel = new Button(composite_1, SWT.NONE);
-		btnOpenManuel.setBounds(604, 26, 75, 25);
-		btnOpenManuel.setText("Manuel");
+		btnOpenManuel.setBounds(633, 10, 75, 25);
+		btnOpenManuel.setText("Manual");
 		
 		Button btnSaveToFile = new Button(composite_1, SWT.NONE);
 		btnSaveToFile.addMouseListener(new MouseAdapter() {
@@ -428,7 +448,7 @@ public class MainScreen  implements Serializable {
 			}
 		});
 		btnSaveToFile.setText("Save to file");
-		btnSaveToFile.setBounds(20, 349, 107, 25);
+		btnSaveToFile.setBounds(144, 337, 107, 25);
 		
 		Button btnEdit = new Button(composite_1, SWT.NONE);
 		btnEdit.setText("Edit");
@@ -438,20 +458,23 @@ public class MainScreen  implements Serializable {
 		lblCurrentKnowledgebase.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD | SWT.ITALIC));
 		lblCurrentKnowledgebase.setAlignment(SWT.CENTER);
 		lblCurrentKnowledgebase.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		lblCurrentKnowledgebase.setText("Current Knowledgebase:");
+		lblCurrentKnowledgebase.setText("Current Knowledgebase :");
 		lblCurrentKnowledgebase.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
-		lblCurrentKnowledgebase.setBounds(20, 222, 160, 17);
+		lblCurrentKnowledgebase.setBounds(20, 224, 163, 25);
+		
+		textNewKb = new Text(composite_1, SWT.BORDER);
+		textNewKb.setBounds(144, 308, 139, 25);
 		
 		labelCurrentKb = new Label(composite_1, SWT.NONE);
-		labelCurrentKb.setText("-");
+		labelCurrentKb.setAlignment(SWT.CENTER);
+		labelCurrentKb.setText("No Knowledgebase loaded");
 		labelCurrentKb.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		labelCurrentKb.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD | SWT.ITALIC));
-		labelCurrentKb.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
-		labelCurrentKb.setAlignment(SWT.CENTER);
-		labelCurrentKb.setBounds(189, 222, 160, 17);
+		labelCurrentKb.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
+		labelCurrentKb.setBounds(190, 224, 183, 25);
 		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
 		lblNewLabel_1.setText("Load");
-		lblNewLabel_1.setBounds(0, 0, 730, 528);
+		lblNewLabel_1.setBounds(0, 0, 720, 518);
 		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_final.jpg"));
 		
@@ -592,40 +615,6 @@ public class MainScreen  implements Serializable {
 
 		mntmExit.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/exit_new.jpg"));
 		mntmExit.setText("Exit");
-		
-		MenuItem mntmOpenKnowlledgebase = new MenuItem(menu, SWT.CASCADE);
-		mntmOpenKnowlledgebase.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				Object Temp;
-				Temp = FileManager.loadKnowledgeFile();
-				if (Temp !=null)
-				{
-					KBase = (KnowledgeBase) Temp;
-					KBase.setRunGui(composite);
-					Variables.updateKBase(KBase);
-					composite.updateKBase(KBase);
-				}
-
-				
-			}
-		});
-		mntmOpenKnowlledgebase.setText("Open Knowledgebase");
-		
-		MenuItem mntmSaveKnowledgebase = new MenuItem(menu, SWT.CASCADE);
-		mntmSaveKnowledgebase.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				//is executed if save knowledgebase is selected
-				e.getSource();
-				FileManager.saveKnowledgeFile(KBase);
-				KBase.setRunGui(composite);
-				composite.updateKBase(KBase);
-		//		composite;
-			}
-
-		});
-		mntmSaveKnowledgebase.setText("Save Knowledgebase");
 		
 		
 
