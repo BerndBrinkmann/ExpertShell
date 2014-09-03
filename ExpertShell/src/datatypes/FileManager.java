@@ -68,6 +68,7 @@ public class FileManager
 			}
 			FileOutputStream fos = new FileOutputStream(f);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			kb.setRunGui(null);
 			oos.writeObject(kb);
 			oos.close();
 		}

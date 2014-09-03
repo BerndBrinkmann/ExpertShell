@@ -489,10 +489,17 @@ public class MainScreen  implements Serializable {
 		mntmOpenKnowlledgebase.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				KBase = FileManager.loadKnowledgeFile();
-				KBase.setRunGui(composite);
-				Variables.updateKBase(KBase);
-				composite.updateKBase(KBase);
+				Object Temp;
+				Temp = FileManager.loadKnowledgeFile();
+				if (Temp !=null)
+				{
+					KBase = (KnowledgeBase) Temp;
+					KBase.setRunGui(composite);
+					Variables.updateKBase(KBase);
+					composite.updateKBase(KBase);
+				}
+
+				
 			}
 		});
 		mntmOpenKnowlledgebase.setText("Open Knowledgebase");
@@ -504,6 +511,8 @@ public class MainScreen  implements Serializable {
 				//is executed if save knowledgebase is selected
 				e.getSource();
 				FileManager.saveKnowledgeFile(KBase);
+				KBase.setRunGui(composite);
+				composite.updateKBase(KBase);
 		//		composite;
 			}
 
@@ -627,5 +636,8 @@ public class MainScreen  implements Serializable {
 		
 		
 	}
-	
+	public void updateKnowledgeBase()
+	{
+		composite.updateKBase(KBase);
+	}
 }

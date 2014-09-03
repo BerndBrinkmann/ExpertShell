@@ -228,12 +228,17 @@ public class VariablesGUI extends Composite {
 					}
 					if(!flag)
 					{
+						if ( KBase.getTarget() == TempVariable)
+						{
+							KBase.setTarget(TempVariable);
+						}
 					TempVariable.setUserInput(btnRadioButtonYes.getSelection());
 					TempVariable.setName(txtVariableName.getText().trim());
 					TempVariable.setDescription(descriptionTxt.getText());
 					TempVariable.setQueryPrompt(QuestionPrompt.getText());
+					MainScreen.window.updateKnowledgeBase();
 					}
-					KBase.saveVariable(TempVariable,currentvariable );
+					//KBase.saveVariable(TempVariable,currentvariable );
 					variableList.removeAll();
 					for (Variable v: KBase.getVariablesArray())
 					{
