@@ -92,7 +92,9 @@ public class MainScreen  implements Serializable {
 	private Button btnDefault;
 	private Button btnForwardChaining;
 	private Button button;
+	private TabFolder tabFolder;
 	private Combo comboExample;
+	private Label labelCurrentKb;
 //	private Button btnRun;
 //	private Combo combo;
 //	private Combo combo_1;
@@ -230,7 +232,7 @@ public class MainScreen  implements Serializable {
 		mntmAbout.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/info_new.jpg"));
 		mntmAbout.setText("About");
 		
-		TabFolder tabFolder = new TabFolder(shlExpertSystemShell, SWT.NONE);
+		tabFolder = new TabFolder(shlExpertSystemShell, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
 		
@@ -254,16 +256,15 @@ public class MainScreen  implements Serializable {
 					KBase.setRunGui(composite);
 					Variables.updateKBase(KBase);
 					composite.updateKBase(KBase);
+					labelCurrentKb.setText(KBase.getName());
 				}
-
-				
 			}
 		});
-		btnLoadKbFromFile.setBounds(58, 274, 86, 25);
+		btnLoadKbFromFile.setBounds(20, 305, 107, 25);
 		btnLoadKbFromFile.setText("Load from file");
 		
 		comboExample = new Combo(composite_1, SWT.NONE);
-		comboExample.setBounds(160, 245, 139, 23);
+		comboExample.setBounds(144, 245, 139, 23);
 		comboExample.add("Weather");
 		comboExample.add("Weather Numeric");
 
@@ -278,136 +279,183 @@ public class MainScreen  implements Serializable {
 					KBase.setRunGui(composite);
 					Variables.updateKBase(KBase);
 					composite.updateKBase(KBase);
+					labelCurrentKb.setText(KBase.getName());
 				}
 			}
 		});
-		btnLoadExample.setBounds(58, 243, 85, 25);
+		btnLoadExample.setBounds(20, 243, 107, 25);
 		btnLoadExample.setText("Load example");
 		
 		Button btnNewButton = new Button(composite_1, SWT.NONE);
-		btnNewButton.setBounds(58, 377, 63, 25);
-		btnNewButton.setText("Edit");
+		btnNewButton.setBounds(20, 274, 107, 25);
+		btnNewButton.setText("Create new");
 		
 		Button btnRun = new Button(composite_1, SWT.NONE);
-		btnRun.setBounds(127, 377, 75, 25);
+		btnRun.setBounds(20, 402, 107, 25);
 		btnRun.setText("Run");
 		
-		Button btnNewButton_1 = new Button(composite_1, SWT.NONE);
-		btnNewButton_1.setBounds(492, 35, 102, 25);
-		btnNewButton_1.setText("Quick Start Guide");
+		Button btnOpenQuickStartGuide = new Button(composite_1, SWT.NONE);
+		btnOpenQuickStartGuide.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
+		btnOpenQuickStartGuide.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// add quick starte guide tab
+				TabItem tbtmQuickStart = new TabItem(tabFolder, SWT.NONE);
+				tbtmQuickStart.setText("Quick Start Guide");
+				
+				Composite composite_2 = new Composite(tabFolder, SWT.NONE);
+				tbtmQuickStart.setControl(composite_2);
+				composite_2.setLayout(new GridLayout(1, false));
+				
+				ScrolledComposite SC_QuickStart = new ScrolledComposite(composite_2, SWT.BORDER | SWT.V_SCROLL);
+				SC_QuickStart.setExpandHorizontal(true);
+				SC_QuickStart.setAlwaysShowScrollBars(true);
+				GridData gd_SC_QuickStart;
+				gd_SC_QuickStart = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+				gd_SC_QuickStart.heightHint = 514;
+				gd_SC_QuickStart.widthHint = 699;
+				SC_QuickStart.setLayoutData(gd_SC_QuickStart);
+				SC_QuickStart.setExpandVertical(true);
+				
+				Composite composite_4 = new Composite(SC_QuickStart, SWT.NONE);
+				composite_4.setLayout(new GridLayout(1, false));
+				
+				Label lblNewLabel = new Label(composite_4, SWT.WRAP);
+				GridData gd_lblNewLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+				gd_lblNewLabel.widthHint = 682;
+				lblNewLabel.setLayoutData(gd_lblNewLabel);
+				lblNewLabel.setText("Welcome to The Expert System Shell. The following is a quick description of each page in this program and how to get started.\r\n");
+				
+				Label lblNewLabelOpen = new Label(composite_4, SWT.NONE);
+				lblNewLabelOpen.setText("\r\nOpen/Save a Knowledgebase:");
+				
+				Label lblNewLabelOpenPic = new Label(composite_4, SWT.NONE);
+				lblNewLabelOpenPic.setText("\r\n open/save image needs inserting here:");
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblRunKnowledgebase = new Label(composite_4, SWT.NONE);
+				lblRunKnowledgebase.setText("\r\nRun Knowledgebase:");
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblStartingTheEvaluation = new Label(composite_4, SWT.NONE);
+				lblStartingTheEvaluation.setText("Starting the Evaluation Process");
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblNewLabel_2 = new Label(composite_4, SWT.NONE);
+				lblNewLabel_2.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/runpic.PNG"));
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblNewLabel_3 = new Label(composite_4, SWT.NONE);
+				GridData gd_lblNewLabel_3 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+				gd_lblNewLabel_3.heightHint = 287;
+				gd_lblNewLabel_3.widthHint = 643;
+				lblNewLabel_3.setLayoutData(gd_lblNewLabel_3);
+				lblNewLabel_3.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/runInfo.PNG"));
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblNewLabel_4 = new Label(composite_4, SWT.NONE);
+				lblNewLabel_4.setText("Finalising the Evaluation Process\r\n");
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblNewLabel_4Pic = new Label(composite_4, SWT.NONE);
+				lblNewLabel_4Pic.setText("How image needs to be inserted here\r\n");
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblNewLabel_5 = new Label(composite_4, SWT.NONE);
+				lblNewLabel_5.setText("\r\nCreate/Edit Knowledgebase:");
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblNewLabel_5Pic = new Label(composite_4, SWT.NONE);
+				lblNewLabel_5Pic.setText("rule editor page image needs to be inserted here\r\n");
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblNewLabel_5Info = new Label(composite_4, SWT.NONE);
+				lblNewLabel_5Info.setText("rule editor page info needs to be inserted here\r\n");
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblNewLabel_6 = new Label(composite_4, SWT.NONE);
+				lblNewLabel_6.setText("\r\nVariables:");
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblNewLabel_6Pic = new Label(composite_4, SWT.NONE);
+				lblNewLabel_6Pic.setText("variables page image needs to be inserted here\r\n");
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblNewLabel_6Info = new Label(composite_4, SWT.NONE);
+				lblNewLabel_6Info.setText("varaibles page info needs to be inserted here\r\n");
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label ReferToManual = new Label(composite_4, SWT.NONE);
+				ReferToManual.setText("For further information, the complete manual can be found in\r\nHelp>Manual");
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+			}
+		});
 		
-		Button btnNewButton_2 = new Button(composite_1, SWT.NONE);
-		btnNewButton_2.setBounds(622, 35, 75, 25);
-		btnNewButton_2.setText("Manuel");
+		btnOpenQuickStartGuide.setBounds(443, 26, 102, 25);
+		btnOpenQuickStartGuide.setText("Quick Start Guide");
+		
+		Button btnOpenManuel = new Button(composite_1, SWT.NONE);
+		btnOpenManuel.setBounds(604, 26, 75, 25);
+		btnOpenManuel.setText("Manuel");
+		
+		Button btnSaveToFile = new Button(composite_1, SWT.NONE);
+		btnSaveToFile.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// save to file
+				FileManager.saveKnowledgeFile(KBase);
+				KBase.setRunGui(composite);
+				composite.updateKBase(KBase);
+			}
+		});
+		btnSaveToFile.setText("Save to file");
+		btnSaveToFile.setBounds(20, 349, 107, 25);
+		
+		Button btnEdit = new Button(composite_1, SWT.NONE);
+		btnEdit.setText("Edit");
+		btnEdit.setBounds(144, 402, 107, 25);
+		
+		Label lblCurrentKnowledgebase = new Label(composite_1, SWT.NONE);
+		lblCurrentKnowledgebase.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD | SWT.ITALIC));
+		lblCurrentKnowledgebase.setAlignment(SWT.CENTER);
+		lblCurrentKnowledgebase.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
+		lblCurrentKnowledgebase.setText("Current Knowledgebase:");
+		lblCurrentKnowledgebase.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+		lblCurrentKnowledgebase.setBounds(20, 222, 160, 17);
+		
+		labelCurrentKb = new Label(composite_1, SWT.NONE);
+		labelCurrentKb.setText("-");
+		labelCurrentKb.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
+		labelCurrentKb.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD | SWT.ITALIC));
+		labelCurrentKb.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+		labelCurrentKb.setAlignment(SWT.CENTER);
+		labelCurrentKb.setBounds(189, 222, 160, 17);
 		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
 		lblNewLabel_1.setText("Load");
 		lblNewLabel_1.setBounds(0, 0, 730, 528);
 		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_final.jpg"));
 		
-		TabItem tbtmQuickStart = new TabItem(tabFolder, SWT.NONE);
-		tbtmQuickStart.setText("Quick Start Guide");
-		
-		Composite composite_2 = new Composite(tabFolder, SWT.NONE);
-		tbtmQuickStart.setControl(composite_2);
-		composite_2.setLayout(new GridLayout(1, false));
-		
-		ScrolledComposite SC_QuickStart = new ScrolledComposite(composite_2, SWT.BORDER | SWT.V_SCROLL);
-		SC_QuickStart.setExpandHorizontal(true);
-		SC_QuickStart.setAlwaysShowScrollBars(true);
-		GridData gd_SC_QuickStart;
-		gd_SC_QuickStart = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_SC_QuickStart.heightHint = 514;
-		gd_SC_QuickStart.widthHint = 699;
-		SC_QuickStart.setLayoutData(gd_SC_QuickStart);
-		SC_QuickStart.setExpandVertical(true);
-		
-		Composite composite_4 = new Composite(SC_QuickStart, SWT.NONE);
-		composite_4.setLayout(new GridLayout(1, false));
-		
-		Label lblNewLabel = new Label(composite_4, SWT.WRAP);
-		GridData gd_lblNewLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_lblNewLabel.widthHint = 682;
-		lblNewLabel.setLayoutData(gd_lblNewLabel);
-		lblNewLabel.setText("Welcome to The Expert System Shell. The following is a quick description of each page in this program and how to get started.\r\n");
-		
-		Label lblNewLabelOpen = new Label(composite_4, SWT.NONE);
-		lblNewLabelOpen.setText("\r\nOpen/Save a Knowledgebase:");
-		
-		Label lblNewLabelOpenPic = new Label(composite_4, SWT.NONE);
-		lblNewLabelOpenPic.setText("\r\n open/save image needs inserting here:");
-		SC_QuickStart.setContent(composite_4);
-		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		Label lblRunKnowledgebase = new Label(composite_4, SWT.NONE);
-		lblRunKnowledgebase.setText("\r\nRun Knowledgebase:");
-		SC_QuickStart.setContent(composite_4);
-		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		Label lblStartingTheEvaluation = new Label(composite_4, SWT.NONE);
-		lblStartingTheEvaluation.setText("Starting the Evaluation Process");
-		SC_QuickStart.setContent(composite_4);
-		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		Label lblNewLabel_2 = new Label(composite_4, SWT.NONE);
-		lblNewLabel_2.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/runpic.PNG"));
-		SC_QuickStart.setContent(composite_4);
-		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		Label lblNewLabel_3 = new Label(composite_4, SWT.NONE);
-		GridData gd_lblNewLabel_3 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_lblNewLabel_3.heightHint = 287;
-		gd_lblNewLabel_3.widthHint = 643;
-		lblNewLabel_3.setLayoutData(gd_lblNewLabel_3);
-		lblNewLabel_3.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/runInfo.PNG"));
-		SC_QuickStart.setContent(composite_4);
-		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		Label lblNewLabel_4 = new Label(composite_4, SWT.NONE);
-		lblNewLabel_4.setText("Finalising the Evaluation Process\r\n");
-		SC_QuickStart.setContent(composite_4);
-		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		Label lblNewLabel_4Pic = new Label(composite_4, SWT.NONE);
-		lblNewLabel_4Pic.setText("How image needs to be inserted here\r\n");
-		SC_QuickStart.setContent(composite_4);
-		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		Label lblNewLabel_5 = new Label(composite_4, SWT.NONE);
-		lblNewLabel_5.setText("\r\nCreate/Edit Knowledgebase:");
-		SC_QuickStart.setContent(composite_4);
-		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		Label lblNewLabel_5Pic = new Label(composite_4, SWT.NONE);
-		lblNewLabel_5Pic.setText("rule editor page image needs to be inserted here\r\n");
-		SC_QuickStart.setContent(composite_4);
-		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		Label lblNewLabel_5Info = new Label(composite_4, SWT.NONE);
-		lblNewLabel_5Info.setText("rule editor page info needs to be inserted here\r\n");
-		SC_QuickStart.setContent(composite_4);
-		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		Label lblNewLabel_6 = new Label(composite_4, SWT.NONE);
-		lblNewLabel_6.setText("\r\nVariables:");
-		SC_QuickStart.setContent(composite_4);
-		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		Label lblNewLabel_6Pic = new Label(composite_4, SWT.NONE);
-		lblNewLabel_6Pic.setText("variables page image needs to be inserted here\r\n");
-		SC_QuickStart.setContent(composite_4);
-		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		Label lblNewLabel_6Info = new Label(composite_4, SWT.NONE);
-		lblNewLabel_6Info.setText("varaibles page info needs to be inserted here\r\n");
-		SC_QuickStart.setContent(composite_4);
-		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		Label ReferToManual = new Label(composite_4, SWT.NONE);
-		ReferToManual.setText("For further information, the complete manual can be found in\r\nHelp>Manual");
-		SC_QuickStart.setContent(composite_4);
-		SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
+
 		TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 		tbtmUserInterface.setText("Run Knowledgebase");
 		
