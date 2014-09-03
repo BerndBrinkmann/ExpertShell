@@ -95,6 +95,8 @@ public class MainScreen  implements Serializable {
 	private TabFolder tabFolder;
 	private Combo comboExample;
 	private Label labelCurrentKb;
+	private Composite composite_3;
+	private TabItem tbtmDeveloperInterface;
 //	private Button btnRun;
 //	private Combo combo;
 //	private Combo combo_1;
@@ -281,7 +283,12 @@ public class MainScreen  implements Serializable {
 				{
 					KBase = test.createBoatKnowlegeBase(window);
 					KBase.setRunGui(composite);
-					Variables.updateKBase(KBase);
+					if (Variables!= null)
+					{
+						Variables.updateKBase(KBase);
+					}
+					
+
 					if (composite!= null)
 					{
 						composite.updateKBase(KBase);
@@ -308,13 +315,16 @@ public class MainScreen  implements Serializable {
 				KnowledgeBase NewKb = new KnowledgeBase(textNewKb.getText());
 				KBase = NewKb;
 				KBase.setRunGui(composite);
-				Variables.updateKBase(KBase);
+				if (Variables!= null)
+				{
+					Variables.updateKBase(KBase);
+				}
 				if (composite!= null)
 				{
 					composite.updateKBase(KBase);
 				}
 				labelCurrentKb.setText(textNewKb.getText());
-				}				
+				}				 
 			}
 		});
 		btnNewButton.setBounds(20, 306, 107, 25);
@@ -494,6 +504,108 @@ public class MainScreen  implements Serializable {
 		btnSaveToFile.setBounds(144, 337, 107, 25);
 		
 		Button btnEdit = new Button(composite_1, SWT.NONE);
+		btnEdit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// edit the knowledgbase
+				if (labelCurrentKb.getText() !="No Knowledgebase loaded")
+				{
+				if (composite_3 == null)
+				{
+
+				tbtmDeveloperInterface = new TabItem(tabFolder, SWT.NONE);
+				tbtmDeveloperInterface.addDisposeListener(new DisposeListener() {
+					public void widgetDisposed(DisposeEvent e) {
+						
+						
+					}
+				});
+				tbtmDeveloperInterface.setText("Create/Edit Knowledgebase");
+				
+				composite_3 = new Composite(tabFolder, SWT.NONE);
+				tbtmDeveloperInterface.setControl(composite_3);
+				composite_3.setLayout(new GridLayout(2, false));
+				
+				Composite compListEditor = new Composite(composite_3, SWT.NONE);
+				compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+				compListEditor.setLayout(new GridLayout(1, false));
+				
+				scrolledComposite = new ScrolledComposite(compListEditor, SWT.BORDER | SWT.V_SCROLL);
+			//	gd_scrolledComposite.heightHint = 428;
+				GridData gd_scrolledComposite_2 = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+				gd_scrolledComposite_2.heightHint = 400;
+				scrolledComposite.setLayoutData(gd_scrolledComposite_2);
+				scrolledComposite.addListener(SWT.MouseWheel, new Listener() {
+		            public void handleEvent(Event event) {
+		                int wheelCount = event.count;
+		                wheelCount = (int) Math.ceil(wheelCount / 3.0f);
+		                while (wheelCount < 0) {
+		                    scrolledComposite.getVerticalBar().setIncrement(4);
+		                    wheelCount++;
+		                }
+
+		                while (wheelCount > 0) {
+		                    scrolledComposite.getVerticalBar().setIncrement(-4);
+		                    wheelCount--;
+		                }
+		            }
+		        });
+				
+				
+				RuleListGUI ruleList = new RuleListGUI(scrolledComposite, SWT.NONE, KBase);
+				scrolledComposite.setContent(ruleList);
+				ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				//scrolledComposite.setMinSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				composite_3.getParent().getParent().layout(true,true);
+				
+				
+				
+				Composite compEditorControls = new Composite(compListEditor, SWT.NONE);
+				compEditorControls.setLayout(new GridLayout(5, false));
+				
+				Button button_1 = new Button(compEditorControls, SWT.NONE);
+				button_1.setText("\u2191");
+				
+				Button button_2 = new Button(compEditorControls, SWT.NONE);
+				button_2.setText("\u2193");
+				
+				Button button_3 = new Button(compEditorControls, SWT.NONE);
+				button_3.setText("Add");
+				
+				Button button_4 = new Button(compEditorControls, SWT.NONE);
+				button_4.setText("Del");
+				
+				Button button_5 = new Button(compEditorControls, SWT.NONE);
+				button_5.setText("Copy");
+				
+				Composite compRuleEditorHolder = new Composite(composite_3, SWT.NONE);
+				compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
+				compRuleEditorHolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+				
+				ruleList.setEditorHolder(compRuleEditorHolder);
+				//ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase.getRule(2), KBase);
+				compRuleEditorHolder.layout();
+				
+				TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);
+				tbtmVariables.setText("Variables");
+				
+				
+				
+				Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
+				Variables.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
+				tbtmVariables.setControl(Variables);
+				
+				tabFolder.setSelection(tbtmDeveloperInterface);
+				}
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Please choose a Knowledgebase first");
+				}
+		
+			}
+		});
 		btnEdit.setText("Edit");
 		btnEdit.setBounds(144, 402, 107, 25);
 		
@@ -605,7 +717,7 @@ public class MainScreen  implements Serializable {
 		});
 		mntmForecast.setText("Forecast");
 		
-		KBase = test.createBoatKnowlegeBase(this);
+
 		
 		MenuItem mntmLoad = new MenuItem(menu_1, SWT.NONE);
 		mntmLoad.addSelectionListener(new SelectionAdapter() {
@@ -671,89 +783,8 @@ public class MainScreen  implements Serializable {
 		btnNewButton.setText("Close Interface");*/
 
 		
-		TabItem tbtmDeveloperInterface = new TabItem(tabFolder, SWT.NONE);
-		tbtmDeveloperInterface.addDisposeListener(new DisposeListener() {
-			public void widgetDisposed(DisposeEvent e) {
-				
-				
-			}
-		});
-		tbtmDeveloperInterface.setText("Create/Edit Knowledgebase");
 		
-		Composite composite_3 = new Composite(tabFolder, SWT.NONE);
-		tbtmDeveloperInterface.setControl(composite_3);
-		composite_3.setLayout(new GridLayout(2, false));
-		
-		Composite compListEditor = new Composite(composite_3, SWT.NONE);
-		compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		compListEditor.setLayout(new GridLayout(1, false));
-		
-		scrolledComposite = new ScrolledComposite(compListEditor, SWT.BORDER | SWT.V_SCROLL);
-	//	gd_scrolledComposite.heightHint = 428;
-		GridData gd_scrolledComposite_2 = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gd_scrolledComposite_2.heightHint = 400;
-		scrolledComposite.setLayoutData(gd_scrolledComposite_2);
-		scrolledComposite.addListener(SWT.MouseWheel, new Listener() {
-            public void handleEvent(Event event) {
-                int wheelCount = event.count;
-                wheelCount = (int) Math.ceil(wheelCount / 3.0f);
-                while (wheelCount < 0) {
-                    scrolledComposite.getVerticalBar().setIncrement(4);
-                    wheelCount++;
-                }
 
-                while (wheelCount > 0) {
-                    scrolledComposite.getVerticalBar().setIncrement(-4);
-                    wheelCount--;
-                }
-            }
-        });
-		
-		
-		RuleListGUI ruleList = new RuleListGUI(scrolledComposite, SWT.NONE, KBase);
-		scrolledComposite.setContent(ruleList);
-		ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		//scrolledComposite.setMinSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		composite_3.getParent().getParent().layout(true,true);
-		
-		
-		
-		Composite compEditorControls = new Composite(compListEditor, SWT.NONE);
-		compEditorControls.setLayout(new GridLayout(5, false));
-		
-		Button button_1 = new Button(compEditorControls, SWT.NONE);
-		button_1.setText("\u2191");
-		
-		Button button_2 = new Button(compEditorControls, SWT.NONE);
-		button_2.setText("\u2193");
-		
-		Button button_3 = new Button(compEditorControls, SWT.NONE);
-		button_3.setText("Add");
-		
-		Button button_4 = new Button(compEditorControls, SWT.NONE);
-		button_4.setText("Del");
-		
-		Button button_5 = new Button(compEditorControls, SWT.NONE);
-		button_5.setText("Copy");
-		
-		Composite compRuleEditorHolder = new Composite(composite_3, SWT.NONE);
-		compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
-		compRuleEditorHolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
-		ruleList.setEditorHolder(compRuleEditorHolder);
-		//ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase.getRule(2), KBase);
-		compRuleEditorHolder.layout();
-		
-		TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);
-		tbtmVariables.setText("Variables");
-		
-		
-		
-		Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
-		Variables.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-		tbtmVariables.setControl(Variables);
-		
 		
 	}
 	public void updateKnowledgeBase()
