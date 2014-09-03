@@ -4,11 +4,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
@@ -62,9 +59,7 @@ public class RuleGUI extends Group {
 		append("\t\t\t\t");
 		first = true;
 		for(Antecedent a : rule.getAntecedentArray()) {
-			if (first) {
-				first = false;
-			} else {
+			if (!first) {
 				if (rule.getConnective() == Connectives.AND) {
 					append("AND\t\t");
 				} else {
@@ -76,7 +71,17 @@ public class RuleGUI extends Group {
 			appendWithStyle(a.getComparisonAsString(),styleCompareAssign);  //comparison
 			append(" "); //space
 			appendWithStyle(a.getValueAsString(),styleValue);
+			
+			if(first && rule.getUncertaintyMethod() == KBSettings.UncertaintyManagement.BAYESIAN){
+				appendWithStyle("  (LN: "+rule.getLikelihoodOfNecessity() +
+						", LS: " + rule.getLikelihoodOfSufficiency() + ")", styleValue);
+			}
+				
 			append("\r\n");
+			
+			
+			
+			first = false;
 		}
 		appendWithStyle("THEN",styleIFTHEN);
 		append("\t\t"); //three tabs
@@ -86,7 +91,7 @@ public class RuleGUI extends Group {
 			if (first) {
 				first = false;
 			} else {
-				append("\t\t\t\t");
+				append("\r\n\t\t\t\t");
 			}
 			appendWithStyle(c.getVariableAsString(),styleVar);  //the variable name
 			append(" "); //space
@@ -104,15 +109,16 @@ public class RuleGUI extends Group {
 			
 			if (rule.getUncertaintyMethod() == KBSettings.UncertaintyManagement.CF) {
 				appendWithStyle("  (CF: " + c.getCertaintyFactor() + ")", styleValue);
+			} else if (rule.getUncertaintyMethod() == KBSettings.UncertaintyManagement.BAYESIAN) {
+				appendWithStyle("  (Prior: " + c.getBeliefOfSelected()  + ")", styleValue);
 			}
-			append("\r\n");
+			
 		}
 		
 	}
 	
 	private void appendWithStyle(String s,StyleRange styleToCopy) {
 		StyleRange style = (StyleRange) styleToCopy.clone();
-		int length;
 		
 		style.start = styledRule.getCharCount();
 		style.length = s.length();

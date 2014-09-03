@@ -190,6 +190,7 @@ public class Variable implements Serializable
 		return beliefs.get(getValueIndex(val));
 	}
 	
+	
 	//checks user input against list of possible values. (checks for val in list of p.values)
 	public int getValueIndex(Value val)
 	{

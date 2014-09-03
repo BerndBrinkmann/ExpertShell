@@ -100,12 +100,13 @@ public class ConsequentGUI {
 		value.select(con.getVariable().getValueIndex(con.getValue()));
 		
 		//update CF
-		spinCF.setSelection((int) (con.getCertaintyFactor()*100) );
+		int factor = (int) Math.pow(10, spinCF.getDigits()); 
+		spinCF.setSelection((int) (con.getCertaintyFactor()*factor) );
 		
 		//update prior
-		//double select = con.getVariable().getBelief(con.getValue());
-						
-		//spinPrior.setSelection( (int) (select*(Math.pow(10, spinPrior.getDigits()))) );
+		double select = con.getVariable().getBelief(con.getValue());
+		factor = (int) Math.pow(10, spinPrior.getDigits());				
+		spinPrior.setSelection( (int) (select*(Math.pow(10, spinPrior.getDigits()))) );
 		
 	}
 	

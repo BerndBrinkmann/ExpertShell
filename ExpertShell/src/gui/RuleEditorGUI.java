@@ -17,7 +17,6 @@ import org.eclipse.swt.widgets.Widget;
 
 import datatypes.Antecedent;
 import datatypes.Consequent;
-import datatypes.KBSettings.UncertaintyManagement;
 import datatypes.Comparison;
 import datatypes.KnowledgeBase;
 import datatypes.Rule;
@@ -129,7 +128,6 @@ public class RuleEditorGUI {
 		Source source = info.getSource();
 		Group group = info.getGroup();
 		
-				
 		
 		if (group == Group.ANTECEDENT) {
 			Antecedent antecedent = rule.getAntecedent(index);
@@ -143,6 +141,7 @@ public class RuleEditorGUI {
 				
 				//update GUI
 				antList.add(toAdd);
+				this.getParentRuleList().updateTextOfSelected();
 				ruleGrid.getParent().getParent().layout(true,true);
 				
 				
@@ -156,7 +155,7 @@ public class RuleEditorGUI {
 				
 				//update GUI
 				antList.delete(index);
-				
+				this.getParentRuleList().updateTextOfSelected();
 				ruleGrid.getParent().getParent().layout(true,true);
 				
 			} else if (source == Source.VARIABLE) {
@@ -289,6 +288,8 @@ public class RuleEditorGUI {
 				debug("Change assignment: " + index);
 				//add code to modify KB here!
 			}
+		} else if( group == Group.RULE ) {
+			
 		}
 		
 		//update the list text
