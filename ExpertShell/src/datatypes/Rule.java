@@ -173,7 +173,6 @@ public class Rule extends getSetKBSettings implements Serializable
 	//returns the result of evaluating the required antecedents in a rule and also fires if required
 
 	public Boolean evaluate(UncertaintyManagement umethod, InferenceEngine Inference, KnowledgeBase KBase)
-
 	{
 		//evaluate all antecedents in the case of Bayesian and Certainty factor reasoning. Otherwise minimise user interaction
 		switch(umethod)
@@ -185,7 +184,7 @@ public class Rule extends getSetKBSettings implements Serializable
 			case CF:
 
 				return evaluateAll(umethod, Inference, KBase);
-
+		
 			default:
 				break;
 		}
@@ -207,6 +206,7 @@ public class Rule extends getSetKBSettings implements Serializable
 			//In an AND connective, test rules until a false or undefinable is found. If none found then fire.
 			for(int i = 0; i < getNumberOfAntecedents(); i++)
 			{
+				System.out.println("entered loop");
 				//if the antecedent variable is undefined
 				Variable var = getAntecedent(i).getVariable();
 				 if(!var.hasValue())
@@ -215,45 +215,30 @@ public class Rule extends getSetKBSettings implements Serializable
 					 if(var.isUserInput())
 					 {
 						//get the input from the user
-
-						//var = IO.AskUserForInput(var,this, KBase, mainsc.composite.CompQ, mainsc.composite.scrolledComposite_1, mainsc.composite.scrolledComposite, mainsc.Inference);
-
-						
 						 KBase.rungui.AskUserForInput(var,this,KBase,Inference);
 						 if(KBase.rungui.resultVar == null)
 						 {
 							return false; 
 						 }
-						 else
-						 {
-							 
-						 }
-						 
-						 //get the certainty if required
-						if(umethod == KBSettings.UncertaintyManagement.CF)
-						{
-							//var.setCertaintyFactor(var.getCurrentValue(), MainScreen.getCertainty("Input a certainty for "+var.toString()));
-						}
 					 }
 					 else
 					 {
 						 //if it can't be obtained then do not fire
 						 return false;
 					 }
+					 
 				 }
-				 
 				 //if the variable has a value
-				 if(!getAntecedent(i).evaluate())
+				/* if(!getAntecedent(i).evaluate())
 				 {
 					 // and evaluates to false then return
 					 return false;
 				 }		 
+				 */
 			}
-			
 			fire();
-	
-			
 			return true;
+		
 		case OR:
 			//In an OR connective, test rules until a true is found then fire
 			for(int i = 0; i < getNumberOfAntecedents(); i++)
@@ -273,35 +258,33 @@ public class Rule extends getSetKBSettings implements Serializable
 						 {
 							return false; 
 						 }
-						 else
-						 {
-							 
-						 }
-						//get the certainty if required
-						if(umethod == UncertaintyManagement.CF)
-						{
-					//		var.setCertaintyFactor(var.getCurrentValue(), MainScreen.getCertainty("Input a certainty for "+var.toString()));
-						}
 					 }
 					 else
 					 {
-						 continue;
+						 return false;
 					 }
 				 }
 				
-				if(getAntecedent(i).evaluate())
+			/*	if(!getAntecedent(i).evaluate())
 				{
-					fire();
-					return true;
+					
+					return false;
 				}
-				 
+				*/
 			}
-
+			fire();
+			return true;
 		
+		
+		
+		default:
+			return false;
+			
 		}
-		return false;
+		
+		
 	}
-	
+
 	
 	//returns the result of evaluating the required antecedents in a rule and also fires if required
 

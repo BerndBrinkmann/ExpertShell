@@ -351,9 +351,9 @@ switch(kb.getUncertaintyMethod())
 		btnBayesianReasoning.setSelection(false);
 		break;
 	case BAYESIAN:
-		button.setSelection(true);
+		button.setSelection(false);
 		btnCertainityFactor.setSelection(false);
-		btnBayesianReasoning.setSelection(false);
+		btnBayesianReasoning.setSelection(true);
 		break;
 	
 	case CF:
