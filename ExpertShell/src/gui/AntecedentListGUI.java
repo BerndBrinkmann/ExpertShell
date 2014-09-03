@@ -66,6 +66,9 @@ public class AntecedentListGUI {
 			antecedents.add(new AntecedentGUI(this,false,addButton,a));
 		}
 		
+		//update LNLS etc
+		update();
+		
 	}
 	
 	public void add(Antecedent a) {
@@ -153,13 +156,21 @@ public class AntecedentListGUI {
 	}
 
 	public void update() {
-		// TODO update uncertainty values
 		
+		//update baeysian shit
+		int factor = (int) Math.pow(10, spinLS.getDigits());
+		spinLS.setSelection((int) (parent.rule.getLikelihoodOfSufficiency()*factor));
+		
+		factor = (int) Math.pow(10, spinLN.getDigits());
+		spinLN.setSelection((int) (parent.rule.getLikelihoodOfNecessity()*factor));
+		
+	}
+	
+	public void updateChildren() {
 		//update the GUI values of all antecedents
 		for (AntecedentGUI a : antecedents) {
 			a.update();
 		}
-		
 	}
 	
 	public ArrayList<AntecedentGUI> getAntGUIList() {

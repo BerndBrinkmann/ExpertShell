@@ -122,6 +122,11 @@ public class Consequent extends getSetKBSettings implements Serializable
 			
 	}
 
+	public Double getBeliefOfSelected(){
+		return variable.getBelief(value);
+	}
+	
+	
 	public Variable getVariable()
 	{
 		return variable;

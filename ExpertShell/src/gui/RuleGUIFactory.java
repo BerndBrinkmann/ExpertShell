@@ -123,6 +123,9 @@ public final class RuleGUIFactory {
 	 */
 	public static Spinner createSpinnerLN(Composite parent) {
 		Spinner spinner = new Spinner(parent, SWT.BORDER);
+		spinner.setDigits(3);
+		spinner.setMaximum(1000);
+		spinner.setMinimum(1);
 		return spinner;
 	}
 	/**
@@ -130,6 +133,9 @@ public final class RuleGUIFactory {
 	 */
 	public static Spinner createSpinnerLS(Composite parent) {
 		Spinner spinner = new Spinner(parent, SWT.BORDER);
+		spinner.setDigits(1);
+		spinner.setMaximum(10000);
+		spinner.setMinimum(10);
 		return spinner;
 	}
 	/**
