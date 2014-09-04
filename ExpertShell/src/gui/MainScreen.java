@@ -201,6 +201,7 @@ public class MainScreen  implements Serializable {
 		KBase = new KnowledgeBase("default");
 		test = new Test_Case();
 		testNum = new Test_Numeric();
+		TestCF = new test_CF();
 		//KBase = FileManager.loadKnowledgeFile();
 		//KBase.SetName("boat_kb");
 		//Inference = new InferenceEngine(KBase);
