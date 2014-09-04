@@ -120,6 +120,7 @@ public class MainScreen  implements Serializable {
  //   private Variable selectedVariable;
    // private String selectedVariableString;
     private Test_Case test;
+    private Test_Numeric testNum;
    // private Label lblSelectTargetVariable;
    // private Label lblWhyhow;
  //   private ArrayList<Rule> HowList = new ArrayList<Rule>();
@@ -190,6 +191,7 @@ public class MainScreen  implements Serializable {
 		//create default KnowledgeBase
 		KBase = new KnowledgeBase("default");
 		test = new Test_Case();
+		testNum = new Test_Numeric();
 		//KBase = FileManager.loadKnowledgeFile();
 		//KBase.SetName("boat_kb");
 		//Inference = new InferenceEngine(KBase);
@@ -282,6 +284,23 @@ public class MainScreen  implements Serializable {
 				if (comboExample.getSelectionIndex() == 0)
 				{
 					KBase = test.createBoatKnowlegeBase(window);
+					KBase.setRunGui(composite);
+					if (Variables!= null)
+					{
+						Variables.updateKBase(KBase);
+					}
+					
+
+					if (composite!= null)
+					{
+						composite.updateKBase(KBase);
+					}
+					
+					labelCurrentKb.setText(KBase.getName());
+				}
+				if(comboExample.getSelectionIndex() == 1)
+				{
+					KBase = testNum.createNumericKB(window);
 					KBase.setRunGui(composite);
 					if (Variables!= null)
 					{
