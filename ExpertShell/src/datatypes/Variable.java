@@ -144,9 +144,13 @@ public class Variable implements Serializable
 	public Boolean hasValue()
 	{
 		if(!(this instanceof NumericVariable))
-			return currentValue != null;
+		{
+		return (currentValue != null);
+		}
 		else
-			return numVal != null;
+		{
+			return (numVal != null);
+		}
 	}
 	
 	public void setDerivedFrom(Rule r)

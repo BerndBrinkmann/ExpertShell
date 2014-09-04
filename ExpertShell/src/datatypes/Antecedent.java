@@ -123,10 +123,13 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		}
 		else
 		{
+			System.out.println("enters comparison");
+			System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
 			switch(comparison)
 			{
 			case EQ:
 //				return variable.getNumVal() == numVal;
+				
 				return Double.compare(variable.getNumVal(), numVal) == 0;
 			case NEQ:
 				return variable.getNumVal() != numVal;

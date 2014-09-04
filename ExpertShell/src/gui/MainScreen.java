@@ -226,9 +226,7 @@ public class MainScreen  implements Serializable {
 		menuItemQuickStart.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-<<<<<<< HEAD
-				FileManager.openQuickStart();
-=======
+
 				
 				
 				// add quick starte guide tab
@@ -354,11 +352,7 @@ public class MainScreen  implements Serializable {
 				ReferToManual.setText("For further information, the complete manual can be found in\r\nHelp>Manual");
 				SC_QuickStart.setContent(composite_4);
 				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
 			
-				
-				
->>>>>>> refs/remotes/origin/master
 			}
 		});
 		
