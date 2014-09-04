@@ -2,6 +2,8 @@ package gui;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -15,6 +17,7 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.custom.ScrolledComposite;
 
 import datatypes.InferenceEngine;
+import datatypes.NumericVariable;
 import datatypes.Rule;
 import datatypes.Value;
 import datatypes.Variable;
@@ -98,28 +101,35 @@ public class QuestionGUI {
 		gd_combo_1.widthHint = 276;
 		ans.setLayoutData(gd_combo_1);
 		
-		if(possibleValues.length !=0)
+		if(var instanceof NumericVariable)
 		{
-			String possiblevString[] = new String[possibleValues.length];
-					for (int i=0; i<possibleValues.length; i++)
-					{
-						possiblevString[i]= possibleValues[i].toString();
-					}
-			ans.setItems(possiblevString);
+			ans.setText("Enter Number");
 		}
-		ans.setText("Choose Value");
+		else
+		{
+			if(possibleValues.length !=0)
+			{
+				String possiblevString[] = new String[possibleValues.length];
+						for (int i=0; i<possibleValues.length; i++)
+						{
+							possiblevString[i]= possibleValues[i].toString();
+						}
+				ans.setItems(possiblevString);
+			}
+			ans.setText("Choose Value");
+		}
 		
-		CFPercentage = UserFactoryGUI.createCFLabel(questionGroup);
-		CFPercentage.setVisible(false);
+		//CFPercentage = UserFactoryGUI.createCFLabel(questionGroup);
+		//CFPercentage.setVisible(false);
 		//lblCF = UserFactoryGUI.createCFLabel(questionGroup);
 		//lblCF.setVisible(false);
 		
-		CFScale = UserFactoryGUI.createCFScale(questionGroup);
+		//CFScale = UserFactoryGUI.createCFScale(questionGroup);
 		//CFScale.addSelectionListener(CFScaleL);
 		//scale = UserFactoryGUI.createCFScale(questionGroup);
 		//scale.addSelectionListener(CFScaleL);
 	
-		CFScale.addSelectionListener(new SelectionAdapter() {
+		/*CFScale.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
@@ -138,7 +148,7 @@ public class QuestionGUI {
 		CFScale.setVisible(false);
 		//scale.setLayoutData(gd_scale);
 		//scale.setVisible(false);
-		
+		*/
 		WhyListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();	
@@ -168,6 +178,28 @@ public class QuestionGUI {
 		OKListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				if(var instanceof NumericVariable)
+				{
+					Boolean doub =true;
+					try
+					{
+						double d = Double.parseDouble(ans.getText());
+					}
+					catch(NumberFormatException nfe)
+					{
+						doub = false;
+					}
+					if(doub)
+					{
+						var.setCurrentValue(Double.parseDouble(ans.getText()));
+						setQueryBoxEnabled(false);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Please enter a valid value");
+					}
+				}
+				else{
 				if(ans.getSelectionIndex() != -1)
 				{
 					//Double CFSelection = (double) CFScale.getSelection();
@@ -177,6 +209,8 @@ public class QuestionGUI {
 					setQueryBoxEnabled(false);
 					
 				}
+				}
+				
 			}
 		};
 		AnswerComboListener = new SelectionAdapter() {
@@ -190,13 +224,21 @@ public class QuestionGUI {
 		ans.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				
+				if(!(var instanceof NumericVariable))
+				{
 				if(ans.getSelectionIndex() != -1)
 				{
 					OKButton.setEnabled(true);
 				}
-				
+				}
+				else
+				{
+					OKButton.setEnabled(true);
+				}
 			}
 		});
+		
 
 		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
 		WhyButton.addSelectionListener(WhyListener);
@@ -217,7 +259,10 @@ public class QuestionGUI {
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		OKButton.addSelectionListener(OKListener);
 		OKButton.setEnabled(false);	
-	
+		if(var instanceof NumericVariable)
+		{
+		OKButton.setEnabled(true);	
+		}
 		
 	}
 	public static void displayHowMessage(ArrayList<Rule> howList)

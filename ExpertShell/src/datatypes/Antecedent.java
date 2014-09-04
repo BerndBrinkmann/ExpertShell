@@ -11,7 +11,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	
 	protected Comparison comparison;
 	protected Boolean isNumeric = false;
-	protected Double numVal = null;
+	public Double numVal = null;
 	protected KBSettings.UncertaintyManagement uncertaintyType =KBSettings.UncertaintyManagement.NONE;
 	
 	public Antecedent()
@@ -233,7 +233,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		this.comparison = comparison;
 		
 		//if antecedent is different then set it
-		if(isNumeric != comparisonIsNumeric)
+		if((variable instanceof NumericVariable)!= comparisonIsNumeric)
 			setIsNumeric(comparisonIsNumeric);
 		
 				
