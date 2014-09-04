@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public final class RuleGUIFactory {
 	/**
@@ -72,8 +73,9 @@ public final class RuleGUIFactory {
 	 */
 	public static Button createButtonDelete(Composite parent) {
 		Button button = new Button(parent, SWT.NONE);
-		button.setText("X");
-		button.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		button.setImage(SWTResourceManager.getImage(RuleGUIFactory.class, "/resources/Delete-icon.png"));
+		//button.setText("X");
+		//button.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		return button;
 	}
 	/**
@@ -81,15 +83,16 @@ public final class RuleGUIFactory {
 	 */
 	public static Button createButtonAdd(Composite parent) {
 		Button button = new Button(parent, SWT.NONE);
-		button.setText("+");
-		button.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		button.setImage(SWTResourceManager.getImage(RuleGUIFactory.class, "/resources/add-icon2.jpg"));
+		//button.setText("+");
+		//button.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		return button;
 	}
 	/**
 	 * @wbp.factory
 	 */
 	public static Composite createCompositeRuleHolder(Composite parent) {
-		Composite composite = new Composite(parent, SWT.NONE);
+		Composite composite = new Composite(parent, SWT.BORDER);
 		composite.setLayout(new GridLayout(6, false));
 		return composite;
 	}

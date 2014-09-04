@@ -21,7 +21,7 @@ import datatypes.Rule;
 public class RuleListGUI extends Composite {
 	
 	private ArrayList<RuleGUI> ruleGUIs;
-	private final KnowledgeBase kb;
+	private KnowledgeBase kb;
 	private boolean selectable;
 	private int selected;
 	private MouseListener listen;
@@ -42,6 +42,14 @@ public class RuleListGUI extends Composite {
 		ruleGUIs = new ArrayList<RuleGUI>();
 		
 		addFromKB();
+	}
+	
+	public void changeKnowledgeBase(KnowledgeBase k) {
+		
+		kb = k;
+		
+		refresh(false);
+		
 	}
 	
 	private void addFromKB() {
@@ -158,6 +166,14 @@ public class RuleListGUI extends Composite {
 		return i;
 	}
 
+	public Rule getSelectedRule(){
+		return ruleGUIs.get(selected).getRule();
+	}
+	
+	public int getSelected() {
+		return selected;
+	}
+	
 	public void setEditorHolder(Composite compRuleEditorHolder) {
 		editorHolder = compRuleEditorHolder;
 	}
@@ -187,13 +203,11 @@ public class RuleListGUI extends Composite {
 		ruleGUIs = new ArrayList<RuleGUI>();
 		
 	}
-	public void delete(int index){
-		RuleGUI toDel = ruleGUIs.get(index);
-		//if you're about to delete the rule you have selected
-		if (selected == index) {
-			deselect(selected);
-		}
+	public void deleteSelected(){
+		RuleGUI toDel = ruleGUIs.get(selected);
 		
+		deselect(selected);
+
 		ruleGUIs.remove(toDel);
 		toDel.destroy();
 		toDel.dispose();

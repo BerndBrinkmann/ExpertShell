@@ -21,6 +21,7 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.widgets.Group;
 
 
 public class RuleGUI_temp extends Composite {
@@ -167,6 +168,17 @@ public class RuleGUI_temp extends Composite {
 		new Label(compRuleGrid, SWT.NONE);
 		new Label(compRuleGrid, SWT.NONE);
 		new Label(compRuleGrid, SWT.NONE);
+		
+		Composite composite_2 = new Composite(this, SWT.NONE);
+		composite_2.setLayout(new GridLayout(1, false));
+		
+		Group grpUncertainty = new Group(composite_2, SWT.NONE);
+		grpUncertainty.setText("Uncertainty");
+		grpUncertainty.setLayout(new GridLayout(1, false));
+		grpUncertainty.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		Button btnRadioButton = new Button(grpUncertainty, SWT.RADIO);
+		btnRadioButton.setText("Radio Button");
 
 	}
 
