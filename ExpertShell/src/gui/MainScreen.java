@@ -474,6 +474,8 @@ public class MainScreen  implements Serializable {
 				RuleListGUI ruleList = new RuleListGUI(scrolledComposite, SWT.NONE, KBase);
 				scrolledComposite.setContent(ruleList);
 				ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				uncertaintyBox.setRuleList(ruleList);
 				//scrolledComposite.setMinSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				
 				

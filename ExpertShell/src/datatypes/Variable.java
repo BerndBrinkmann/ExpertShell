@@ -209,11 +209,6 @@ public class Variable implements Serializable
 			}
 		}
 		
-		if(index == -1)
-		{
-			System.err.println("Variable.getValueIndex(): Value was not found in variable!");
-		}
-		
 		return index;
 	}
 	

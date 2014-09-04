@@ -95,6 +95,8 @@ public class Rule extends getSetKBSettings implements Serializable
 	
 	public Consequent getConsequent(int i)
 	{
+		if (i == -1) return null;
+		//else
 		return consequents.get(i);
 	}
 	

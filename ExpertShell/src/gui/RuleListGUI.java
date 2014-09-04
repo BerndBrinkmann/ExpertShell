@@ -149,6 +149,12 @@ public class RuleListGUI extends Composite {
 		return (Control) ruleGUIs.get(index).getStyledTextWidget();
 	}
 	
+	public void updateUncertainty(){
+		this.refresh(true);
+		this.setSize(this.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		this.getParent().getParent().layout(true, true);
+	}
+	
 	public void updateTextOfSelected() {
 		ruleGUIs.get(selected).updateText();
 	}

@@ -91,13 +91,23 @@ public class ConsequentGUI {
 			assign.select(0);
 		}
 		
-		//add numeric!!!
+	
 		//update value
-		value.removeAll();
-		for(Value v: con.getVariable().getArrayOfPossibleValues()) {
-			value.add(v.toString());
+		if(!con.isNumeric()) {
+			value.removeAll();
+			for(Value v: con.getVariable().getArrayOfPossibleValues()) {
+				value.add(v.toString());
+			}
+			
+			int valueIndex = con.getVariable().getValueIndex(con.getValue());
+			if(valueIndex != -1) {
+				value.select(valueIndex);
+			} else {
+				value.setText(con.getValue().toString());
+			}
+		} else {
+			value.setText(con.getNumVal().toString());
 		}
-		value.select(con.getVariable().getValueIndex(con.getValue()));
 		
 		//update CF
 		int factor = (int) Math.pow(10, spinCF.getDigits()); 
@@ -106,7 +116,7 @@ public class ConsequentGUI {
 		//update prior
 		double select = con.getVariable().getBelief(con.getValue());
 		factor = (int) Math.pow(10, spinPrior.getDigits());				
-		spinPrior.setSelection( (int) (select*(Math.pow(10, spinPrior.getDigits()))) );
+		spinPrior.setSelection( (int) (select*factor) );
 		
 	}
 	
