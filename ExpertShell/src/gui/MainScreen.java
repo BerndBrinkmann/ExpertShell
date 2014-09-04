@@ -218,164 +218,12 @@ public class MainScreen  implements Serializable {
 		Menu menu_3 = new Menu(mntmHelp);
 		mntmHelp.setMenu(menu_3);
 		
-		MenuItem mntmMaual = new MenuItem(menu_3, SWT.NONE);
-		mntmMaual.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/book.jpg"));
-		mntmMaual.setText("Manual");
-		
-		MenuItem mntmAbout = new MenuItem(menu_3, SWT.NONE);
-		mntmAbout.addSelectionListener(new SelectionAdapter() {
+		MenuItem menuItemQuickStart = new MenuItem(menu_3, SWT.NONE);
+		menuItemQuickStart.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-			    HelpDialog about = new HelpDialog(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
-			    about.open();	
-			}
-			
-		});
-		mntmAbout.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/info_new.jpg"));
-		mntmAbout.setText("About");
-		
-		tabFolder = new TabFolder(shlExpertSystemShell, SWT.NONE);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		
-		
-		TabItem tbtmMain = new TabItem(tabFolder, SWT.NONE);
-		tbtmMain.setText("Main");
-		
-		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
-		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		tbtmMain.setControl(composite_1);
-		composite_1.setLayout(null);
-		
-		Button btnLoadKbFromFile = new Button(composite_1, SWT.NONE);
-		btnLoadKbFromFile.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				Object Temp;
-				Temp = FileManager.loadKnowledgeFile();
-				if (Temp !=null)
-				{
-					KBase = (KnowledgeBase) Temp;
-					KBase.setRunGui(composite);
-					Variables.updateKBase(KBase);
-					if (composite!= null)
-					{
-						composite.updateKBase(KBase);
-					}
-					labelCurrentKb.setText(KBase.getName());
-				}
-			}
-		});
-		btnLoadKbFromFile.setBounds(20, 337, 107, 25);
-		btnLoadKbFromFile.setText("Load from file");
-		
-		comboExample = new Combo(composite_1, SWT.NONE);
-		comboExample.setBounds(144, 277, 139, 23);
-		comboExample.add("Weather");
-		comboExample.add("Weather Numeric");
-
-		Button btnLoadExample = new Button(composite_1, SWT.NONE);
-		btnLoadExample.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				// load an example
-				if (comboExample.getSelectionIndex() == 0)
-				{
-					KBase = test.createBoatKnowlegeBase(window);
-					KBase.setRunGui(composite);
-					if (Variables!= null)
-					{
-						Variables.updateKBase(KBase);
-					}
-					
-
-					if (composite!= null)
-					{
-						composite.updateKBase(KBase);
-					}
-					
-					labelCurrentKb.setText(KBase.getName());
-				}
-			}
-		});
-		btnLoadExample.setBounds(20, 275, 107, 25);
-		btnLoadExample.setText("Load example");
-		
-		Button btnNewButton = new Button(composite_1, SWT.NONE);
-		btnNewButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				// create new knowledgebase
-				if (textNewKb.getText()=="")
-				{
-					JOptionPane.showMessageDialog(null, "Please enter Knowledgebase Name");
-				}
-					else
-				{
-				KnowledgeBase NewKb = new KnowledgeBase(textNewKb.getText());
-				KBase = NewKb;
-				KBase.setRunGui(composite);
-				if (Variables!= null)
-				{
-					Variables.updateKBase(KBase);
-				}
-				if (composite!= null)
-				{
-					composite.updateKBase(KBase);
-				}
-				labelCurrentKb.setText(textNewKb.getText());
-				}				 
-			}
-		});
-		btnNewButton.setBounds(20, 306, 107, 25);
-		btnNewButton.setText("Create new");
-		
-		Button btnRun = new Button(composite_1, SWT.NONE);
-		btnRun.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				// open run tab
-				if (labelCurrentKb.getText() !="No Knowledgebase loaded")
-				{
-				if (composite == null ) // only one run tab can be created
-				{
-				TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
-				tbtmUserInterface.setText("Run Knowledgebase");
 				
-				composite = new runGUI(tabFolder, SWT.NONE,KBase,shlExpertSystemShell, display);
-				tbtmUserInterface.setControl(composite);
-				KBase.setRunGui(composite);
 				
-				composite.addDisposeListener(new DisposeListener(){
-					public void widgetDisposed(DisposeEvent e)
-					{
-						composite.dispose();
-						System.out.println("trying to exit now");
-						System.exit(0);
-					}
-				});
-				tabFolder.setSelection(tbtmUserInterface);
-				}
-				}
-				else
-				{
-					JOptionPane.showMessageDialog(null, "Please choose a Knowledgebase first");
-				}
-				
-			}
-		});
-		btnRun.setBounds(20, 402, 107, 25);
-		btnRun.setText("Run");
-		
-		Button btnOpenQuickStartGuide = new Button(composite_1, SWT.NONE);
-		btnOpenQuickStartGuide.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
-		btnOpenQuickStartGuide.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
 				// add quick starte guide tab
 				TabItem tbtmQuickStart = new TabItem(tabFolder, SWT.NONE);
 				tbtmQuickStart.setText("Quick Start Guide");
@@ -480,28 +328,140 @@ public class MainScreen  implements Serializable {
 				SC_QuickStart.setContent(composite_4);
 				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				
+			
+				
+				
 			}
 		});
+		menuItemQuickStart.setText("Quick Start Guide");
+		menuItemQuickStart.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/run_new.jpg"));
 		
-		btnOpenQuickStartGuide.setBounds(525, 10, 102, 25);
-		btnOpenQuickStartGuide.setText("Quick Start Guide");
+		MenuItem mntmMaual = new MenuItem(menu_3, SWT.NONE);
+		mntmMaual.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/book.jpg"));
+		mntmMaual.setText("Manual");
 		
-		Button btnOpenManuel = new Button(composite_1, SWT.NONE);
-		btnOpenManuel.setBounds(633, 10, 75, 25);
-		btnOpenManuel.setText("Manual");
+		MenuItem mntmAbout = new MenuItem(menu_3, SWT.NONE);
+		mntmAbout.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+			    HelpDialog about = new HelpDialog(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
+			    about.open();	
+			}
+			
+		});
+		mntmAbout.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/info_new.jpg"));
+		mntmAbout.setText("About");
 		
-		Button btnSaveToFile = new Button(composite_1, SWT.NONE);
-		btnSaveToFile.addMouseListener(new MouseAdapter() {
+		tabFolder = new TabFolder(shlExpertSystemShell, SWT.NONE);
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		
+		TabItem tbtmMain = new TabItem(tabFolder, SWT.NONE);
+		tbtmMain.setText("Main");
+		
+		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
+		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
+		tbtmMain.setControl(composite_1);
+		composite_1.setLayout(null);
+		
+		comboExample = new Combo(composite_1, SWT.NONE);
+		comboExample.setBounds(144, 277, 139, 23);
+		comboExample.add("Weather");
+		comboExample.add("Weather Numeric");
+
+		Button btnLoadExample = new Button(composite_1, SWT.NONE);
+		btnLoadExample.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
-				// save to file
-				FileManager.saveKnowledgeFile(KBase);
-				KBase.setRunGui(composite);
-				composite.updateKBase(KBase);
+				// load an example
+				if (comboExample.getSelectionIndex() == 0)
+				{
+					KBase = test.createBoatKnowlegeBase(window);
+					KBase.setRunGui(composite);
+					if (Variables!= null)
+					{
+						Variables.updateKBase(KBase);
+					}
+					
+
+					if (composite!= null)
+					{
+						composite.updateKBase(KBase);
+					}
+					
+					labelCurrentKb.setText(KBase.getName());
+				}
 			}
 		});
-		btnSaveToFile.setText("Save to file");
-		btnSaveToFile.setBounds(144, 337, 107, 25);
+		btnLoadExample.setBounds(20, 275, 107, 25);
+		btnLoadExample.setText("Load example");
+		
+		Button btnNewButton = new Button(composite_1, SWT.NONE);
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// create new knowledgebase
+				if (textNewKb.getText()=="")
+				{
+					JOptionPane.showMessageDialog(null, "Please enter Knowledgebase Name");
+				}
+					else
+				{
+				KnowledgeBase NewKb = new KnowledgeBase(textNewKb.getText());
+				KBase = NewKb;
+				KBase.setRunGui(composite);
+				if (Variables!= null)
+				{
+					Variables.updateKBase(KBase);
+				}
+				if (composite!= null)
+				{
+					composite.updateKBase(KBase);
+				}
+				labelCurrentKb.setText(textNewKb.getText());
+				}				 
+			}
+		});
+		btnNewButton.setBounds(20, 306, 107, 25);
+		btnNewButton.setText("Create new");
+		
+		Button btnRun = new Button(composite_1, SWT.NONE);
+		btnRun.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// open run tab
+				if (labelCurrentKb.getText() !="No Knowledgebase loaded")
+				{
+				if (composite == null ) // only one run tab can be created
+				{
+				TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
+				tbtmUserInterface.setText("Run Knowledgebase");
+				
+				composite = new runGUI(tabFolder, SWT.NONE,KBase,shlExpertSystemShell, display);
+				tbtmUserInterface.setControl(composite);
+				KBase.setRunGui(composite);
+				
+				composite.addDisposeListener(new DisposeListener(){
+					public void widgetDisposed(DisposeEvent e)
+					{
+						composite.dispose();
+						System.out.println("trying to exit now");
+						System.exit(0);
+					}
+				});
+				tabFolder.setSelection(tbtmUserInterface);
+				}
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Please choose a Knowledgebase first");
+				}
+				
+			}
+		});
+		btnRun.setBounds(20, 402, 107, 25);
+		btnRun.setText("Run");
 		
 		Button btnEdit = new Button(composite_1, SWT.NONE);
 		btnEdit.addMouseListener(new MouseAdapter() {
@@ -717,13 +677,26 @@ public class MainScreen  implements Serializable {
 		});
 		mntmForecast.setText("Forecast");
 		
-
-		
 		MenuItem mntmLoad = new MenuItem(menu_1, SWT.NONE);
 		mntmLoad.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-			KBase = FileManager.loadKnowledgeFile();
+				Object Temp;
+				Temp = FileManager.loadKnowledgeFile();
+				if (Temp !=null)
+				{
+					KBase = (KnowledgeBase) Temp;
+					KBase.setRunGui(composite);
+					if (composite!= null)
+					{
+						composite.updateKBase(KBase);
+					}
+					if (Variables!= null)
+					{
+						Variables.updateKBase(KBase);
+					}
+					labelCurrentKb.setText(KBase.getName());
+				}
 			}
 		});
 		mntmLoad.setText("Load");
@@ -733,7 +706,17 @@ public class MainScreen  implements Serializable {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				FileManager.saveKnowledgeFile(KBase);
-			}
+
+				KBase.setRunGui(composite);
+				if (Variables!= null)
+				{
+					Variables.updateKBase(KBase);
+				}
+				if (composite!= null)
+				{
+					composite.updateKBase(KBase);
+				}
+		 	}
 		});
 		mntmSave.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/Save-icon.png"));
 		mntmSave.setText("Save");
