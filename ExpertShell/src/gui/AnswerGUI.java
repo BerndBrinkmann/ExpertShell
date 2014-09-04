@@ -255,6 +255,7 @@ public void showAnswer(Group questionGroup, String message, final KnowledgeBase 
 				e.getSource();
 				{
 					kb.rungui.resetVariableValues();
+					runGUI.lblWhyhow.setText("");
 				for(Control i: CompQ.getChildren())
 				{
 					i.dispose();
@@ -267,6 +268,12 @@ public void showAnswer(Group questionGroup, String message, final KnowledgeBase 
 		}};
 		
 		
+		HowButton1 = UserFactoryGUI.createHowButton(questionGroup);
+		HowButton1.addSelectionListener(HowListener);
+		GridData gd_HowButton1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_HowButton1.widthHint = 54;
+		HowButton1.setLayoutData(gd_HowButton1);
+		HowButton1.setText("How?");
 		
 		WhyButton1 = UserFactoryGUI.createWhyButton(questionGroup);
 		GridData gd_WhyButton1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -275,12 +282,7 @@ public void showAnswer(Group questionGroup, String message, final KnowledgeBase 
 		WhyButton1.setText("Why?");
 		WhyButton1.setVisible(false);
 		
-		HowButton1 = UserFactoryGUI.createHowButton(questionGroup);
-		HowButton1.addSelectionListener(HowListener);
-		GridData gd_HowButton1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_HowButton1.widthHint = 54;
-		HowButton1.setLayoutData(gd_HowButton1);
-		HowButton1.setText("How?");
+	
 		
 		OKButton1 = UserFactoryGUI.createOKButton(questionGroup);
 		OKButton1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));

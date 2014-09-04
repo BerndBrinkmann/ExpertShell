@@ -1,7 +1,10 @@
 package gui;
 
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -110,7 +113,6 @@ public class MainScreen  implements Serializable {
 //    private Group questionGroup;
 //    private Label lblNewLabel;
     private ScrolledComposite scrolledComposite;
-    private Menu menu_4;
  //   private MenuItem newKB;
    // private RuleEditorGUI ruleEditor;
 //    private RuleListGUI ruleList;
@@ -120,6 +122,7 @@ public class MainScreen  implements Serializable {
  //   private Variable selectedVariable;
    // private String selectedVariableString;
     private Test_Case test;
+    private Test_Numeric testNum;
    // private Label lblSelectTargetVariable;
    // private Label lblWhyhow;
  //   private ArrayList<Rule> HowList = new ArrayList<Rule>();
@@ -190,6 +193,7 @@ public class MainScreen  implements Serializable {
 		//create default KnowledgeBase
 		KBase = new KnowledgeBase("default");
 		test = new Test_Case();
+		testNum = new Test_Numeric();
 		//KBase = FileManager.loadKnowledgeFile();
 		//KBase.SetName("boat_kb");
 		//Inference = new InferenceEngine(KBase);
@@ -218,7 +222,25 @@ public class MainScreen  implements Serializable {
 		Menu menu_3 = new Menu(mntmHelp);
 		mntmHelp.setMenu(menu_3);
 		
+		MenuItem menuItemQuickStart = new MenuItem(menu_3, SWT.NONE);
+		menuItemQuickStart.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FileManager.openQuickStart();
+			}
+		});
+		
+		menuItemQuickStart.setText("Quick Start Guide");
+		menuItemQuickStart.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/run_new.jpg"));
+		
 		MenuItem mntmMaual = new MenuItem(menu_3, SWT.NONE);
+		mntmMaual.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				//open the PDF of the manual
+			FileManager.openManual();
+			}
+		});
 		mntmMaual.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/book.jpg"));
 		mntmMaual.setText("Manual");
 		
@@ -247,32 +269,10 @@ public class MainScreen  implements Serializable {
 		tbtmMain.setControl(composite_1);
 		composite_1.setLayout(null);
 		
-		Button btnLoadKbFromFile = new Button(composite_1, SWT.NONE);
-		btnLoadKbFromFile.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				Object Temp;
-				Temp = FileManager.loadKnowledgeFile();
-				if (Temp !=null)
-				{
-					KBase = (KnowledgeBase) Temp;
-					KBase.setRunGui(composite);
-					Variables.updateKBase(KBase);
-					if (composite!= null)
-					{
-						composite.updateKBase(KBase);
-					}
-					labelCurrentKb.setText(KBase.getName());
-				}
-			}
-		});
-		btnLoadKbFromFile.setBounds(20, 337, 107, 25);
-		btnLoadKbFromFile.setText("Load from file");
-		
 		comboExample = new Combo(composite_1, SWT.NONE);
-		comboExample.setBounds(144, 277, 139, 23);
-		comboExample.add("Weather");
-		comboExample.add("Weather Numeric");
+		comboExample.setBounds(144, 308, 139, 23);
+		comboExample.add("Forcast (Linguistic)");
+		comboExample.add("Forcast (Numeric)");
 
 		Button btnLoadExample = new Button(composite_1, SWT.NONE);
 		btnLoadExample.addMouseListener(new MouseAdapter() {
@@ -296,9 +296,26 @@ public class MainScreen  implements Serializable {
 					
 					labelCurrentKb.setText(KBase.getName());
 				}
+				if(comboExample.getSelectionIndex() == 1)
+				{
+					KBase = testNum.createNumericKB(window);
+					KBase.setRunGui(composite);
+					if (Variables!= null)
+					{
+						Variables.updateKBase(KBase);
+					}
+					
+
+					if (composite!= null)
+					{
+						composite.updateKBase(KBase);
+					}
+					
+					labelCurrentKb.setText(KBase.getName());
+				}
 			}
 		});
-		btnLoadExample.setBounds(20, 275, 107, 25);
+		btnLoadExample.setBounds(20, 306, 107, 25);
 		btnLoadExample.setText("Load example");
 		
 		Button btnNewButton = new Button(composite_1, SWT.NONE);
@@ -327,7 +344,7 @@ public class MainScreen  implements Serializable {
 				}				 
 			}
 		});
-		btnNewButton.setBounds(20, 306, 107, 25);
+		btnNewButton.setBounds(20, 335, 107, 25);
 		btnNewButton.setText("Create new");
 		
 		Button btnRun = new Button(composite_1, SWT.NONE);
@@ -364,144 +381,8 @@ public class MainScreen  implements Serializable {
 				
 			}
 		});
-		btnRun.setBounds(20, 402, 107, 25);
+		btnRun.setBounds(20, 391, 107, 25);
 		btnRun.setText("Run");
-		
-		Button btnOpenQuickStartGuide = new Button(composite_1, SWT.NONE);
-		btnOpenQuickStartGuide.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
-		btnOpenQuickStartGuide.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				// add quick starte guide tab
-				TabItem tbtmQuickStart = new TabItem(tabFolder, SWT.NONE);
-				tbtmQuickStart.setText("Quick Start Guide");
-				
-				Composite composite_2 = new Composite(tabFolder, SWT.NONE);
-				tbtmQuickStart.setControl(composite_2);
-				composite_2.setLayout(new GridLayout(1, false));
-				
-				ScrolledComposite SC_QuickStart = new ScrolledComposite(composite_2, SWT.BORDER | SWT.V_SCROLL);
-				SC_QuickStart.setExpandHorizontal(true);
-				SC_QuickStart.setAlwaysShowScrollBars(true);
-				GridData gd_SC_QuickStart;
-				gd_SC_QuickStart = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-				gd_SC_QuickStart.heightHint = 514;
-				gd_SC_QuickStart.widthHint = 699;
-				SC_QuickStart.setLayoutData(gd_SC_QuickStart);
-				SC_QuickStart.setExpandVertical(true);
-				
-				Composite composite_4 = new Composite(SC_QuickStart, SWT.NONE);
-				composite_4.setLayout(new GridLayout(1, false));
-				
-				Label lblNewLabel = new Label(composite_4, SWT.WRAP);
-				GridData gd_lblNewLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-				gd_lblNewLabel.widthHint = 682;
-				lblNewLabel.setLayoutData(gd_lblNewLabel);
-				lblNewLabel.setText("Welcome to The Expert System Shell. The following is a quick description of each page in this program and how to get started.\r\n");
-				
-				Label lblNewLabelOpen = new Label(composite_4, SWT.NONE);
-				lblNewLabelOpen.setText("\r\nOpen/Save a Knowledgebase:");
-				
-				Label lblNewLabelOpenPic = new Label(composite_4, SWT.NONE);
-				lblNewLabelOpenPic.setText("\r\n open/save image needs inserting here:");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblRunKnowledgebase = new Label(composite_4, SWT.NONE);
-				lblRunKnowledgebase.setText("\r\nRun Knowledgebase:");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblStartingTheEvaluation = new Label(composite_4, SWT.NONE);
-				lblStartingTheEvaluation.setText("Starting the Evaluation Process");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_2 = new Label(composite_4, SWT.NONE);
-				lblNewLabel_2.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/runpic.PNG"));
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_3 = new Label(composite_4, SWT.NONE);
-				GridData gd_lblNewLabel_3 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-				gd_lblNewLabel_3.heightHint = 287;
-				gd_lblNewLabel_3.widthHint = 643;
-				lblNewLabel_3.setLayoutData(gd_lblNewLabel_3);
-				lblNewLabel_3.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/runInfo.PNG"));
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_4 = new Label(composite_4, SWT.NONE);
-				lblNewLabel_4.setText("Finalising the Evaluation Process\r\n");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_4Pic = new Label(composite_4, SWT.NONE);
-				lblNewLabel_4Pic.setText("How image needs to be inserted here\r\n");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_5 = new Label(composite_4, SWT.NONE);
-				lblNewLabel_5.setText("\r\nCreate/Edit Knowledgebase:");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_5Pic = new Label(composite_4, SWT.NONE);
-				lblNewLabel_5Pic.setText("rule editor page image needs to be inserted here\r\n");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_5Info = new Label(composite_4, SWT.NONE);
-				lblNewLabel_5Info.setText("rule editor page info needs to be inserted here\r\n");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_6 = new Label(composite_4, SWT.NONE);
-				lblNewLabel_6.setText("\r\nVariables:");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_6Pic = new Label(composite_4, SWT.NONE);
-				lblNewLabel_6Pic.setText("variables page image needs to be inserted here\r\n");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_6Info = new Label(composite_4, SWT.NONE);
-				lblNewLabel_6Info.setText("varaibles page info needs to be inserted here\r\n");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label ReferToManual = new Label(composite_4, SWT.NONE);
-				ReferToManual.setText("For further information, the complete manual can be found in\r\nHelp>Manual");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-			}
-		});
-		
-		btnOpenQuickStartGuide.setBounds(525, 10, 102, 25);
-		btnOpenQuickStartGuide.setText("Quick Start Guide");
-		
-		Button btnOpenManuel = new Button(composite_1, SWT.NONE);
-		btnOpenManuel.setBounds(633, 10, 75, 25);
-		btnOpenManuel.setText("Manual");
-		
-		Button btnSaveToFile = new Button(composite_1, SWT.NONE);
-		btnSaveToFile.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				// save to file
-				FileManager.saveKnowledgeFile(KBase);
-				KBase.setRunGui(composite);
-				composite.updateKBase(KBase);
-			}
-		});
-		btnSaveToFile.setText("Save to file");
-		btnSaveToFile.setBounds(144, 337, 107, 25);
 		
 		Button btnEdit = new Button(composite_1, SWT.NONE);
 		btnEdit.addMouseListener(new MouseAdapter() {
@@ -595,123 +476,53 @@ public class MainScreen  implements Serializable {
 			}
 		});
 		btnEdit.setText("Edit");
-		btnEdit.setBounds(144, 402, 107, 25);
+		btnEdit.setBounds(144, 391, 107, 25);
 		
-		Label lblCurrentKnowledgebase = new Label(composite_1, SWT.NONE);
-		lblCurrentKnowledgebase.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD | SWT.ITALIC));
+		Label lblCurrentKnowledgebase = new Label(composite_1, SWT.BORDER);
+		lblCurrentKnowledgebase.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD | SWT.ITALIC));
 		lblCurrentKnowledgebase.setAlignment(SWT.CENTER);
-		lblCurrentKnowledgebase.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
+		lblCurrentKnowledgebase.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		lblCurrentKnowledgebase.setText("Current Knowledgebase :");
-		lblCurrentKnowledgebase.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
-		lblCurrentKnowledgebase.setBounds(20, 224, 163, 25);
+		lblCurrentKnowledgebase.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
+		lblCurrentKnowledgebase.setBounds(20, 220, 196, 25);
 		
 		textNewKb = new Text(composite_1, SWT.BORDER);
-		textNewKb.setBounds(144, 308, 139, 25);
+		textNewKb.setBounds(144, 337, 139, 23);
 		
-		labelCurrentKb = new Label(composite_1, SWT.NONE);
+		labelCurrentKb = new Label(composite_1, SWT.BORDER);
 		labelCurrentKb.setAlignment(SWT.CENTER);
 		labelCurrentKb.setText("No Knowledgebase loaded");
-		labelCurrentKb.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		labelCurrentKb.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD | SWT.ITALIC));
-		labelCurrentKb.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		labelCurrentKb.setBounds(190, 224, 183, 25);
+		labelCurrentKb.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
+		labelCurrentKb.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD | SWT.ITALIC));
+		labelCurrentKb.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
+		labelCurrentKb.setBounds(20, 251, 214, 25);
 		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
 		lblNewLabel_1.setText("Load");
 		lblNewLabel_1.setBounds(0, 0, 720, 518);
 		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_final.jpg"));
 		
-
-
-		
-		MenuItem mntmOpenKnowledgeBase = new MenuItem(menu_1, SWT.CASCADE);
-		mntmOpenKnowledgeBase.setText("Open Knowledge Base");
-		
-		menu_4 = new Menu(mntmOpenKnowledgeBase);
-		mntmOpenKnowledgeBase.setMenu(menu_4);
-		
-		
-		MenuItem mntmBoat = new MenuItem(menu_4, SWT.NONE);
-		mntmBoat.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-				//want to actually open boat KB when this is pressed
-				text.setText("Boat");
-				btnDefault.setSelection(true);
-				button.setSelection(true);
-				btnCertainityFactor.setSelection(false);
-				btnBayesianReasoning.setSelection(false);
-				btnForwardChaining.setSelection(false);
-				btnBackwardChaining.setSelection(false);
-				if (btnCertainityFactor.getSelection()==true){
-					scale.setVisible(true);
-					lblCf.setVisible(true);
-				}
-				if (btnCertainityFactor.getSelection()==false){
-					scale.setVisible(false);
-					lblCf.setVisible(false);
-				}
-			}
-		});
-		mntmBoat.setText("Boat");
-		
-		MenuItem mntmBoatWithCf = new MenuItem(menu_4, SWT.NONE);
-		mntmBoatWithCf.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-				text.setText("Boat with CF");
-				btnDefault.setSelection(true);
-				button.setSelection(false);
-				btnCertainityFactor.setSelection(true);
-				btnBayesianReasoning.setSelection(false);
-				btnForwardChaining.setSelection(false);
-				btnBackwardChaining.setSelection(false);
-				if (btnCertainityFactor.getSelection()==true){
-					scale.setVisible(true);
-					lblCf.setVisible(true);
-				}
-				if (btnCertainityFactor.getSelection()==false){
-					scale.setVisible(false);
-					lblCf.setVisible(false);
-				}
-			}
-		});
-		mntmBoatWithCf.setText("Boat with CF");
-		
-		MenuItem mntmForecast = new MenuItem(menu_4, SWT.NONE);
-		mntmForecast.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-				text.setText("Forecast");
-				btnCertainityFactor.setSelection(true);
-				btnDefault.setSelection(true);
-				button.setSelection(false);
-				btnCertainityFactor.getSelection();
-				if (btnCertainityFactor.getSelection()==true){
-					scale.setVisible(true);
-					lblCf.setVisible(true);
-				}
-				if (btnCertainityFactor.getSelection()==false){
-					scale.setVisible(false);
-					lblCf.setVisible(false);
-				}
-				btnBayesianReasoning.setSelection(false);
-				btnForwardChaining.setSelection(false);
-				btnBackwardChaining.setSelection(false);
-			}
-		});
-		mntmForecast.setText("Forecast");
-		
-
-		
 		MenuItem mntmLoad = new MenuItem(menu_1, SWT.NONE);
+		mntmLoad.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/Load.png"));
 		mntmLoad.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-			KBase = FileManager.loadKnowledgeFile();
+				Object Temp;
+				Temp = FileManager.loadKnowledgeFile();
+				if (Temp !=null)
+				{
+					KBase = (KnowledgeBase) Temp;
+					KBase.setRunGui(composite);
+					if (composite!= null)
+					{
+						composite.updateKBase(KBase);
+					}
+					if (Variables!= null)
+					{
+						Variables.updateKBase(KBase);
+					}
+					labelCurrentKb.setText(KBase.getName());
+				}
 			}
 		});
 		mntmLoad.setText("Load");
@@ -721,7 +532,17 @@ public class MainScreen  implements Serializable {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				FileManager.saveKnowledgeFile(KBase);
-			}
+
+				KBase.setRunGui(composite);
+				if (Variables!= null)
+				{
+					Variables.updateKBase(KBase);
+				}
+				if (composite!= null)
+				{
+					composite.updateKBase(KBase);
+				}
+		 	}
 		});
 		mntmSave.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/Save-icon.png"));
 		mntmSave.setText("Save");
@@ -738,39 +559,6 @@ public class MainScreen  implements Serializable {
 
 		mntmExit.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/exit_new.jpg"));
 		mntmExit.setText("Exit");
-		
-		
-
-
-
-		
-		
-	/*	text_1 = new Text(scrolledComposite, SWT.WRAP | SWT.V_SCROLL);
-		text_1.setToolTipText("");
-		scrolledComposite.setContent(text_1);
-		scrolledComposite.setMinSize(text_1.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		
-		
-		
-	/*	Button btnNewButton = new Button(composite, SWT.NONE);
-		btnNewButton.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-				//tbtmUserInterface.dispose();
-				
-			}
-		});
-		btnNewButton.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/exit_new.jpg"));
-		GridData gd_btnNewButton = new GridData(SWT.RIGHT, SWT.BOTTOM, false, true, 4, 1);
-		gd_btnNewButton.widthHint = 113;
-		btnNewButton.setLayoutData(gd_btnNewButton);
-		btnNewButton.setText("Close Interface");*/
-
-		
 		
 
 		

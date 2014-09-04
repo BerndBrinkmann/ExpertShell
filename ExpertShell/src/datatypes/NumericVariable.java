@@ -10,12 +10,12 @@ public class NumericVariable extends Variable implements Serializable  {
 	protected ArrayList<Value> possibleValues;
 	protected ArrayList<Integer> numOfValueInstances;
 	protected ArrayList<String> numericOperators;
-	protected Double currentValue = null;
+	public Double currentValue = null;
 	protected Rule changedBy;
 	protected String queryPrompt = "";
 	
 	protected Boolean isNumeric = true;
-	protected Double numVal = null;
+	public Double numVal = null;
 	
 	protected ArrayList<Double> certaintyFactors;  //by our convention certainty factors are stored as 0-1
 	protected ArrayList<Double> prior;
@@ -64,9 +64,9 @@ public class NumericVariable extends Variable implements Serializable  {
 		return currentValue;
 	}
 
-	public void setCurrentValue(Double value)
+	public void setNumValue(Double value)
 	{
-		currentValue = value;	
+		numVal = value;	
 	}
 	
 	public void userSetCurrentValue(Double value)
@@ -144,6 +144,22 @@ public class NumericVariable extends Variable implements Serializable  {
 		return sb.toString();
 	}
 	
+	public void clearVariable()
+	{
+		for(int i=0; i< certaintyFactors.size() ; i++)
+		{
+			certaintyFactors.set(i,0.0);
+			beliefs.set(i, 0.5);
+		}
+		
+		//beliefs = new ArrayList<Double>();
+		numVal = (Double) null;
+		currentValue = (Double) null;
+	}
 
+	public String getName()
+	{
+		return name;
+	}
 	
 }

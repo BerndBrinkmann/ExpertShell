@@ -1,5 +1,7 @@
 package datatypes;
 
+import gui.MainScreen;
+
 import java.awt.Component;
 import java.awt.Desktop;
 import java.io.File;
@@ -14,6 +16,8 @@ import java.io.OutputStream;
 
 import javax.swing.JFileChooser;
 
+import STUART.KnowledgeBaseFileManager;
+import resources.*;
 import datatypes.*;
 
 public class FileManager
@@ -141,12 +145,10 @@ public class FileManager
 	
 	public static void openManual()
 	{
-		//open the PDF of the manual
-		// within a .jar, this must be done by writing to a temporary file outside the .jar and then opening that
-		// as the file cannot be accessed otherwise
 		if (Desktop.isDesktopSupported())
 		{
-			InputStream resource = FileManager.class.getResourceAsStream("/manual.pdf");
+			InputStream resource = ClassLoader.getSystemClassLoader().getResourceAsStream("resources/Manual.pdf");
+						
 		    
 			try
 		    {
@@ -189,18 +191,18 @@ public class FileManager
 		}
 	}
 
-	public static void openGuide()
+	public static void openQuickStart()
 	{
 		//open the PDF of the manual
-		// within a .jar, this must be done by writing to a temporary file outside the .jar and then opening that
-		// as the file cannot be accessed otherwise
 		if (Desktop.isDesktopSupported())
 		{
-			InputStream resource = FileManager.class.getResourceAsStream("/Quick Start Guide.pdf");
+			InputStream resource = ClassLoader.getSystemClassLoader().getResourceAsStream("resources/QuickStart.pdf");
+						
 		    
 			try
 		    {
-				File manualFile = new File(System.getProperty("java.io.tmpdir") + "Quick Start Guide.pdf");
+//				File manualFile = File.createTempFile("Manual", ".pdf", new File(System.getProperty("java.io.tmpdir")));
+				File manualFile = new File(System.getProperty("java.io.tmpdir") + "QuickStart.pdf");
 		        manualFile.deleteOnExit();
 		        OutputStream out = new FileOutputStream(manualFile);
 		        try
@@ -236,5 +238,6 @@ public class FileManager
 				}
 			}
 		}
+		
 	}
 }

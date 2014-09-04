@@ -142,7 +142,7 @@ public class runGUI extends Composite implements Serializable {
     private String selectedVariableString;
     private Test_Case test;
     private Label lblSelectTargetVariable;
-    private static Label lblWhyhow;
+    public static Label lblWhyhow;
     private ArrayList<Rule> HowList = new ArrayList<Rule>();
     static Rule tRule; // a hack to get this into the description function
     
@@ -527,6 +527,7 @@ switch(kb.getUncertaintyMethod())
 	//		KBase = (KnowledgeBase)MainScreen.window.CopyKnowledgeBase(KBase);
 			Inference = new InferenceEngine(KBase);
 			Inference.stopFlag = false;
+			lblWhyhow.setText("");
 			resetVariableValues();
 			for(Control i: CompQ.getChildren())
 			{
@@ -535,14 +536,22 @@ switch(kb.getUncertaintyMethod())
 			btnRun.setText("Stop");
 			
 			if(text.getText()==""){
-				NoRun noKB = new NoRun(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
-				noKB.open();	
+				
+				JOptionPane.showMessageDialog(null, "Unable to Run. Please select a knowledgebase:\r\n\r\nFile >Open KnowledgeBase > KnowledgeBase\r\n");
+				/*NoRun noKB = new NoRun(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
+				noKB.open();*/	
 			}
 			
 			if(targetvariablecombo.isVisible()==true && targetvariablecombo.getText()==""){
 				
-				NoRunV noVar = new NoRunV(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
-				noVar.open();
+				if(btnBackwardChaining.getSelection()==true){
+					JOptionPane.showMessageDialog(null, "Unable to Run.\r\nSelect a Target Variable and Value from the drop down list.");
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Unable to Run.\r\nSelect a Target Variable from the drop down list.");
+				}
+			/*	NoRunV noVar = new NoRunV(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
+				noVar.open();*/
 			}
 			//There are issues with this... causes screen to crash
 		    if(btnForwardChaining.getSelection()==true || btnDefault.getSelection()==true){
@@ -576,7 +585,7 @@ switch(kb.getUncertaintyMethod())
 		}
 		else
 		{resetVariableValues();
-		
+		lblWhyhow.setText("");
 		for(Control i: CompQ.getChildren())
 		{
 			i.dispose();
@@ -926,7 +935,7 @@ switch(kb.getUncertaintyMethod())
 			}
 		}
 	CompQ.update();
-	while (var.currentValue== null) {
+	while (var.currentValue== null && var.numVal ==null) {
         if (!display.readAndDispatch ())
            display.sleep ();
      }
@@ -968,5 +977,6 @@ switch(kb.getUncertaintyMethod())
 	public void updateKBase(KnowledgeBase kb)
 	{
 		KBase = kb;
+		
 	}
 }

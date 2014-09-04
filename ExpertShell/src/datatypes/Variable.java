@@ -17,7 +17,7 @@ public class Variable implements Serializable
 	protected String queryPrompt = "";
 	
 	protected Boolean isNumeric = false;
-	protected Double numVal = null;
+	public Double numVal = null;
 	
 	public ArrayList<Double> certaintyFactors ;  //by our convention certainty factors are stored as 0-1
 	protected ArrayList<Double> beliefs = new ArrayList<Double>();
