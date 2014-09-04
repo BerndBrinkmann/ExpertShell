@@ -744,6 +744,10 @@ switch(kb.getUncertaintyMethod())
 					}
 			targetvariablecombo.setItems(consequentArrayString);
 		}
+		else
+		{
+			targetvariablecombo.removeAll();
+		}
 //			System.out.println("runs get target var combo");
 	}
 
@@ -902,6 +906,6 @@ switch(kb.getUncertaintyMethod())
 	public void updateKBase(KnowledgeBase kb)
 	{
 		KBase = kb;
-		
+		getTargetVariableCombo();
 	}
 }

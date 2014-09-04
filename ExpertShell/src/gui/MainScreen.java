@@ -533,10 +533,11 @@ public class MainScreen  implements Serializable {
 				if (Temp !=null)
 				{
 					KBase = (KnowledgeBase) Temp;
-					KBase.setRunGui(composite);
+					
 					if (composite!= null)
 					{
 						composite.updateKBase(KBase);
+						KBase.setRunGui(composite);
 					}
 					if (Variables!= null)
 					{
@@ -554,7 +555,7 @@ public class MainScreen  implements Serializable {
 				e.getSource();
 				FileManager.saveKnowledgeFile(KBase);
 
-				KBase.setRunGui(composite);
+				
 				if (Variables!= null)
 				{
 					Variables.updateKBase(KBase);
@@ -562,6 +563,7 @@ public class MainScreen  implements Serializable {
 				if (composite!= null)
 				{
 					composite.updateKBase(KBase);
+					KBase.setRunGui(composite);
 				}
 		 	}
 		});
@@ -586,6 +588,15 @@ public class MainScreen  implements Serializable {
 	}
 	public void updateKnowledgeBase()
 	{
-		composite.updateKBase(KBase);
+		
+		if (Variables!= null)
+		{
+			Variables.updateKBase(KBase);
+		}
+		if (composite!= null)
+		{
+			composite.updateKBase(KBase);
+			KBase.setRunGui(composite);
+		}
 	}
 }
