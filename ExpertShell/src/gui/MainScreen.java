@@ -77,6 +77,8 @@ import org.eclipse.swt.custom.StyledText;
 
 
 
+
+
 //import STUART.ADT.Rule;
 import gui.IO;
 
@@ -134,6 +136,7 @@ public class MainScreen  implements Serializable {
     private Test_Case test;
     private Test_Numeric testNum;
     private test_CF TestCF;
+    private Test_Thermostat TestTherm;
    // private Label lblSelectTargetVariable;
    // private Label lblWhyhow;
  //   private ArrayList<Rule> HowList = new ArrayList<Rule>();
@@ -206,6 +209,7 @@ public class MainScreen  implements Serializable {
 		test = new Test_Case();
 		testNum = new Test_Numeric();
 		TestCF = new test_CF();
+		TestTherm = new Test_Thermostat();
 		//KBase = FileManager.loadKnowledgeFile();
 		//KBase.SetName("boat_kb");
 		//Inference = new InferenceEngine(KBase);
@@ -286,9 +290,10 @@ public class MainScreen  implements Serializable {
 
 		comboExample.setBounds(144, 293, 139, 23);
 		comboExample.setText("Select Example");
-		comboExample.add("Forcast (Linguistic)");
-		comboExample.add("Forcast (Numeric)");
+		comboExample.add("Forecast Example");
+		comboExample.add("Numeric Example");
 		comboExample.add("Boat (Certainty Factor)");
+		comboExample.add("Thermostat Example");
 
 		Button btnLoadExample = new Button(composite_1, SWT.NONE);
 		btnLoadExample.addMouseListener(new MouseAdapter() {
@@ -346,8 +351,25 @@ public class MainScreen  implements Serializable {
 					
 					labelCurrentKb.setText(KBase.getName());
 				}
+				
+				if(comboExample.getSelectionIndex() == 3)
+				{
+					KBase = TestTherm.createThermostat(window);
+					KBase.setRunGui(composite);
+					if (Variables!= null)
+					{
+						Variables.updateKBase(KBase);
+					}
+					
+
+					if (composite!= null)
+					{
+						composite.updateKBase(KBase);
+					}
+					
+					labelCurrentKb.setText(KBase.getName());
 	
-			}
+			}}
 		});
 		btnLoadExample.setBounds(24, 291, 107, 25);
 		btnLoadExample.setText("Load example");
@@ -396,6 +418,22 @@ public class MainScreen  implements Serializable {
 				composite = new runGUI(tabFolder, SWT.NONE,KBase,shlExpertSystemShell, display);
 				tbtmUserInterface.setControl(composite);
 				KBase.setRunGui(composite);
+				
+				
+				Button btnNewButton2 = new Button(composite, SWT.NONE);
+				//btnNewButton.addSelectionListener(QSCloseL);
+				btnNewButton2.setImage(SWTResourceManager.getImage(QuickStart.class, "/resources/delete2.jpg"));
+				btnNewButton2.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, false, 4, 1));
+				btnNewButton2.setText("Close");
+				btnNewButton2.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						e.getSource();
+						tbtmUserInterface.dispose();
+						composite =null;
+						}
+					
+				});
 				
 				composite.addDisposeListener(new DisposeListener(){
 					public void widgetDisposed(DisposeEvent e)
@@ -543,6 +581,7 @@ public class MainScreen  implements Serializable {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				tbtmQS.dispose();
+				compositeQS =null;
 			}	
 		};
 		

@@ -51,6 +51,9 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 
 import datatypes.*;
 import test.*;
@@ -96,6 +99,7 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.widgets.ScrollBar;
 
 import gui.AnswerGUI;
 import datatypes.Variable;
@@ -105,6 +109,7 @@ import test.Test_Case;
 import datatypes.*;
 import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseWheelListener;
 
 public class runGUI extends Composite implements Serializable {
 	protected static Shell shlExpertSystemShell;
@@ -366,11 +371,17 @@ switch(kb.getUncertaintyMethod())
 	}
 	
 	
+
 	scrolledComposite = new ScrolledComposite(this, SWT.V_SCROLL);
-	scrolledComposite.addTraverseListener(new TraverseListener() {
-		public void keyTraversed(TraverseEvent e) {
+	scrolledComposite.addMouseTrackListener(new MouseTrackAdapter() {
+		@Override
+		public void mouseEnter(MouseEvent e) {
+			scrolledComposite.setFocus();	
 		}
 	});
+
+	
+    	    
 	scrolledComposite.setAlwaysShowScrollBars(true);
 	GridData gd_scrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 	gd_scrolledComposite.heightHint = 381;
@@ -380,6 +391,12 @@ switch(kb.getUncertaintyMethod())
 	scrolledComposite.setExpandVertical(true);
 	
 	CompQ = new Composite(scrolledComposite, SWT.NONE);
+	CompQ.addMouseTrackListener(new MouseTrackAdapter() {
+		@Override
+		public void mouseEnter(MouseEvent e) {
+			scrolledComposite.setFocus();
+		}
+	});
 	CompQ.addControlListener(new ControlAdapter() {
 		@Override
 		public void controlResized(ControlEvent e) {
@@ -565,6 +582,12 @@ switch(kb.getUncertaintyMethod())
 	
 	
 	scrolledComposite_1 = new ScrolledComposite(this, SWT.BORDER | SWT.V_SCROLL);
+	scrolledComposite_1.addMouseTrackListener(new MouseTrackAdapter() {
+		@Override
+		public void mouseEnter(MouseEvent e) {
+			scrolledComposite_1.setFocus();
+		}
+	});
 		
 	scrolledComposite_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 	GridData gd_scrolledComposite_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
@@ -576,6 +599,12 @@ switch(kb.getUncertaintyMethod())
 	
 	
 	lblWhyhow = new Label(scrolledComposite_1, SWT.WRAP);
+	lblWhyhow.addMouseTrackListener(new MouseTrackAdapter() {
+		@Override
+		public void mouseEnter(MouseEvent e) {
+			scrolledComposite_1.setFocus();
+		}
+	});
 	lblWhyhow.setText("Why/How");
 	scrolledComposite_1.setContent(lblWhyhow);
 	scrolledComposite_1.setMinSize(lblWhyhow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -583,6 +612,8 @@ switch(kb.getUncertaintyMethod())
 	new Label(this, SWT.NONE);
 	new Label(this, SWT.NONE);
 	new Label(this, SWT.NONE);
+	
+
 	/**Original Question Box for reference*/
 	/*
 	WhyButton = new Button(questionGroup, SWT.NONE);
