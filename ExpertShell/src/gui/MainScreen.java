@@ -496,9 +496,7 @@ public class MainScreen  implements Serializable {
 				
 				TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);
 				tbtmVariables.setText("Variables");
-				
-				
-				
+
 				Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
 				Variables.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 				tbtmVariables.setControl(Variables);
@@ -526,7 +524,6 @@ public class MainScreen  implements Serializable {
 				
 				compositeQS = new QuickStart(tabFolder, SWT.NONE);
 				tbtmQS.setControl(compositeQS);
-
 				
 			}
 		});
