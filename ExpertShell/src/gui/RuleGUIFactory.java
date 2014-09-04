@@ -89,7 +89,7 @@ public final class RuleGUIFactory {
 	 * @wbp.factory
 	 */
 	public static Composite createCompositeRuleHolder(Composite parent) {
-		Composite composite = new Composite(parent, SWT.NONE);
+		Composite composite = new Composite(parent, SWT.BORDER);
 		composite.setLayout(new GridLayout(6, false));
 		return composite;
 	}

@@ -131,6 +131,10 @@ public class RuleGUI extends Group {
 		styledRule.append(s);
 	}
 	
+	public Rule getRule(){
+		return rule;
+	}
+	
 	public Object getStyledTextWidget() {
 		return styledRule;
 	}

@@ -68,13 +68,24 @@ public class RuleButtonsGUI extends Composite {
 			toAdd.addConsequent(new Consequent());
 			KBase.AddRule(toAdd);
 			
-			
 			//update GUI
 			ruleList.refresh(true);
 			ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 			ruleList.getParent().layout(true, true);
 			
 		} else if (source == btnDelete) {
+			
+			Rule toDelete = ruleList.getSelectedRule();
+						
+			//update GUI
+			ruleList.deleteSelected();
+			
+			//delete from kb
+			KBase.removeRule(toDelete);
+			
+			//redraw
+			ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			ruleList.getParent().layout(true, true);
 			
 		} else if (source == btnCopy) {
 			
