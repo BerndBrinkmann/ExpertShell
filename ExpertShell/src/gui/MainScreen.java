@@ -505,7 +505,7 @@ public class MainScreen  implements Serializable {
 		labelCurrentKb.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		labelCurrentKb.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD | SWT.ITALIC));
 		labelCurrentKb.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		labelCurrentKb.setBounds(24, 248, 214, 25);
+		labelCurrentKb.setBounds(24, 245, 259, 25);
 		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
 		lblNewLabel_1.setText("Load");
 		lblNewLabel_1.setBounds(0, 0, 720, 518);

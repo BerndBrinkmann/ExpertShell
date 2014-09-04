@@ -73,7 +73,7 @@ public final class RuleGUIFactory {
 	 */
 	public static Button createButtonDelete(Composite parent) {
 		Button button = new Button(parent, SWT.NONE);
-		button.setImage(SWTResourceManager.getImage(RuleGUIFactory.class, "/resources/Delete-icon.png"));
+		button.setImage(SWTResourceManager.getImage(RuleGUIFactory.class, "/resources/Delete-icon-greyed.png"));
 		//button.setText("X");
 		//button.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		return button;
@@ -83,7 +83,7 @@ public final class RuleGUIFactory {
 	 */
 	public static Button createButtonAdd(Composite parent) {
 		Button button = new Button(parent, SWT.NONE);
-		button.setImage(SWTResourceManager.getImage(RuleGUIFactory.class, "/resources/add-icon2.jpg"));
+		button.setImage(SWTResourceManager.getImage(RuleGUIFactory.class, "/resources/add-icon-greyed.jpg"));
 		//button.setText("+");
 		//button.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		return button;
