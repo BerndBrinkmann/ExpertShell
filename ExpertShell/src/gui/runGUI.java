@@ -935,7 +935,7 @@ switch(kb.getUncertaintyMethod())
 			}
 		}
 	CompQ.update();
-	while (var.currentValue== null) {
+	while (var.currentValue== null && var.numVal ==null) {
         if (!display.readAndDispatch ())
            display.sleep ();
      }
