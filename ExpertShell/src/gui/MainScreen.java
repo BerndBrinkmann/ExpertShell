@@ -233,7 +233,7 @@ public class MainScreen  implements Serializable {
 		});
 		
 		menuItemQuickStart.setText("Quick Start Guide");
-		menuItemQuickStart.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/run_new.jpg"));
+		menuItemQuickStart.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/speech-balloon-green-q-icon.png"));
 		
 		MenuItem mntmMaual = new MenuItem(menu_3, SWT.NONE);
 		mntmMaual.addSelectionListener(new SelectionAdapter() {
@@ -521,7 +521,7 @@ public class MainScreen  implements Serializable {
 		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_final.jpg"));
 		
 		MenuItem mntmLoad = new MenuItem(menu_1, SWT.NONE);
-		mntmLoad.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/Load.png"));
+		mntmLoad.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/folder.png"));
 		mntmLoad.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
