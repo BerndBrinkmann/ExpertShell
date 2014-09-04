@@ -142,7 +142,7 @@ public class runGUI extends Composite implements Serializable {
     private String selectedVariableString;
     private Test_Case test;
     private Label lblSelectTargetVariable;
-    private static Label lblWhyhow;
+    public static Label lblWhyhow;
     private ArrayList<Rule> HowList = new ArrayList<Rule>();
     static Rule tRule; // a hack to get this into the description function
     
@@ -527,6 +527,7 @@ switch(kb.getUncertaintyMethod())
 	//		KBase = (KnowledgeBase)MainScreen.window.CopyKnowledgeBase(KBase);
 			Inference = new InferenceEngine(KBase);
 			Inference.stopFlag = false;
+			lblWhyhow.setText("");
 			resetVariableValues();
 			for(Control i: CompQ.getChildren())
 			{
@@ -576,7 +577,7 @@ switch(kb.getUncertaintyMethod())
 		}
 		else
 		{resetVariableValues();
-		
+		lblWhyhow.setText("");
 		for(Control i: CompQ.getChildren())
 		{
 			i.dispose();
@@ -968,5 +969,6 @@ switch(kb.getUncertaintyMethod())
 	public void updateKBase(KnowledgeBase kb)
 	{
 		KBase = kb;
+		
 	}
 }

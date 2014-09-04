@@ -144,6 +144,22 @@ public class NumericVariable extends Variable implements Serializable  {
 		return sb.toString();
 	}
 	
+	public void clearVariable()
+	{
+		for(int i=0; i< certaintyFactors.size() ; i++)
+		{
+			certaintyFactors.set(i,0.0);
+			beliefs.set(i, 0.5);
+		}
+		
+		//beliefs = new ArrayList<Double>();
+		numVal = (Double) null;
+		currentValue = (Double) null;
+	}
 
+	public String getName()
+	{
+		return name;
+	}
 	
 }
