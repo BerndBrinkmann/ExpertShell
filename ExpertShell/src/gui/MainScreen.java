@@ -77,6 +77,8 @@ import org.eclipse.swt.custom.StyledText;
 
 
 
+
+
 //import STUART.ADT.Rule;
 import gui.IO;
 
@@ -397,6 +399,22 @@ public class MainScreen  implements Serializable {
 				tbtmUserInterface.setControl(composite);
 				KBase.setRunGui(composite);
 				
+				
+				Button btnNewButton2 = new Button(composite, SWT.NONE);
+				//btnNewButton.addSelectionListener(QSCloseL);
+				btnNewButton2.setImage(SWTResourceManager.getImage(QuickStart.class, "/resources/delete2.jpg"));
+				btnNewButton2.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, false, 4, 1));
+				btnNewButton2.setText("Close");
+				btnNewButton2.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						e.getSource();
+						tbtmUserInterface.dispose();
+						composite =null;
+						}
+					
+				});
+				
 				composite.addDisposeListener(new DisposeListener(){
 					public void widgetDisposed(DisposeEvent e)
 					{
@@ -543,6 +561,7 @@ public class MainScreen  implements Serializable {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				tbtmQS.dispose();
+				compositeQS =null;
 			}	
 		};
 		
