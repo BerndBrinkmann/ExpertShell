@@ -6,6 +6,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class QuickStart extends Composite {
 
@@ -44,12 +45,12 @@ public class QuickStart extends Composite {
 		lblNewLabel_2.setText("New Label");
 		
 		Label lblNewLabel_3 = new Label(composite, SWT.WRAP);
+		lblNewLabel_3.setImage(SWTResourceManager.getImage(QuickStart.class, "/resources/runpic.PNG"));
 		GridData gd_lblNewLabel_3 = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		lblNewLabel_3.setText("New Label");
 		
 		Label lblNewLabel_4 = new Label(composite, SWT.WRAP);
+		lblNewLabel_4.setImage(SWTResourceManager.getImage(QuickStart.class, "/resources/RunWhyInfo.PNG"));
 		GridData gd_lblNewLabel_4 = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		lblNewLabel_4.setText("New Label");
 		
 		Label lblNewLabel_5 = new Label(composite, SWT.WRAP);
 		GridData gd_lblNewLabel_5 = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
