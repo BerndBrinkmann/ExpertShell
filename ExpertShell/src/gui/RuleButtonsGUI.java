@@ -21,6 +21,7 @@ public class RuleButtonsGUI extends Composite {
 	
 	public RuleButtonsGUI(Composite parent, int style, KnowledgeBase kb, RuleListGUI rl) {
 		super(parent, style);
+		setFont(SWTResourceManager.getFont("Segoe UI Semibold", 9, SWT.BOLD));
 		this.setLayout(new GridLayout(5, false));
 		ruleList = rl;
 		KBase = kb;
@@ -43,14 +44,19 @@ public class RuleButtonsGUI extends Composite {
 		btnDown.addSelectionListener(selAdaptor);
 		
 		btnAdd = new Button(this, SWT.NONE);
-		btnAdd.setText("Add");
+		//btnAdd.setImage(SWTResourceManager.getImage(RuleButtonsGUI.class, "/resources/Add file.png"));
+		btnAdd.setFont(SWTResourceManager.getFont("Segoe UI Semibold", 9, SWT.NORMAL));
+	    btnAdd.setText("Add Rule");
 		btnAdd.addSelectionListener(selAdaptor);
 		
 		btnDelete = new Button(this, SWT.NONE);
-		btnDelete.setText("Del");
+		//btnDelete.setImage(SWTResourceManager.getImage(RuleButtonsGUI.class, "/resources/delete_file.jpg"));
+		btnDelete.setFont(SWTResourceManager.getFont("Segoe UI Semibold", 9, SWT.BOLD));
+		btnDelete.setText("Delete Rule");
 		btnDelete.addSelectionListener(selAdaptor);
 		
 		btnCopy = new Button(this, SWT.NONE);
+		btnCopy.setFont(SWTResourceManager.getFont("Segoe UI Semibold", 9, SWT.BOLD));
 		btnCopy.setText("Copy");
 		btnCopy.addSelectionListener(selAdaptor);
 		
