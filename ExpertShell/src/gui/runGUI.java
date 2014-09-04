@@ -509,17 +509,18 @@ switch(kb.getUncertaintyMethod())
 		    }
 		}
 		else
-		{resetVariableValues();
-		lblWhyhow.setText("");
-		for(Control i: CompQ.getChildren())
 		{
-			i.dispose();
-		}
-		btnRun.setText("Run");
-		setRCMethod(true);
-		Inference.stopFlag = true;
-		resultVar = null;
-		result = null;
+			resetVariableValues();
+			lblWhyhow.setText("");
+			for(Control i: CompQ.getChildren())
+			{
+				i.dispose();
+			}
+			btnRun.setText("Run");
+			setRCMethod(true);
+			Inference.stopFlag = true;
+			resultVar = null;
+			result = null;
 		//Inference = null;
 		}
 			// this should not be handled by run button, KBase needs to tell it when to ask a new question
@@ -893,6 +894,7 @@ switch(kb.getUncertaintyMethod())
 		{
 			//v.setCurrentValue((Value) null);
 			v.clearVariable();
+			v.setNumVal(null);
 		}
 		for(Rule r: KBase.getRuleArray())
 		{
