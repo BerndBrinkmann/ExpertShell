@@ -75,6 +75,8 @@ import org.eclipse.swt.custom.StyledText;
 import gui.IO;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 
 
 
@@ -231,7 +233,7 @@ public class MainScreen  implements Serializable {
 		});
 		
 		menuItemQuickStart.setText("Quick Start Guide");
-		menuItemQuickStart.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/run_new.jpg"));
+		menuItemQuickStart.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/speech-balloon-green-q-icon.png"));
 		
 		MenuItem mntmMaual = new MenuItem(menu_3, SWT.NONE);
 		mntmMaual.addSelectionListener(new SelectionAdapter() {
@@ -271,6 +273,7 @@ public class MainScreen  implements Serializable {
 		
 		comboExample = new Combo(composite_1, SWT.NONE);
 		comboExample.setBounds(144, 293, 139, 23);
+		comboExample.setText("Select Example");
 		comboExample.add("Forcast (Linguistic)");
 		comboExample.add("Forcast (Numeric)");
 
@@ -323,7 +326,7 @@ public class MainScreen  implements Serializable {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				// create new knowledgebase
-				if (textNewKb.getText()=="")
+				if (textNewKb.getText()=="" || "Enter Name".equals(textNewKb.getText()))
 				{
 					JOptionPane.showMessageDialog(null, "Please enter Knowledgebase Name");
 				}
@@ -438,27 +441,13 @@ public class MainScreen  implements Serializable {
 				ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				//scrolledComposite.setMinSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				
-				composite_3.getParent().getParent().layout(true,true);
 				
 				
 				
-				Composite compEditorControls = new Composite(compListEditor, SWT.NONE);
-				compEditorControls.setLayout(new GridLayout(5, false));
 				
-				Button button_1 = new Button(compEditorControls, SWT.NONE);
-				button_1.setText("\u2191");
+				RuleButtonsGUI compEditorControls = new RuleButtonsGUI(compListEditor, SWT.NONE, KBase, ruleList);
 				
-				Button button_2 = new Button(compEditorControls, SWT.NONE);
-				button_2.setText("\u2193");
 				
-				Button button_3 = new Button(compEditorControls, SWT.NONE);
-				button_3.setText("Add");
-				
-				Button button_4 = new Button(compEditorControls, SWT.NONE);
-				button_4.setText("Del");
-				
-				Button button_5 = new Button(compEditorControls, SWT.NONE);
-				button_5.setText("Copy");
 				
 				Composite compRuleEditorHolder = new Composite(composite_3, SWT.NONE);
 				compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -467,6 +456,8 @@ public class MainScreen  implements Serializable {
 				ruleList.setEditorHolder(compRuleEditorHolder);
 				//ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase.getRule(2), KBase);
 				compRuleEditorHolder.layout();
+				composite_3.getParent().getParent().layout(true,true);
+				
 				
 				TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);
 				tbtmVariables.setText("Variables");
@@ -491,7 +482,22 @@ public class MainScreen  implements Serializable {
 		btnEdit.setBounds(144, 393, 107, 25);
 		
 		textNewKb = new Text(composite_1, SWT.BORDER);
+		textNewKb.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textNewKb.getText()==""){
+					textNewKb.setText("Enter Name");
+				}
+			}
+		});
+		textNewKb.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				textNewKb.setText("");
+			}
+		});
 		textNewKb.setBounds(144, 333, 139, 23);
+		textNewKb.setText("Enter Name");
 		
 		labelCurrentKb = new Label(composite_1, SWT.BORDER);
 		labelCurrentKb.setAlignment(SWT.CENTER);
@@ -507,7 +513,7 @@ public class MainScreen  implements Serializable {
 		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_final2.jpg"));
 		
 		MenuItem mntmLoad = new MenuItem(menu_1, SWT.NONE);
-		mntmLoad.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/Load.png"));
+		mntmLoad.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/folder.png"));
 		mntmLoad.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

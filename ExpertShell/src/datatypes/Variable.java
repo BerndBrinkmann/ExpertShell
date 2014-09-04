@@ -187,6 +187,7 @@ public class Variable implements Serializable
 	
 	public Double getBelief(Value val)
 	{
+		if (getValueIndex(val) == -1) return 0.0;
 		return beliefs.get(getValueIndex(val));
 	}
 	
