@@ -407,6 +407,10 @@ public class MainScreen  implements Serializable {
 				tbtmDeveloperInterface.setControl(composite_3);
 				composite_3.setLayout(new GridLayout(2, false));
 				
+				Composite header = new Composite(composite_3,SWT.BORDER);
+				header.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
+				header.setLayout(new GridLayout(2, false));
+				
 				Composite compListEditor = new Composite(composite_3, SWT.NONE);
 				compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 				compListEditor.setLayout(new GridLayout(1, false));
