@@ -22,6 +22,8 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 
 public class RuleGUI_temp extends Composite {
@@ -173,12 +175,36 @@ public class RuleGUI_temp extends Composite {
 		composite_2.setLayout(new GridLayout(1, false));
 		
 		Group grpUncertainty = new Group(composite_2, SWT.NONE);
+		grpUncertainty.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				System.out.println("-----------");
+			}
+		});
 		grpUncertainty.setText("Uncertainty");
 		grpUncertainty.setLayout(new GridLayout(1, false));
 		grpUncertainty.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		Button btnRadioButton = new Button(grpUncertainty, SWT.RADIO);
-		btnRadioButton.setText("Radio Button");
+		Combo combo_13 = new Combo(grpUncertainty, SWT.NONE);
+		combo_13.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				System.out.println("selection");
+			}
+		});
+		combo_13.addVerifyListener(new VerifyListener() {
+			public void verifyText(VerifyEvent arg0) {
+				System.out.println("verify");
+			}
+		});
+		combo_13.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				System.out.println("modify");
+			}
+		});
+		combo_13.setItems(new String[] {"one", "two", "three"});
+		combo_13.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		combo_13.setText("choose");
 
 	}
 

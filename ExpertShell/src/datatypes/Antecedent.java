@@ -250,7 +250,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		this.comparison = comparison;
 		
 		//if antecedent is different then set it
-		if((variable instanceof NumericVariable)!= comparisonIsNumeric)
+		if(isNumeric != comparisonIsNumeric)
 			setIsNumeric(comparisonIsNumeric);
 		
 				

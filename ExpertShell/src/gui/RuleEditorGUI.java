@@ -44,7 +44,7 @@ public class RuleEditorGUI {
 		rule = kb.getRule(index);
 		ruleListGUI = rl;
 		
-		//for button 'clicks'
+		//for button 'clicks' and combo list 'clicks'
 		selAdaptor = new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -338,6 +338,34 @@ public class RuleEditorGUI {
 				
 			} else if (source == Source.VALUE) {
 				debug("Change consequent value: " + index);
+				
+				/*Combo combo = (Combo)w;
+				
+				boolean numeric = consequent.getIsNumeric();
+				
+				String comboText = combo.getText().trim();
+			
+				if(!numeric) {
+					
+					//check if it already exists
+					int exists = antecedent.getVariable().getValueIndex(comboText);
+												
+					if (exists != -1) {
+						//already exists - set the value to be the one found
+						antecedent.setValue(antecedent.getVariable().getPossibleValue(exists));
+					} else {
+						//add a new value with this name
+						antecedent.setValue(new Value(comboText,antecedent));
+					}
+					
+				} else if(numeric) {
+					if(!comboText.equals("")) {
+						try {
+							//try and parse the combobox text as a double
+							antecedent.setValue(Double.parseDouble(comboText));
+						} catch (NumberFormatException ex) {}
+					}
+				}*/
 				
 			}
 		} else if( group == Group.RULE ) {

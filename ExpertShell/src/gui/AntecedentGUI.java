@@ -50,19 +50,23 @@ public class AntecedentGUI {
 			logicComb = RuleGUIFactory.createComboComLogic(c);
 			logicComb.addFocusListener(f);
 			logicComb.addKeyListener(enter);
+			logicComb.addSelectionListener(s);
 		}
 		
 		var = RuleGUIFactory.createComboVar(c);
 		var.addFocusListener(f);
 		var.addKeyListener(enter);
+		var.addSelectionListener(s);
 		
 		logicComparitor = RuleGUIFactory.createComboComparitor(c);
 		logicComparitor.addFocusListener(f);
 		logicComparitor.addKeyListener(enter);
+		logicComparitor.addSelectionListener(s);
 		
 		value = RuleGUIFactory.createComboValue(c);
 		value.addFocusListener(f);
 		value.addKeyListener(enter);
+		value.addSelectionListener(s);
 		
 		filler = new Label(c, SWT.NONE);
 		
