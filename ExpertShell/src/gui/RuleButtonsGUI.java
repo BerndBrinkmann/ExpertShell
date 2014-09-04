@@ -6,6 +6,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import datatypes.Antecedent;
 import datatypes.Consequent;
@@ -32,11 +33,13 @@ public class RuleButtonsGUI extends Composite {
 		};
 		
 		btnUp = new Button(this, SWT.NONE);
-		btnUp.setText("\u2191");
+		//btnUp.setText("\u2191");
+		btnUp.setImage(SWTResourceManager.getImage(RuleButtonsGUI.class, "/resources/up_arrow_sign.png"));
 		btnUp.addSelectionListener(selAdaptor);
 		
 		btnDown = new Button(this, SWT.NONE);
-		btnDown.setText("\u2193");
+		//btnDown.setText("\u2193");
+		btnDown.setImage(SWTResourceManager.getImage(RuleButtonsGUI.class, "/resources/down-arrow-inv.jpg"));
 		btnDown.addSelectionListener(selAdaptor);
 		
 		btnAdd = new Button(this, SWT.NONE);
