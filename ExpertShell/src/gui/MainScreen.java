@@ -330,7 +330,7 @@ public class MainScreen  implements Serializable {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				// create new knowledgebase
-				if (textNewKb.getText()=="")
+				if (textNewKb.getText()=="" || textNewKb.getText().equals("Enter Name"))
 				{
 					JOptionPane.showMessageDialog(null, "Please enter Knowledgebase Name");
 				}
