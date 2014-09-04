@@ -2,6 +2,8 @@ package gui;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -176,6 +178,28 @@ public class QuestionGUI {
 		OKListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				if(var instanceof NumericVariable)
+				{
+					Boolean doub =true;
+					try
+					{
+						double d = Double.parseDouble(ans.getText());
+					}
+					catch(NumberFormatException nfe)
+					{
+						doub = false;
+					}
+					if(doub)
+					{
+						var.setCurrentValue(Double.parseDouble(ans.getText()));
+						setQueryBoxEnabled(false);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Please enter a valid value");
+					}
+				}
+				else{
 				if(ans.getSelectionIndex() != -1)
 				{
 					//Double CFSelection = (double) CFScale.getSelection();
@@ -185,6 +209,8 @@ public class QuestionGUI {
 					setQueryBoxEnabled(false);
 					
 				}
+				}
+				
 			}
 		};
 		AnswerComboListener = new SelectionAdapter() {
@@ -199,13 +225,20 @@ public class QuestionGUI {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
+				if(!(var instanceof NumericVariable))
+				{
 				if(ans.getSelectionIndex() != -1)
 				{
 					OKButton.setEnabled(true);
 				}
-				
+				}
+				else
+				{
+					OKButton.setEnabled(true);
+				}
 			}
 		});
+		
 
 		WhyButton = UserFactoryGUI.createWhyButton(questionGroup);
 		WhyButton.addSelectionListener(WhyListener);
@@ -226,7 +259,10 @@ public class QuestionGUI {
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		OKButton.addSelectionListener(OKListener);
 		OKButton.setEnabled(false);	
-	
+		if(var instanceof NumericVariable)
+		{
+		OKButton.setEnabled(true);	
+		}
 		
 	}
 	public static void displayHowMessage(ArrayList<Rule> howList)
