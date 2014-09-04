@@ -123,21 +123,35 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		}
 		else
 		{
+			System.out.println("enters comparison");
+			//System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
 			switch(comparison)
 			{
 			case EQ:
 //				return variable.getNumVal() == numVal;
+				System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
+				System.out.println(Double.compare(variable.getNumVal(), numVal) == 0);
 				return Double.compare(variable.getNumVal(), numVal) == 0;
 			case NEQ:
-				return variable.getNumVal() != numVal;
+				System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
+				System.out.println(variable.getNumVal() != numVal);
+				return (Double.compare(variable.getNumVal(), numVal) != 0);
 			case GT:
-				return variable.getNumVal() > numVal;
+				System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
+				System.out.println(variable.getNumVal() > numVal);
+				return (Double.compare(variable.getNumVal(), numVal) > 0);
 			case LT:
-				return variable.getNumVal() < numVal;
+				System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
+				System.out.println(variable.getNumVal() < numVal);
+				return (Double.compare(variable.getNumVal(), numVal) < 0);
 			case LTEQ:
-				return variable.getNumVal() <= numVal;
+				System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
+				System.out.println(variable.getNumVal() <= numVal);
+				return (Double.compare(variable.getNumVal(), numVal) == 0 || Double.compare(variable.getNumVal(), numVal) < 0);
 			case GTEQ:
-				return variable.getNumVal() >= numVal;
+				System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
+				System.out.println(variable.getNumVal() >= numVal);
+				return (Double.compare(variable.getNumVal(), numVal) == 0 || Double.compare(variable.getNumVal(), numVal) > 0);
 			default:
 				return false;
 			}

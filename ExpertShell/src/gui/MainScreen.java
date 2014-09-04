@@ -33,6 +33,8 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -71,12 +73,13 @@ import org.eclipse.swt.custom.StyledText;
 
 
 
+
+
 //import STUART.ADT.Rule;
 import gui.IO;
+
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
 
 
 
@@ -272,6 +275,7 @@ public class MainScreen  implements Serializable {
 		composite_1.setLayout(null);
 		
 		comboExample = new Combo(composite_1, SWT.NONE);
+
 		comboExample.setBounds(144, 293, 139, 23);
 		comboExample.setText("Select Example");
 		comboExample.add("Forcast (Linguistic)");
@@ -326,7 +330,7 @@ public class MainScreen  implements Serializable {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				// create new knowledgebase
-				if (textNewKb.getText()=="" || "Enter Name".equals(textNewKb.getText()))
+				if (textNewKb.getText()=="")
 				{
 					JOptionPane.showMessageDialog(null, "Please enter Knowledgebase Name");
 				}
@@ -504,6 +508,7 @@ public class MainScreen  implements Serializable {
 		});
 		textNewKb.setBounds(144, 333, 139, 23);
 		textNewKb.setText("Enter Name");
+
 		
 		labelCurrentKb = new Label(composite_1, SWT.BORDER);
 		labelCurrentKb.setAlignment(SWT.CENTER);
@@ -511,7 +516,7 @@ public class MainScreen  implements Serializable {
 		labelCurrentKb.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		labelCurrentKb.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD | SWT.ITALIC));
 		labelCurrentKb.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		labelCurrentKb.setBounds(24, 248, 214, 25);
+		labelCurrentKb.setBounds(24, 245, 259, 25);
 		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
 		lblNewLabel_1.setText("Load");
 		lblNewLabel_1.setBounds(0, 0, 720, 518);
