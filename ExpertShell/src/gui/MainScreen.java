@@ -75,8 +75,6 @@ import org.eclipse.swt.custom.StyledText;
 import gui.IO;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
 
 
 
@@ -273,7 +271,6 @@ public class MainScreen  implements Serializable {
 		
 		comboExample = new Combo(composite_1, SWT.NONE);
 		comboExample.setBounds(144, 308, 139, 23);
-		comboExample.setText("Select Example");
 		comboExample.add("Forcast (Linguistic)");
 		comboExample.add("Forcast (Numeric)");
 
@@ -326,7 +323,7 @@ public class MainScreen  implements Serializable {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				// create new knowledgebase
-				if (textNewKb.getText()=="" || "Enter Name".equals(textNewKb.getText()))
+				if (textNewKb.getText()=="")
 				{
 					JOptionPane.showMessageDialog(null, "Please enter Knowledgebase Name");
 				}
@@ -490,22 +487,7 @@ public class MainScreen  implements Serializable {
 		lblCurrentKnowledgebase.setBounds(20, 220, 196, 25);
 		
 		textNewKb = new Text(composite_1, SWT.BORDER);
-		textNewKb.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (textNewKb.getText()==""){
-					textNewKb.setText("Enter Name");
-				}
-			}
-		});
-		textNewKb.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				textNewKb.setText("");
-			}
-		});
 		textNewKb.setBounds(144, 337, 139, 23);
-		textNewKb.setText("Enter Name");
 		
 		labelCurrentKb = new Label(composite_1, SWT.BORDER);
 		labelCurrentKb.setAlignment(SWT.CENTER);
