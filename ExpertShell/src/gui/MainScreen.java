@@ -448,12 +448,12 @@ public class MainScreen  implements Serializable {
 				RuleUncertaintyGUI uncertaintyBox = new RuleUncertaintyGUI(header, KBase);
 				
 				Composite compListEditor = new Composite(composite_3, SWT.NONE);
-				compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+				compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 				compListEditor.setLayout(new GridLayout(1, false));
 				
 				scrolledComposite = new ScrolledComposite(compListEditor, SWT.BORDER | SWT.V_SCROLL);
 			//	gd_scrolledComposite.heightHint = 428;
-				GridData gd_scrolledComposite_2 = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+				GridData gd_scrolledComposite_2 = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 				gd_scrolledComposite_2.heightHint = 400;
 				scrolledComposite.setLayoutData(gd_scrolledComposite_2);
 				scrolledComposite.addListener(SWT.MouseWheel, new Listener() {
