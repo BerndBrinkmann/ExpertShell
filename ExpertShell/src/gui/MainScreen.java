@@ -75,6 +75,8 @@ import org.eclipse.swt.custom.StyledText;
 import gui.IO;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 
 
 
@@ -231,7 +233,7 @@ public class MainScreen  implements Serializable {
 		});
 		
 		menuItemQuickStart.setText("Quick Start Guide");
-		menuItemQuickStart.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/run_new.jpg"));
+		menuItemQuickStart.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/speech-balloon-green-q-icon.png"));
 		
 		MenuItem mntmMaual = new MenuItem(menu_3, SWT.NONE);
 		mntmMaual.addSelectionListener(new SelectionAdapter() {
@@ -270,7 +272,8 @@ public class MainScreen  implements Serializable {
 		composite_1.setLayout(null);
 		
 		comboExample = new Combo(composite_1, SWT.NONE);
-		comboExample.setBounds(144, 308, 139, 23);
+		comboExample.setBounds(144, 293, 139, 23);
+		comboExample.setText("Select Example");
 		comboExample.add("Forcast (Linguistic)");
 		comboExample.add("Forcast (Numeric)");
 
@@ -315,7 +318,7 @@ public class MainScreen  implements Serializable {
 				}
 			}
 		});
-		btnLoadExample.setBounds(20, 306, 107, 25);
+		btnLoadExample.setBounds(24, 291, 107, 25);
 		btnLoadExample.setText("Load example");
 		
 		Button btnNewButton = new Button(composite_1, SWT.NONE);
@@ -323,7 +326,7 @@ public class MainScreen  implements Serializable {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				// create new knowledgebase
-				if (textNewKb.getText()=="")
+				if (textNewKb.getText()=="" || "Enter Name".equals(textNewKb.getText()))
 				{
 					JOptionPane.showMessageDialog(null, "Please enter Knowledgebase Name");
 				}
@@ -344,7 +347,7 @@ public class MainScreen  implements Serializable {
 				}				 
 			}
 		});
-		btnNewButton.setBounds(20, 335, 107, 25);
+		btnNewButton.setBounds(24, 331, 107, 25);
 		btnNewButton.setText("Create new");
 		
 		Button btnRun = new Button(composite_1, SWT.NONE);
@@ -381,7 +384,7 @@ public class MainScreen  implements Serializable {
 				
 			}
 		});
-		btnRun.setBounds(20, 391, 107, 25);
+		btnRun.setBounds(24, 393, 107, 25);
 		btnRun.setText("Run");
 		
 		Button btnEdit = new Button(composite_1, SWT.NONE);
@@ -480,18 +483,25 @@ public class MainScreen  implements Serializable {
 			}
 		});
 		btnEdit.setText("Edit");
-		btnEdit.setBounds(144, 391, 107, 25);
-		
-		Label lblCurrentKnowledgebase = new Label(composite_1, SWT.BORDER);
-		lblCurrentKnowledgebase.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD | SWT.ITALIC));
-		lblCurrentKnowledgebase.setAlignment(SWT.CENTER);
-		lblCurrentKnowledgebase.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		lblCurrentKnowledgebase.setText("Current Knowledgebase :");
-		lblCurrentKnowledgebase.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		lblCurrentKnowledgebase.setBounds(20, 220, 196, 25);
+		btnEdit.setBounds(144, 393, 107, 25);
 		
 		textNewKb = new Text(composite_1, SWT.BORDER);
-		textNewKb.setBounds(144, 337, 139, 23);
+		textNewKb.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textNewKb.getText()==""){
+					textNewKb.setText("Enter Name");
+				}
+			}
+		});
+		textNewKb.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				textNewKb.setText("");
+			}
+		});
+		textNewKb.setBounds(144, 333, 139, 23);
+		textNewKb.setText("Enter Name");
 		
 		labelCurrentKb = new Label(composite_1, SWT.BORDER);
 		labelCurrentKb.setAlignment(SWT.CENTER);
@@ -499,15 +509,15 @@ public class MainScreen  implements Serializable {
 		labelCurrentKb.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		labelCurrentKb.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD | SWT.ITALIC));
 		labelCurrentKb.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		labelCurrentKb.setBounds(20, 251, 214, 25);
+		labelCurrentKb.setBounds(24, 248, 214, 25);
 		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
 		lblNewLabel_1.setText("Load");
 		lblNewLabel_1.setBounds(0, 0, 720, 518);
 		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_final.jpg"));
+		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_final2.jpg"));
 		
 		MenuItem mntmLoad = new MenuItem(menu_1, SWT.NONE);
-		mntmLoad.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/Load.png"));
+		mntmLoad.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/folder.png"));
 		mntmLoad.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
