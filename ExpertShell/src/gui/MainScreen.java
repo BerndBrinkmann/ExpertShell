@@ -106,6 +106,7 @@ public class MainScreen  implements Serializable {
 	private Label labelCurrentKb;
 	private Composite composite_3;
 	private TabItem tbtmDeveloperInterface;
+	private TabItem tbtmUserInterface;
 //	private Button btnRun;
 //	private Combo combo;
 //	private Combo combo_1;
@@ -387,7 +388,7 @@ public class MainScreen  implements Serializable {
 				{
 				if (composite == null ) // only one run tab can be created
 				{
-				TabItem tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
+				tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
 				tbtmUserInterface.setText("Run Knowledgebase");
 				
 				composite = new runGUI(tabFolder, SWT.NONE,KBase,shlExpertSystemShell, display);
@@ -402,8 +403,8 @@ public class MainScreen  implements Serializable {
 						System.exit(0);
 					}
 				});
-				tabFolder.setSelection(tbtmUserInterface);
 				}
+				tabFolder.setSelection(tbtmUserInterface);
 				}
 				else
 				{
@@ -502,8 +503,9 @@ public class MainScreen  implements Serializable {
 				Variables.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 				tbtmVariables.setControl(Variables);
 				
-				tabFolder.setSelection(tbtmDeveloperInterface);
+				
 				}
+				tabFolder.setSelection(tbtmDeveloperInterface);
 				}
 				else
 				{
