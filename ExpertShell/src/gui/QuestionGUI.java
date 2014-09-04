@@ -191,7 +191,9 @@ public class QuestionGUI {
 					}
 					if(doub)
 					{
-						var.setCurrentValue(Double.parseDouble(ans.getText()));
+						var.setNumVal(Double.parseDouble(ans.getText()));
+						System.out.println(Double.parseDouble(ans.getText()));
+						System.out.println(var.getNumVal());
 						setQueryBoxEnabled(false);
 					}
 					else
