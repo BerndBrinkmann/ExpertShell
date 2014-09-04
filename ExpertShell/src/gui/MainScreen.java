@@ -75,6 +75,8 @@ import org.eclipse.swt.custom.StyledText;
 import gui.IO;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 
 
 
@@ -226,133 +228,7 @@ public class MainScreen  implements Serializable {
 		menuItemQuickStart.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
-				
-				
-				// add quick starte guide tab
-				TabItem tbtmQuickStart = new TabItem(tabFolder, SWT.NONE);
-				tbtmQuickStart.setText("Quick Start Guide");
-				
-				Composite composite_2 = new Composite(tabFolder, SWT.NONE);
-				tbtmQuickStart.setControl(composite_2);
-				composite_2.setLayout(new GridLayout(1, false));
-				
-				ScrolledComposite SC_QuickStart = new ScrolledComposite(composite_2, SWT.BORDER | SWT.V_SCROLL);
-				SC_QuickStart.setExpandHorizontal(true);
-				SC_QuickStart.setAlwaysShowScrollBars(true);
-				GridData gd_SC_QuickStart;
-				gd_SC_QuickStart = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-				gd_SC_QuickStart.heightHint = 514;
-				gd_SC_QuickStart.widthHint = 699;
-				SC_QuickStart.setLayoutData(gd_SC_QuickStart);
-				SC_QuickStart.setExpandVertical(true);
-				
-				Composite composite_4 = new Composite(SC_QuickStart, SWT.NONE);
-				composite_4.setLayout(new GridLayout(1, false));
-				
-				Label lblNewLabel = new Label(composite_4, SWT.WRAP);
-				GridData gd_lblNewLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-				gd_lblNewLabel.widthHint = 682;
-				lblNewLabel.setLayoutData(gd_lblNewLabel);
-				lblNewLabel.setText("Welcome to The Expert System Shell. The following is a quick description of each page in this program and how to get started.\r\n");
-				
-				Label lblNewMain = new Label(composite_4, SWT.NONE);
-				lblNewMain.setText("\r\n Main Screen:");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabelMainImage = new Label(composite_4, SWT.WRAP);
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabelMainInfo = new Label(composite_4, SWT.WRAP);
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-			/*	Label lblNewLabelOpen = new Label(composite_4, SWT.NONE);
-				lblNewLabelOpen.setText("\r\nOpen/Save a Knowledgebase:");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));*/
-				
-				/*Label lblNewLabelOpenPic = new Label(composite_4, SWT.NONE);
-				lblNewLabelOpenPic.setText("\r\n open/save image needs inserting here:");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));*/
-				
-				Label lblRunKnowledgebase = new Label(composite_4, SWT.NONE);
-				lblRunKnowledgebase.setText("\r\nRun Knowledgebase:");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblStartingTheEvaluation = new Label(composite_4, SWT.NONE);
-				lblStartingTheEvaluation.setText("Starting the Evaluation Process");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_2 = new Label(composite_4, SWT.NONE);
-				lblNewLabel_2.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/whypic.PNG"));
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_3 = new Label(composite_4, SWT.NONE);
-				GridData gd_lblNewLabel_3 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-				gd_lblNewLabel_3.heightHint = 287;
-				gd_lblNewLabel_3.widthHint = 643;
-				lblNewLabel_3.setLayoutData(gd_lblNewLabel_3);
-				lblNewLabel_3.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/runInfo.PNG"));
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_4 = new Label(composite_4, SWT.NONE);
-				lblNewLabel_4.setText("Finalising the Evaluation Process\r\n");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_4Pic = new Label(composite_4, SWT.NONE);
-				lblNewLabel_4Pic.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/howpicnew.PNG"));
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabelHowInfo = new Label(composite_4, SWT.NONE);
-				lblNewLabelHowInfo.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/howInfo.PNG"));
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_5 = new Label(composite_4, SWT.NONE);
-				lblNewLabel_5.setText("\r\nCreate/Edit Knowledgebase:");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_5Pic = new Label(composite_4, SWT.NONE);
-				lblNewLabel_5Pic.setText("rule editor page image needs to be inserted here\r\n");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_5Info = new Label(composite_4, SWT.NONE);
-				lblNewLabel_5Info.setText("rule editor page info needs to be inserted here\r\n");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_6 = new Label(composite_4, SWT.NONE);
-				lblNewLabel_6.setText("\r\nVariables:");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_6Pic = new Label(composite_4, SWT.NONE);
-				lblNewLabel_6Pic.setText("variables page image needs to be inserted here\r\n");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label lblNewLabel_6Info = new Label(composite_4, SWT.NONE);
-				lblNewLabel_6Info.setText("varaibles page info needs to be inserted here\r\n");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				Label ReferToManual = new Label(composite_4, SWT.NONE);
-				ReferToManual.setText("For further information, the complete manual can be found in\r\nHelp>Manual");
-				SC_QuickStart.setContent(composite_4);
-				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-			
+				FileManager.openQuickStart();
 			}
 		});
 		
@@ -397,6 +273,7 @@ public class MainScreen  implements Serializable {
 		
 		comboExample = new Combo(composite_1, SWT.NONE);
 		comboExample.setBounds(144, 308, 139, 23);
+		comboExample.setText("Select Example");
 		comboExample.add("Forcast (Linguistic)");
 		comboExample.add("Forcast (Numeric)");
 
@@ -449,7 +326,7 @@ public class MainScreen  implements Serializable {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				// create new knowledgebase
-				if (textNewKb.getText()=="")
+				if (textNewKb.getText()=="" || "Enter Name".equals(textNewKb.getText()))
 				{
 					JOptionPane.showMessageDialog(null, "Please enter Knowledgebase Name");
 				}
@@ -564,27 +441,13 @@ public class MainScreen  implements Serializable {
 				ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				//scrolledComposite.setMinSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				
-				composite_3.getParent().getParent().layout(true,true);
 				
 				
 				
-				Composite compEditorControls = new Composite(compListEditor, SWT.NONE);
-				compEditorControls.setLayout(new GridLayout(5, false));
 				
-				Button button_1 = new Button(compEditorControls, SWT.NONE);
-				button_1.setText("\u2191");
+				RuleButtonsGUI compEditorControls = new RuleButtonsGUI(compListEditor, SWT.NONE, KBase, ruleList);
 				
-				Button button_2 = new Button(compEditorControls, SWT.NONE);
-				button_2.setText("\u2193");
 				
-				Button button_3 = new Button(compEditorControls, SWT.NONE);
-				button_3.setText("Add");
-				
-				Button button_4 = new Button(compEditorControls, SWT.NONE);
-				button_4.setText("Del");
-				
-				Button button_5 = new Button(compEditorControls, SWT.NONE);
-				button_5.setText("Copy");
 				
 				Composite compRuleEditorHolder = new Composite(composite_3, SWT.NONE);
 				compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -593,6 +456,8 @@ public class MainScreen  implements Serializable {
 				ruleList.setEditorHolder(compRuleEditorHolder);
 				//ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase.getRule(2), KBase);
 				compRuleEditorHolder.layout();
+				composite_3.getParent().getParent().layout(true,true);
+				
 				
 				TabItem tbtmVariables = new TabItem(tabFolder, SWT.NONE);
 				tbtmVariables.setText("Variables");
@@ -625,7 +490,22 @@ public class MainScreen  implements Serializable {
 		lblCurrentKnowledgebase.setBounds(20, 220, 196, 25);
 		
 		textNewKb = new Text(composite_1, SWT.BORDER);
+		textNewKb.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textNewKb.getText()==""){
+					textNewKb.setText("Enter Name");
+				}
+			}
+		});
+		textNewKb.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				textNewKb.setText("");
+			}
+		});
 		textNewKb.setBounds(144, 337, 139, 23);
+		textNewKb.setText("Enter Name");
 		
 		labelCurrentKb = new Label(composite_1, SWT.BORDER);
 		labelCurrentKb.setAlignment(SWT.CENTER);

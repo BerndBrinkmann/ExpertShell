@@ -141,6 +141,10 @@ public class RuleGUI extends Group {
 		this.setLayout(new FillLayout(SWT.HORIZONTAL));
 	}
 	
+	public void destroy() {
+		rule = null;
+		styledRule.dispose();
+	}
 	//I subclass whatever I want mwahahaha
 	@Override
 	protected void checkSubclass () {

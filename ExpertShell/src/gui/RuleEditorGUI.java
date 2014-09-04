@@ -289,7 +289,7 @@ public class RuleEditorGUI {
 				//add code to modify KB here!
 			}
 		} else if( group == Group.RULE ) {
-			
+			//if (source == Source.MOVEUP)
 		}
 		
 		//update the list text

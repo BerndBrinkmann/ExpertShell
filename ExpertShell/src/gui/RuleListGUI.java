@@ -40,10 +40,15 @@ public class RuleListGUI extends Composite {
 		
 		
 		ruleGUIs = new ArrayList<RuleGUI>();
+		
+		addFromKB();
+	}
+	
+	private void addFromKB() {
 		//for each rule in the knowledge base
 		for(Rule r : kb.getRuleArray()) {
 			//make a new rule display box
-			ruleGUIs.add(new RuleGUI(this,style,r,listen));
+			ruleGUIs.add(new RuleGUI(this,SWT.NONE,r,listen));
 		}
 	}
 	
@@ -115,6 +120,8 @@ public class RuleListGUI extends Composite {
 
 	protected void deselect(int index) {
 		
+		if (selected == -1) return;
+		
 		StyledText st = (StyledText) getControlFromIndex(index);
 		
 		st.setForeground(null);
@@ -124,7 +131,6 @@ public class RuleListGUI extends Composite {
 			editor.destroy();  //remove gui elements
 			editor = null; //remove reference
 		}
-		
 		
 		
 		selected = -1;
@@ -156,4 +162,67 @@ public class RuleListGUI extends Composite {
 		editorHolder = compRuleEditorHolder;
 	}
 	
+	public void refresh(boolean keepSelection) {
+		int rememberSelected = selected;
+		
+		deselect(selected);
+		
+		deleteAll();
+		
+		addFromKB();
+		
+		if (keepSelection && rememberSelected != -1 && rememberSelected < ruleGUIs.size()) {
+			select(rememberSelected);
+		}
+		
+	}
+	
+	private void deleteAll() {
+		for(RuleGUI rg : ruleGUIs) {
+			rg.destroy();
+			rg.dispose();
+		}
+	
+		ruleGUIs = null;
+		ruleGUIs = new ArrayList<RuleGUI>();
+		
+	}
+	public void delete(int index){
+		RuleGUI toDel = ruleGUIs.get(index);
+		//if you're about to delete the rule you have selected
+		if (selected == index) {
+			deselect(selected);
+		}
+		
+		ruleGUIs.remove(toDel);
+		toDel.destroy();
+		toDel.dispose();
+		
+	}
+	
+	public void shiftSelectedUp() {
+		RuleGUI stopper, toMove;
+		
+		//cant move if already first (or unselected)
+		if (selected < 1) return;
+		
+		stopper = ruleGUIs.get(selected -1);
+		toMove = ruleGUIs.get(selected);
+		
+		toMove.moveAbove(stopper);
+		
+	}
+	
+	public void shiftSelectedDown() {
+		RuleGUI stopper, toMove;
+		
+		//cant move if already last (or unselected)
+		if (selected == -1 || selected >= (ruleGUIs.size() -1) ) return;
+		
+		stopper = ruleGUIs.get(selected + 1);
+		toMove = ruleGUIs.get(selected);
+		
+		toMove.moveBelow(stopper);
+		
+	}
 }
