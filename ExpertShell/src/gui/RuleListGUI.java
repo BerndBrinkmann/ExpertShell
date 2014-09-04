@@ -218,11 +218,22 @@ public class RuleListGUI extends Composite {
 		RuleGUI stopper, toMove;
 		
 		//cant move if already first (or unselected)
-		if (selected < 1) return;
+		if (selected < 1){
+			System.out.println("cant move up");
+			return;
+		}
 		
 		stopper = ruleGUIs.get(selected -1);
 		toMove = ruleGUIs.get(selected);
 		
+		//move in the array
+		ruleGUIs.remove(selected);
+		ruleGUIs.add(selected - 1, toMove);
+		
+		//update selected
+		selected--;
+		
+		//move in the composite
 		toMove.moveAbove(stopper);
 		
 	}
@@ -236,6 +247,14 @@ public class RuleListGUI extends Composite {
 		stopper = ruleGUIs.get(selected + 1);
 		toMove = ruleGUIs.get(selected);
 		
+		//move in the array
+		ruleGUIs.remove(selected);
+		ruleGUIs.add(selected + 1, toMove);
+		
+		//update selected
+		selected++;
+		
+		//move in the composite
 		toMove.moveBelow(stopper);
 		
 	}
