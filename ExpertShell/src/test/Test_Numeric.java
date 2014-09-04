@@ -77,11 +77,14 @@ public class Test_Numeric implements Serializable  {
 	
 	rules[0] = new Rule();
 	rules[0].setConnective(Connectives.AND);
-	rules[0].addAntecedent(new Antecedent(x,1.0));
+	rules[0].addAntecedent(new Antecedent(x,1.5));
+	System.out.println(rules[0].getAntecedent(0).numVal);
+	
 	rules[0].getAntecedent(0).setComparison(Comparison.GT);
 	rules[0].addAntecedent(new Antecedent(y,1.0));
 	rules[0].getAntecedent(1).setComparison(Comparison.EQ);
 	rules[0].addConsequent(new Consequent(z,two));
+	System.out.println(rules[0].getAntecedent(0).toString());
 	
 	
 	rules[1] = new Rule();
