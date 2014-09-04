@@ -76,6 +76,7 @@ import org.eclipse.swt.custom.StyledText;
 
 
 
+
 //import STUART.ADT.Rule;
 import gui.IO;
 
@@ -129,6 +130,7 @@ public class MainScreen  implements Serializable {
   //  private String variableListLabel = "";
  //   private Variable selectedVariable;
    // private String selectedVariableString;
+    public TabItem tbtmQS;
     private Test_Case test;
     private Test_Numeric testNum;
     private test_CF TestCF;
@@ -145,7 +147,7 @@ public class MainScreen  implements Serializable {
 	public KnowledgeBase getKnowledgeBase(){
 		return KBase ;
 	}
-
+	public SelectionAdapter QSCloseListener;
 	public SelectionAdapter WhyListener;
 	public SelectionAdapter HowListener;
 	public SelectionAdapter OKListener;
@@ -518,19 +520,26 @@ public class MainScreen  implements Serializable {
 		btnEdit.setBounds(144, 393, 107, 25);
 		
 		Button btnNewButton_1 = new Button(composite_1, SWT.NONE);
+		btnNewButton_1.setText("Guide");
 		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				TabItem tbtmQS = new TabItem(tabFolder, SWT.NONE);
+				tbtmQS = new TabItem(tabFolder, SWT.NONE);
 				tbtmQS.setText("Quick Start Guide");
-				
-				compositeQS = new QuickStart(tabFolder, SWT.NONE);
+				compositeQS = new QuickStart(tabFolder, SWT.NONE, QSCloseListener);
 				tbtmQS.setControl(compositeQS);
 				
 			}
 		});
 		btnNewButton_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/speech-balloon-green-q-icon.png"));
-		btnNewButton_1.setBounds(10, 10, 26, 25);
+		btnNewButton_1.setBounds(10, 10, 64, 25);
+		
+		QSCloseListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+				tbtmQS.dispose();
+			}	
+		};
 		
 		textNewKb = new Text(composite_1, SWT.BORDER);
 		textNewKb.addFocusListener(new FocusAdapter() {
