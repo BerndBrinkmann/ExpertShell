@@ -60,9 +60,22 @@ public class RuleButtonsGUI extends Composite {
 		Button source = (Button) e.getSource();
 		
 		if (source == btnUp) {
-			//
+			
+			//move in the kb
+			KBase.shiftRuleUp(ruleList.getSelectedRule());
+			
+			//move in the GUI
+			ruleList.shiftSelectedUp();
+			ruleList.getParent().layout(true, true);
+			
 		} else if (source == btnDown) {
 			
+			//move in the kb
+			KBase.shiftRuleDown(ruleList.getSelectedRule());
+			
+			//move in the GUI
+			ruleList.shiftSelectedDown();
+			ruleList.getParent().layout(true, true);
 		} else if (source == btnAdd) {
 			
 			//add to kb
