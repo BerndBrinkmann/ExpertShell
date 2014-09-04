@@ -403,13 +403,28 @@ public class MainScreen  implements Serializable {
 				lblNewLabel.setLayoutData(gd_lblNewLabel);
 				lblNewLabel.setText("Welcome to The Expert System Shell. The following is a quick description of each page in this program and how to get started.\r\n");
 				
-				Label lblNewLabelOpen = new Label(composite_4, SWT.NONE);
-				lblNewLabelOpen.setText("\r\nOpen/Save a Knowledgebase:");
-				
-				Label lblNewLabelOpenPic = new Label(composite_4, SWT.NONE);
-				lblNewLabelOpenPic.setText("\r\n open/save image needs inserting here:");
+				Label lblNewMain = new Label(composite_4, SWT.NONE);
+				lblNewMain.setText("\r\n Main Screen:");
 				SC_QuickStart.setContent(composite_4);
 				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblNewLabelMainImage = new Label(composite_4, SWT.WRAP);
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblNewLabelMainInfo = new Label(composite_4, SWT.WRAP);
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+			/*	Label lblNewLabelOpen = new Label(composite_4, SWT.NONE);
+				lblNewLabelOpen.setText("\r\nOpen/Save a Knowledgebase:");
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));*/
+				
+				/*Label lblNewLabelOpenPic = new Label(composite_4, SWT.NONE);
+				lblNewLabelOpenPic.setText("\r\n open/save image needs inserting here:");
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));*/
 				
 				Label lblRunKnowledgebase = new Label(composite_4, SWT.NONE);
 				lblRunKnowledgebase.setText("\r\nRun Knowledgebase:");
@@ -422,7 +437,7 @@ public class MainScreen  implements Serializable {
 				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				
 				Label lblNewLabel_2 = new Label(composite_4, SWT.NONE);
-				lblNewLabel_2.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/runpic.PNG"));
+				lblNewLabel_2.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/whypic.PNG"));
 				SC_QuickStart.setContent(composite_4);
 				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				
@@ -441,7 +456,12 @@ public class MainScreen  implements Serializable {
 				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				
 				Label lblNewLabel_4Pic = new Label(composite_4, SWT.NONE);
-				lblNewLabel_4Pic.setText("How image needs to be inserted here\r\n");
+				lblNewLabel_4Pic.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/howpicnew.PNG"));
+				SC_QuickStart.setContent(composite_4);
+				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				
+				Label lblNewLabelHowInfo = new Label(composite_4, SWT.NONE);
+				lblNewLabelHowInfo.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/howInfo.PNG"));
 				SC_QuickStart.setContent(composite_4);
 				SC_QuickStart.setMinSize(composite_4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				
