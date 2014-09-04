@@ -367,7 +367,7 @@ public class MainScreen  implements Serializable {
 		composite_1.setLayout(null);
 		
 		comboExample = new Combo(composite_1, SWT.NONE);
-		comboExample.setBounds(144, 277, 139, 23);
+		comboExample.setBounds(144, 308, 139, 23);
 		comboExample.add("Forcast (Linguistic)");
 		comboExample.add("Forcast (Numeric)");
 
@@ -412,7 +412,7 @@ public class MainScreen  implements Serializable {
 				}
 			}
 		});
-		btnLoadExample.setBounds(20, 275, 107, 25);
+		btnLoadExample.setBounds(20, 306, 107, 25);
 		btnLoadExample.setText("Load example");
 		
 		Button btnNewButton = new Button(composite_1, SWT.NONE);
@@ -441,7 +441,7 @@ public class MainScreen  implements Serializable {
 				}				 
 			}
 		});
-		btnNewButton.setBounds(20, 306, 107, 25);
+		btnNewButton.setBounds(20, 335, 107, 25);
 		btnNewButton.setText("Create new");
 		
 		Button btnRun = new Button(composite_1, SWT.NONE);
@@ -478,7 +478,7 @@ public class MainScreen  implements Serializable {
 				
 			}
 		});
-		btnRun.setBounds(20, 402, 107, 25);
+		btnRun.setBounds(20, 391, 107, 25);
 		btnRun.setText("Run");
 		
 		Button btnEdit = new Button(composite_1, SWT.NONE);
@@ -585,7 +585,7 @@ public class MainScreen  implements Serializable {
 			}
 		});
 		btnEdit.setText("Edit");
-		btnEdit.setBounds(144, 402, 107, 25);
+		btnEdit.setBounds(144, 391, 107, 25);
 		
 		Label lblCurrentKnowledgebase = new Label(composite_1, SWT.BORDER);
 		lblCurrentKnowledgebase.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD | SWT.ITALIC));
@@ -593,10 +593,10 @@ public class MainScreen  implements Serializable {
 		lblCurrentKnowledgebase.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		lblCurrentKnowledgebase.setText("Current Knowledgebase :");
 		lblCurrentKnowledgebase.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		lblCurrentKnowledgebase.setBounds(20, 210, 196, 25);
+		lblCurrentKnowledgebase.setBounds(20, 220, 196, 25);
 		
 		textNewKb = new Text(composite_1, SWT.BORDER);
-		textNewKb.setBounds(144, 308, 139, 25);
+		textNewKb.setBounds(144, 337, 139, 23);
 		
 		labelCurrentKb = new Label(composite_1, SWT.BORDER);
 		labelCurrentKb.setAlignment(SWT.CENTER);
@@ -604,7 +604,7 @@ public class MainScreen  implements Serializable {
 		labelCurrentKb.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		labelCurrentKb.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD | SWT.ITALIC));
 		labelCurrentKb.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		labelCurrentKb.setBounds(20, 241, 214, 25);
+		labelCurrentKb.setBounds(20, 251, 214, 25);
 		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
 		lblNewLabel_1.setText("Load");
 		lblNewLabel_1.setBounds(0, 0, 720, 518);
