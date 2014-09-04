@@ -485,7 +485,7 @@ switch(kb.getUncertaintyMethod())
 				setRCMethod(false);
 				result = Inference.solveForwardChaining(selectedVariable);
 				HowList = Inference.getHowList();
-				if(result != null)
+				if(result != null && !(Inference.stopFlag))
 				{
 					AnswerGUI showAnswer = new AnswerGUI(CompQ, result, scrolledComposite , lblWhyhow, Inference.getHowList(), KBase, scrolledComposite_1);	
 				}
@@ -499,7 +499,7 @@ switch(kb.getUncertaintyMethod())
 				setRCMethod(false);
 				result = Inference.solveBackwardChaining(selectedVariable, selectedValue);
 				HowList = Inference.getHowList();
-				if(result != null)
+				if(result != null&& !(Inference.stopFlag))
 				{
 					AnswerGUI showAnswer = new AnswerGUI(CompQ, result, scrolledComposite , lblWhyhow, Inference.getHowList(), KBase, scrolledComposite_1);	
 				}
@@ -865,7 +865,7 @@ switch(kb.getUncertaintyMethod())
 			}
 		}
 	CompQ.update();
-	while (var.currentValue== null && var.numVal ==null) {
+	while (var.currentValue== null && var.numVal ==null && !(Inference.stopFlag)) {
         if (!display.readAndDispatch ())
            display.sleep ();
      }

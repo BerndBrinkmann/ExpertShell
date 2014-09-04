@@ -63,6 +63,8 @@ public class InferenceEngine implements Serializable {
 			//consider all the rules 
 			for(int i = 0; i < rulesList.length; i++)
 			{
+				if(!stopFlag)
+				{
 				//grab the current rule in a cyclic way
 				rule = rulesList[i];
 				//has the rule been evaluated? If it has then grab the next rule
@@ -84,6 +86,7 @@ public class InferenceEngine implements Serializable {
 						
 					}
 				}
+			}
 			}
 				return target;
 		}
