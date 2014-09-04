@@ -536,14 +536,22 @@ switch(kb.getUncertaintyMethod())
 			btnRun.setText("Stop");
 			
 			if(text.getText()==""){
-				NoRun noKB = new NoRun(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
-				noKB.open();	
+				
+				JOptionPane.showMessageDialog(null, "Unable to Run. Please select a knowledgebase:\r\n\r\nFile >Open KnowledgeBase > KnowledgeBase\r\n");
+				/*NoRun noKB = new NoRun(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
+				noKB.open();*/	
 			}
 			
 			if(targetvariablecombo.isVisible()==true && targetvariablecombo.getText()==""){
 				
-				NoRunV noVar = new NoRunV(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
-				noVar.open();
+				if(btnBackwardChaining.getSelection()==true){
+					JOptionPane.showMessageDialog(null, "Unable to Run.\r\nSelect a Target Variable and Value from the drop down list.");
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Unable to Run.\r\nSelect a Target Variable from the drop down list.");
+				}
+			/*	NoRunV noVar = new NoRunV(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
+				noVar.open();*/
 			}
 			//There are issues with this... causes screen to crash
 		    if(btnForwardChaining.getSelection()==true || btnDefault.getSelection()==true){
