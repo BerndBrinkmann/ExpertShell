@@ -225,8 +225,7 @@ public class Rule extends getSetKBSettings implements Serializable
 					 {
 						 //if it can't be obtained then do not fire
 						 return false;
-					 }
-					 
+					 }	 
 				 }
 				 else
 				 {
@@ -251,9 +250,7 @@ public class Rule extends getSetKBSettings implements Serializable
 					 if(var.isUserInput())
 					 {
 						//get the input from the user
-
-						//var = IO.AskUserForInput(var,this, mainsc.KBase, mainsc.composite.CompQ, mainsc.composite.scrolledComposite_1, mainsc.composite.scrolledComposite, mainsc.Inference);
-						KBase.rungui.AskUserForInput(var,this,KBase,Inference);
+						 KBase.rungui.AskUserForInput(var,this,KBase,Inference);
 						if(KBase.rungui.resultVar == null)
 						 {
 							return false; 
@@ -264,30 +261,24 @@ public class Rule extends getSetKBSettings implements Serializable
 						 return false;
 					 }
 				 }
-				
-			/*	if(!getAntecedent(i).evaluate())
-				{
-					
-					return false;
-				}
-				*/
+				 else
+				 {
+					 if(!getAntecedent(i).evaluate())
+						{
+							return false;
+						} 
+				 }
 			}
 			fire();
 			return true;
-		
-		
-		
+	
 		default:
 			return false;
 			
 		}
-		
-		
 	}
-
 	
 	//returns the result of evaluating the required antecedents in a rule and also fires if required
-
 	public Boolean evaluateAll(UncertaintyManagement umethod, InferenceEngine Inference, KnowledgeBase KBase)
 
 		{
@@ -464,31 +455,6 @@ public class Rule extends getSetKBSettings implements Serializable
 				getConsequent(j).executeBayesian(likelihoodOfNecessity);
 			}
 		}
-		
-		//consider antecedents in order
-		/*for(int i = 0; i < getNumberOfAntecedents(); i++)
-		{
-			
-			Antecedent currentAnt = getAntecedent(i);
-			//evaluate the current antecedent. 
-			if(currentAnt.evaluate())
-			{
-				//if it is true then execute consequents using LS
-				for(int j = 0; j < getNumberOfConsequents(); j++)
-				{
-					getConsequent(j).executeBayesian(currentAnt.getLikelihoodOfSufficiency());
-				}
-			}
-			else
-			{
-				//if it is false then execute consequents using LN
-				for(int j = 0; j < getNumberOfConsequents(); j++)
-				{
-					getConsequent(j).executeBayesian(currentAnt.getLikelihoodOfNecessity());
-				}
-			}
-			
-		}*/
 	}
 	
 	public String toString()

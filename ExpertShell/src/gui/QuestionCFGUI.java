@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 
 
+
+
+import javax.swing.JOptionPane;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -20,6 +24,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
 
+import datatypes.NumericVariable;
 import datatypes.Rule;
 import datatypes.InferenceEngine;
 import datatypes.Variable;
@@ -120,16 +125,23 @@ public class QuestionCFGUI {
 		ans.setLayoutData(gd_combo_1);
 		
 		
-		if(possibleValues.length !=0)
+		if(var instanceof NumericVariable)
 		{
-			String possiblevString[] = new String[possibleValues.length];
-					for (int i=0; i<possibleValues.length; i++)
-					{
-						possiblevString[i]= possibleValues[i].toString();
-					}
-			ans.setItems(possiblevString);
+			ans.setText("Enter Number");
 		}
-		ans.setText("Choose Value");
+		else
+		{
+			if(possibleValues.length !=0)
+			{
+				String possiblevString[] = new String[possibleValues.length];
+						for (int i=0; i<possibleValues.length; i++)
+						{
+							possiblevString[i]= possibleValues[i].toString();
+						}
+				ans.setItems(possiblevString);
+			}
+			ans.setText("Choose Value");
+		}
 		
 		CFPercentage = UserFactoryGUI.createCFLabel(questionGroup);
 		CFPercentage.setVisible(true);
@@ -177,6 +189,30 @@ public class QuestionCFGUI {
 		OKListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
+				if(var instanceof NumericVariable)
+				{
+					Boolean doub =true;
+					try
+					{
+						double d = Double.parseDouble(ans.getText());
+					}
+					catch(NumberFormatException nfe)
+					{
+						doub = false;
+					}
+					if(doub)
+					{
+						var.setNumVal(Double.parseDouble(ans.getText()));
+						System.out.println(Double.parseDouble(ans.getText()));
+						System.out.println(var.getNumVal());
+						setQueryBoxEnabled(false);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Please enter a valid value");
+					}
+				}
+				else{
 				if(ans.getSelectionIndex() != -1)
 				{
 					Double CFSelection = (double) CFScale.getSelection();
@@ -186,7 +222,8 @@ public class QuestionCFGUI {
 					setQueryBoxEnabled(false);
 					
 				}
-			}	
+				}	
+			}
 		};
 		AnswerComboListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -217,9 +254,16 @@ public class QuestionCFGUI {
 		ans.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				if(!(var instanceof NumericVariable))
+				{
 				if(ans.getSelectionIndex() != -1)
 				{
-					OkayFlag1=true;
+					OkayFlag1 = true;
+				}
+				}
+				else
+				{
+					OkayFlag1 = true;
 				}
 				if(OkayFlag1 && OkayFlag2)
 				{
@@ -248,10 +292,10 @@ public class QuestionCFGUI {
 		OKButton.addSelectionListener(OKListener);
 		OKButton.setText("OK");
 		OKButton.setEnabled(false);	
-		
-		
-		
-	
+		if(var instanceof NumericVariable)
+		{
+		OKButton.setEnabled(true);	
+		}
 		
 	}
 	
