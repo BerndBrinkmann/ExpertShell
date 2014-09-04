@@ -271,7 +271,7 @@ public class MainScreen  implements Serializable {
 		mntmAbout.setText("About");
 		
 		tabFolder = new TabFolder(shlExpertSystemShell, SWT.NONE);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		
 		TabItem tbtmMain = new TabItem(tabFolder, SWT.NONE);
