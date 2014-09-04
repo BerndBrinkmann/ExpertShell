@@ -145,5 +145,8 @@ public class ConsequentListGUI {
 		return addButton;
 	}
 	
+	public ArrayList<ConsequentGUI> getConsGUIList() {
+		return conseqents;
+	}
 	
 }

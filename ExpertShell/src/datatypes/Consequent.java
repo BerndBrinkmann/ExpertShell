@@ -2,6 +2,7 @@ package datatypes;
 
 import java.io.Serializable;
 
+
 public class Consequent extends getSetKBSettings implements Serializable
 {
 	protected Variable variable;
@@ -10,7 +11,7 @@ public class Consequent extends getSetKBSettings implements Serializable
 	
 	protected Boolean isNumeric = false;
 	protected Double numVal;
-	protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
+	//protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
 	
 	
 	public Consequent()
@@ -207,5 +208,17 @@ public class Consequent extends getSetKBSettings implements Serializable
 	
 	public boolean isNumeric() {
 		return isNumeric;
+	}
+
+	public void setIsNumeric(Boolean isNumeric)
+	{
+		this.isNumeric = isNumeric;
+		
+		if(variable != null)
+			variable.setIsNumeric(isNumeric);
+		if(isNumeric)
+			setValue(0.0);
+		else
+			setValue(new Value(""));
 	}
 }

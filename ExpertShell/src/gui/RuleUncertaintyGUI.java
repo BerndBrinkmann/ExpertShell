@@ -17,6 +17,7 @@ public class RuleUncertaintyGUI extends Composite {
 	private Button radioNone,radioCF,radioBay;
 	private KBSettings.UncertaintyManagement selected;
 	private KnowledgeBase KBase;
+	private RuleListGUI ruleList;
 	
 	public RuleUncertaintyGUI(Composite parent, KnowledgeBase kb) {
 		
@@ -63,25 +64,32 @@ public class RuleUncertaintyGUI extends Composite {
 	private void buttonPress(Button sourceButton, boolean fromUserClick) {
 		
 		if (sourceButton == radioNone) {
+			
 			radioNone.setSelection(true);
 			radioCF.setSelection(false);
 			radioBay.setSelection(false);
 			selected = KBSettings.UncertaintyManagement.NONE;
+			
 		} else if (sourceButton == radioCF) {
+			
 			radioNone.setSelection(false);
 			radioCF.setSelection(true);
 			radioBay.setSelection(false);
 			selected = KBSettings.UncertaintyManagement.CF;
+			
 		} else if (sourceButton == radioBay) {
+			
 			radioNone.setSelection(false);
 			radioCF.setSelection(false);
 			radioBay.setSelection(true);
 			selected = KBSettings.UncertaintyManagement.BAYESIAN;
+			
 		}
 		
 		//ie the user actually clicked the button
 		if (fromUserClick){
 			KBase.setUncertaintyMethod(selected);
+			ruleList.updateUncertainty();
 		}
 	}
 	
@@ -99,5 +107,9 @@ public class RuleUncertaintyGUI extends Composite {
 		} else if (u == KBSettings.UncertaintyManagement.BAYESIAN) {
 			buttonPress(radioBay,false);
 		}
+	}
+
+	public void setRuleList(RuleListGUI rl) {
+		ruleList = rl;
 	}
 }

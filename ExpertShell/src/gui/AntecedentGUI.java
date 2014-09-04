@@ -102,7 +102,6 @@ public class AntecedentGUI {
 		//update comparison
 		logicComparitor.select(ant.getComparison().getIndex());
 		
-		//(add numeric!!!!!!!!!!!!!!)
 		//update value
 		value.removeAll();
 		if(!ant.getIsNumeric()) {
@@ -114,7 +113,11 @@ public class AntecedentGUI {
 			if(valueIndex != -1){
 				value.select(valueIndex);
 			} else {
-				value.setText(ant.getValue().toString());
+				if (ant.getValue() == null) {
+					value.setText("");
+				} else {
+					value.setText(ant.getValue().toString());
+				}
 			}
 		} else {
 			value.setText(ant.getNumVal().toString());

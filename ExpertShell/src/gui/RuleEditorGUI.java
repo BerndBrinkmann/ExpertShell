@@ -134,8 +134,17 @@ public class RuleEditorGUI {
 			if (source == Source.ADD) {
 				
 				debug("Add antecedent");
-				Antecedent toAdd = new Antecedent();
 				
+				Antecedent toAdd;
+				
+				Variable variableToAdd = kb.getVariable("default");
+				if (variableToAdd == null) {
+					//default isn't a var yet
+					toAdd = new Antecedent();
+				} else {
+					toAdd = new Antecedent( variableToAdd, (Value)null );
+				}
+					
 				//update KB
 				rule.addAntecedent(toAdd);
 				
@@ -248,6 +257,8 @@ public class RuleEditorGUI {
 				//add code to modify KB here!
 			}
 		} else if (group == Group.CONSEQUENT) {
+			Consequent consequent = rule.getConsequent(index);
+			
 			if (source == Source.ADD) {
 				debug("Add consequent");
 				
@@ -262,7 +273,7 @@ public class RuleEditorGUI {
 				
 			} else if (source == Source.DELETE) {
 				debug("Delete consequent: " + index);
-				Consequent toDelete = rule.getConsequent(index);
+				Consequent toDelete = consequent;
 				
 				//update KB
 				rule.removeConditional(toDelete);
@@ -274,19 +285,60 @@ public class RuleEditorGUI {
 			} else if (source == Source.VARIABLE) {
 				debug("Change consequent variable: " + index);
 				
+				Combo combo = (Combo)w;
 				
+				String comboText;
 				
+				comboText = combo.getText().trim();
 				
-				//add code to modify KB here!
-			} else if (source == Source.COMPARE) {
-				debug("Change consequent assignment: " + index);
-				//add code to modify KB here!
-			} else if (source == Source.VALUE) {
-				debug("Change consequent value: " + index);
-				//add code to modify KB here!
+				if (combo.getSelectionIndex() == -1 && !(comboText.equals(""))) {
+					//ie. combo was changed (typed into) but they didn't select an existing var from the list
+					//ignore blank text
+					
+					//see if the variable already exists in kb
+					Variable var = kb.getVariable(comboText);
+					
+					//the variable name doesn't exist in kb (yet!)
+					if (var == null) {
+						//make a new variable with this name
+						var = new Variable(comboText);
+						
+						//add it to the kb
+						kb.addVariable(var);
+					}
+					
+					consequent.setVariable(var);
+					
+				} else { //user has selected an existing variable
+					
+					//set the var in the kb
+					consequent.setVariable(kb.getVariable(comboText));
+				}
+				
+				//update values of GUI elements for this antecedent
+				consList.getConsGUIList().get(index).update();
+				
 			} else if (source == Source.ASSIGN) {
 				debug("Change assignment: " + index);
-				//add code to modify KB here!
+				
+				//get a pointer to the combo involved
+				Combo combo = (Combo)w;
+				
+				if (combo.getSelectionIndex() == 0) {
+					//selected "is"
+					consequent.setIsNumeric(true);
+				} else if (combo.getSelectionIndex() == 1) {
+					//selected "="
+					consequent.setIsNumeric(false);
+				}
+				
+				//update the GUI
+				consList.getConsGUIList().get(index).update();
+				
+				
+			} else if (source == Source.VALUE) {
+				debug("Change consequent value: " + index);
+				
 			}
 		} else if( group == Group.RULE ) {
 			//if (source == Source.MOVEUP)
