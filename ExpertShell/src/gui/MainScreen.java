@@ -258,7 +258,8 @@ public class MainScreen  implements Serializable {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 			    HelpDialog about = new HelpDialog(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
-			    about.open();	
+			    about.open();
+				//JOptionPane.showMessageDialog(null, "This Expert System Shell was designed by: \r\n\r\nArie Westland, Bernd Brinkmann, Jessica Taylor, Mandy Bester, and Nathan Cortes.\r\n\r\nFor the partial requirements of KNE441: Computational Intelligence, at the University of Tasmania, 2014.");
 			}
 			
 		});

@@ -204,12 +204,7 @@ public class test_CF implements Serializable  {
 				boat_kb.setTarget(boat);
 				boat_kb.setUncertaintyMethod(KBSettings.UncertaintyManagement.CF);
 				boat_kb.setInferenceMethod(KBSettings.InferenceType.F_CHAINING);
-				return boat_kb;
-		
-		
-		
-		
-		
+				return boat_kb;	
 		
 }
 }
