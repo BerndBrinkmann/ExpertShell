@@ -75,6 +75,7 @@ import org.eclipse.swt.custom.StyledText;
 
 
 
+
 //import STUART.ADT.Rule;
 import gui.IO;
 
@@ -118,6 +119,7 @@ public class MainScreen  implements Serializable {
 //    private Group questionGroup;
 //    private Label lblNewLabel;
     private ScrolledComposite scrolledComposite;
+    public QuickStart compositeQS;
  //   private MenuItem newKB;
    // private RuleEditorGUI ruleEditor;
 //    private RuleListGUI ruleList;
@@ -128,6 +130,7 @@ public class MainScreen  implements Serializable {
    // private String selectedVariableString;
     private Test_Case test;
     private Test_Numeric testNum;
+    private test_CF TestCF;
    // private Label lblSelectTargetVariable;
    // private Label lblWhyhow;
  //   private ArrayList<Rule> HowList = new ArrayList<Rule>();
@@ -199,6 +202,7 @@ public class MainScreen  implements Serializable {
 		KBase = new KnowledgeBase("default");
 		test = new Test_Case();
 		testNum = new Test_Numeric();
+		TestCF = new test_CF();
 		//KBase = FileManager.loadKnowledgeFile();
 		//KBase.SetName("boat_kb");
 		//Inference = new InferenceEngine(KBase);
@@ -255,7 +259,8 @@ public class MainScreen  implements Serializable {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 			    HelpDialog about = new HelpDialog(shlExpertSystemShell, SWT.ICON_INFORMATION|SWT.OK);
-			    about.open();	
+			    about.open();
+				//JOptionPane.showMessageDialog(null, "This Expert System Shell was designed by: \r\n\r\nArie Westland, Bernd Brinkmann, Jessica Taylor, Mandy Bester, and Nathan Cortes.\r\n\r\nFor the partial requirements of KNE441: Computational Intelligence, at the University of Tasmania, 2014.");
 			}
 			
 		});
@@ -280,6 +285,7 @@ public class MainScreen  implements Serializable {
 		comboExample.setText("Select Example");
 		comboExample.add("Forcast (Linguistic)");
 		comboExample.add("Forcast (Numeric)");
+		comboExample.add("Boat (Certainty Factor)");
 
 		Button btnLoadExample = new Button(composite_1, SWT.NONE);
 		btnLoadExample.addMouseListener(new MouseAdapter() {
@@ -320,6 +326,24 @@ public class MainScreen  implements Serializable {
 					
 					labelCurrentKb.setText(KBase.getName());
 				}
+				if(comboExample.getSelectionIndex() == 2)
+				{
+					KBase = TestCF.createCFKB(window);
+					KBase.setRunGui(composite);
+					if (Variables!= null)
+					{
+						Variables.updateKBase(KBase);
+					}
+					
+
+					if (composite!= null)
+					{
+						composite.updateKBase(KBase);
+					}
+					
+					labelCurrentKb.setText(KBase.getName());
+				}
+	
 			}
 		});
 		btnLoadExample.setBounds(24, 291, 107, 25);
@@ -490,6 +514,22 @@ public class MainScreen  implements Serializable {
 		});
 		btnEdit.setText("Edit");
 		btnEdit.setBounds(144, 393, 107, 25);
+		
+		Button btnNewButton_1 = new Button(composite_1, SWT.NONE);
+		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TabItem tbtmQS = new TabItem(tabFolder, SWT.NONE);
+				tbtmQS.setText("Quick Start Guide");
+				
+				compositeQS = new QuickStart(tabFolder, SWT.NONE);
+				tbtmQS.setControl(compositeQS);
+
+				
+			}
+		});
+		btnNewButton_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/speech-balloon-green-q-icon.png"));
+		btnNewButton_1.setBounds(10, 10, 26, 25);
 		
 		textNewKb = new Text(composite_1, SWT.BORDER);
 		textNewKb.addFocusListener(new FocusAdapter() {

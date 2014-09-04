@@ -77,14 +77,6 @@ public class QuestionGUI {
 		CompQ.layout();
 		questionGroup.setFocus();
 		CompQ.update();
-	/*	while(var.currentValue == null)
-		{
-			try
-			{
-				wait();
-			} catch (InterruptedException e){};
-			
-		}*/
 	}
 	
 	public void addQuestion(String message, Group questionGroup){
