@@ -524,10 +524,15 @@ public class MainScreen  implements Serializable {
 		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				tbtmQS = new TabItem(tabFolder, SWT.NONE);
-				tbtmQS.setText("Quick Start Guide");
-				compositeQS = new QuickStart(tabFolder, SWT.NONE, QSCloseListener);
-				tbtmQS.setControl(compositeQS);
+				
+				if (compositeQS == null ) // only one QS tab can be created
+				{
+					tbtmQS = new TabItem(tabFolder, SWT.NONE);
+					tbtmQS.setText("Quick Start Guide");
+					compositeQS = new QuickStart(tabFolder, SWT.NONE, QSCloseListener);
+					tbtmQS.setControl(compositeQS);
+				}
+			tabFolder.setSelection(tbtmQS);
 				
 			}
 		});

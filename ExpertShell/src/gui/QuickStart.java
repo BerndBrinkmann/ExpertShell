@@ -1,27 +1,37 @@
 package gui;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+
+
 
 public class QuickStart extends Composite {
-
+	
+	public SelectionAdapter QSCloseL;
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public QuickStart(Composite parent, int style) {
+	public QuickStart(Composite parent, int style, SelectionAdapter QSCloseListener) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
+		QSCloseL = QSCloseListener;
+		
 		ScrolledComposite scrolledComposite = new ScrolledComposite(this, SWT.V_SCROLL);
 		GridData gd_scrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_scrolledComposite.heightHint = 500;
+		gd_scrolledComposite.heightHint = 480;
 		gd_scrolledComposite.widthHint = 684;
 		scrolledComposite.setLayoutData(gd_scrolledComposite);
 		scrolledComposite.setExpandHorizontal(true);
@@ -128,6 +138,14 @@ public class QuickStart extends Composite {
 		lblNewLabel_12.setText("variables info inserted here");
 		scrolledComposite.setContent(composite);
 		scrolledComposite.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		Button btnNewButton = new Button(this, SWT.NONE);
+		btnNewButton.addSelectionListener(QSCloseL);
+		
+
+		btnNewButton.setImage(SWTResourceManager.getImage(QuickStart.class, "/resources/delete2.jpg"));
+		btnNewButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, false, 1, 1));
+		btnNewButton.setText("Close");
 	}
 
 	@Override
