@@ -33,6 +33,8 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -71,12 +73,13 @@ import org.eclipse.swt.custom.StyledText;
 
 
 
+
+
 //import STUART.ADT.Rule;
 import gui.IO;
+
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
 
 
 
@@ -272,6 +275,7 @@ public class MainScreen  implements Serializable {
 		composite_1.setLayout(null);
 		
 		comboExample = new Combo(composite_1, SWT.NONE);
+
 		comboExample.setBounds(144, 293, 139, 23);
 		comboExample.setText("Select Example");
 		comboExample.add("Forcast (Linguistic)");
@@ -326,7 +330,7 @@ public class MainScreen  implements Serializable {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				// create new knowledgebase
-				if (textNewKb.getText()=="" || "Enter Name".equals(textNewKb.getText()))
+				if (textNewKb.getText()=="")
 				{
 					JOptionPane.showMessageDialog(null, "Please enter Knowledgebase Name");
 				}
@@ -409,6 +413,10 @@ public class MainScreen  implements Serializable {
 				composite_3 = new Composite(tabFolder, SWT.NONE);
 				tbtmDeveloperInterface.setControl(composite_3);
 				composite_3.setLayout(new GridLayout(2, false));
+				
+				Composite header = new Composite(composite_3,SWT.BORDER);
+				header.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
+				header.setLayout(new GridLayout(2, false));
 				
 				Composite compListEditor = new Composite(composite_3, SWT.NONE);
 				compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
@@ -498,6 +506,7 @@ public class MainScreen  implements Serializable {
 		});
 		textNewKb.setBounds(144, 333, 139, 23);
 		textNewKb.setText("Enter Name");
+
 		
 		labelCurrentKb = new Label(composite_1, SWT.BORDER);
 		labelCurrentKb.setAlignment(SWT.CENTER);

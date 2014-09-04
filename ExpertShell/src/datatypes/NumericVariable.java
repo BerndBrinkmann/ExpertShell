@@ -162,4 +162,6 @@ public class NumericVariable extends Variable implements Serializable  {
 		return name;
 	}
 	
+	
+	
 }
