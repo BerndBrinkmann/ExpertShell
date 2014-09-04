@@ -75,6 +75,7 @@ import org.eclipse.swt.custom.StyledText;
 
 
 
+
 //import STUART.ADT.Rule;
 import gui.IO;
 
@@ -128,6 +129,7 @@ public class MainScreen  implements Serializable {
    // private String selectedVariableString;
     private Test_Case test;
     private Test_Numeric testNum;
+    private test_CF TestCF;
    // private Label lblSelectTargetVariable;
    // private Label lblWhyhow;
  //   private ArrayList<Rule> HowList = new ArrayList<Rule>();
@@ -280,6 +282,7 @@ public class MainScreen  implements Serializable {
 		comboExample.setText("Select Example");
 		comboExample.add("Forcast (Linguistic)");
 		comboExample.add("Forcast (Numeric)");
+		comboExample.add("Boat (Certainty Factor)");
 
 		Button btnLoadExample = new Button(composite_1, SWT.NONE);
 		btnLoadExample.addMouseListener(new MouseAdapter() {
@@ -320,6 +323,24 @@ public class MainScreen  implements Serializable {
 					
 					labelCurrentKb.setText(KBase.getName());
 				}
+				if(comboExample.getSelectionIndex() == 2)
+				{
+					KBase = TestCF.createCFKB(window);
+					KBase.setRunGui(composite);
+					if (Variables!= null)
+					{
+						Variables.updateKBase(KBase);
+					}
+					
+
+					if (composite!= null)
+					{
+						composite.updateKBase(KBase);
+					}
+					
+					labelCurrentKb.setText(KBase.getName());
+				}
+	
 			}
 		});
 		btnLoadExample.setBounds(24, 291, 107, 25);
