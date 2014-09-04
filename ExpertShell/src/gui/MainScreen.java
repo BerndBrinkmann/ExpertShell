@@ -561,23 +561,9 @@ public class MainScreen  implements Serializable {
 				
 				
 				
-				Composite compEditorControls = new Composite(compListEditor, SWT.NONE);
-				compEditorControls.setLayout(new GridLayout(5, false));
+				RuleButtonsGUI compEditorControls = new RuleButtonsGUI(compListEditor, SWT.NONE, KBase, ruleList);
 				
-				Button button_1 = new Button(compEditorControls, SWT.NONE);
-				button_1.setText("\u2191");
 				
-				Button button_2 = new Button(compEditorControls, SWT.NONE);
-				button_2.setText("\u2193");
-				
-				Button button_3 = new Button(compEditorControls, SWT.NONE);
-				button_3.setText("Add");
-				
-				Button button_4 = new Button(compEditorControls, SWT.NONE);
-				button_4.setText("Del");
-				
-				Button button_5 = new Button(compEditorControls, SWT.NONE);
-				button_5.setText("Copy");
 				
 				Composite compRuleEditorHolder = new Composite(composite_3, SWT.NONE);
 				compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
