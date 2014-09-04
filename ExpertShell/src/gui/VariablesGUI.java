@@ -299,6 +299,12 @@ public class VariablesGUI extends Composite {
 	{
 		KBase = kb;
 		setVariableList();
+		 descriptionTxt.setText("");
+		 txtVariableName.setText("");
+		 QuestionPrompt.setText("");
+		 possibleValuesList.removeAll();
+		setForInput(false);
+		
 	}
 	
 }

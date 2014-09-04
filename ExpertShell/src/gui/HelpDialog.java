@@ -2,6 +2,7 @@ package gui;
 
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.SWT;
@@ -15,10 +16,10 @@ public class HelpDialog extends Dialog {
 
 	protected Object result;
 	protected Shell shlAbout;
-	private Text txtThisExpertSystem;
-	private Text txtArieWestlandBernd;
-	private Text txtForTheRequirements;
-	private Text txtAtTheUniversity;
+	private Label txtThisExpertSystem;
+	private Label txtArieWestlandBernd;
+	private Label txtForTheRequirements;
+	private Label txtAtTheUniversity;
 
 	/**
 	 * Create the dialog.
@@ -55,7 +56,7 @@ public class HelpDialog extends Dialog {
 		shlAbout.setSize(379, 180);
 		shlAbout.setText("About");
 		
-		txtThisExpertSystem = new Text(shlAbout, SWT.WRAP);
+		txtThisExpertSystem = new Label(shlAbout, SWT.WRAP);
 		txtThisExpertSystem.setText("This Expert System Shell was designed by: \r\n\r\nArie Westland, Bernd Brinkmann, Jessica Taylor, Mandy Bester, and Nathan Cortes.\r\n\r\nFor the partial requirements of KNE441: Computational Intelligence, at the University of Tasmania, 2014.");
 		txtThisExpertSystem.setBounds(10, 10, 353, 132);
 		
