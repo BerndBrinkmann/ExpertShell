@@ -35,7 +35,7 @@ public class RuleUncertaintyGUI extends Composite {
 		
 		grpUncertainty = new Group(this, SWT.NONE);
 		grpUncertainty.setText("Uncertainty");
-		grpUncertainty.setLayout(new GridLayout(1, false));
+		grpUncertainty.setLayout(new GridLayout(3, false));
 		grpUncertainty.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
 		radioNone = new Button(grpUncertainty, SWT.RADIO);

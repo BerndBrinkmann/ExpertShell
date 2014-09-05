@@ -273,4 +273,8 @@ public class RuleListGUI extends Composite {
 		toMove.moveBelow(stopper);
 		
 	}
+	
+	public KnowledgeBase getCurrentKnowledgeBase() {
+		return kb;
+	}
 }

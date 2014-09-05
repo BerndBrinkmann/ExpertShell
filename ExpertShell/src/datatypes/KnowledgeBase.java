@@ -98,6 +98,10 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 		return RuleList.toArray(new Rule[RuleList.size()]);
 	}
 	
+	public int getRuleIndex(Rule r) {
+		return RuleList.indexOf(r);
+	}
+	
 	public void shiftRuleUp(Rule rule)
 	{
 		int index = RuleList.indexOf(rule);

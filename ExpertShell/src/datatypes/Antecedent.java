@@ -163,7 +163,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		}
 	}
 	
-	/*public Consequent convertToConsequent()
+	public Consequent convertToConsequent()
 	{
 		if(variable instanceof NumericVariable)
 		{
@@ -173,7 +173,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		{
 			return new Consequent(this.variable, this.value);
 		}
-	}*/
+	}
 	
 	public String toString()
 	{

@@ -275,6 +275,28 @@ public class RuleEditorGUI {
 				//update all connectives
 				antList.updateChildren();
 				
+			} else if (source == Source.LN) {
+				debug("Change LN value: " + index);
+				
+				Spinner spin = (Spinner)w;
+				
+				Double ln;
+				
+				double factor = Math.pow(10,spin.getDigits());
+				ln = ((double) spin.getSelection()) / factor;
+				
+				rule.setLikelihoodOfNecessity(ln);
+			} else if (source == Source.LS) {
+				debug("Change LS value: " + index);
+				
+				Spinner spin = (Spinner)w;
+				
+				Double ls;
+				
+				double factor = Math.pow(10,spin.getDigits());
+				ls = ((double) spin.getSelection()) / factor;
+				
+				rule.setLikelihoodOfNecessity(ls);
 			}
 		//---------------------CONSEQENT START-------------
 		} else if (group == Group.CONSEQUENT) {

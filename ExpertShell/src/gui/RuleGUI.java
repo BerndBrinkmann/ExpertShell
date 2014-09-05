@@ -49,7 +49,7 @@ public class RuleGUI extends Group {
 		styleValue.fontStyle = SWT.ITALIC;
 		
 		//set the label of the group (1 is the first rule)
-		int number = ((RuleListGUI) this.getParent()).getRuleGUIArray().indexOf(this);
+		int number = ((RuleListGUI) this.getParent()).getCurrentKnowledgeBase().getRuleIndex(rule);
 		this.setText((number+1) + ".");
 		
 		//reset text
