@@ -19,7 +19,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		variable = new Variable("default");
 		comparison = Comparison.IS;
 		value = new Value("default",this);
-		
+		isNumeric = false;
 	}
 	
 	public Antecedent(Variable var,Comparison comp ,Double val)
@@ -28,6 +28,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		numVal = val;
 		comparison = comp;
 		variable = var;
+		isNumeric = true;
 		
 	}
 	
@@ -36,6 +37,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		variable = var;
 		comparison = Comparison.IS;
 		value = val;
+		isNumeric = false;
 	}
 	
 	public Antecedent(Variable var, Double val)
@@ -43,6 +45,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		variable = var;
 		comparison = Comparison.EQ;
 		numVal = val;
+		isNumeric = true;
 	}
 
 	public Boolean getIsNumeric()
@@ -196,7 +199,10 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	
 	public String getValueAsString() {
 		if(variable.isNumeric) {
-			return numVal.toString();
+			if (numVal == null)
+				return new String("");
+			else
+				return numVal.toString();
 		} else {
 			if (value == null)
 				return new String("");

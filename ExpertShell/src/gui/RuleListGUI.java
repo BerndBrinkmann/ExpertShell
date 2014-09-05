@@ -48,6 +48,8 @@ public class RuleListGUI extends Composite {
 		
 		kb = k;
 		
+		
+		
 		refresh(false);
 		
 		this.setSize(this.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -177,6 +179,10 @@ public class RuleListGUI extends Composite {
 
 	public Rule getSelectedRule(){
 		return ruleGUIs.get(selected).getRule();
+	}
+	
+	public ArrayList<RuleGUI> getRuleGUIArray(){
+		return ruleGUIs;
 	}
 	
 	public int getSelected() {

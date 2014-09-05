@@ -205,6 +205,9 @@ public class RuleEditorGUI {
 				//update values of GUI elements for this antecedent
 				antList.getAntGUIList().get(index).update();
 				
+				ruleListGUI.setSize(ruleListGUI.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				ruleListGUI.getParent().layout(true, true);
+				
 			} else if (source == Source.COMPARE) {
 				debug("Change antecedent comparitor logic: " + index);
 				
@@ -253,6 +256,8 @@ public class RuleEditorGUI {
 					}
 				}
 				
+				ruleListGUI.setSize(ruleListGUI.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				ruleListGUI.getParent().layout(true, true);
 				
 			} else if (source == Source.COMBINE) {
 				debug("Change antecedent combinational logic: " + index);
@@ -334,6 +339,9 @@ public class RuleEditorGUI {
 				//update values of GUI elements for this antecedent
 				consList.getConsGUIList().get(index).update();
 				
+				ruleListGUI.setSize(ruleListGUI.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				ruleListGUI.getParent().layout(true, true);
+				
 			} else if (source == Source.ASSIGN) {
 				debug("Change assignment: " + index);
 				
@@ -382,6 +390,9 @@ public class RuleEditorGUI {
 						} catch (NumberFormatException ex) {}
 					}
 				}
+				
+				ruleListGUI.setSize(ruleListGUI.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				ruleListGUI.getParent().layout(true, true);
 				
 			} else if (source == Source.PRIOR) {
 				debug("Change prior value: " + index);
