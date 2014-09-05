@@ -222,10 +222,10 @@ public class Rule extends getSetKBSettings implements Serializable
 						 {
 							return false; 
 						 }
-						if(!getAntecedent(i).evaluate())
+						/*if(!getAntecedent(i).evaluate())
 				 		{
 					 		return false;
-				 		}	
+				 		}*/	
 					 }
 					 else
 					 {
@@ -261,26 +261,21 @@ public class Rule extends getSetKBSettings implements Serializable
 						 {
 							return false; 
 						 }
-						if(!getAntecedent(i).evaluate())
-				 		{
-					 		return false;
-				 		}
+						
 					 }
 					 else
 					 {
-						 return false;
+						 continue;
 					 }
 				 }
-				 else
-				 {
-					 if(!getAntecedent(i).evaluate())
+				
+					 if(getAntecedent(i).evaluate())
 						{
-							return false;
+						 fire();	
+						 return true;
 						} 
-				 }
+				 
 			}
-			fire();
-			return true;
 	
 		default:
 			return false;
