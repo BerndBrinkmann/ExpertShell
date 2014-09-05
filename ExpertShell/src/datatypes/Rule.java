@@ -28,6 +28,7 @@ public class Rule extends getSetKBSettings implements Serializable
 	protected ArrayList<Consequent> consequents;
 	Connectives connective = Connectives.AND;
 	protected Boolean fired = false;
+	protected Boolean fireable = true;
 	protected int priority = 1;
 	protected int ruleNum;
 	
@@ -506,5 +507,15 @@ public class Rule extends getSetKBSettings implements Serializable
 	public double getLikelihoodOfNecessity()
 	{
 		return likelihoodOfNecessity;
+	}
+	
+	public void setFireable(Boolean fire)
+	{
+		fireable = fire;
+	}
+	
+	public Boolean getFireable()
+	{
+		return fireable;
 	}
 }

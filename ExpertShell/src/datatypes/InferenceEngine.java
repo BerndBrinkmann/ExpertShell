@@ -55,8 +55,8 @@ public class InferenceEngine implements Serializable {
 		Rule[] rulesList = KBase.getRuleArray();		
 		
 		//sort the rule list for forward chaining
-		if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
-			Arrays.sort(rulesList, new RuleAntecedentComparator());
+		/*if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
+			Arrays.sort(rulesList, new RuleAntecedentComparator());*/
 		
 		while(true)
 		{
@@ -67,6 +67,28 @@ public class InferenceEngine implements Serializable {
 				{
 				//grab the current rule in a cyclic way
 				rule = rulesList[i];
+				Boolean conseq = false;
+				//checks whether the target can still be adjusted 
+				for( int n=i; n<rulesList.length;n++)
+				{
+					if(!rulesList[n].hasFired())
+					{
+						for(int m=0; m<rulesList[n].getConsequentArray().length;m++)
+						{
+							//if target is in a consequent and that rule is fireable
+							if(rulesList[n].getConsequent(m).getVariable() == target && rulesList[n].getFireable())
+							{
+								conseq = true;
+								System.out.println(conseq);
+							}
+						}
+					}
+				}
+				if(!conseq)
+				{
+					return target;
+				}
+				
 				//has the rule been evaluated? If it has then grab the next rule
 				if(rule.hasFired() == true)
 				{
@@ -83,7 +105,10 @@ public class InferenceEngine implements Serializable {
 					}
 					else
 					{
-						
+						if(checkFireable(rule))
+						{
+						rule.setFireable(false);	
+						}
 					}
 				}
 			}
@@ -220,5 +245,83 @@ public class InferenceEngine implements Serializable {
 		return rules.toArray(new Rule[rules.size()]);
 	}
 	
+	public Boolean isInConsequent(Variable selectedVariable)
+	{
+		Rule rule;
+		Rule[] rulesList = KBase.getRuleArray();		
+		
+		Boolean conseq = false;
+		//cycle through rulesList 
+		for( int n=0; n<rulesList.length;n++)
+		{
+			//check every consequent
+			for(int m=0; m<rulesList[n].getConsequentArray().length;m++)
+			{
+				
+				if(rulesList[n].getConsequent(m).getVariable() == selectedVariable && !checkFireable(rulesList[n]))
+			{
+				conseq = true;
+				return conseq;
+				
+			}
+			}
+		}
+		return conseq;
+	}
+	
+	public Boolean checkFireable(Rule currentRule)
+	{
+		if(!currentRule.hasFired())
+		{
+			//Checking each antecedent for fireability
+			Rule[] rulesList = KBase.getRuleArray();
+			for(int i = 0; i < currentRule.getAntecedentArray().length;i++)
+			{
+				//if antecendent is user-set and has a value, and the variable isn't in a consequent. 
+				if(currentRule.getAntecedentArray()[i].getVariable().isUserInput())
+				{
+					if(currentRule.getAntecedentArray()[i].getVariable().hasValue())
+					{
+						if(!isInConsequent(currentRule.getAntecedentArray()[i].getVariable()))
+						{
+							return false;
+						}
+						return true;
+					}
+					else
+					{
+					return true;
+					}//then cannot be changed
+				}
+				//if antecedent is not user-set, then check if variable is a consequent
+				else
+				{
+					//check every rule
+					for(int n=0; n<rulesList.length;n++)
+					{
+						//if rule hasn't fired
+						if(!rulesList[n].hasFired())
+						{
+								//check consequent for match
+							for(int m=0; m<rulesList[n].getConsequentArray().length;m++)
+							{
+								//if consequent is current antecedent variable
+								if(rulesList[n].getConsequent(m).getVariable() == currentRule.getAntecedentArray()[i].getVariable())
+								{	
+									System.out.println("fireable");
+									return true;
+								}
+							}
+						}	
+					}
+				}
+			}
+		
+			}
+		
+			return false;
+		
+		
+	}
 	
 }
