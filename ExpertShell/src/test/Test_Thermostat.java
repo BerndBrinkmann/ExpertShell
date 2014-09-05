@@ -55,7 +55,7 @@ public class Test_Thermostat implements Serializable {
 	it.addPossibleValue(end);
 	it.addPossibleValue(work);
 	
-	NumericVariable time = new NumericVariable("time");
+	Variable time = new Variable("time");
 	time.setIsNumeric(true);
 	Thermo.addVariable(time);
 	time.setUserInput(true);
@@ -115,8 +115,8 @@ public class Test_Thermostat implements Serializable {
 	op.addPossibleValue(closed);
 	op.addPossibleValue(open);
 	
-	NumericVariable settings = new NumericVariable("thermostat_settings");
-	month.setIsNumeric(true);
+	Variable settings = new Variable("thermostat_settings");
+	settings.setIsNumeric(true);
 	Thermo.addVariable(settings);
 	settings.setUserInput(false);
 	
