@@ -110,13 +110,13 @@ public class QuickStart extends Composite {
 		
 		Label lblNewLabel_9 = new Label(composite, SWT.WRAP);
 		GridData gd_lblNewLabel_9 = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		lblNewLabel_9.setText("edit knowledgebase pic inserted here");
+		lblNewLabel_9.setImage(SWTResourceManager.getImage(QuickStart.class, "/resources/editor_pic.PNG"));
 		scrolledComposite.setContent(composite);
 		scrolledComposite.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
 		Label lblNewLabel_10 = new Label(composite, SWT.WRAP);
 		GridData gd_lblNewLabel_10 = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		lblNewLabel_10.setText("edit knowledgebase info inserted here");
+		lblNewLabel_10.setImage(SWTResourceManager.getImage(QuickStart.class, "/resources/editor_info.PNG"));
 		scrolledComposite.setContent(composite);
 		scrolledComposite.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
