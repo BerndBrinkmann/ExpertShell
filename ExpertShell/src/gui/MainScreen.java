@@ -400,9 +400,12 @@ public class MainScreen  implements Serializable {
 				Button runFromEditor = new Button(header, SWT.NONE);
 				runFromEditor.setText("Run");
 				runFromEditor.addSelectionListener(new SelectionAdapter() {
-				
-					//run the thing
 					
+					public void widgetSelected(SelectionEvent e) {
+						//run the thing
+				
+						Run();
+					}
 				});
 				
 				Composite compListEditor = new Composite(composite_3, SWT.NONE);

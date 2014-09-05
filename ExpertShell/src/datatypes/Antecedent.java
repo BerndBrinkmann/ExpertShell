@@ -58,9 +58,10 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		this.isNumeric = isNumeric;
 		if(variable != null)
 			variable.setIsNumeric(isNumeric);
-		if(isNumeric)
+		
+		if(isNumeric && numVal == null)
 			setValue(0.0);
-		else
+		else if (!isNumeric && value == null)
 			setValue(new Value(""));
 	}
 	
