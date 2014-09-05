@@ -154,7 +154,10 @@ public class Consequent extends getSetKBSettings implements Serializable
 		if(isNumeric) {
 			return numVal.toString();
 		} else {
-			return value.getName();
+			if (value == null)
+				return new String("");
+			else
+				return value.getName();
 		}
 	}
 	

@@ -342,10 +342,10 @@ public class RuleEditorGUI {
 				
 				if (combo.getSelectionIndex() == 0) {
 					//selected "is"
-					consequent.setIsNumeric(true);
+					consequent.setIsNumeric(false);
 				} else if (combo.getSelectionIndex() == 1) {
 					//selected "="
-					consequent.setIsNumeric(false);
+					consequent.setIsNumeric(true);
 				}
 				
 				//update the GUI
