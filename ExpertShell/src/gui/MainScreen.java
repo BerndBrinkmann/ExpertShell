@@ -397,6 +397,13 @@ public class MainScreen  implements Serializable {
 				header.setLayout(new GridLayout(2, false));
 				
 				RuleUncertaintyGUI uncertaintyBox = new RuleUncertaintyGUI(header, KBase);
+				Button runFromEditor = new Button(header, SWT.NONE);
+				runFromEditor.setText("Run");
+				runFromEditor.addSelectionListener(new SelectionAdapter() {
+				
+					//run the thing
+					
+				});
 				
 				Composite compListEditor = new Composite(composite_3, SWT.NONE);
 				compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
