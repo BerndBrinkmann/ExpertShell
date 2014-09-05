@@ -221,7 +221,7 @@ public class runGUI extends Composite implements Serializable {
 				public void widgetSelected(SelectionEvent e) {
 					if(targetvariablecombo.getSelectionIndex() != -1)
 					{
-						if(KBase.getBCConsequents()[targetvariablecombo.getSelectionIndex()] instanceof Consequent)
+						if(KBase.getInferenceMethod() == KBSettings.InferenceType.B_CHAINING || KBase.getBCConsequents()[targetvariablecombo.getSelectionIndex()] instanceof Consequent)
 						{
 						selectedVariable = KBase.getBCConsequents()[targetvariablecombo.getSelectionIndex()].getVariable();
 						selectedValue = KBase.getBCConsequents()[targetvariablecombo.getSelectionIndex()].getValue();
