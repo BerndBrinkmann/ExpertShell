@@ -43,10 +43,12 @@ public class Test_Thermostat implements Serializable {
 	day.addPossibleValue(fri);
 	day.addPossibleValue(sat);
 	day.addPossibleValue(sun);
+	day.setUserInput(true);
 	
 	Variable it = new Variable("it");
 	it.setIsNumeric(false);
 	Thermo.addVariable(it);
+	it.setUserInput(false);
 	
 	Value end = new Value("weekend");
 	Value work = new Value("workday");
@@ -54,7 +56,9 @@ public class Test_Thermostat implements Serializable {
 	it.addPossibleValue(work);
 	
 	NumericVariable time = new NumericVariable("time");
+	time.setIsNumeric(true);
 	Thermo.addVariable(time);
+	time.setUserInput(true);
 	
 	Variable month = new Variable("month");
 	month.setIsNumeric(false);
@@ -85,10 +89,12 @@ public class Test_Thermostat implements Serializable {
 	month.addPossibleValue(nov);
 	month.addPossibleValue(dec);
 	
+	month.setUserInput(true);
 	
 	Variable season = new Variable("season");
 	season.setIsNumeric(false);
 	Thermo.addVariable(season);
+	season.setUserInput(false);
 	
 	Value spring = new Value("Spring");
 	Value summer = new Value("Summer");
@@ -102,14 +108,17 @@ public class Test_Thermostat implements Serializable {
 	Variable op = new Variable("operation");
 	op.setIsNumeric(false);
 	Thermo.addVariable(op);
+	op.setUserInput(false);
 	
 	Value closed = new Value("outside business hours");
 	Value open = new Value("during business hours");
 	op.addPossibleValue(closed);
 	op.addPossibleValue(open);
 	
-	NumericVariable settings = new NumericVariable("thermostat setting");
+	NumericVariable settings = new NumericVariable("thermostat_settings");
+	month.setIsNumeric(true);
 	Thermo.addVariable(settings);
+	settings.setUserInput(false);
 	
 	//rules
 	Rule[] rules = new Rule[18];
@@ -137,10 +146,8 @@ public class Test_Thermostat implements Serializable {
 	rules[i] = new Rule();
 	rules[i].setConnective(Connectives.AND);
 	rules[i].addAntecedent(new Antecedent(it,work));
-	rules[i].addAntecedent(new Antecedent(time, 0900.00));
-	rules[i].getAntecedent(1).setComparison(Comparison.GT);
-	rules[i].addAntecedent(new Antecedent(time,1700.00));
-	rules[i].getAntecedent(2).setComparison(Comparison.LT);
+	rules[i].addAntecedent(new Antecedent(time, Comparison.GT,0900.00));
+	rules[i].addAntecedent(new Antecedent(time,Comparison.LT,1700.00));
 	rules[i].addConsequent(new Consequent(op, open));
 	
 	i++;

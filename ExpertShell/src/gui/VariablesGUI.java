@@ -99,7 +99,7 @@ public class VariablesGUI extends Composite {
 						}
 					}
 //TODO adjust so if numeric shows a range of values instead of possible values					
-					if(currentvariable instanceof NumericVariable)
+					if(currentvariable.isNumeric)
 					{
 						
 					}

@@ -37,7 +37,7 @@ public class Test_Numeric implements Serializable  {
 	Value nine = new Value("9");
 	Value ten = new Value("10");
 	// variables
-	NumericVariable x = new NumericVariable("x");
+	Variable x = new Variable("x");
 	x.setIsNumeric(true);
 	Numerical.addVariable(x);
 	x.addPossibleValue(one);
@@ -47,7 +47,7 @@ public class Test_Numeric implements Serializable  {
 	x.addPossibleValue(five);
 	x.setUserInput(true);
 	
-	NumericVariable y = new NumericVariable("y");
+	Variable y = new Variable("y");
 	y.setIsNumeric(true);
 	Numerical.addVariable(y);
 	y.addPossibleValue(one);
@@ -77,47 +77,36 @@ public class Test_Numeric implements Serializable  {
 	
 	rules[0] = new Rule();
 	rules[0].setConnective(Connectives.AND);
-	rules[0].addAntecedent(new Antecedent(x,1.5));
+	rules[0].addAntecedent(new Antecedent(x,Comparison.GT,1.5));
 	System.out.println(rules[0].getAntecedent(0).numVal);
-	
-	rules[0].getAntecedent(0).setComparison(Comparison.GT);
-	rules[0].addAntecedent(new Antecedent(y,1.0));
-	rules[0].getAntecedent(1).setComparison(Comparison.EQ);
+	rules[0].addAntecedent(new Antecedent(y,Comparison.EQ,1.0));
 	rules[0].addConsequent(new Consequent(z,two));
 	System.out.println(rules[0].getAntecedent(0).toString());
 	
 	
 	rules[1] = new Rule();
 	rules[1].setConnective(Connectives.AND);
-	rules[1].addAntecedent(new Antecedent(x,2.0));
-	rules[1].getAntecedent(0).setComparison(Comparison.EQ);
-	rules[1].addAntecedent(new Antecedent(y,1.0));
-	rules[1].getAntecedent(1).setComparison(Comparison.GTEQ);
+	rules[1].addAntecedent(new Antecedent(x,Comparison.EQ,2.0));
+	rules[1].addAntecedent(new Antecedent(y,Comparison.GTEQ,1.0));
 	rules[1].addConsequent(new Consequent(z,three));
 	
 	rules[2] = new Rule();
 	rules[2].setConnective(Connectives.AND);
-	rules[2].addAntecedent(new Antecedent(x,1.0));
-	rules[2].getAntecedent(0).setComparison(Comparison.EQ);
-	rules[2].addAntecedent(new Antecedent(y,2.0));
-	rules[2].getAntecedent(1).setComparison(Comparison.GT);
+	rules[2].addAntecedent(new Antecedent(x,Comparison.EQ,1.0));
+	rules[2].addAntecedent(new Antecedent(y,Comparison.GT,2.0));
 	rules[2].addConsequent(new Consequent(z,three));
 
 
 	rules[3] = new Rule();
 	rules[3].setConnective(Connectives.AND);
-	rules[3].addAntecedent(new Antecedent(x,2.0));
-	rules[3].getAntecedent(0).setComparison(Comparison.EQ);
-	rules[3].addAntecedent(new Antecedent(y,2.0));
-	rules[3].getAntecedent(1).setComparison(Comparison.NEQ);
+	rules[3].addAntecedent(new Antecedent(x,Comparison.EQ,2.0));
+	rules[3].addAntecedent(new Antecedent(y,Comparison.NEQ,2.0));
 	rules[3].addConsequent(new Consequent(z,four));
 		
 	rules[4] = new Rule();
 	rules[4].setConnective(Connectives.AND);
-	rules[4].addAntecedent(new Antecedent(x,3.0));
-	rules[4].getAntecedent(0).setComparison(Comparison.LT);
-	rules[4].addAntecedent(new Antecedent(y,2.0));
-	rules[4].getAntecedent(1).setComparison(Comparison.NEQ);
+	rules[4].addAntecedent(new Antecedent(x,Comparison.LT,3.0));
+	rules[4].addAntecedent(new Antecedent(y,Comparison.NEQ,2.0));
 	rules[4].addConsequent(new Consequent(z,five));
 	
 	for(int i = 0; i < 5; i++)

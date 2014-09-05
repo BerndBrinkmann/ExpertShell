@@ -93,7 +93,7 @@ public class QuestionGUI {
 		gd_combo_1.widthHint = 276;
 		ans.setLayoutData(gd_combo_1);
 		
-		if(var instanceof NumericVariable)
+		if(var.isNumeric)
 		{
 			ans.setText("Enter Number");
 		}
@@ -170,7 +170,7 @@ public class QuestionGUI {
 		OKListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-				if(var instanceof NumericVariable)
+				if(var.isNumeric)
 				{
 					Boolean doub =true;
 					try
@@ -219,7 +219,7 @@ public class QuestionGUI {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
-				if(!(var instanceof NumericVariable))
+				if(!(var.isNumeric))
 				{
 				if(ans.getSelectionIndex() != -1)
 				{
@@ -253,7 +253,7 @@ public class QuestionGUI {
 		OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		OKButton.addSelectionListener(OKListener);
 		OKButton.setEnabled(false);	
-		if(var instanceof NumericVariable)
+		if(var.isNumeric)
 		{
 		OKButton.setEnabled(true);	
 		}

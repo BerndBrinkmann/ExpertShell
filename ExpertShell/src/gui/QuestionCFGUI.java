@@ -125,7 +125,7 @@ public class QuestionCFGUI {
 		ans.setLayoutData(gd_combo_1);
 		
 		
-		if(var instanceof NumericVariable)
+		if(var.isNumeric)
 		{
 			ans.setText("Enter Number");
 		}
@@ -189,7 +189,7 @@ public class QuestionCFGUI {
 		OKListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-				if(var instanceof NumericVariable)
+				if(var.isNumeric)
 				{
 					Boolean doub =true;
 					try
@@ -254,7 +254,7 @@ public class QuestionCFGUI {
 		ans.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(!(var instanceof NumericVariable))
+				if(!(var.isNumeric))
 				{
 				if(ans.getSelectionIndex() != -1)
 				{
@@ -292,7 +292,7 @@ public class QuestionCFGUI {
 		OKButton.addSelectionListener(OKListener);
 		OKButton.setText("OK");
 		OKButton.setEnabled(false);	
-		if(var instanceof NumericVariable)
+		if(var.isNumeric)
 		{
 		OKButton.setEnabled(true);	
 		}

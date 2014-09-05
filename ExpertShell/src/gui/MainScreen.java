@@ -616,10 +616,12 @@ public class MainScreen  implements Serializable {
 		});
 		}
 		tabFolder.setSelection(tbtmUserInterface);
+		updateKnowledgeBase();
 		}
 		else
 		{
 			JOptionPane.showMessageDialog(null, "Please choose a Knowledgebase first");
 		}
 	}
+	
 }

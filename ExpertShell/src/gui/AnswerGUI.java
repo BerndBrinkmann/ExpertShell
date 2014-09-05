@@ -309,7 +309,7 @@ public void showAnswer(Group questionGroup, String message, final KnowledgeBase 
 			}
 			else
 			{
-				if(!(result instanceof NumericVariable))
+				if(!(result.isNumeric))
 				{
 					if(result.getCurrentValue() != null)
 					{

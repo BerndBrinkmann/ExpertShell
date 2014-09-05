@@ -16,7 +16,7 @@ public class Variable implements Serializable
 	protected Rule derivedFrom;
 	protected String queryPrompt = "";
 	
-	protected Boolean isNumeric = false;
+	public Boolean isNumeric = false;
 	public Double numVal = null;
 	
 	public ArrayList<Double> certaintyFactors ;  //by our convention certainty factors are stored as 0-1
@@ -66,7 +66,7 @@ public class Variable implements Serializable
 	
 	public String getValue()
 	{
-		if(this instanceof NumericVariable)
+		if(this.isNumeric)
 		{
 			return numVal.toString();
 		}
@@ -143,7 +143,7 @@ public class Variable implements Serializable
 	
 	public Boolean hasValue()
 	{
-		if(!(this instanceof NumericVariable))
+		if(!(this.isNumeric))
 		{
 		return (currentValue != null);
 		}
@@ -311,7 +311,7 @@ public class Variable implements Serializable
 	}
 	
 	//converts the variable from numeric to linguistic and vice versa	
-	public Variable convert()
+/*	public Variable convert()
 	{
 		if(this instanceof NumericVariable)
 		{
@@ -347,7 +347,7 @@ public class Variable implements Serializable
 					this.askUser,this.userDerived,this.possibleValues);
 		}	
 	
-	}
+	}*/
 	
 	//used to shorten the calls in convert to get and set the comparison value
 	public void ComparisonSetter(int i, Comparison compare)

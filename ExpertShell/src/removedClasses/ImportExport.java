@@ -1,4 +1,4 @@
-package datatypes;
+package removedClasses;
 
 
 import java.awt.Component;
@@ -23,7 +23,13 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import removedClasses.UncertaintyMethod;
+import datatypes.KBSettings;
+import datatypes.KnowledgeBase;
+import datatypes.NumericVariable;
+import datatypes.Rule;
+import datatypes.Value;
+import datatypes.Variable;
+import datatypes.KBSettings.UncertaintyManagement;
 
 public class ImportExport
 {

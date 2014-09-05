@@ -799,7 +799,7 @@ switch(kb.getUncertaintyMethod())
 			String consequentArrayString[] = new String[KBase.getBCConsequents().length];
 			for (int i=0; i<consequentArrayString.length; i++)
 			{
-				if(KBase.getBCConsequents()[i].getVariable() instanceof NumericVariable)
+				if(KBase.getBCConsequents()[i].getVariable().isNumeric)
 				{			
 					consequentArrayString[i]= new String (KBase.getBCConsequents()[i].getVariableAsString() + " = " +KBase.getBCConsequents()[i].getValueAsString());
 				}

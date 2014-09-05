@@ -97,7 +97,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		
 		variable = v;
 		
-		if(variable instanceof NumericVariable)
+		if(variable.isNumeric)
 		{
 			setValue(0.0);
 			setComparison(Comparison.EQ);
@@ -108,7 +108,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	
 	public Boolean evaluate()
 	{
-		if(!(variable instanceof NumericVariable))
+		if(!(variable.isNumeric))
 		{
 			
 			//System.out.println(variable.getCurrentValue().toString() + "  =?  " + value.toString());
@@ -134,7 +134,9 @@ public class Antecedent extends getSetKBSettings implements Serializable
 				return Double.compare(variable.getNumVal(), numVal) == 0;
 			case NEQ:
 				System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
-				System.out.println(variable.getNumVal() != numVal);
+				//System.out.println(variable.getNumVal() != numVal);
+				System.out.println("(Double.compare(variable.getNumVal(), numVal) gives:" + (Double.compare(variable.getNumVal(), numVal)));
+				System.out.println("(Double.compare(variable.getNumVal(), numVal) != 0)" + (Double.compare(variable.getNumVal(), numVal) != 0));
 				return (Double.compare(variable.getNumVal(), numVal) != 0);
 			case GT:
 				System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
@@ -158,7 +160,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		}
 	}
 	
-	public Consequent convertToConsequent()
+	/*public Consequent convertToConsequent()
 	{
 		if(variable instanceof NumericVariable)
 		{
@@ -168,11 +170,11 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		{
 			return new Consequent(this.variable, this.value);
 		}
-	}
+	}*/
 	
 	public String toString()
 	{
-		if(variable instanceof NumericVariable)
+		if(variable.isNumeric)
 		{
 			return variable.getName() + " " + comparison.toString() + " " + numVal;
 		}
@@ -193,7 +195,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	}
 	
 	public String getValueAsString() {
-		if(variable instanceof NumericVariable) {
+		if(variable.isNumeric) {
 			return numVal.toString();
 		} else {
 			if (value == null)

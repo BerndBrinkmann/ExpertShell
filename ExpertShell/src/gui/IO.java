@@ -144,7 +144,7 @@ public class IO
 			}
 			else
 			{
-				if(!(result instanceof NumericVariable))
+				if(!(result.isNumeric))
 				{
 					if(result.getCurrentValue() != null)
 					{

@@ -54,7 +54,7 @@ public class Consequent extends getSetKBSettings implements Serializable
 	
 	public void execute()
 	{
-		if(!(variable instanceof NumericVariable))
+		if(!(variable.isNumeric))
 			variable.setCurrentValue(value);
 		else
 			variable.setCurrentValue(numVal);
@@ -82,7 +82,7 @@ public class Consequent extends getSetKBSettings implements Serializable
 		
 		variable = v;
 		
-		if(variable instanceof NumericVariable)
+		if(variable.isNumeric)
 			setValue(0.0);
 		else
 			setValue(new Value("",this));
@@ -108,7 +108,7 @@ public class Consequent extends getSetKBSettings implements Serializable
 	
 	public String toString()
 	{
-		if(!(variable instanceof NumericVariable))
+		if(!(variable.isNumeric))
 		{
 			if(uncertaintyType == KBSettings.UncertaintyManagement.CF)
 			{
