@@ -50,6 +50,9 @@ public class RuleListGUI extends Composite {
 		
 		refresh(false);
 		
+		this.setSize(this.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		this.getParent().layout(true, true);
+		
 	}
 	
 	private void addFromKB() {

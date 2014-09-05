@@ -116,7 +116,11 @@ public class ConsequentGUI {
 			if(valueIndex != -1) {
 				value.select(valueIndex);
 			} else {
-				value.setText(con.getValue().toString());
+				if (con.getValue() == null) {
+					value.setText("");
+				} else {
+					value.setText(con.getValue().toString());
+				}
 			}
 		} else {
 			value.setText(con.getNumVal().toString());

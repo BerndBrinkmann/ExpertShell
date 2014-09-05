@@ -12,6 +12,8 @@ import datatypes.Antecedent;
 import datatypes.Consequent;
 import datatypes.KnowledgeBase;
 import datatypes.Rule;
+import datatypes.Value;
+import datatypes.Variable;
 
 public class RuleButtonsGUI extends Composite {
 
@@ -86,8 +88,20 @@ public class RuleButtonsGUI extends Composite {
 			
 			//add to kb
 			Rule toAdd = new Rule();
-			toAdd.addAntecedent(new Antecedent());
-			toAdd.addConsequent(new Consequent());
+			Antecedent antToAdd;
+			Consequent conToAdd;
+			
+			Variable variableToAdd = KBase.getVariable("default");
+			if (variableToAdd == null) {
+				//default isn't a var yet
+				variableToAdd = new Variable("default");
+			}
+			
+			antToAdd = new Antecedent( variableToAdd, (Value)null );
+			conToAdd = new Consequent( variableToAdd, (Value)null );
+			
+			toAdd.addAntecedent(antToAdd);
+			toAdd.addConsequent(conToAdd);
 			KBase.AddRule(toAdd);
 			
 			//update GUI
