@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -37,6 +39,8 @@ public class AntecedentListGUI {
 		container = p.ruleGrid;
 		
 		SelectionAdapter s = p.selAdaptor;
+		FocusAdapter f = p.focAdaptor;
+		KeyAdapter enter = p.enterAdaptor;
 		
 		addFiller();
 		ifLabel = RuleGUIFactory.createLabelIf(container);
@@ -48,8 +52,15 @@ public class AntecedentListGUI {
 		uncertaintyContainer = RuleGUIFactory.createCompositeLNLS(container);
 		lnLabel = RuleGUIFactory.createLabelLN(uncertaintyContainer);
 		spinLN = RuleGUIFactory.createSpinnerLN(uncertaintyContainer);
+		spinLN.addFocusListener(f);
+		spinLN.addKeyListener(enter);
+		spinLN.addSelectionListener(s);
+		
 		lsLabel = RuleGUIFactory.createLabelLS(uncertaintyContainer);
 		spinLS = RuleGUIFactory.createSpinnerLS(uncertaintyContainer);
+		spinLS.addFocusListener(f);
+		spinLS.addKeyListener(enter);
+		spinLS.addSelectionListener(s);
 		
 		addButton = RuleGUIFactory.createButtonAdd(container);
 		addFillers(5);

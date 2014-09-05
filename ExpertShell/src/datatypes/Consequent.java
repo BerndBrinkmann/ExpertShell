@@ -101,6 +101,11 @@ public class Consequent extends getSetKBSettings implements Serializable
 		}
 	}
 
+	public Boolean getIsNumeric()
+	{
+		return isNumeric;
+	}
+	
 	public String toString()
 	{
 		if(!(variable instanceof NumericVariable))
@@ -127,6 +132,9 @@ public class Consequent extends getSetKBSettings implements Serializable
 		return variable.getBelief(value);
 	}
 	
+	public void setBeliefOfSelected(double b){
+		variable.setBelief(value, b);
+	}
 	
 	public Variable getVariable()
 	{

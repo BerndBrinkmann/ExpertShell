@@ -13,9 +13,11 @@ import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Widget;
 
 import datatypes.Antecedent;
+import datatypes.Connectives;
 import datatypes.Consequent;
 import datatypes.Comparison;
 import datatypes.KnowledgeBase;
@@ -254,8 +256,22 @@ public class RuleEditorGUI {
 				
 			} else if (source == Source.COMBINE) {
 				debug("Change antecedent combinational logic: " + index);
-				//add code to modify KB here!
+				
+				Combo combo = (Combo)w;
+				
+				if(combo.getSelectionIndex() == 0) {
+					//selected "AND"
+					rule.setConnective(Connectives.AND);
+				} else if (combo.getSelectionIndex() == 1) {
+					//selected "OR"
+					rule.setConnective(Connectives.OR);
+				}
+				
+				//update all connectives
+				antList.updateChildren();
+				
 			}
+		//---------------------CONSEQENT START-------------
 		} else if (group == Group.CONSEQUENT) {
 			Consequent consequent = rule.getConsequent(index);
 			
@@ -339,7 +355,7 @@ public class RuleEditorGUI {
 			} else if (source == Source.VALUE) {
 				debug("Change consequent value: " + index);
 				
-				/*Combo combo = (Combo)w;
+				Combo combo = (Combo)w;
 				
 				boolean numeric = consequent.getIsNumeric();
 				
@@ -348,28 +364,49 @@ public class RuleEditorGUI {
 				if(!numeric) {
 					
 					//check if it already exists
-					int exists = antecedent.getVariable().getValueIndex(comboText);
+					int exists = consequent.getVariable().getValueIndex(comboText);
 												
 					if (exists != -1) {
 						//already exists - set the value to be the one found
-						antecedent.setValue(antecedent.getVariable().getPossibleValue(exists));
+						consequent.setValue(consequent.getVariable().getPossibleValue(exists));
 					} else {
 						//add a new value with this name
-						antecedent.setValue(new Value(comboText,antecedent));
+						consequent.setValue(new Value(comboText,consequent));
 					}
 					
 				} else if(numeric) {
 					if(!comboText.equals("")) {
 						try {
 							//try and parse the combobox text as a double
-							antecedent.setValue(Double.parseDouble(comboText));
+							consequent.setValue(Double.parseDouble(comboText));
 						} catch (NumberFormatException ex) {}
 					}
-				}*/
+				}
 				
+			} else if (source == Source.PRIOR) {
+				debug("Change prior value: " + index);
+				
+				Spinner spin = (Spinner)w;
+				
+				Double prior;
+				
+				double factor = Math.pow(10,spin.getDigits());
+				prior = ((double) spin.getSelection()) / factor;
+				
+				consequent.setBeliefOfSelected(prior);
+				
+			} else if (source == Source.CF) {
+				debug("Change certainty factor: " + index);
+				
+				Spinner spin = (Spinner)w;
+				
+				Double cf;
+				
+				double factor = Math.pow(10,spin.getDigits());
+				cf = ((double) spin.getSelection()) / factor;
+				
+				consequent.setCertaintyFactor(cf);
 			}
-		} else if( group == Group.RULE ) {
-			//if (source == Source.MOVEUP)
 		}
 		
 		//update the list text
