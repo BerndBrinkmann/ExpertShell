@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -43,6 +44,7 @@ public class ConsequentGUI {
 		//get listeners
 		SelectionAdapter s = p.parent.selAdaptor;
 		FocusAdapter f = p.parent.focAdaptor;
+		KeyAdapter enter = p.parent.enterAdaptor;
 		
 		//the lines after the first include delete button
 		if (!first) {
@@ -53,19 +55,30 @@ public class ConsequentGUI {
 		
 		var = RuleGUIFactory.createComboVar(c);
 		var.addFocusListener(f);
+		var.addKeyListener(enter);
+		var.addSelectionListener(s);
 		
 		assign = RuleGUIFactory.createComboAssign(c);
 		assign.addFocusListener(f);
+		assign.addSelectionListener(s);
 		
 		value = RuleGUIFactory.createComboValue(c);
 		value.addFocusListener(f);
+		value.addKeyListener(enter);
+		value.addSelectionListener(s);
 		
 		uncertaintyContainer = RuleGUIFactory.createCompositeConsequentUncertainty(c);
-		labelPrior = RuleGUIFactory.createLabelPrior(uncertaintyContainer);		
+		labelPrior = RuleGUIFactory.createLabelPrior(uncertaintyContainer);
 		spinPrior = RuleGUIFactory.createSpinnerPrior(uncertaintyContainer);
+		spinPrior.addFocusListener(f);
+		spinPrior.addKeyListener(enter);
+		spinPrior.addSelectionListener(s);
+		
 		labelCF = RuleGUIFactory.createLabelCF(uncertaintyContainer);
-		spinCF = RuleGUIFactory.createSpinnerCF(uncertaintyContainer);	
-		//filler = new Label(c, SWT.NONE);
+		spinCF = RuleGUIFactory.createSpinnerCF(uncertaintyContainer);
+		spinCF.addFocusListener(f);
+		spinCF.addKeyListener(enter);
+		spinCF.addSelectionListener(s);
 		
 		if (!first) {
 			delButton.moveAbove(stopper);

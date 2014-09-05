@@ -20,6 +20,16 @@ public class WidgetInfo {
 			source = Source.ADD;
 			return;
 		}
+		if (w == r.antList.spinLN) {
+			group = Group.ANTECEDENT;
+			source = Source.LN;
+			return;
+		}
+		if (w == r.antList.spinLS) {
+			group = Group.ANTECEDENT;
+			source = Source.LS;
+			return;
+		}
 		
 		if (w == r.consList.getAddButton()) {
 			group = Group.CONSEQUENT;
@@ -85,6 +95,16 @@ public class WidgetInfo {
 			}
 			if (w == a.value) {
 				source = Source.VALUE;
+				index = i;
+				return;
+			}
+			if (w == a.spinCF) {
+				source = Source.CF;
+				index = i;
+				return;
+			}
+			if (w == a.spinPrior) {
+				source = Source.PRIOR;
 				index = i;
 				return;
 			}

@@ -154,6 +154,7 @@ public class AnswerGUI {
 		ScrolledComposite_1.setMinSize(lblWhyHow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		ScrolledComposite_1.layout();
 		ScrolledComposite_1.update();
+		ScrolledComposite_1.setFocus();
 	}
 	public void displayWhyMessage()
 	{
@@ -234,6 +235,7 @@ public void showAnswer(Group questionGroup, String message, final KnowledgeBase 
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				displayHowMessage(HowList);
+				
 				if(HowList.isEmpty())
 				{
 //TODO					//lblWhyhow.setText("\nA result was not reached\n");

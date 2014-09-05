@@ -76,7 +76,10 @@ import org.eclipse.swt.custom.StyledText;
 
 
 
-//import STUART.ADT.Rule;
+
+
+
+
 import gui.IO;
 
 import org.eclipse.swt.events.MouseAdapter;
@@ -130,9 +133,11 @@ public class MainScreen  implements Serializable {
   //  private String variableListLabel = "";
  //   private Variable selectedVariable;
    // private String selectedVariableString;
+    public TabItem tbtmQS;
     private Test_Case test;
     private Test_Numeric testNum;
     private test_CF TestCF;
+    private Test_Thermostat TestTherm;
    // private Label lblSelectTargetVariable;
    // private Label lblWhyhow;
  //   private ArrayList<Rule> HowList = new ArrayList<Rule>();
@@ -146,7 +151,7 @@ public class MainScreen  implements Serializable {
 	public KnowledgeBase getKnowledgeBase(){
 		return KBase ;
 	}
-
+	public SelectionAdapter QSCloseListener;
 	public SelectionAdapter WhyListener;
 	public SelectionAdapter HowListener;
 	public SelectionAdapter OKListener;
@@ -205,6 +210,7 @@ public class MainScreen  implements Serializable {
 		test = new Test_Case();
 		testNum = new Test_Numeric();
 		TestCF = new test_CF();
+		TestTherm = new Test_Thermostat();
 		//KBase = FileManager.loadKnowledgeFile();
 		//KBase.SetName("boat_kb");
 		//Inference = new InferenceEngine(KBase);
@@ -270,7 +276,7 @@ public class MainScreen  implements Serializable {
 		mntmAbout.setText("About");
 		
 		tabFolder = new TabFolder(shlExpertSystemShell, SWT.NONE);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		
 		TabItem tbtmMain = new TabItem(tabFolder, SWT.NONE);
@@ -285,9 +291,10 @@ public class MainScreen  implements Serializable {
 
 		comboExample.setBounds(144, 293, 139, 23);
 		comboExample.setText("Select Example");
-		comboExample.add("Forcast (Linguistic)");
-		comboExample.add("Forcast (Numeric)");
+		comboExample.add("Forecast Example");
+		comboExample.add("Numeric Example");
 		comboExample.add("Boat (Certainty Factor)");
+		comboExample.add("Thermostat Example");
 
 		Button btnLoadExample = new Button(composite_1, SWT.NONE);
 		btnLoadExample.addMouseListener(new MouseAdapter() {
@@ -345,8 +352,25 @@ public class MainScreen  implements Serializable {
 					
 					labelCurrentKb.setText(KBase.getName());
 				}
+				
+				if(comboExample.getSelectionIndex() == 3)
+				{
+					KBase = TestTherm.createThermostat(window);
+					KBase.setRunGui(composite);
+					if (Variables!= null)
+					{
+						Variables.updateKBase(KBase);
+					}
+					
+
+					if (composite!= null)
+					{
+						composite.updateKBase(KBase);
+					}
+					
+					labelCurrentKb.setText(KBase.getName());
 	
-			}
+			}}
 		});
 		btnLoadExample.setBounds(24, 291, 107, 25);
 		btnLoadExample.setText("Load example");
@@ -422,12 +446,12 @@ public class MainScreen  implements Serializable {
 				RuleUncertaintyGUI uncertaintyBox = new RuleUncertaintyGUI(header, KBase);
 				
 				Composite compListEditor = new Composite(composite_3, SWT.NONE);
-				compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+				compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 				compListEditor.setLayout(new GridLayout(1, false));
 				
 				scrolledComposite = new ScrolledComposite(compListEditor, SWT.BORDER | SWT.V_SCROLL);
 			//	gd_scrolledComposite.heightHint = 428;
-				GridData gd_scrolledComposite_2 = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+				GridData gd_scrolledComposite_2 = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 				gd_scrolledComposite_2.heightHint = 400;
 				scrolledComposite.setLayoutData(gd_scrolledComposite_2);
 				scrolledComposite.addListener(SWT.MouseWheel, new Listener() {
@@ -494,19 +518,32 @@ public class MainScreen  implements Serializable {
 		btnEdit.setBounds(144, 393, 107, 25);
 		
 		Button btnNewButton_1 = new Button(composite_1, SWT.NONE);
+		btnNewButton_1.setText("Guide");
 		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				TabItem tbtmQS = new TabItem(tabFolder, SWT.NONE);
-				tbtmQS.setText("Quick Start Guide");
 				
-				compositeQS = new QuickStart(tabFolder, SWT.NONE);
-				tbtmQS.setControl(compositeQS);
+				if (compositeQS == null ) // only one QS tab can be created
+				{
+					tbtmQS = new TabItem(tabFolder, SWT.NONE);
+					tbtmQS.setText("Quick Start Guide");
+					compositeQS = new QuickStart(tabFolder, SWT.NONE, QSCloseListener);
+					tbtmQS.setControl(compositeQS);
+				}
+			tabFolder.setSelection(tbtmQS);
 				
 			}
 		});
 		btnNewButton_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/speech-balloon-green-q-icon.png"));
-		btnNewButton_1.setBounds(10, 10, 26, 25);
+		btnNewButton_1.setBounds(10, 10, 64, 25);
+		
+		QSCloseListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+				tbtmQS.dispose();
+				compositeQS =null;
+			}	
+		};
 		
 		textNewKb = new Text(composite_1, SWT.BORDER);
 		textNewKb.addFocusListener(new FocusAdapter() {
