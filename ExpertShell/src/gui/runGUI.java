@@ -57,6 +57,7 @@ import org.eclipse.swt.events.SelectionListener;
 
 import datatypes.*;
 import test.*;
+import datatypes.KBSettings.InferenceType;
 import datatypes.KBSettings.UncertaintyManagement;
 
 import org.eclipse.swt.events.TraverseListener;
@@ -107,6 +108,7 @@ import gui.NoRun;
 import gui.NoRunV;
 import test.Test_Case;
 import datatypes.*;
+
 import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseWheelListener;
@@ -261,6 +263,13 @@ public class runGUI extends Composite implements Serializable {
 	btnBackwardChaining.setSelection(false);
 	
 	//System.out.println(kb.getInferenceMethod());
+	
+	
+	//if inference is unset(null) default to forward
+	if (kb.getInferenceMethod() == null) {
+		kb.setInferenceMethod(InferenceType.F_CHAINING);
+	}
+	
 	switch(kb.getInferenceMethod())
 	{
 	case F_CHAINING:
