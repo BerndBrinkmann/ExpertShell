@@ -17,7 +17,7 @@ import datatypes.Variable;
 
 public class RuleButtonsGUI extends Composite {
 
-	Button btnUp,btnDown,btnAdd,btnDelete,btnCopy;
+	Button btnUp,btnDown,btnAdd,btnDelete,btnSort;
 	RuleListGUI ruleList;
 	KnowledgeBase KBase;
 	
@@ -57,10 +57,10 @@ public class RuleButtonsGUI extends Composite {
 		btnDelete.setText("Delete Rule");
 		btnDelete.addSelectionListener(selAdaptor);
 		
-		btnCopy = new Button(this, SWT.NONE);
-		btnCopy.setFont(SWTResourceManager.getFont("Segoe UI Semibold", 9, SWT.BOLD));
-		btnCopy.setText("Copy");
-		btnCopy.addSelectionListener(selAdaptor);
+		btnSort = new Button(this, SWT.NONE);
+		btnSort.setFont(SWTResourceManager.getFont("Segoe UI Semibold", 9, SWT.BOLD));
+		btnSort.setText("Sort");
+		btnSort.addSelectionListener(selAdaptor);
 		
 	}
 	
@@ -125,7 +125,12 @@ public class RuleButtonsGUI extends Composite {
 				ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				ruleList.getParent().layout(true, true);
 			}
-		} else if (source == btnCopy) {
+		} else if (source == btnSort) {
+			KBase.sortBySpec();
+			
+			ruleList.refresh(true);
+			ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			ruleList.getParent().layout(true, true);
 			
 		}
 	}

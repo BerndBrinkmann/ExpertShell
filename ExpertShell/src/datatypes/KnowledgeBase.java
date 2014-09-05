@@ -2,6 +2,8 @@ package datatypes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import datatypes.Variable;
 import gui.runGUI;
@@ -44,6 +46,10 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	{
 		Name = name;
 		RuleList = new ArrayList<Rule>();
+	}
+	
+	public void sortBySpec() {
+		Collections.sort(RuleList, new RuleAntecedentComparator());
 	}
 	
 	public void setDescription(String description)
