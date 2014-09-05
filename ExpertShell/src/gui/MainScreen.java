@@ -304,51 +304,22 @@ public class MainScreen  implements Serializable {
 				if (comboExample.getSelectionIndex() == 0)
 				{
 					KBase = test.createBoatKnowlegeBase(window);
-					KBase.setRunGui(composite);
-					if (Variables!= null)
-					{
-						Variables.updateKBase(KBase);
-					}
-					
-
-					if (composite!= null)
-					{
-						composite.updateKBase(KBase);
-					}
-					
-					labelCurrentKb.setText(KBase.getName());
+					updateKnowledgeBase();					
+					labelCurrentKb.setText(KBase.getName()); 
 				}
 				if(comboExample.getSelectionIndex() == 1)
 				{
 					KBase = testNum.createNumericKB(window);
-					KBase.setRunGui(composite);
-					if (Variables!= null)
-					{
-						Variables.updateKBase(KBase);
-					}
-					
 
-					if (composite!= null)
-					{
-						composite.updateKBase(KBase);
-					}
+					updateKnowledgeBase();
 					
 					labelCurrentKb.setText(KBase.getName());
 				}
 				if(comboExample.getSelectionIndex() == 2)
 				{
 					KBase = TestCF.createCFKB(window);
-					KBase.setRunGui(composite);
-					if (Variables!= null)
-					{
-						Variables.updateKBase(KBase);
-					}
-					
-
-					if (composite!= null)
-					{
-						composite.updateKBase(KBase);
-					}
+			
+					updateKnowledgeBase();
 					
 					labelCurrentKb.setText(KBase.getName());
 				}
@@ -356,17 +327,7 @@ public class MainScreen  implements Serializable {
 				if(comboExample.getSelectionIndex() == 3)
 				{
 					KBase = TestTherm.createThermostat(window);
-					KBase.setRunGui(composite);
-					if (Variables!= null)
-					{
-						Variables.updateKBase(KBase);
-					}
-					
-
-					if (composite!= null)
-					{
-						composite.updateKBase(KBase);
-					}
+					updateKnowledgeBase();
 					
 					labelCurrentKb.setText(KBase.getName());
 	
@@ -388,15 +349,7 @@ public class MainScreen  implements Serializable {
 				{
 				KnowledgeBase NewKb = new KnowledgeBase(textNewKb.getText());
 				KBase = NewKb;
-				KBase.setRunGui(composite);
-				if (Variables!= null)
-				{
-					Variables.updateKBase(KBase);
-				}
-				if (composite!= null)
-				{
-					composite.updateKBase(KBase);
-				}
+				updateKnowledgeBase();
 				labelCurrentKb.setText(textNewKb.getText());
 				}				 
 			}
@@ -588,15 +541,7 @@ public class MainScreen  implements Serializable {
 				{
 					KBase = (KnowledgeBase) Temp;
 					
-					if (composite!= null)
-					{
-						composite.updateKBase(KBase);
-						KBase.setRunGui(composite);
-					}
-					if (Variables!= null)
-					{
-						Variables.updateKBase(KBase);
-					}
+					updateKnowledgeBase();
 					labelCurrentKb.setText(KBase.getName());
 				}
 			}
@@ -607,18 +552,8 @@ public class MainScreen  implements Serializable {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-				FileManager.saveKnowledgeFile(KBase);
-
-				
-				if (Variables!= null)
-				{
-					Variables.updateKBase(KBase);
-				}
-				if (composite!= null)
-				{
-					composite.updateKBase(KBase);
-					KBase.setRunGui(composite);
-				}
+				FileManager.saveKnowledgeFile(KBase);	
+				updateKnowledgeBase();
 		 	}
 		});
 		mntmSave.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/Save-icon.png"));
