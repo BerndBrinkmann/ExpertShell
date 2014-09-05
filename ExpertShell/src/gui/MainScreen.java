@@ -107,6 +107,7 @@ public class MainScreen  implements Serializable {
 	private Composite composite_3;
 	private TabItem tbtmDeveloperInterface;
 	private TabItem tbtmUserInterface;
+	private RuleListGUI ruleList;
 //	private Button btnRun;
 //	private Combo combo;
 //	private Combo combo_1;
@@ -384,32 +385,7 @@ public class MainScreen  implements Serializable {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				// open run tab
-				if (labelCurrentKb.getText() !="No Knowledgebase loaded")
-				{
-				if (composite == null ) // only one run tab can be created
-				{
-				tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
-				tbtmUserInterface.setText("Run Knowledgebase");
-				
-				composite = new runGUI(tabFolder, SWT.NONE,KBase,shlExpertSystemShell, display);
-				tbtmUserInterface.setControl(composite);
-				KBase.setRunGui(composite);
-				
-				composite.addDisposeListener(new DisposeListener(){
-					public void widgetDisposed(DisposeEvent e)
-					{
-						composite.dispose();
-						System.out.println("trying to exit now");
-						System.exit(0);
-					}
-				});
-				}
-				tabFolder.setSelection(tbtmUserInterface);
-				}
-				else
-				{
-					JOptionPane.showMessageDialog(null, "Please choose a Knowledgebase first");
-				}
+			Run();
 				
 			}
 		});
@@ -471,7 +447,7 @@ public class MainScreen  implements Serializable {
 		        });
 				
 				
-				RuleListGUI ruleList = new RuleListGUI(scrolledComposite, SWT.NONE, KBase);
+				ruleList = new RuleListGUI(scrolledComposite, SWT.NONE, KBase);
 				scrolledComposite.setContent(ruleList);
 				ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				
@@ -638,6 +614,40 @@ public class MainScreen  implements Serializable {
 		{
 			composite.updateKBase(KBase);
 			KBase.setRunGui(composite);
+		}
+		 if (ruleList != null)
+		 {
+			 ruleList.changeKnowledgeBase(KBase);
+		 }
+		 
+	}
+	public void Run()
+	{
+		if (labelCurrentKb.getText() !="No Knowledgebase loaded")
+		{
+		if (composite == null ) // only one run tab can be created
+		{
+		tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
+		tbtmUserInterface.setText("Run Knowledgebase");
+		
+		composite = new runGUI(tabFolder, SWT.NONE,KBase,shlExpertSystemShell, display);
+		tbtmUserInterface.setControl(composite);
+		KBase.setRunGui(composite);
+		
+		composite.addDisposeListener(new DisposeListener(){
+			public void widgetDisposed(DisposeEvent e)
+			{
+				composite.dispose();
+				System.out.println("trying to exit now");
+				System.exit(0);
+			}
+		});
+		}
+		tabFolder.setSelection(tbtmUserInterface);
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Please choose a Knowledgebase first");
 		}
 	}
 }
