@@ -289,7 +289,7 @@ public class MainScreen  implements Serializable {
 		
 		comboExample = new Combo(composite_1, SWT.NONE);
 
-		comboExample.setBounds(144, 293, 139, 23);
+		comboExample.setBounds(199, 383, 139, 23);
 		comboExample.setText("Select Example");
 		comboExample.add("Forecast Example");
 		comboExample.add("Numeric Example");
@@ -333,7 +333,7 @@ public class MainScreen  implements Serializable {
 	
 			}}
 		});
-		btnLoadExample.setBounds(24, 291, 107, 25);
+		btnLoadExample.setBounds(79, 381, 107, 25);
 		btnLoadExample.setText("Load example");
 		
 		Button btnNewButton = new Button(composite_1, SWT.NONE);
@@ -354,7 +354,7 @@ public class MainScreen  implements Serializable {
 				}				 
 			}
 		});
-		btnNewButton.setBounds(24, 331, 107, 25);
+		btnNewButton.setBounds(79, 421, 107, 25);
 		btnNewButton.setText("Create new");
 		
 		Button btnRun = new Button(composite_1, SWT.NONE);
@@ -366,7 +366,7 @@ public class MainScreen  implements Serializable {
 				
 			}
 		});
-		btnRun.setBounds(24, 393, 107, 25);
+		btnRun.setBounds(79, 467, 107, 25);
 		btnRun.setText("Run");
 		
 		Button btnEdit = new Button(composite_1, SWT.NONE);
@@ -486,7 +486,7 @@ public class MainScreen  implements Serializable {
 			}
 		});
 		btnEdit.setText("Edit");
-		btnEdit.setBounds(144, 393, 107, 25);
+		btnEdit.setBounds(199, 467, 107, 25);
 		
 		Button btnNewButton_1 = new Button(composite_1, SWT.NONE);
 		btnNewButton_1.setText("Guide");
@@ -531,7 +531,7 @@ public class MainScreen  implements Serializable {
 				textNewKb.setText("");
 			}
 		});
-		textNewKb.setBounds(144, 333, 139, 23);
+		textNewKb.setBounds(199, 423, 139, 23);
 		textNewKb.setText("Enter Name");
 
 		
@@ -541,7 +541,7 @@ public class MainScreen  implements Serializable {
 		labelCurrentKb.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		labelCurrentKb.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD | SWT.ITALIC));
 		labelCurrentKb.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		labelCurrentKb.setBounds(24, 245, 259, 25);
+		labelCurrentKb.setBounds(144, 317, 265, 25);
 		Label lblNewLabel_1 = new Label(composite_1, SWT.HORIZONTAL | SWT.CENTER);
 		lblNewLabel_1.setText("Load");
 		lblNewLabel_1.setBounds(0, 0, 836, 607);
