@@ -112,11 +112,11 @@ public class Consequent extends getSetKBSettings implements Serializable
 		{
 			if(uncertaintyType == KBSettings.UncertaintyManagement.CF)
 			{
-				return variable.getName() + " is " + value.getName() + " {cf = "+certaintyFactor+"}";
+				return variable.getName() + " is " + value.getName();// + " {cf = "+certaintyFactor+"}";
 			}
 			else if(uncertaintyType == KBSettings.UncertaintyManagement.BAYESIAN && !value.getName().equals("default") && !value.getName().equals(""))
 			{
-				return variable.getName() + " is " + value.getName() + " {prior = "+variable.getBelief(value)+"}";
+				return variable.getName() + " is " + value.getName();// + " {prior = "+variable.getBelief(value)+"}";
 			}
 			else
 				return variable.getName() + " is " + value.getName();

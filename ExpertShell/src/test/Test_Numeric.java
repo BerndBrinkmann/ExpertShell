@@ -40,21 +40,11 @@ public class Test_Numeric implements Serializable  {
 	Variable x = new Variable("x");
 	x.setIsNumeric(true);
 	Numerical.addVariable(x);
-	x.addPossibleValue(one);
-	x.addPossibleValue(two);
-	x.addPossibleValue(three);
-	x.addPossibleValue(four);
-	x.addPossibleValue(five);
 	x.setUserInput(true);
 	
 	Variable y = new Variable("y");
 	y.setIsNumeric(true);
 	Numerical.addVariable(y);
-	y.addPossibleValue(one);
-	y.addPossibleValue(two);
-	y.addPossibleValue(three);
-	y.addPossibleValue(four);
-	y.addPossibleValue(five);
 	y.setUserInput(true);
 	
 	Variable z = new Variable("z");
