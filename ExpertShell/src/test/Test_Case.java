@@ -7,7 +7,6 @@ import datatypes.Antecedent;
 import datatypes.Connectives;
 import datatypes.Consequent;
 import datatypes.KnowledgeBase;
-import datatypes.LinguisticVariable;
 import datatypes.Rule;
 import datatypes.KBSettings;
 import datatypes.Value;

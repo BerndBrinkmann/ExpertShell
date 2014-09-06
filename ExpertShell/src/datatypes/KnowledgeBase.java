@@ -16,13 +16,6 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	protected ArrayList<Rule> RuleList;
 	protected ArrayList<Variable> VariableList = new ArrayList<Variable>();
 	protected getSetKBSettings getsetSettings;
-	//not needed - enum classes are static - Arie
-	//protected KBSettings kbSettings = new KBSettings();
-	
-	//these are declared in the parent class (getSetKBSettings) - Arie
-	//protected KBSettings.InferenceType inferenceType;
-	//protected KBSettings.UncertaintyManagement uncertaintyType = KBSettings.UncertaintyManagement.NONE;
-	//protected KBSettings.ConflictResolution conflictResolution = KBSettings.ConflictResolution.NONE;
 	protected Variable VarTemp;
 	protected Variable target;
 	public runGUI rungui;
@@ -353,29 +346,7 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 				if(!VariableList.contains(c.getVariable())&& c.getVariable() !=null)
 					VariableList.add(c.getVariable());
 			}
-		}
-		
-		
-		
-		
-		
-//		int x=0;
-//		for (int i = 0;i< VariableList.size();i++)
-//		{
-//			if (VariableList.get(i).getName().equals(VarNew.getName()))
-//			{
-//
-//				VariableList.set(i,VarNew);
-//				x=1;
-//			}
-//		}
-//		if (x==0)
-//		{
-//			VariableList.add(VarNew);
-//		}	
-		
-		
-		
+		}		
 	}
 		
 	public Variable getTarget(){

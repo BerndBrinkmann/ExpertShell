@@ -6,8 +6,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 {
 	protected Variable variable;
 	protected Value value;
-//	protected double likelihoodOfNecessity = 1;
-//	protected double likelihoodOfSufficiency = 1;
+
 	
 	protected Comparison comparison;
 	protected Boolean isNumeric = false;
@@ -65,36 +64,12 @@ public class Antecedent extends getSetKBSettings implements Serializable
 			setValue(new Value(""));
 	}
 	
-	/*public double getLikelihoodOfNecessity()
-	{
-		return likelihoodOfNecessity;
-	}
-	*/
+
 	public Comparison getComparison()
 	{
 		return comparison;
 	}
 
-/*	public double getLikelihoodOfNecessity()
-	{
-		return likelihoodOfNecessity;
-	}
-	
-	public void setLikelihoodOfNecessity(double likelihoodOfNecessity)
-	{
-		this.likelihoodOfNecessity = likelihoodOfNecessity;
-	}
-
-	public double getLikelihoodOfSufficiency()
-	{
-		return likelihoodOfSufficiency;
-	}
-
-	public void setLikelihoodOfSufficiency(double likelihoodOfSufficiency)
-	{
-		this.likelihoodOfSufficiency = likelihoodOfSufficiency;
-	}
-*/
 	public void setVariable(Variable v)
 	{
 		// will null this object's value field on setting of variable - it will no longer be valid
@@ -114,8 +89,6 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	{
 		if(!(variable.isNumeric))
 		{
-			
-			//System.out.println(variable.getCurrentValue().toString() + "  =?  " + value.toString());
 			if(variable.getCurrentValue().toString().equals(value.toString()))
 			{
 				return true;
@@ -127,36 +100,31 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		}
 		else
 		{
-			System.out.println("enters comparison");
-			//System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
 			switch(comparison)
 			{
 			case EQ:
-//				return variable.getNumVal() == numVal;
-				System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
-				System.out.println(Double.compare(variable.getNumVal(), numVal) == 0);
+				//System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
+				//System.out.println(Double.compare(variable.getNumVal(), numVal) == 0);
 				return Double.compare(variable.getNumVal(), numVal) == 0;
 			case NEQ:
-				System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
-				//System.out.println(variable.getNumVal() != numVal);
-				System.out.println("(Double.compare(variable.getNumVal(), numVal) gives:" + (Double.compare(variable.getNumVal(), numVal)));
-				System.out.println("(Double.compare(variable.getNumVal(), numVal) != 0)" + (Double.compare(variable.getNumVal(), numVal) != 0));
+				//System.out.println("(Double.compare(variable.getNumVal(), numVal) gives:" + (Double.compare(variable.getNumVal(), numVal)));
+				//System.out.println("(Double.compare(variable.getNumVal(), numVal) != 0)" + (Double.compare(variable.getNumVal(), numVal) != 0));
 				return (Double.compare(variable.getNumVal(), numVal) != 0);
 			case GT:
-				System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
-				System.out.println(variable.getNumVal() > numVal);
+				//System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
+				//System.out.println(variable.getNumVal() > numVal);
 				return (Double.compare(variable.getNumVal(), numVal) > 0);
 			case LT:
-				System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
-				System.out.println(variable.getNumVal() < numVal);
+			//	System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
+			//	System.out.println(variable.getNumVal() < numVal);
 				return (Double.compare(variable.getNumVal(), numVal) < 0);
 			case LTEQ:
-				System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
-				System.out.println(variable.getNumVal() <= numVal);
+				//System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
+				//System.out.println(variable.getNumVal() <= numVal);
 				return (Double.compare(variable.getNumVal(), numVal) == 0 || Double.compare(variable.getNumVal(), numVal) < 0);
 			case GTEQ:
-				System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
-				System.out.println(variable.getNumVal() >= numVal);
+				//System.out.println( variable.getNumVal()+" " +comparison + " "+ numVal);
+				//System.out.println(variable.getNumVal() >= numVal);
 				return (Double.compare(variable.getNumVal(), numVal) == 0 || Double.compare(variable.getNumVal(), numVal) > 0);
 			default:
 				return false;
@@ -184,12 +152,6 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		}
 		else
 		{
-			/*if(uncertaintyType == KBSettings.UncertaintyManagement.BAYESIAN
-					&& (likelihoodOfSufficiency != 1 || likelihoodOfNecessity != 1))
-			{
-				return variable.getName() + " is " + value.getName() + " {ls = "+likelihoodOfSufficiency+"} {ln = "+likelihoodOfNecessity+"}";
-			}
-			else*/
 				return variable.getName() + " is " + value.getName();
 		}
 	}
@@ -247,11 +209,6 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	
 	public void setComparison(Comparison comparison)
 	{
-//		if(this.variable instanceof NumericVariable)
-//		{
-//			this.comparison = comparison;
-//		}
-		
 		//see what type of comparison we have
 		boolean comparisonIsNumeric = comparison.numeric;
 		
@@ -261,8 +218,6 @@ public class Antecedent extends getSetKBSettings implements Serializable
 		//if antecedent is different then set it
 		if(isNumeric != comparisonIsNumeric)
 			setIsNumeric(comparisonIsNumeric);
-		
-				
 	}
 	@Override
 	public int hashCode()

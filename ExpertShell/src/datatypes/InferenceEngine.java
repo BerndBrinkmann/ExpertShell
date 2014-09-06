@@ -54,10 +54,6 @@ public class InferenceEngine implements Serializable {
 		Rule rule;
 		Rule[] rulesList = KBase.getRuleArray();		
 		
-		//sort the rule list for forward chaining
-		/*if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
-			Arrays.sort(rulesList, new RuleAntecedentComparator());*/
-		
 		while(true)
 		{
 			//consider all the rules 
@@ -98,7 +94,7 @@ public class InferenceEngine implements Serializable {
 				else
 				{
 
-					//stopFlag = rule.evaluate(KBase.getUncertaintyMethod(),this,KBase);
+
 					if(rule.evaluate(KBase.getUncertaintyMethod(),this,KBase))
 
 					{
@@ -152,10 +148,6 @@ public class InferenceEngine implements Serializable {
 		
 		//find the first lot of containing rules and push to the stack
 		Rule[] containingRules = findContainingRules(cons);
-		//sort the containing rules to resolve conflicts
-		/*if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
-			Arrays.sort(containingRules, new RuleAntecedentComparator());*/
-		
 		
 		if(containingRules.length > 0)
 		{			
@@ -192,10 +184,6 @@ public class InferenceEngine implements Serializable {
 					if(!rule.getAntecedent(j).getVariable().hasValue() || rule.getAntecedent(j).evaluate() == false)
 					{
 						containingRules = findContainingRules(rule.getAntecedent(j).convertToConsequent());
-						
-						//sort the containing rules to resolve conflicts
-						/*if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
-							Arrays.sort(containingRules, new RuleAntecedentComparator());*/
 						if(containingRules.length > 0)
 						{		
 							for(Rule r : containingRules)
@@ -240,12 +228,7 @@ public class InferenceEngine implements Serializable {
 		ArrayList<Rule> stacked = new ArrayList<Rule>();
 		
 		//find the first lot of containing rules and push to the stack
-		Rule[] containingRules = findContainingRules(cons);
-		//sort the containing rules to resolve conflicts
-		/*if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
-			Arrays.sort(containingRules, new RuleAntecedentComparator());*/
-		
-		
+		Rule[] containingRules = findContainingRules(cons);		
 		if(containingRules.length > 0)
 		{			
 			for(Rule r : containingRules)
@@ -281,10 +264,6 @@ public class InferenceEngine implements Serializable {
 					if(!rule.getAntecedent(j).getVariable().hasValue() || rule.getAntecedent(j).evaluate() == false)
 					{
 						containingRules = findContainingRules(rule.getAntecedent(j).convertToConsequent());
-						
-						//sort the containing rules to resolve conflicts
-						/*if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
-							Arrays.sort(containingRules, new RuleAntecedentComparator());*/
 						if(containingRules.length > 0)
 						{		
 							for(Rule r : containingRules)
