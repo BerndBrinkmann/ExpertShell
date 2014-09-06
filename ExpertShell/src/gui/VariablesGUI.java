@@ -36,6 +36,8 @@ public class VariablesGUI extends Composite {
 	 private String Name;
 	 private Text descriptionTxt;
 	 private Text txtVariableName;
+	 private Text txtmin;
+	 private Text txtmax;
 	 private List variableList;
 	 private List possibleValuesList;
 	 private Variable currentvariable = new Variable();
@@ -78,6 +80,19 @@ public class VariablesGUI extends Composite {
 					setForInput(true);
 					possibleValuesList.removeAll();
 					currentvariable = KBase.getVariable(variableList.getSelection()[0]);
+					if(currentvariable.isNumeric)
+					{
+						possibleValuesList.setEnabled(false);
+						possibleValuesList.add("Does not contain possible values.");
+					}
+					else
+					{
+						txtmin.setText("N/A");
+						txtmax.setText("N/A");
+						txtmin.setEnabled(false);
+						txtmax.setEnabled(false);
+					}
+					
 					if (currentvariable.isUserInput() == false) 
 					{
 						btnRadioButtonYes.setSelection(false); 
@@ -91,6 +106,24 @@ public class VariablesGUI extends Composite {
 					descriptionTxt.setText(currentvariable.getDescription());
 					txtVariableName.setText(currentvariable.getName());
 					QuestionPrompt.setText(currentvariable.getQueryPrompt());
+					if(currentvariable.getMin()!= null)
+					{
+						txtmin.setText(currentvariable.getMin().toString());
+					}
+					else
+					{
+						txtmin.setText("null");
+					}
+					
+					if(currentvariable.getMax()!= null)
+					{
+						txtmax.setText(currentvariable.getMax().toString());
+					}
+					else
+					{
+						txtmax.setText("null");
+					}
+					
 					if (currentvariable.getArrayOfPossibleValues()!= null)
 					{
 						for (Value i : currentvariable.getArrayOfPossibleValues())
@@ -109,14 +142,15 @@ public class VariablesGUI extends Composite {
 			}
 		});
 
-		GridData gd_variableList = new GridData(SWT.FILL, SWT.TOP, false, true, 1, 2);
+		GridData gd_variableList = new GridData(SWT.FILL, SWT.TOP, false, true, 1, 6);
 		gd_variableList.heightHint = 714;
 		gd_variableList.widthHint = 141;
 		variableList.setLayoutData(gd_variableList);
-		GroupAddDelete.setLayout(new GridLayout(2, false));
+		GroupAddDelete.setLayout(new GridLayout(6,false));
 		
 		
-		GridData gd_GroupAddDelete = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2);
+		GridData gd_GroupAddDelete = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 6);
+		gd_GroupAddDelete.widthHint = 527;
 		gd_GroupAddDelete.heightHint = 713;
 		GroupAddDelete.setLayoutData(gd_GroupAddDelete);
 		GroupAddDelete.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
@@ -130,10 +164,36 @@ public class VariablesGUI extends Composite {
 
 		
 		txtVariableName = new Text(GroupAddDelete, SWT.BORDER);
-		GridData gd_txtVariableName = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
-		gd_txtVariableName.widthHint = 424;
+		GridData gd_txtVariableName = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_txtVariableName.widthHint = 246;
 		txtVariableName.setLayoutData(gd_txtVariableName);
 		txtVariableName.setToolTipText("Contains the name of the variable");
+		
+		Label lblmin = new Label(GroupAddDelete,SWT.NONE);
+		lblmin.setToolTipText("Minimum value for Variable");
+		lblmin.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
+		lblmin.setText("Min:");
+		
+		txtmin = new Text(GroupAddDelete,SWT.BORDER);
+		txtmin.setEnabled(false);
+		GridData gd_txtmin = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_txtmin.widthHint = 61;
+		txtmin.setLayoutData(gd_txtmin);
+	
+		
+		Label lblmax = new Label(GroupAddDelete,SWT.NONE);
+		lblmax.setToolTipText("Maximum value for Variable");
+		lblmax.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
+		lblmax.setText("Max:");
+		
+		txtmax = new Text(GroupAddDelete,SWT.BORDER);
+		txtmax.setEnabled(false);
+		GridData gd_txtmax = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_txtmax.widthHint = 61;
+		txtmax.setLayoutData(gd_txtmax);
+		
+		
+		
 		
 		Label lblDescription = new Label(GroupAddDelete, SWT.NONE);
 		lblDescription.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
@@ -142,9 +202,9 @@ public class VariablesGUI extends Composite {
 		lblDescription.setText("Description:");
 		
 		descriptionTxt = new Text(GroupAddDelete, SWT.BORDER);
-		GridData gd_descriptionTxt = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+		GridData gd_descriptionTxt = new GridData(SWT.LEFT, SWT.CENTER, false, false, 5, 1);
 		gd_descriptionTxt.heightHint = 170;
-		gd_descriptionTxt.widthHint = 424;
+		gd_descriptionTxt.widthHint = 462;
 		descriptionTxt.setLayoutData(gd_descriptionTxt);
 		descriptionTxt.setToolTipText("Contains a description of the Variable. This description is not used in the knowledgebase");
 		descriptionTxt.addModifyListener(new ModifyListener() {
@@ -161,9 +221,9 @@ public class VariablesGUI extends Composite {
 		lblQuestionPrompt.setText("Question Prompt:");
 		
 		QuestionPrompt = new Text(GroupAddDelete, SWT.BORDER);
-		GridData gd_QuestionPrompt = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+		GridData gd_QuestionPrompt = new GridData(SWT.LEFT, SWT.CENTER, false, false, 5, 1);
 		gd_QuestionPrompt.heightHint = 54;
-		gd_QuestionPrompt.widthHint = 424;
+		gd_QuestionPrompt.widthHint = 462;
 		QuestionPrompt.setLayoutData(gd_QuestionPrompt);
 		QuestionPrompt.setToolTipText("Sets the question associated with this variable");
 		QuestionPrompt.addModifyListener(new ModifyListener() {
@@ -180,8 +240,8 @@ public class VariablesGUI extends Composite {
 		lblPossibleValues.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		lblPossibleValues.setText("Possible Values:");
 		possibleValuesList = new List(GroupAddDelete, SWT.BORDER | SWT.V_SCROLL);
-		GridData gd_possibleValuesList = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
-		gd_possibleValuesList.widthHint = 412;
+		GridData gd_possibleValuesList = new GridData(SWT.LEFT, SWT.CENTER, false, false, 5, 1);
+		gd_possibleValuesList.widthHint = 450;
 		gd_possibleValuesList.heightHint = 223;
 		possibleValuesList.setLayoutData(gd_possibleValuesList);
 		possibleValuesList.setToolTipText("Lists all possible values for this variable which are defined in the knowledgebase");
@@ -211,9 +271,11 @@ public class VariablesGUI extends Composite {
 		btnRadioButtonNo.setBounds(55, 10, 39, 16);
 		btnRadioButtonNo.setText("No");
 		new Label(GroupAddDelete, SWT.NONE);
+		new Label(GroupAddDelete, SWT.NONE);
+		new Label(GroupAddDelete, SWT.NONE);
 		
 		btnSave = new Button(GroupAddDelete, SWT.NONE);
-		GridData gd_btnSave = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
+		GridData gd_btnSave = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_btnSave.widthHint = 74;
 		btnSave.setLayoutData(gd_btnSave);
 		btnSave.setToolTipText("Save changes to Knowledgebase");
@@ -239,16 +301,49 @@ public class VariablesGUI extends Composite {
 						}
 					 
 					}
+					if(TempVariable.isNumeric)
+					{
+					if(!parsedmin() || !parsedmax())
+					{
+						flag=true;
+						JOptionPane.showMessageDialog(null, "Enter a valid number in Min. and Max.");
+					}
+					else
+					{
+						if(parsedmin() && parsedmax())
+						{
+							if(Double.parseDouble(txtmin.getText()) >= Double.parseDouble(txtmax.getText()))
+							{
+								flag=true;
+								JOptionPane.showMessageDialog(null, "Enter a valid range of values (Min. < Max.).");
+							}
+						}
+					}
+					}
+					
 					if(!flag)
 					{
 						if ( KBase.getTarget() == TempVariable)
 						{
 							KBase.setTarget(TempVariable);
 						}
+					
+						if(TempVariable.isNumeric)
+						{
+							if(parsedmin())
+							{
+								TempVariable.setMin(Double.parseDouble(txtmin.getText()));
+							}
+							if(parsedmax())
+							{
+								TempVariable.setMax(Double.parseDouble(txtmax.getText()));
+							}
+						}
 					TempVariable.setUserInput(btnRadioButtonYes.getSelection());
 					TempVariable.setName(txtVariableName.getText().trim());
 					TempVariable.setDescription(descriptionTxt.getText());
 					TempVariable.setQueryPrompt(QuestionPrompt.getText());
+					
 					MainScreen.window.updateKnowledgeBase();
 					}
 					//KBase.saveVariable(TempVariable,currentvariable );
@@ -288,6 +383,8 @@ public class VariablesGUI extends Composite {
 		descriptionTxt.setEnabled(enable);
 		QuestionPrompt.setEnabled(enable);
 		possibleValuesList.setEnabled(enable);
+		txtmin.setEnabled(enable);
+		txtmax.setEnabled(enable);
 	}
 
 	@Override
@@ -318,8 +415,74 @@ public class VariablesGUI extends Composite {
 		 txtVariableName.setText("");
 		 QuestionPrompt.setText("");
 		 possibleValuesList.removeAll();
+		 txtmin.setText("");
+		 txtmax.setText("");
 		setForInput(false);
 		
+	}
+	
+	public Boolean parsedmax()
+	{
+		try{
+			Double parsemax = Double.parseDouble(txtmax.getText());
+			return true;
+			}
+		catch (NumberFormatException e)
+		{
+			if(currentvariable.getMax()!= null)
+			{
+				txtmin.setText(currentvariable.getMax().toString());
+			}
+			else
+			{
+				txtmin.setText("null");
+			}
+			return false;
+		}
+		catch (NullPointerException e)
+		{
+			if(currentvariable.getMax()!= null)
+			{
+				txtmin.setText(currentvariable.getMax().toString());
+			}
+			else
+			{
+				txtmin.setText("null");
+			}
+			return false;
+		}
+	}
+	
+	public Boolean parsedmin()
+	{
+		try{
+			Double parsedmin = Double.parseDouble(txtmin.getText());
+			return true;
+			}
+		catch (NumberFormatException e)
+		{
+			if(currentvariable.getMin()!= null)
+			{
+				txtmin.setText(currentvariable.getMin().toString());
+			}
+			else
+			{
+				txtmin.setText("null");
+			}
+			return false;
+		}
+		catch (NullPointerException e)
+		{
+			if(currentvariable.getMin()!= null)
+			{
+				txtmin.setText(currentvariable.getMin().toString());
+			}
+			else
+			{
+				txtmin.setText("null");
+			}
+			return false;
+		}
 	}
 	
 }

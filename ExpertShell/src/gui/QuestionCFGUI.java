@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 
 
+
+
+
 import javax.swing.JOptionPane;
 
 import org.eclipse.swt.SWT;
@@ -23,6 +26,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
+
+
+
 
 
 import datatypes.Rule;
@@ -102,7 +108,17 @@ public class QuestionCFGUI {
 	public void addQuestion(String message, Group questionGroup){
 		
 		QforUser= UserFactoryGUI.createQuestionLabel(questionGroup);
-		QforUser.setText(message);
+		if(var.isNumeric && var.getMin() != null && var.getMax() != null)
+		{
+			StringBuilder extender = new StringBuilder();
+			extender.append(message);
+			extender.append(". [" + var.getMin()+ ":"+ var.getMax() + "]");
+			QforUser.setText(extender.toString());
+		}
+		else
+		{
+			QforUser.setText(message);
+		}
 		GridData gd_label = new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1);
 		gd_label.widthHint=370;
 		gd_label.heightHint=30;
@@ -193,10 +209,27 @@ public class QuestionCFGUI {
 					}
 					if(doub)
 					{
-						var.setNumVal(Double.parseDouble(ans.getText()));
-						System.out.println(Double.parseDouble(ans.getText()));
-						System.out.println(var.getNumVal());
-						setQueryBoxEnabled(false);
+						if(var.getMin() != null && var.getMax() != null)
+						{
+							if(Double.parseDouble(ans.getText())>=var.getMin() && Double.parseDouble(ans.getText())<=var.getMax())
+								{
+								var.setNumVal(Double.parseDouble(ans.getText()));
+								System.out.println(Double.parseDouble(ans.getText()));
+								System.out.println(var.getNumVal());
+								setQueryBoxEnabled(false);
+								}
+							else
+								{
+								JOptionPane.showMessageDialog(null, "Please enter within ["+ var.getMin() + ":" + var.getMax() + "]");
+								}
+						}
+						else
+						{
+							var.setNumVal(Double.parseDouble(ans.getText()));
+							System.out.println(Double.parseDouble(ans.getText()));
+							System.out.println(var.getNumVal());
+							setQueryBoxEnabled(false);
+						}
 					}
 					else
 					{

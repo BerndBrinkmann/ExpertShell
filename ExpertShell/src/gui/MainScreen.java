@@ -352,7 +352,7 @@ public class MainScreen  implements Serializable {
 				scrolledComposite.setAlwaysShowScrollBars(true);
 				GridData gd_scrolledComposite_2 = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 				gd_scrolledComposite_2.heightHint = 400;
-				gd_scrolledComposite_2.widthHint = 300;
+				gd_scrolledComposite_2.widthHint = 320;
 				scrolledComposite.setLayoutData(gd_scrolledComposite_2);
 				scrolledComposite.setExpandHorizontal(true);
 				scrolledComposite.setExpandVertical(true);

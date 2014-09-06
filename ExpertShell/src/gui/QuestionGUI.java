@@ -74,7 +74,18 @@ public class QuestionGUI {
 	public void addQuestion(String message, Group questionGroup){
 		
 		QforUser= UserFactoryGUI.createQuestionLabel(questionGroup);
-		QforUser.setText(message);
+		if(var.isNumeric && var.getMin() != null && var.getMax() != null)
+		{
+			StringBuilder extender = new StringBuilder();
+			extender.append(message);
+			extender.append(". [" + var.getMin()+ ":"+ var.getMax() + "]");
+			QforUser.setText(extender.toString());
+		}
+		else
+		{
+			QforUser.setText(message);
+		}
+
 		GridData gd_label = new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1);
 		gd_label.widthHint=370;
 		gd_label.heightHint=20;
@@ -127,10 +138,27 @@ public class QuestionGUI {
 					}
 					if(doub)
 					{
-						var.setNumVal(Double.parseDouble(ans.getText()));
-						System.out.println(Double.parseDouble(ans.getText()));
-						System.out.println(var.getNumVal());
-						setQueryBoxEnabled(false);
+						if(var.getMin() != null && var.getMax() != null)
+						{
+							if(Double.parseDouble(ans.getText())>=var.getMin() && Double.parseDouble(ans.getText())<=var.getMax())
+								{
+								var.setNumVal(Double.parseDouble(ans.getText()));
+								System.out.println(Double.parseDouble(ans.getText()));
+								System.out.println(var.getNumVal());
+								setQueryBoxEnabled(false);
+								}
+							else
+								{
+								JOptionPane.showMessageDialog(null, "Please enter within ["+ var.getMin() + ":" + var.getMax() + "]");
+								}
+						}
+						else
+						{
+							var.setNumVal(Double.parseDouble(ans.getText()));
+							System.out.println(Double.parseDouble(ans.getText()));
+							System.out.println(var.getNumVal());
+							setQueryBoxEnabled(false);
+						}
 					}
 					else
 					{

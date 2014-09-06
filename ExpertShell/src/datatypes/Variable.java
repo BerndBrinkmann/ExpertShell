@@ -15,6 +15,8 @@ public class Variable implements Serializable
 	public Value currentValue = null;
 	protected Rule derivedFrom;
 	protected String queryPrompt = "";
+	public Double max = null;
+	public Double min = null;
 	
 	public Boolean isNumeric = false;
 	public Double numVal = null;
@@ -332,5 +334,25 @@ public class Variable implements Serializable
 		//beliefs = new ArrayList<Double>();
 		numVal = (Double) null;
 		currentValue = (Value) null;
+	}
+	
+	public void setMin(Double mini)
+	{
+		min=mini;
+	}
+	
+	public void setMax(Double maxi)
+	{
+		max= maxi;
+	}
+	
+	public Double getMin()
+	{
+		return min;
+	}
+	
+	public Double getMax()
+	{
+		return max;
 	}
 }
