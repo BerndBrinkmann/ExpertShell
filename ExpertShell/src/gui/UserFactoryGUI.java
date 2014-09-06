@@ -67,7 +67,7 @@ public final class UserFactoryGUI {
 	public static Scale createCFScale(Composite parent) {
 		Scale scale = new Scale(parent, SWT.NONE);
 		
-		scale.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		scale.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
 	
 		//scale.setLayoutData(layoutData);
 		return scale;

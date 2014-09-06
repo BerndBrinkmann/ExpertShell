@@ -96,16 +96,7 @@ public class QuestionCFGUI {
 		CompQ.layout();
 		questionGroup.setFocus();
 		CompQ.update();
-		
-		
-		/*while(var.currentValue == null)
-		{
-			try
-			{
-				wait();
-			} catch (InterruptedException e){};
-			
-		}*/
+
 	}
 	
 	public void addQuestion(String message, Group questionGroup){
@@ -114,7 +105,7 @@ public class QuestionCFGUI {
 		QforUser.setText(message);
 		GridData gd_label = new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1);
 		gd_label.widthHint=370;
-		gd_label.heightHint=65;
+		gd_label.heightHint=30;
 		QforUser.setLayoutData(gd_label);
 		
 		
@@ -172,7 +163,7 @@ public class QuestionCFGUI {
 			}
 		});
 		GridData gd_scale = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
-		gd_scale.widthHint = 216;
+		gd_scale.widthHint = 250;
 		CFScale.setLayoutData(gd_scale);
 		CFScale.setVisible(true);
 		//scale.setLayoutData(gd_scale);
