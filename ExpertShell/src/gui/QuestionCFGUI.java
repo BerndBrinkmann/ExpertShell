@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
 
-import datatypes.NumericVariable;
+
 import datatypes.Rule;
 import datatypes.InferenceEngine;
 import datatypes.Variable;

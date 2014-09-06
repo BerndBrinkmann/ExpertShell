@@ -8,7 +8,6 @@ import datatypes.Comparison;
 import datatypes.Connectives;
 import datatypes.Consequent;
 import datatypes.KnowledgeBase;
-import datatypes.NumericVariable;
 import datatypes.Rule;
 import datatypes.KBSettings;
 import datatypes.Value;

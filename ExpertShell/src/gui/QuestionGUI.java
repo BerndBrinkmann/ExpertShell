@@ -17,7 +17,6 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.custom.ScrolledComposite;
 
 import datatypes.InferenceEngine;
-import datatypes.NumericVariable;
 import datatypes.Rule;
 import datatypes.Value;
 import datatypes.Variable;

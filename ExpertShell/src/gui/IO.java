@@ -2,29 +2,26 @@ package gui;
 
 import java.awt.Component;
 
-import org.eclipse.swt.*;
+
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
+
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Scanner;
+
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.JSpinner;
-import javax.swing.JTextArea;
+
 import javax.swing.JTextField;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.UIManager;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 

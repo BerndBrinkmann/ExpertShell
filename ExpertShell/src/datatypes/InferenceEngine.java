@@ -2,22 +2,10 @@ package datatypes;
 
 import gui.IO;
 import gui.runGUI;
-
-import java.io.IOException;
-
-import datatypes.getSetKBSettings;
 import datatypes.KnowledgeBase;
-
-import java.io.PipedInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 import java.util.Stack;
 import java.io.Serializable;
-
-import javax.swing.JOptionPane;
-
 import org.apache.commons.lang3.SerializationUtils;
 
 import datatypes.*;
@@ -116,20 +104,7 @@ public class InferenceEngine implements Serializable {
 	{
 		return howList;
 	}
-	
-	public Variable solveBackwardChaining(Variable selectedVariable)
-	{
 		
-		Variable targetVar = selectedVariable;
-		Value targetVal = IO.getValue("Input a value to search for111", targetVar.getArrayOfPossibleValues());
-		if(targetVar == null || targetVal == null)
-		{
-			System.out.println("Operation Cancelled by User");
-			return null;
-		}
-		return solveBackwardChaining(targetVar, targetVal);
-	}
-	
 	public Variable solveBackwardChaining(Variable targetVar, Value targetVal)
 	{
 		

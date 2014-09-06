@@ -1,25 +1,8 @@
 package gui;
 
-import java.awt.Desktop;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
+
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Hashtable;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import org.apache.commons.lang3.SerializationUtils;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Menu;
@@ -27,60 +10,29 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Tree;
+
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import datatypes.*;
 import test.*;
-import datatypes.KBSettings.UncertaintyManagement;
-
-import org.eclipse.swt.events.TraverseListener;
-import org.eclipse.swt.events.TraverseEvent;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.custom.StyledText;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import gui.IO;
 
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -95,15 +47,6 @@ import org.eclipse.swt.events.MouseEvent;
 public class MainScreen  implements Serializable {
 
 	protected Shell shlExpertSystemShell;
-	private Label text;
-//	private Text text_1;
-//	private Text text_2;
-	private Button btnBackwardChaining;
-	private Button btnBayesianReasoning;
-	private Button btnCertainityFactor;
-	private Button btnDefault;
-	private Button btnForwardChaining;
-	private Button button;
 	private TabFolder tabFolder;
 	private Combo comboExample;
 	private Label labelCurrentKb;
@@ -111,36 +54,14 @@ public class MainScreen  implements Serializable {
 	private TabItem tbtmDeveloperInterface;
 	private TabItem tbtmUserInterface;
 	private RuleListGUI ruleList;
-//	private Button btnRun;
-//	private Combo combo;
-//	private Combo combo_1;
-	private Scale scale;
-	private Label lblCf;
 	public KnowledgeBase KBase;
-//	private Button OKButton;
-//	private Button HowButton;
-//	private Button WhyButton;
-//    private Composite CompQ;
-//    private Group questionGroup;
-//    private Label lblNewLabel;
     private ScrolledComposite scrolledComposite;
     public QuickStart compositeQS;
- //   private MenuItem newKB;
-   // private RuleEditorGUI ruleEditor;
-//    private RuleListGUI ruleList;
-  //  private Combo targetvariablecombo;
-//    private Boolean listChangeFlag = false;
-  //  private String variableListLabel = "";
- //   private Variable selectedVariable;
-   // private String selectedVariableString;
     public TabItem tbtmQS;
     private Test_Case test;
     private Test_Numeric testNum;
     private test_CF TestCF;
     private Test_Thermostat TestTherm;
-   // private Label lblSelectTargetVariable;
-   // private Label lblWhyhow;
- //   private ArrayList<Rule> HowList = new ArrayList<Rule>();
     static Rule tRule; // a hack to get this into the description function
     public InferenceEngine Inference;
     public runGUI composite; 
@@ -158,7 +79,7 @@ public class MainScreen  implements Serializable {
 	public SelectionAdapter AnswerComboListener;
 	public SelectionAdapter CFListener;
 	public SelectionAdapter CFScaleListener;
-	private GridData gd_SC_QuickStart;
+
 	private Text textNewKb;
 
 	/**
@@ -443,16 +364,8 @@ public class MainScreen  implements Serializable {
 				ruleList.setLayout(new GridLayout(1, false));
 				scrolledComposite.setContent(ruleList);
 				scrolledComposite.setMinSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				//ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				
 				uncertaintyBox.setRuleList(ruleList);
-				//scrolledComposite.setMinSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				
-				
-				
-				
-				
-				RuleButtonsGUI compEditorControls = new RuleButtonsGUI(compListEditor, SWT.NONE, KBase, ruleList);
 				
 				
 				
@@ -461,7 +374,6 @@ public class MainScreen  implements Serializable {
 				compRuleEditorHolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 				
 				ruleList.setEditorHolder(compRuleEditorHolder);
-				//ruleEditor = new RuleEditorGUI(compRuleEditorHolder, KBase.getRule(2), KBase);
 				compRuleEditorHolder.layout();
 				composite_3.getParent().getParent().layout(true,true);
 				

@@ -1,13 +1,5 @@
 package datatypes;
 
-import gui.MainScreen;
-
-import gui.IO;
-
-
-import gui.runGUI;
-
-
 import java.io.Serializable;
 
 import datatypes.KBSettings;
@@ -15,12 +7,6 @@ import datatypes.KBSettings.UncertaintyManagement;
 import datatypes.getSetKBSettings;
 
 import java.util.ArrayList;
-import java.util.Stack;
-
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.widgets.Composite;
-
-
 
 public class Rule extends getSetKBSettings implements Serializable 
 {
@@ -192,7 +178,7 @@ public class Rule extends getSetKBSettings implements Serializable
 		
 		
 		// there must be at least a single antecedent to evaluate
-		Boolean result = false;
+
 
 		if(getNumberOfAntecedents() < 1)
 		{
@@ -287,8 +273,6 @@ public class Rule extends getSetKBSettings implements Serializable
 
 		{
 			// there must be at least a single antecedent to evaluate
-			Boolean result = false;
-
 			if(getNumberOfAntecedents() < 1)
 			{
 				System.err.println("ERROR: Rule must have at least one antecedent to evaluate");

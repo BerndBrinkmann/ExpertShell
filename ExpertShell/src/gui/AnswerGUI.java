@@ -1,7 +1,6 @@
 package gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.util.ArrayList;
 
 
@@ -13,12 +12,6 @@ import java.util.ArrayList;
 
 
 
-
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -35,9 +28,7 @@ import org.eclipse.swt.widgets.Scale;
 
 import datatypes.KBSettings;
 import datatypes.KnowledgeBase;
-import datatypes.NumericVariable;
 import datatypes.Rule;
-import datatypes.InferenceEngine;
 import datatypes.Variable;
 import datatypes.Value;
 
@@ -83,7 +74,6 @@ public class AnswerGUI {
 	public Boolean okayPress = false;
 	
 	private Variable var;
-	private InferenceEngine infer;
 	static Rule tRule;
 	static Label lblWhyHow;
 	static ScrolledComposite ScrolledComposite_1;
