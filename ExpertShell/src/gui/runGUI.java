@@ -221,6 +221,7 @@ public class runGUI extends Composite implements Serializable {
 				public void widgetSelected(SelectionEvent e) {
 					if(targetvariablecombo.getSelectionIndex() != -1)
 					{
+						System.out.println(KBase.getInferenceMethod() + "   ");
 						if(KBase.getInferenceMethod() == KBSettings.InferenceType.B_CHAINING) //|| KBase.getBCConsequents()[targetvariablecombo.getSelectionIndex()] instanceof Consequent)
 						{
 							selectedVariable = KBase.getBCConsequents()[targetvariablecombo.getSelectionIndex()].getVariable();
@@ -297,6 +298,7 @@ public class runGUI extends Composite implements Serializable {
 			e.getSource();
 			btnDefault.getSelection();
 			if (btnDefault.getSelection()==true){
+			KBase.setInferenceMethod(KBSettings.InferenceType.F_CHAINING);
 			btnForwardChaining.setSelection(false);
 			btnBackwardChaining.setSelection(false);
 			targetvariablecombo.setVisible(true);
@@ -312,6 +314,7 @@ public class runGUI extends Composite implements Serializable {
 			e.getSource();
 			btnForwardChaining.getSelection();
 			if(btnForwardChaining.getSelection()==true){
+			KBase.setInferenceMethod(KBSettings.InferenceType.F_CHAINING);
 			btnDefault.setSelection(false);
 			btnBackwardChaining.setSelection(false);
 			targetvariablecombo.setVisible(true);
@@ -328,6 +331,7 @@ public class runGUI extends Composite implements Serializable {
 			e.getSource();
 			btnBackwardChaining.getSelection();
 			if(btnBackwardChaining.getSelection()==true){
+			KBase.setInferenceMethod(KBSettings.InferenceType.B_CHAINING);
 			btnDefault.setSelection(false);
 			btnForwardChaining.setSelection(false);
 			targetvariablecombo.setVisible(true);

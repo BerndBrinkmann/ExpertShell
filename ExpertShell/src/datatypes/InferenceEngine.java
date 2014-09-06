@@ -153,8 +153,8 @@ public class InferenceEngine implements Serializable {
 		//find the first lot of containing rules and push to the stack
 		Rule[] containingRules = findContainingRules(cons);
 		//sort the containing rules to resolve conflicts
-		if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
-			Arrays.sort(containingRules, new RuleAntecedentComparator());
+		/*if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
+			Arrays.sort(containingRules, new RuleAntecedentComparator());*/
 		
 		
 		if(containingRules.length > 0)
@@ -184,6 +184,7 @@ public class InferenceEngine implements Serializable {
 			}	
 			else
 			{
+				System.out.println("could not evaluate");
 				//else stack the rules that can cause this rule to trigger
 				int nStacked = 0;
 				for(int j = 0; j < rule.getNumberOfAntecedents(); j++)
@@ -193,8 +194,8 @@ public class InferenceEngine implements Serializable {
 						containingRules = findContainingRules(rule.getAntecedent(j).convertToConsequent());
 						
 						//sort the containing rules to resolve conflicts
-						if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
-							Arrays.sort(containingRules, new RuleAntecedentComparator());
+						/*if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
+							Arrays.sort(containingRules, new RuleAntecedentComparator());*/
 						if(containingRules.length > 0)
 						{		
 							for(Rule r : containingRules)
@@ -233,7 +234,7 @@ public class InferenceEngine implements Serializable {
 		{
 			for(int j = 0; j < KBase.getRule(i).getNumberOfConsequents(); j++)
 			{
-				if(cons.value.name.equals(KBase.getRule(i).getConsequent(j).value.name))
+				if(cons.getValueAsString().equals(KBase.getRule(i).getConsequent(j).getValueAsString()))
 				{
 					rules.add(KBase.getRule(i));
 				}

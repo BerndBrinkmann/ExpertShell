@@ -136,7 +136,7 @@ public class AnswerGUI {
 		
 		if(howList.isEmpty())
 		{
-			lblWhyHow.setText("\nA result was not reached\n");
+			lblWhyHow.setText("\n A result could not be reached \nfrom the information  provided.\n");
 		}
 		else
 		{
@@ -317,7 +317,7 @@ public void showAnswer(Group questionGroup, String message, final KnowledgeBase 
 					}
 					else
 					{
-						summary = "A conclusion could not be made from the information provided";
+						summary = "A conclusion could not be made.";
 					}
 				}
 				else
@@ -328,14 +328,14 @@ public void showAnswer(Group questionGroup, String message, final KnowledgeBase 
 					}
 					else
 					{
-						summary = "A conclusion could not be made from the information provided";
+						summary = "A conclusion could not be made.";
 					}
 				}
 			}
 		}
 		else
 		{
-			summary = "A conclusion could not be made from the information provided";
+			summary = "A conclusion could not be made";
 		}
 		
 		return summary;
