@@ -57,17 +57,17 @@ public class VariablesGUI extends Composite {
 		super(parent, style);
 
 		KBase = kb;
+		//setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		setLayout(new GridLayout(2, false));
+		
 		variableList = new List(this, SWT.BORDER | SWT.V_SCROLL);
 		variableList.setToolTipText("Lists all variables used in the knowledgebase");
 		variableList.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
+		variableList.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
 		
 		setVariableList();
 		Group GroupAddDelete = new Group(this, SWT.NONE);
-		possibleValuesList = new List(GroupAddDelete, SWT.BORDER | SWT.V_SCROLL);
-		possibleValuesList.setToolTipText("Lists all possible values for this variable which are defined in the knowledgebase");
-		possibleValuesList.setBounds(112, 215, 369, 148);
 		
 		variableList.addSelectionListener(new SelectionAdapter() {	
 			@Override
@@ -109,36 +109,43 @@ public class VariablesGUI extends Composite {
 			}
 		});
 
-		GridData gd_variableList = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2);
-		gd_variableList.heightHint = 441;
+		GridData gd_variableList = new GridData(SWT.FILL, SWT.TOP, false, true, 1, 2);
+		gd_variableList.heightHint = 714;
 		gd_variableList.widthHint = 141;
 		variableList.setLayoutData(gd_variableList);
+		GroupAddDelete.setLayout(new GridLayout(2, false));
 		
 		
-		GridData gd_GroupAddDelete = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gd_GroupAddDelete.heightHint = 423;
+		GridData gd_GroupAddDelete = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2);
+		gd_GroupAddDelete.heightHint = 713;
 		GroupAddDelete.setLayoutData(gd_GroupAddDelete);
 		GroupAddDelete.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		
 		Label lblName = new Label(GroupAddDelete, SWT.NONE);
 		lblName.setToolTipText("Contains the name of the variable");
 		lblName.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-		lblName.setBounds(26, 25, 80, 15);
 		lblName.setText("Variable Name:");
 		
+		
+
+		
+		txtVariableName = new Text(GroupAddDelete, SWT.BORDER);
+		GridData gd_txtVariableName = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+		gd_txtVariableName.widthHint = 424;
+		txtVariableName.setLayoutData(gd_txtVariableName);
+		txtVariableName.setToolTipText("Contains the name of the variable");
+		
 		Label lblDescription = new Label(GroupAddDelete, SWT.NONE);
+		lblDescription.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		lblDescription.setToolTipText("Contains a description of the Variable. This description is not used in the knowledgebase");
 		lblDescription.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-		lblDescription.setBounds(43, 52, 63, 21);
 		lblDescription.setText("Description:");
 		
-		Label lblAskUser = new Label(GroupAddDelete, SWT.NONE);
-		lblAskUser.setToolTipText("Determine if the user is asked to input a value or not");
-		lblAskUser.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-		lblAskUser.setBounds(42, 369, 48, 15);
-		lblAskUser.setText("Ask User:");
-		
 		descriptionTxt = new Text(GroupAddDelete, SWT.BORDER);
+		GridData gd_descriptionTxt = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+		gd_descriptionTxt.heightHint = 170;
+		gd_descriptionTxt.widthHint = 424;
+		descriptionTxt.setLayoutData(gd_descriptionTxt);
 		descriptionTxt.setToolTipText("Contains a description of the Variable. This description is not used in the knowledgebase");
 		descriptionTxt.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -146,20 +153,50 @@ public class VariablesGUI extends Composite {
 				//currentvariable.setDescription(descriptionTxt.getText());
 			}
 		});
-		descriptionTxt.setBounds(112, 49, 369, 104);
 		
-
+		Label lblQuestionPrompt = new Label(GroupAddDelete, SWT.NONE);
+		lblQuestionPrompt.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		lblQuestionPrompt.setToolTipText("Sets the question associated with this variable");
+		lblQuestionPrompt.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
+		lblQuestionPrompt.setText("Question Prompt:");
 		
-		txtVariableName = new Text(GroupAddDelete, SWT.BORDER);
-		txtVariableName.setToolTipText("Contains the name of the variable");
-		txtVariableName.setBounds(113, 22, 192, 21);
+		QuestionPrompt = new Text(GroupAddDelete, SWT.BORDER);
+		GridData gd_QuestionPrompt = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+		gd_QuestionPrompt.heightHint = 54;
+		gd_QuestionPrompt.widthHint = 424;
+		QuestionPrompt.setLayoutData(gd_QuestionPrompt);
+		QuestionPrompt.setToolTipText("Sets the question associated with this variable");
+		QuestionPrompt.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+			
+				//currentvariable.setQueryPrompt(QuestionPrompt.getText());
+			
+			}
+		});
+		
+		Label lblPossibleValues = new Label(GroupAddDelete, SWT.NONE);
+		lblPossibleValues.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		lblPossibleValues.setToolTipText("Lists all possible values for this variable which are defined in the knowledgebase");
+		lblPossibleValues.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
+		lblPossibleValues.setText("Possible Values:");
+		possibleValuesList = new List(GroupAddDelete, SWT.BORDER | SWT.V_SCROLL);
+		GridData gd_possibleValuesList = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+		gd_possibleValuesList.widthHint = 412;
+		gd_possibleValuesList.heightHint = 223;
+		possibleValuesList.setLayoutData(gd_possibleValuesList);
+		possibleValuesList.setToolTipText("Lists all possible values for this variable which are defined in the knowledgebase");
+		
+		Label lblAskUser = new Label(GroupAddDelete, SWT.NONE);
+		lblAskUser.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		lblAskUser.setToolTipText("Determine if the user is asked to input a value or not");
+		lblAskUser.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
+		lblAskUser.setText("Ask User:");
 		
 		
 		
 		Group group = new Group(GroupAddDelete, SWT.NONE);
 		group.setToolTipText("Determine if the user is asked to input a value or not");
 		group.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-		group.setBounds(103, 369, 105, 31);
 		
 		btnRadioButtonYes = new Button(group, SWT.RADIO);
 		btnRadioButtonYes.setToolTipText("Determine if the user is asked to input a value or not");
@@ -173,38 +210,14 @@ public class VariablesGUI extends Composite {
 		btnRadioButtonNo.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnRadioButtonNo.setBounds(55, 10, 39, 16);
 		btnRadioButtonNo.setText("No");
-		
-		Label lblPossibleValues = new Label(GroupAddDelete, SWT.NONE);
-		lblPossibleValues.setToolTipText("Lists all possible values for this variable which are defined in the knowledgebase");
-		lblPossibleValues.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-		lblPossibleValues.setBounds(19, 219, 87, 15);
-		lblPossibleValues.setText("Possible Values:");
+		new Label(GroupAddDelete, SWT.NONE);
 		
 		btnSave = new Button(GroupAddDelete, SWT.NONE);
+		GridData gd_btnSave = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
+		gd_btnSave.widthHint = 74;
+		btnSave.setLayoutData(gd_btnSave);
 		btnSave.setToolTipText("Save changes to Knowledgebase");
-		btnSave.setBounds(103, 406, 75, 25);
 		btnSave.setText("Save");
-		
-		QuestionPrompt = new Text(GroupAddDelete, SWT.BORDER);
-		QuestionPrompt.setToolTipText("Sets the question associated with this variable");
-		QuestionPrompt.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-			
-				//currentvariable.setQueryPrompt(QuestionPrompt.getText());
-			
-			}
-		});
-		QuestionPrompt.setBounds(113, 159, 368, 50);
-		
-		Label lblQuestionPrompt = new Label(GroupAddDelete, SWT.NONE);
-		lblQuestionPrompt.setToolTipText("Sets the question associated with this variable");
-		lblQuestionPrompt.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-		lblQuestionPrompt.setBounds(10, 159, 97, 15);
-		lblQuestionPrompt.setText("Question Prompt:");
-		
-		new Label(this, SWT.NONE);
-		
-		setForInput(false);
 		
 		btnSave.addMouseListener(new MouseAdapter() {
 			
@@ -261,6 +274,8 @@ public class VariablesGUI extends Composite {
 				}
 			}
 		});
+		
+		setForInput(false);
 		
 		
 	}

@@ -220,7 +220,7 @@ public class MainScreen  implements Serializable {
 		shlExpertSystemShell.setMinimumSize(new Point(132, 10));
 		shlExpertSystemShell.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/UTasLogo.png"));
 
-		shlExpertSystemShell.setSize(757, 611);
+		shlExpertSystemShell.setSize(870, 703);
 		shlExpertSystemShell.setText("Expert System Shell");
 		shlExpertSystemShell.setLayout(new GridLayout(1, false));
 		
@@ -470,8 +470,9 @@ public class MainScreen  implements Serializable {
 				tbtmVariables.setText("Variables");
 
 				Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
-				Variables.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
+				//Variables.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 				tbtmVariables.setControl(Variables);
+				//Variables.setLayout(new GridLayout(2, true));
 				
 				
 				}

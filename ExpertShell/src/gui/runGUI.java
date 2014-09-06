@@ -200,9 +200,9 @@ public class runGUI extends Composite implements Serializable {
 	
 	Group grpKnowledgeBaseSelected = new Group(this, SWT.NONE);
 	grpKnowledgeBaseSelected.setLayout(new GridLayout(3, false));
-	GridData gd_grpKnowledgeBaseSelected = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
+	GridData gd_grpKnowledgeBaseSelected = new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1);
 	gd_grpKnowledgeBaseSelected.heightHint = 62;
-	gd_grpKnowledgeBaseSelected.widthHint = 345;
+	gd_grpKnowledgeBaseSelected.widthHint = 408;
 	grpKnowledgeBaseSelected.setLayoutData(gd_grpKnowledgeBaseSelected);
 	grpKnowledgeBaseSelected.setText("Knowledge Base Selected/Opened");
 	
@@ -245,13 +245,15 @@ public class runGUI extends Composite implements Serializable {
 			
 			
 			btnRun = new Button(grpKnowledgeBaseSelected, SWT.NONE);
-			btnRun.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+			GridData gd_btnRun = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+			gd_btnRun.widthHint = 53;
+			btnRun.setLayoutData(gd_btnRun);
 			btnRun.setText("Run");
 						
 	
 	Group grpSelectRunMethod = new Group(this, SWT.NONE);
 	GridData gd_grpSelectRunMethod = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-	gd_grpSelectRunMethod.widthHint = 159;
+	gd_grpSelectRunMethod.widthHint = 192;
 	grpSelectRunMethod.setLayoutData(gd_grpSelectRunMethod);
 	grpSelectRunMethod.setText("Select Run Method");
 	
@@ -348,8 +350,8 @@ public class runGUI extends Composite implements Serializable {
 	});
 	
 	Group grpSelectReasoningMethod = new Group(this, SWT.NONE);
-	GridData gd_grpSelectReasoningMethod = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-	gd_grpSelectReasoningMethod.widthHint = 157;
+	GridData gd_grpSelectReasoningMethod = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+	gd_grpSelectReasoningMethod.widthHint = 179;
 	grpSelectReasoningMethod.setLayoutData(gd_grpSelectReasoningMethod);
 	grpSelectReasoningMethod.setText("Select Reasoning Method");
 	
@@ -403,9 +405,9 @@ switch(kb.getUncertaintyMethod())
 	
     	    
 	scrolledComposite.setAlwaysShowScrollBars(true);
-	GridData gd_scrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
-	gd_scrolledComposite.heightHint = 381;
-	gd_scrolledComposite.widthHint = 329;
+	GridData gd_scrolledComposite = new GridData(SWT.LEFT, SWT.TOP, false, true, 2, 1);
+	gd_scrolledComposite.heightHint = 600;
+	gd_scrolledComposite.widthHint = 397;
 	scrolledComposite.setLayoutData(gd_scrolledComposite);
 	scrolledComposite.setExpandHorizontal(true);
 	scrolledComposite.setExpandVertical(true);
@@ -617,9 +619,9 @@ switch(kb.getUncertaintyMethod())
 	});
 		
 	scrolledComposite_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-	GridData gd_scrolledComposite_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
-	gd_scrolledComposite_1.heightHint = 377;
-	gd_scrolledComposite_1.widthHint = 320;
+	GridData gd_scrolledComposite_1 = new GridData(SWT.LEFT, SWT.TOP, false, true, 2, 1);
+	gd_scrolledComposite_1.heightHint = 602;
+	gd_scrolledComposite_1.widthHint = 366;
 	scrolledComposite_1.setLayoutData(gd_scrolledComposite_1);
 	scrolledComposite_1.setExpandHorizontal(true);
 	scrolledComposite_1.setExpandVertical(true);
