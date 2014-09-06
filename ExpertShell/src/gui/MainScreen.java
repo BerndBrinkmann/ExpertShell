@@ -253,6 +253,24 @@ public class MainScreen  implements Serializable {
 		tbtmMain.setControl(composite_1);
 		composite_1.setLayout(null);
 		
+		textNewKb = new Text(composite_1, SWT.BORDER);
+		textNewKb.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textNewKb.getText()==""){
+					textNewKb.setText("Enter Name");
+				}
+			}
+		});
+		textNewKb.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				textNewKb.setText("");
+			}
+		});
+		textNewKb.setBounds(115, 467, 172, 23);
+		textNewKb.setText("Enter Name");
+		
 		Button btnNewButton = new Button(composite_1, SWT.NONE);
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -271,7 +289,7 @@ public class MainScreen  implements Serializable {
 				}				 
 			}
 		});
-		btnNewButton.setBounds(79, 421, 107, 25);
+		btnNewButton.setBounds(293, 465, 87, 25);
 		btnNewButton.setText("Create New");
 		
 		Button btnRun = new Button(composite_1, SWT.NONE);
@@ -283,7 +301,7 @@ public class MainScreen  implements Serializable {
 				
 			}
 		});
-		btnRun.setBounds(79, 467, 107, 25);
+		btnRun.setBounds(131, 369, 93, 25);
 		btnRun.setText("Run");
 		
 		Button btnEdit = new Button(composite_1, SWT.NONE);
@@ -394,27 +412,7 @@ public class MainScreen  implements Serializable {
 			}
 		});
 		btnEdit.setText("Edit");
-		btnEdit.setBounds(199, 467, 107, 25);
-		
-		Button btnNewButton_1 = new Button(composite_1, SWT.NONE);
-		btnNewButton_1.setText("Guide");
-		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				
-				if (compositeQS == null ) // only one QS tab can be created
-				{
-					tbtmQS = new TabItem(tabFolder, SWT.NONE);
-					tbtmQS.setText("Quick Start Guide");
-					compositeQS = new QuickStart(tabFolder, SWT.NONE, QSCloseListener);
-					tbtmQS.setControl(compositeQS);
-				}
-			tabFolder.setSelection(tbtmQS);
-				
-			}
-		});
-		btnNewButton_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/speech-balloon-green-q-icon.png"));
-		btnNewButton_1.setBounds(10, 10, 64, 25);
+		btnEdit.setBounds(267, 369, 93, 25);
 		
 		QSCloseListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -423,38 +421,20 @@ public class MainScreen  implements Serializable {
 				compositeQS =null;
 			}	
 		};
-		
-		textNewKb = new Text(composite_1, SWT.BORDER);
-		textNewKb.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (textNewKb.getText()==""){
-					textNewKb.setText("Enter Name");
-				}
-			}
-		});
-		textNewKb.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				textNewKb.setText("");
-			}
-		});
-		textNewKb.setBounds(199, 423, 139, 23);
-		textNewKb.setText("Enter Name");
 
 		
-		labelCurrentKb = new Label(composite_1, SWT.BORDER);
+		labelCurrentKb = new Label(composite_1, SWT.NONE);
 		labelCurrentKb.setAlignment(SWT.CENTER);
 		labelCurrentKb.setText("No Knowledge-Base Loaded");
 		labelCurrentKb.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		labelCurrentKb.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD | SWT.ITALIC));
 		labelCurrentKb.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		labelCurrentKb.setBounds(144, 317, 265, 25);
+		labelCurrentKb.setBounds(115, 328, 265, 25);
 		Label lblNewLabel_1 = new Label(composite_1, SWT.HORIZONTAL | SWT.CENTER);
 		lblNewLabel_1.setText("Load");
 		lblNewLabel_1.setBounds(0, 0, 836, 607);
 		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage3.jpg"));
+		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_lastmaybe.jpg"));
 		
 		MenuItem mntmLoad = new MenuItem(menu_1, SWT.NONE);
 		mntmLoad.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/folder.png"));
