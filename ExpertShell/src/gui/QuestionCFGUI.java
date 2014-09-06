@@ -113,7 +113,7 @@ public class QuestionCFGUI {
 		QforUser= UserFactoryGUI.createQuestionLabel(questionGroup);
 		QforUser.setText(message);
 		GridData gd_label = new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1);
-		gd_label.widthHint=303;
+		gd_label.widthHint=370;
 		gd_label.heightHint=65;
 		QforUser.setLayoutData(gd_label);
 		
