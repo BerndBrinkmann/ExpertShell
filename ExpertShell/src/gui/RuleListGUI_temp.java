@@ -11,6 +11,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.events.MouseTrackAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 public class RuleListGUI_temp extends Composite {
 
@@ -23,7 +25,8 @@ public class RuleListGUI_temp extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
-		ScrolledComposite scrolledComposite = new ScrolledComposite(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		ScrolledComposite scrolledComposite = new ScrolledComposite(this, SWT.V_SCROLL);
+		scrolledComposite.setAlwaysShowScrollBars(true);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 		scrolledComposite.setMinHeight(50);
@@ -31,7 +34,13 @@ public class RuleListGUI_temp extends Composite {
 		gd_scrolledComposite.heightHint = 115;
 		scrolledComposite.setLayoutData(gd_scrolledComposite);
 		
-		Composite compList = new Composite(scrolledComposite, SWT.NONE);
+		final Composite compList = new Composite(scrolledComposite, SWT.NONE);
+		compList.addMouseTrackListener(new MouseTrackAdapter() {
+			@Override
+			public void mouseEnter(MouseEvent e) {
+				compList.setFocus();
+			}
+		});
 		compList.setLayout(new GridLayout(1, false));
 		
 		Group group = RuleGUIFactory.createGroupRuleContainer(compList, "1.");

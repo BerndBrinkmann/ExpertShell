@@ -27,13 +27,15 @@ public class RuleListGUI extends Composite {
 	private MouseListener listen;
 	private Composite editorHolder;
 	private RuleEditorGUI editor;
+	public ScrolledComposite scroll;
 	
 	//create an editable/selectable rulelistGUI linked to a knowledgebase
-	public RuleListGUI(Composite parent, int style, KnowledgeBase k) {
+	public RuleListGUI(ScrolledComposite parent, int style, KnowledgeBase k) {
 		super(parent, style);
 		kb = k;
 		selected = -1;
 		selectable = true;
+		scroll = parent;
 		
 		setupComposite();
 		setupListener();
@@ -244,6 +246,7 @@ public class RuleListGUI extends Composite {
 		//move in the array
 		ruleGUIs.remove(selected);
 		ruleGUIs.add(selected - 1, toMove);
+		updateRuleGUIList();
 		
 		//update selected
 		selected--;
@@ -265,7 +268,7 @@ public class RuleListGUI extends Composite {
 		//move in the array
 		ruleGUIs.remove(selected);
 		ruleGUIs.add(selected + 1, toMove);
-		
+		updateRuleGUIList();
 		//update selected
 		selected++;
 		
@@ -276,5 +279,13 @@ public class RuleListGUI extends Composite {
 	
 	public KnowledgeBase getCurrentKnowledgeBase() {
 		return kb;
+	}
+	
+	public void updateRuleGUIList()
+	{
+		for(RuleGUI r:ruleGUIs)
+		{
+			r.updateText();
+		}
 	}
 }

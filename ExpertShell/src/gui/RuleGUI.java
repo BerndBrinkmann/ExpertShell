@@ -59,8 +59,12 @@ public class RuleGUI extends Group {
 		appendWithStyle("IF",styleIFTHEN);
 		append("\t\t\t\t");
 		first = true;
-		for(Antecedent a : rule.getAntecedentArray()) {
-			if (!first) {
+		for(int i=0; i< rule.getAntecedentArray().length;i++) 
+		{
+			Antecedent a =rule.getAntecedentArray()[i];
+			
+			if (!first) 
+			{
 				if (rule.getConnective() == Connectives.AND) {
 					append("AND\t\t");
 				} else {
@@ -73,7 +77,8 @@ public class RuleGUI extends Group {
 			append(" "); //space
 			appendWithStyle(a.getValueAsString(),styleValue);
 			
-			if(first && rule.getUncertaintyMethod() == KBSettings.UncertaintyManagement.BAYESIAN){
+			if(((i+1)== rule.getAntecedentArray().length) && rule.getUncertaintyMethod() == KBSettings.UncertaintyManagement.BAYESIAN)
+			{
 				appendWithStyle("  (LN: "+rule.getLikelihoodOfNecessity() +
 						", LS: " + rule.getLikelihoodOfSufficiency() + ")", styleValue);
 			}

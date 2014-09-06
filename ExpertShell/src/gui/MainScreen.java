@@ -414,9 +414,13 @@ public class MainScreen  implements Serializable {
 				
 				scrolledComposite = new ScrolledComposite(compListEditor, SWT.BORDER | SWT.V_SCROLL);
 			//	gd_scrolledComposite.heightHint = 428;
+				scrolledComposite.setAlwaysShowScrollBars(true);
 				GridData gd_scrolledComposite_2 = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 				gd_scrolledComposite_2.heightHint = 400;
+				gd_scrolledComposite_2.widthHint = 300;
 				scrolledComposite.setLayoutData(gd_scrolledComposite_2);
+				scrolledComposite.setExpandHorizontal(true);
+				scrolledComposite.setExpandVertical(true);
 				scrolledComposite.addListener(SWT.MouseWheel, new Listener() {
 		            public void handleEvent(Event event) {
 		                int wheelCount = event.count;
@@ -435,8 +439,11 @@ public class MainScreen  implements Serializable {
 				
 				
 				ruleList = new RuleListGUI(scrolledComposite, SWT.NONE, KBase);
+				ruleList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+				ruleList.setLayout(new GridLayout(1, false));
 				scrolledComposite.setContent(ruleList);
-				ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				scrolledComposite.setMinSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				//ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				
 				uncertaintyBox.setRuleList(ruleList);
 				//scrolledComposite.setMinSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
