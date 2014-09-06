@@ -48,7 +48,6 @@ public class MainScreen  implements Serializable {
 
 	protected Shell shlExpertSystemShell;
 	private TabFolder tabFolder;
-	private Combo comboExample;
 	private Label labelCurrentKb;
 	private Composite composite_3;
 	private TabItem tbtmDeveloperInterface;
@@ -132,9 +131,6 @@ public class MainScreen  implements Serializable {
 		testNum = new Test_Numeric();
 		TestCF = new test_CF();
 		TestTherm = new Test_Thermostat();
-		//KBase = FileManager.loadKnowledgeFile();
-		//KBase.SetName("boat_kb");
-		//Inference = new InferenceEngine(KBase);
 		
 		//resized
 		shlExpertSystemShell = new Shell();
@@ -153,6 +149,55 @@ public class MainScreen  implements Serializable {
 		
 		Menu menu_1 = new Menu(mntmFile);
 		mntmFile.setMenu(menu_1);
+		
+		MenuItem mntmExample = new MenuItem(menu, SWT.CASCADE);
+		mntmExample.setText("Examples");
+		Menu menu_2 = new Menu(mntmExample);
+		mntmExample.setMenu(menu_2);
+		
+		MenuItem mnItemCFBoat = new MenuItem(menu_2, SWT.NONE);
+		mnItemCFBoat.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				KBase = TestCF.createCFKB(window);
+				updateKnowledgeBase();
+				labelCurrentKb.setText(KBase.getName());
+			}
+		});
+		mnItemCFBoat.setText("Boat Example (CF)");
+		
+		MenuItem mnItemForecast = new MenuItem(menu_2, SWT.NONE);
+		mnItemForecast.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				KBase = test.createBoatKnowlegeBase(window);
+				updateKnowledgeBase();					
+				labelCurrentKb.setText(KBase.getName()); 	
+			}
+		});
+		mnItemForecast.setText("Forecast Example (Bay.)");
+		
+		MenuItem mnItemNumeric = new MenuItem(menu_2, SWT.NONE);
+		 mnItemNumeric.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				KBase = testNum.createNumericKB(window);
+				updateKnowledgeBase();
+				labelCurrentKb.setText(KBase.getName());
+			}
+		});
+		 mnItemNumeric.setText("Numeric Example");
+	
+		 MenuItem mnItemThermo = new MenuItem(menu_2, SWT.NONE);
+		 mnItemThermo.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					KBase = TestTherm.createThermostat(window);
+					updateKnowledgeBase();
+					labelCurrentKb.setText(KBase.getName());
+				}
+			});
+		 mnItemThermo.setText("Thermostat Test");
 		
 		MenuItem mntmHelp = new MenuItem(menu, SWT.CASCADE);
 		mntmHelp.setText("Help");
@@ -208,55 +253,6 @@ public class MainScreen  implements Serializable {
 		tbtmMain.setControl(composite_1);
 		composite_1.setLayout(null);
 		
-		comboExample = new Combo(composite_1, SWT.NONE);
-
-		comboExample.setBounds(199, 383, 139, 23);
-		comboExample.setText("Select Example");
-		comboExample.add("Boat Example (CF)");
-		comboExample.add("Forecast Example (Bay.)");
-		comboExample.add("Numeric Example");
-		comboExample.add("Thermostat Test");
-
-		Button btnLoadExample = new Button(composite_1, SWT.NONE);
-		btnLoadExample.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				// load an example
-				if (comboExample.getSelectionIndex() == 1)
-				{
-					KBase = test.createBoatKnowlegeBase(window);
-					updateKnowledgeBase();					
-					labelCurrentKb.setText(KBase.getName()); 
-				}
-				if(comboExample.getSelectionIndex() == 2)
-				{
-					KBase = testNum.createNumericKB(window);
-
-					updateKnowledgeBase();
-					
-					labelCurrentKb.setText(KBase.getName());
-				}
-				if(comboExample.getSelectionIndex() == 0)
-				{
-					KBase = TestCF.createCFKB(window);
-			
-					updateKnowledgeBase();
-					
-					labelCurrentKb.setText(KBase.getName());
-				}
-				
-				if(comboExample.getSelectionIndex() == 3)
-				{
-					KBase = TestTherm.createThermostat(window);
-					updateKnowledgeBase();
-					
-					labelCurrentKb.setText(KBase.getName());
-	
-			}}
-		});
-		btnLoadExample.setBounds(79, 381, 107, 25);
-		btnLoadExample.setText("Load example");
-		
 		Button btnNewButton = new Button(composite_1, SWT.NONE);
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -264,7 +260,7 @@ public class MainScreen  implements Serializable {
 				// create new knowledgebase
 				if (textNewKb.getText()=="" || textNewKb.getText().equals("Enter Name"))
 				{
-					JOptionPane.showMessageDialog(null, "Please enter Knowledgebase Name");
+					JOptionPane.showMessageDialog(null, "Please enter Knowledge-Base name");
 				}
 					else
 				{
@@ -276,7 +272,7 @@ public class MainScreen  implements Serializable {
 			}
 		});
 		btnNewButton.setBounds(79, 421, 107, 25);
-		btnNewButton.setText("Create new");
+		btnNewButton.setText("Create New");
 		
 		Button btnRun = new Button(composite_1, SWT.NONE);
 		btnRun.addMouseListener(new MouseAdapter() {
@@ -295,7 +291,7 @@ public class MainScreen  implements Serializable {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				// edit the knowledgbase
-				if (labelCurrentKb.getText() !="No Knowledgebase loaded")
+				if (labelCurrentKb.getText() !="No Knowledge-Base Loaded")
 				{
 				if (composite_3 == null)
 				{
@@ -307,7 +303,7 @@ public class MainScreen  implements Serializable {
 						
 					}
 				});
-				tbtmDeveloperInterface.setText("Create/Edit Knowledgebase");
+				tbtmDeveloperInterface.setText("Create/Edit Knowledge-Base");
 				
 				composite_3 = new Composite(tabFolder, SWT.NONE);
 				tbtmDeveloperInterface.setControl(composite_3);
@@ -392,7 +388,7 @@ public class MainScreen  implements Serializable {
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "Please choose a Knowledgebase first");
+					JOptionPane.showMessageDialog(null, "Please choose a Knowledge-Base first");
 				}
 		
 			}
@@ -449,7 +445,7 @@ public class MainScreen  implements Serializable {
 		
 		labelCurrentKb = new Label(composite_1, SWT.BORDER);
 		labelCurrentKb.setAlignment(SWT.CENTER);
-		labelCurrentKb.setText("No Knowledgebase loaded");
+		labelCurrentKb.setText("No Knowledge-Base Loaded");
 		labelCurrentKb.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		labelCurrentKb.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD | SWT.ITALIC));
 		labelCurrentKb.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
@@ -525,12 +521,12 @@ public class MainScreen  implements Serializable {
 	}
 	public void Run()
 	{
-		if (labelCurrentKb.getText() !="No Knowledgebase loaded")
+		if (labelCurrentKb.getText() !="No Knowledge-Base Loaded")
 		{
 		if (composite == null ) // only one run tab can be created
 		{
 		tbtmUserInterface = new TabItem(tabFolder, SWT.NONE);
-		tbtmUserInterface.setText("Run Knowledgebase");
+		tbtmUserInterface.setText("Run Knowledge-Base");
 		
 		composite = new runGUI(tabFolder, SWT.NONE,KBase,shlExpertSystemShell, display);
 		tbtmUserInterface.setControl(composite);
@@ -550,7 +546,7 @@ public class MainScreen  implements Serializable {
 		}
 		else
 		{
-			JOptionPane.showMessageDialog(null, "Please choose a Knowledgebase first");
+			JOptionPane.showMessageDialog(null, "Please choose a Knowledge-Base first");
 		}
 	}
 }

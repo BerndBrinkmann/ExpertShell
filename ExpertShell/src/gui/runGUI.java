@@ -204,7 +204,7 @@ public class runGUI extends Composite implements Serializable {
 	gd_grpKnowledgeBaseSelected.heightHint = 62;
 	gd_grpKnowledgeBaseSelected.widthHint = 408;
 	grpKnowledgeBaseSelected.setLayoutData(gd_grpKnowledgeBaseSelected);
-	grpKnowledgeBaseSelected.setText("Knowledge Base Selected/Opened");
+	grpKnowledgeBaseSelected.setText("Knowledge-Base Selected/Opened");
 	
 	text = new Label(grpKnowledgeBaseSelected, SWT.NONE);
 	GridData gd_text = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
