@@ -23,7 +23,7 @@ public class test_CF implements Serializable  {
 		public KnowledgeBase createCFKB(MainScreen mains)
 		{
 		mainsc = mains;
-		KnowledgeBase boat_kb = new KnowledgeBase("Boat with Certainty Factor Knowledge Base");
+		KnowledgeBase boat_kb = new KnowledgeBase("Boat KB (Certainty Factor Example)");
 		
 				//define the variables
 		

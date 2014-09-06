@@ -23,7 +23,7 @@ public class Test_Thermostat implements Serializable {
 	public KnowledgeBase createThermostat(MainScreen mains)
 	{
 	mainsc = mains;
-	KnowledgeBase Thermo = new KnowledgeBase("Thermostat Knowledge Base");
+	KnowledgeBase Thermo = new KnowledgeBase("Thermostat KB (Combination Test)");
 	
 	Variable day = new Variable("day");
 	day.setIsNumeric(false);

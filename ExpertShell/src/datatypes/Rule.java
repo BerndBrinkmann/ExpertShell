@@ -20,7 +20,7 @@ import java.util.Stack;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 
-import removedClasses.UncertaintyMethod;
+
 
 public class Rule extends getSetKBSettings implements Serializable 
 {

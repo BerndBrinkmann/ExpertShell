@@ -188,7 +188,7 @@ public void showAnswer(Group questionGroup, String message, final KnowledgeBase 
 	lblAns= UserFactoryGUI.createQuestionLabel(questionGroup);
 	lblAns.setText("[Evaluation Complete] \n");
 	GridData gd_label3 = new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1);
-	gd_label3.widthHint=303;
+	gd_label3.widthHint=370;
 	gd_label3.heightHint=15;
 	lblAns.setLayoutData(gd_label3);
 	

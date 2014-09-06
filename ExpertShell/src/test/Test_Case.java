@@ -289,7 +289,7 @@ public class Test_Case implements Serializable {
 		*/
 		
 		mainsc = mains;
-		KnowledgeBase forecast = new KnowledgeBase("Forecast Knowledge Base");
+		KnowledgeBase forecast = new KnowledgeBase("Forecast KB (Bayesian Example)");
 		
 		//define the variables
 		

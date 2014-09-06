@@ -16,7 +16,7 @@ import java.io.OutputStream;
 
 import javax.swing.JFileChooser;
 
-import STUART.KnowledgeBaseFileManager;
+
 import resources.*;
 import datatypes.*;
 

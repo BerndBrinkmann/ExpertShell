@@ -23,7 +23,7 @@ public class Test_Numeric implements Serializable  {
 	public KnowledgeBase createNumericKB(MainScreen mains)
 	{
 	mainsc = mains;
-	KnowledgeBase Numerical = new KnowledgeBase("Numerical Knowledge Base");
+	KnowledgeBase Numerical = new KnowledgeBase("XYZ KB (Numeric Example)");
 	
 	//values
 	Value one = new Value("1");

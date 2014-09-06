@@ -291,23 +291,23 @@ public class MainScreen  implements Serializable {
 
 		comboExample.setBounds(199, 383, 139, 23);
 		comboExample.setText("Select Example");
-		comboExample.add("Forecast Example");
+		comboExample.add("Boat Example (CF)");
+		comboExample.add("Forecast Example (Bay.)");
 		comboExample.add("Numeric Example");
-		comboExample.add("Boat (Certainty Factor)");
-		comboExample.add("Thermostat Example");
+		comboExample.add("Thermostat Test");
 
 		Button btnLoadExample = new Button(composite_1, SWT.NONE);
 		btnLoadExample.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				// load an example
-				if (comboExample.getSelectionIndex() == 0)
+				if (comboExample.getSelectionIndex() == 1)
 				{
 					KBase = test.createBoatKnowlegeBase(window);
 					updateKnowledgeBase();					
 					labelCurrentKb.setText(KBase.getName()); 
 				}
-				if(comboExample.getSelectionIndex() == 1)
+				if(comboExample.getSelectionIndex() == 2)
 				{
 					KBase = testNum.createNumericKB(window);
 
@@ -315,7 +315,7 @@ public class MainScreen  implements Serializable {
 					
 					labelCurrentKb.setText(KBase.getName());
 				}
-				if(comboExample.getSelectionIndex() == 2)
+				if(comboExample.getSelectionIndex() == 0)
 				{
 					KBase = TestCF.createCFKB(window);
 			
