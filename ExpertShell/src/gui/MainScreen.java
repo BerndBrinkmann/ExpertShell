@@ -544,9 +544,9 @@ public class MainScreen  implements Serializable {
 		labelCurrentKb.setBounds(24, 245, 259, 25);
 		Label lblNewLabel_1 = new Label(composite_1, SWT.NONE);
 		lblNewLabel_1.setText("Load");
-		lblNewLabel_1.setBounds(0, 0, 826, 597);
+		lblNewLabel_1.setBounds(0, 0, 836, 607);
 		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_loaded1.jpg"));
+		lblNewLabel_1.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/ShellImage_smallesize.jpg"));
 		
 		MenuItem mntmLoad = new MenuItem(menu_1, SWT.NONE);
 		mntmLoad.setImage(SWTResourceManager.getImage(MainScreen.class, "/resources/folder.png"));
