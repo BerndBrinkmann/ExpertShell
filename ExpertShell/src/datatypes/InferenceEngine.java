@@ -68,6 +68,7 @@ public class InferenceEngine implements Serializable {
 				//grab the current rule in a cyclic way
 				rule = rulesList[i];
 				Boolean conseq = false;
+				setRelevant(target);
 				//checks whether the target can still be adjusted 
 				for( int n=i; n<rulesList.length;n++)
 				{
@@ -76,7 +77,7 @@ public class InferenceEngine implements Serializable {
 						for(int m=0; m<rulesList[n].getConsequentArray().length;m++)
 						{
 							//if target is in a consequent and that rule is fireable
-							if(rulesList[n].getConsequent(m).getVariable() == target && rulesList[n].getFireable())
+							if(rulesList[n].getConsequent(m).getVariable() == target)
 							{
 								conseq = true;
 								System.out.println(conseq);
@@ -105,10 +106,7 @@ public class InferenceEngine implements Serializable {
 					}
 					else
 					{
-						if(checkFireable(rule))
-						{
-						rule.setFireable(false);	
-						}
+
 					}
 				}
 			}
@@ -245,83 +243,68 @@ public class InferenceEngine implements Serializable {
 		return rules.toArray(new Rule[rules.size()]);
 	}
 	
-	public Boolean isInConsequent(Variable selectedVariable)
+	public void setRelevant(Variable target)
 	{
-		Rule rule;
-		Rule[] rulesList = KBase.getRuleArray();		
-		
-		Boolean conseq = false;
-		//cycle through rulesList 
-		for( int n=0; n<rulesList.length;n++)
+		Rule[] rulesList = KBase.getRuleArray();
+		for(int i = 0; i < rulesList.length; i++)
 		{
-			//check every consequent
-			for(int m=0; m<rulesList[n].getConsequentArray().length;m++)
+			if(!checkRelevant(target, i))
 			{
-				
-				if(rulesList[n].getConsequent(m).getVariable() == selectedVariable && !checkFireable(rulesList[n]))
-			{
-				conseq = true;
-				return conseq;
-				
-			}
+				rulesList[i].setFired(true);
+				System.out.println("Rule " + (i+1) + "setFired");
 			}
 		}
-		return conseq;
 	}
 	
-	public Boolean checkFireable(Rule currentRule)
+	public Boolean checkRelevant(Variable target, Integer index)
 	{
-		if(!currentRule.hasFired())
-		{
-			//Checking each antecedent for fireability
 			Rule[] rulesList = KBase.getRuleArray();
-			for(int i = 0; i < currentRule.getAntecedentArray().length;i++)
+			for(int n=0; n < rulesList[index].getConsequentArray().length; n++)
 			{
-				//if antecendent is user-set and has a value, and the variable isn't in a consequent. 
-				if(currentRule.getAntecedentArray()[i].getVariable().isUserInput())
+				if(rulesList[index].getConsequentArray()[n].getVariable() == target)
 				{
-					if(currentRule.getAntecedentArray()[i].getVariable().hasValue())
-					{
-						if(!isInConsequent(currentRule.getAntecedentArray()[i].getVariable()))
-						{
-							return false;
-						}
-						return true;
-					}
-					else
-					{
 					return true;
-					}//then cannot be changed
 				}
-				//if antecedent is not user-set, then check if variable is a consequent
 				else
 				{
-					//check every rule
-					for(int n=0; n<rulesList.length;n++)
-					{
-						//if rule hasn't fired
-						if(!rulesList[n].hasFired())
-						{
-								//check consequent for match
-							for(int m=0; m<rulesList[n].getConsequentArray().length;m++)
-							{
-								//if consequent is current antecedent variable
-								if(rulesList[n].getConsequent(m).getVariable() == currentRule.getAntecedentArray()[i].getVariable())
-								{	
-									System.out.println("fireable");
-									return true;
-								}
-							}
-						}	
+					if(checkAntRelevant(rulesList[index].getConsequentArray()[n].getVariable(), target)){
+						return true;
 					}
 				}
 			}
-		
+		return false;
+	}
+	public Boolean checkAntRelevant(Variable targetVariable, Variable target)
+	{
+		Rule[] rulesList = KBase.getRuleArray();
+		for(int m=0; m< rulesList.length;m++)
+		{
+		for(int r=0; r<rulesList[m].getAntecedentArray().length;r++)
+		{
+			if(rulesList[m].getAntecedentArray()[r].getVariable() == targetVariable)
+			{
+				return checkConsRelevant(rulesList[m],target);
 			}
-		
-			return false;
-		
-		
+			
+		}
+		}
+		return false;
+	}
+	
+	public Boolean checkConsRelevant(Rule r, Variable target)
+	{
+		for(int i=0; i<r.getConsequentArray().length;i++)
+		{
+			if(r.getConsequentArray()[i].getVariable() == target)
+			{
+				return true;
+			}
+			else
+			{
+				return checkAntRelevant(r.getConsequentArray()[i].getVariable(),target);
+			}
+		}
+		return false;
 	}
 	
 }
