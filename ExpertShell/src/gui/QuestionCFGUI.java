@@ -241,13 +241,6 @@ public class QuestionCFGUI {
 		CFScaleListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-				
-				/*int perspectivevalue=scale.getSelection();
-				GridData gd_lblCf = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-				gd_lblCf.widthHint = 101;
-				lblCf.setLayoutData(gd_lblCf);
-				lblCf.setText(""+(perspectivevalue));*/
-				
 			}
 		};
 		

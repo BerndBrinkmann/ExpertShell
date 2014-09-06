@@ -36,8 +36,6 @@ public class Rule extends getSetKBSettings implements Serializable
 	protected double likelihoodOfSufficiency = 1;
 
 	
-	//UncertaintyManagement uncertaintyType = UncertaintyManagement.NONE;
-	
 	@Override
 	public void setUncertaintyMethod(KBSettings.UncertaintyManagement uncertainty)
 	{
@@ -310,8 +308,6 @@ public class Rule extends getSetKBSettings implements Serializable
 						 if(var.isUserInput())
 						 {
 							//get the input from the user
-
-							 //var = IO.AskUserForInput(var,this, mainsc.KBase, mainsc.composite.CompQ, mainsc.composite.scrolledComposite_1, mainsc.composite.scrolledComposite, mainsc.Inference);
 							 KBase.rungui.AskUserForInput(var,this,KBase,Inference);
 							 if(KBase.rungui.resultVar == null)
 							 {
@@ -321,13 +317,6 @@ public class Rule extends getSetKBSettings implements Serializable
 							 {
 								 
 							 }
-							//var = ImportExport.userSetVaraible(var,this);
-							
-							//get the certainty if required				TODO added this condition
-							if(umethod == UncertaintyManagement.CF && !(var.isNumeric))
-							{
-					//			var.setCertaintyFactor(var.getCurrentValue(), MainScreen.getCertainty("Input a certainty for "+var.toString()));
-							}
 						 }
 
 					 }
@@ -376,7 +365,6 @@ public class Rule extends getSetKBSettings implements Serializable
 				}
 				else
 				{
-					//TODO this is the original chunk
 					Variable var = getAntecedent(i).getVariable();
 					Value val = getAntecedent(i).getValue();
 					if(var.getCertaintyFactor(val) < min)
@@ -405,7 +393,6 @@ public class Rule extends getSetKBSettings implements Serializable
 				}
 				else
 				{
-					// TODO this was the original chunk that just doesn't get run if the antecedent is numeric
 					Variable var = getAntecedent(i).getVariable();
 					Value val = getAntecedent(i).getValue();
 					if(var.getCertaintyFactor(val) > max)

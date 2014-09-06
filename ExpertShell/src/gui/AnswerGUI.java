@@ -207,48 +207,10 @@ public void showAnswer(Group questionGroup, String message, final KnowledgeBase 
 		gd_label2.heightHint = (15*(lines));
 		AforUser.setLayoutData(gd_label2);
 		
-		/*
-		ans1 = UserFactoryGUI.createAnswerCombo(questionGroup);
-		GridData gd_combo_11 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1);
-		gd_combo_11.widthHint = 276;
-		ans1.setLayoutData(gd_combo_11);
-		ans1.setVisible(false);
-		
-		ans1.setText("Choose Value");
-		
-		CFPercentage1 = UserFactoryGUI.createCFLabel(questionGroup);
-		CFPercentage1.setVisible(false);
-		//lblCF = UserFactoryGUI.createCFLabel(questionGroup);
-		//lblCF.setVisible(true);
-		
-		CFScale1 = UserFactoryGUI.createCFScale(questionGroup);
-		//scale= UserFactoryGUI.createCFScale(questionGroup);
-		//scale.addSelectionListener(CFScaleL);
-		GridData gd_scale1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
-		gd_scale1.widthHint = 216;
-		CFScale1.setLayoutData(gd_scale1);
-		CFScale1.setVisible(false);
-		//scale.setLayoutData(gd_scale);
-		//scale.setVisible(true);
-		*/
 		HowListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
 				displayHowMessage(HowList);
-				
-				if(HowList.isEmpty())
-				{
-//TODO					//lblWhyhow.setText("\nA result was not reached\n");
-				}
-				else
-				{
-				
-//TODO					//lblWhyhow.setText("\nThe result was reached by firing these rules in this order\n");
-					for(Rule r : HowList)
-					{
-//TODO						//lblWhyhow.setText(r.toString());
-					}
-				}	
 			}	
 		};
 		

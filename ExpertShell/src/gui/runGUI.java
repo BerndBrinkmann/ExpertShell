@@ -567,42 +567,7 @@ switch(kb.getUncertaintyMethod())
 			Inference.stopFlag = true;
 			resultVar = null;
 			result = null;
-		//Inference = null;
 		}
-			// this should not be handled by run button, KBase needs to tell it when to ask a new question
-		    /*
-		    btnCertainityFactor.getSelection();
-		    btnRun.getSelection();
-			if (btnCertainityFactor.getSelection()==true){
-				QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
-				askCFQuestion.addQuestion();
-				//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-				scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				CompQ.layout();
-				//scrolledComposite.layout();
-				button.setSelection(false);
-				btnBayesianReasoning.setSelection(false);
-			}else
-			{
-				QuestionGUI askQuestion = new QuestionGUI(CompQ, WhyListener, HowListener, OKListener, CFListener, CFScaleListener, AnswerComboListener);
-				askQuestion.addQuestion();
-				//AnswerGUI userAnswer = new AnswerGUI(questionGroup);
-				scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				CompQ.layout();
-				btnCertainityFactor.setSelection(false);
-				//End of section that needs to be moved
-				
-			}
-			*/
-			//IO.setMainFrame(OKButton);
-
-			/**This code cause GUI to close when called - issue somewhere*/
-		//	FileManager.saveKnowledgeFile(KBase);
-
-			//KBase.validate();
-			//Variable result = Inference.solveForwardChaining();
-			//HowList = Inference.getHowList();
-			//IO.displayResults(result, Inference.getHowList(), KBase);	
 
 		}
 	});
@@ -641,93 +606,7 @@ switch(kb.getUncertaintyMethod())
 	new Label(this, SWT.NONE);
 	new Label(this, SWT.NONE);
 	new Label(this, SWT.NONE);
-	
-
-	/**Original Question Box for reference*/
-	/*
-	WhyButton = new Button(questionGroup, SWT.NONE);
-	WhyButton.addSelectionListener(new SelectionAdapter() {
-		@Override
-		//I Don't understand what "thisRule" is doing - returns Null, need to replace with actual rule?
-		public void widgetSelected(SelectionEvent e) {
-			e.getSource();
-			//lblWhyhow.setText(IO.displayWhyMessage());
-			StringBuilder s = new StringBuilder();
-			s.append("\nI am trying to evaluate the rule\n");
-			s.append(tRule != null ? tRule.toString() : "null");
-			s.toString();
-			lblWhyhow.setText(""+s);
-		}
-	});
-	GridData gd_WhyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-	gd_WhyButton.widthHint = 54;
-	WhyButton.setLayoutData(gd_WhyButton);
-	WhyButton.setText("Why?");
-
-	HowButton = new Button(questionGroup, SWT.NONE);
-	HowButton.addSelectionListener(new SelectionAdapter() {
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			e.getSource();
-			//lblWhyhow.setText(IO.displayHowMessage(howList);
-			
-			if(HowList.isEmpty())
-			{
-				lblWhyhow.setText("\nA result was not reached\n");
-			}
-			else
-			{
-			
-				lblWhyhow.setText("\nThe result was reached by firing these rules in this order\n");
-				for(Rule r : HowList)
-				{
-					lblWhyhow.setText(r.toString());
-				}
-			}	
-			
-		}
-	});
-	GridData gd_HowButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-	gd_HowButton.widthHint = 54;
-	HowButton.setLayoutData(gd_HowButton);
-	HowButton.setText("How?");
-	
-	OKButton = new Button(questionGroup, SWT.NONE);
-	OKButton.addSelectionListener(new SelectionAdapter() {
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			e.getSource();
-			// Attempt at creating new Question box...
-
-				}
-			});
-			
-				  
-	OKButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-	OKButton.setText("OK");*/
-	
-	//scrolledComposite.setContent(CompQ);
-	//scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
-/*
-	ScrolledComposite scrolledComposite_1 = new ScrolledComposite(composite, SWT.BORDER | SWT.V_SCROLL);
-	scrolledComposite_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-	GridData gd_scrolledComposite_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
-	gd_scrolledComposite_1.heightHint = 377;
-	gd_scrolledComposite_1.widthHint = 320;
-	scrolledComposite_1.setLayoutData(gd_scrolledComposite_1);
-	scrolledComposite_1.setExpandHorizontal(true);
-	scrolledComposite_1.setExpandVertical(true);
-	
-	lblWhyhow = new Label(scrolledComposite_1, SWT.WRAP);
-	lblWhyhow.setText("Why/How");
-	scrolledComposite_1.setContent(lblWhyhow);
-	scrolledComposite_1.setMinSize(lblWhyhow.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-*/	
 	WhyListener = new SelectionAdapter() {
 		public void widgetSelected(SelectionEvent e) {
 			e.getSource();	
@@ -776,11 +655,6 @@ switch(kb.getUncertaintyMethod())
 	CFScaleListener = new SelectionAdapter() {
 		public void widgetSelected(SelectionEvent e) {
 			e.getSource();
-			/*int perspectivevalue=scale.getSelection();
-			GridData gd_lblCf = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-			gd_lblCf.widthHint = 101;
-			lblCf.setLayoutData(gd_lblCf);
-			lblCf.setText(""+(perspectivevalue));*/
 		}
 	};
 	
@@ -871,37 +745,9 @@ switch(kb.getUncertaintyMethod())
 	Group questionGroup;
 	questionGroup = UserFactoryGUI.createQuestionGroup(CompQ);
 	questionGroup.getParent().getParent().layout(true);
-	
-	
-	/*	
-	QuestionCFGUI askCFQuestion = new QuestionCFGUI(CompQ, Inference);
-	askCFQuestion.addQuestion("Input a value for "+var.getName());
-	scrolledComposite.setMinSize(CompQ.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-	CompQ.layout();
-		*/	
-		thisRule = rule;
+	thisRule = rule;
 
-		/*	
-		boolean invalid = true;
-		while(invalid)
-		{
-			try
-			{	
-				var.userSetCurrentValue(Double.parseDouble(field.getText()));
-				invalid = false;
-			}
-			catch(NumberFormatException ex)
-			{
-				System.out.println("Please enter a valid number.");
-				invalid = true;
-				JOptionPane.showMessageDialog(frame, panel,"",JOptionPane.PLAIN_MESSAGE);
-			}	
-		} */
-		
-			
-	
-			//btnCertainityFactor.getSelection();
-		   // btnRun.getSelection();
+
 		if(var.getQueryPrompt().trim().equals(""))
 		{
 			if (kb.getUncertaintyMethod()==KBSettings.UncertaintyManagement.CF)
@@ -925,7 +771,8 @@ switch(kb.getUncertaintyMethod())
 				QuestionGUI askQuestion = new QuestionGUI(CompQ, Inference,questionGroup,var.getQueryPrompt(), var,scrolledComposite, rule, lblWhyhow,scrolledComposite_1);
 			}
 		}
-	CompQ.update();
+	
+		CompQ.update();
 	while (var.currentValue== null && var.numVal ==null && !(Inference.stopFlag)) {
         if (!display.readAndDispatch ())
            display.sleep ();
@@ -940,7 +787,7 @@ switch(kb.getUncertaintyMethod())
      {
     	 resultVar = var;
      }
-	//return var;
+	
 	}
 	
 	@Override

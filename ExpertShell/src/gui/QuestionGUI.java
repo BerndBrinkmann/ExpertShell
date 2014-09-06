@@ -24,9 +24,6 @@ import datatypes.Variable;
 
 public class QuestionGUI {
 	
-	//Composite CompQ;
-	//ScrolledComposite scrolledComposite;
-	
 	Button WhyButton;
 	Button HowButton;
 	Button OKButton;
@@ -61,10 +58,6 @@ public class QuestionGUI {
 	
 	public QuestionGUI(Composite CompQ, InferenceEngine Inference, Group questionGroup, String message, Variable var, ScrolledComposite scrolledComposite, Rule currentRule, Label whyhow,ScrolledComposite ScrolledComposite_1){
 		scrolledComposite_1 = ScrolledComposite_1;
-		//WhyL= WhyListener;
-		//HowL= HowListener;
-		//OKL= OKListener;
-
 		AnswerComboL= AnswerComboListener;
 		howlist  = Inference.getHowList();
 		this.var = var;
@@ -111,62 +104,14 @@ public class QuestionGUI {
 			ans.setText("Choose Value");
 		}
 		
-		//CFPercentage = UserFactoryGUI.createCFLabel(questionGroup);
-		//CFPercentage.setVisible(false);
-		//lblCF = UserFactoryGUI.createCFLabel(questionGroup);
-		//lblCF.setVisible(false);
-		
-		//CFScale = UserFactoryGUI.createCFScale(questionGroup);
-		//CFScale.addSelectionListener(CFScaleL);
-		//scale = UserFactoryGUI.createCFScale(questionGroup);
-		//scale.addSelectionListener(CFScaleL);
-	
-		/*CFScale.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-				int perspectivevalue=CFScale.getSelection();
-				GridData gd_lblCf = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-				gd_lblCf.widthHint = 101;
-				CFPercentage.setLayoutData(gd_lblCf);
-				CFPercentage.setText(""+(perspectivevalue));
-				//lblCF.setLayoutData(gd_lblCf);
-				//lblCF.setText(""+(perspectivevalue));
-			}
-		});
-		GridData gd_scale = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
-		gd_scale.widthHint = 216;
-		CFScale.setLayoutData(gd_scale);
-		CFScale.setVisible(false);
-		//scale.setLayoutData(gd_scale);
-		//scale.setVisible(false);
-		*/
+
 		WhyListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();	
 				displayWhyMessage();
-//TODO				lblWhyhow.setText(""+s);
 			}
 		};
-		/*HowListener = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-				displayHowMessage(howlist);
-				if(howlist.isEmpty())
-				{
-//TODO					lblWhyhow.setText("\nA result was not reached\n");
-				}
-				else
-				{
-				
-//TODO					lblWhyhow.setText("\nThe result was reached by firing these rules in this order\n");
-					for(Rule r : howlist)
-					{
-//TODO						lblWhyhow.setText(r.toString());
-					}
-				}	
-			}	
-		};*/
+
 		OKListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
@@ -195,13 +140,9 @@ public class QuestionGUI {
 				}
 				else{
 				if(ans.getSelectionIndex() != -1)
-				{
-					//Double CFSelection = (double) CFScale.getSelection();
-					//CFSelection = CFSelection/100;
+				{	
 					var.setCurrentValue(possibleValues[ans.getSelectionIndex()]);
-					//var.setCertaintyFactor(var.getCurrentValue(),CFSelection);
-					setQueryBoxEnabled(false);
-					
+					setQueryBoxEnabled(false);	
 				}
 				}
 				
@@ -210,7 +151,7 @@ public class QuestionGUI {
 		AnswerComboListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				e.getSource();
-				//needs to find where varaibles are!!!
+				//needs to find where variables are!!!
 				System.out.println(ans.getText());
 			}	
 		};

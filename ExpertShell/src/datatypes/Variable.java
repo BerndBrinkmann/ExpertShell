@@ -310,45 +310,6 @@ public class Variable implements Serializable
 		return name;
 	}
 	
-	//converts the variable from numeric to linguistic and vice versa	
-/*	public Variable convert()
-	{
-		if(this instanceof NumericVariable)
-		{
-			for(int i=0;i<allValues.size();i++)
-			{
-				
-				switch(ComparisonGetter(i))
-				{
-				case NEQ:
-						ComparisonSetter(i,comparison.ISNT);
-				default:
-						ComparisonSetter(i,comparison.EQ);
-				}
-			}
-			return new LinguisticVariable(this.name, this.description, this.beliefs,
-					this.certaintyFactors,this.queryPrompt,this.numOfValueInstances,
-					this.askUser,this.userDerived,this.possibleValues);	
-		}
-		else
-		{		
-			for(int i=0;i<allValues.size();i++)
-			{
-				switch(ComparisonGetter(i))
-				{
-				case IS:
-						ComparisonSetter(i,comparison.EQ);
-				default:
-						ComparisonSetter(i,comparison.NEQ);				
-				}	
-			}	
-			return	new NumericVariable(this.name, this.description, this.beliefs,
-					this.certaintyFactors,this.queryPrompt,this.numOfValueInstances,
-					this.askUser,this.userDerived,this.possibleValues);
-		}	
-	
-	}*/
-	
 	//used to shorten the calls in convert to get and set the comparison value
 	public void ComparisonSetter(int i, Comparison compare)
 	{
