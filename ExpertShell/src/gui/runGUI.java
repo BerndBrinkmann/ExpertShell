@@ -146,6 +146,7 @@ public class runGUI extends Composite implements Serializable {
     private String variableListLabel = "";
     private Variable selectedVariable;
     private Value selectedValue;
+    private Double selectedNumValue;
     private String selectedVariableString;
     private Test_Case test;
     private Label lblSelectTargetVariable;
@@ -225,7 +226,11 @@ public class runGUI extends Composite implements Serializable {
 						if(KBase.getInferenceMethod() == KBSettings.InferenceType.B_CHAINING) //|| KBase.getBCConsequents()[targetvariablecombo.getSelectionIndex()] instanceof Consequent)
 						{
 							selectedVariable = KBase.getBCConsequents()[targetvariablecombo.getSelectionIndex()].getVariable();
-						selectedValue = KBase.getBCConsequents()[targetvariablecombo.getSelectionIndex()].getValue();
+						if(selectedVariable.isNumeric)
+						{
+							selectedNumValue = KBase.getBCConsequents()[targetvariablecombo.getSelectionIndex()].getNumVal();
+						}
+							selectedValue = KBase.getBCConsequents()[targetvariablecombo.getSelectionIndex()].getValue();
 						System.out.println("bc " + selectedVariable);
 						}
 						else{
@@ -529,7 +534,14 @@ switch(kb.getUncertaintyMethod())
 				KBase.validate();
 				//grpSelectRunMethod.setEnabled(false);
 				setRCMethod(false);
-				result = Inference.solveBackwardChaining(selectedVariable, selectedValue);
+				if(selectedVariable.isNumeric)
+					{
+					result = Inference.solveBackwardChainingNum(selectedVariable, selectedNumValue);
+					}
+				else
+				{
+					result = Inference.solveBackwardChaining(selectedVariable, selectedValue);
+				}
 				HowList = Inference.getHowList();
 				if(result != null&& !(Inference.stopFlag))
 				{
@@ -807,6 +819,7 @@ switch(kb.getUncertaintyMethod())
 			{
 				if(KBase.getBCConsequents()[i].getVariable().isNumeric)
 				{			
+					//System.out.println("value " + KBase.getBCConsequents()[i].get);
 					consequentArrayString[i]= new String (KBase.getBCConsequents()[i].getVariableAsString() + " = " +KBase.getBCConsequents()[i].getValueAsString());
 				}
 				else

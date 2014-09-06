@@ -396,8 +396,19 @@ public class KnowledgeBase extends getSetKBSettings implements Serializable
 	{
 		for(Consequent c : rule.getConsequentArray())
 		{
-			if(!consequents.contains(c)&& c !=null)
-				consequents.add(c);
+			if(!c.getVariable().isNumeric)
+				{
+				if(!consequents.contains(c)&& c !=null)
+					consequents.add(c);
+				}
+			else
+			{
+				System.out.println("numeric  " + c);
+				if(c != null)
+				{
+					consequents.add(c);
+				}
+			}
 		}
 	}
 	return consequents.toArray(new Consequent[consequents.size()]);

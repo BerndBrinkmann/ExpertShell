@@ -166,7 +166,7 @@ public class Antecedent extends getSetKBSettings implements Serializable
 	
 	public Consequent convertToConsequent()
 	{
-		if(variable instanceof NumericVariable)
+		if(variable.isNumeric)
 		{
 			return new Consequent(this.variable, this.numVal);
 		}

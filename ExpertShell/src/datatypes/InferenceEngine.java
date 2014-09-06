@@ -223,6 +223,95 @@ public class InferenceEngine implements Serializable {
 		return targetVar;
 	}
 	
+	public Variable solveBackwardChainingNum(Variable targetVar, Double targetVal)
+	{
+		System.out.println(targetVar +"  "+ targetVal);
+		if(targetVar == null || targetVal == null)
+		{
+			System.out.println("1. Operation Cancelled by User");
+			return null;
+		}
+		
+		howList = new ArrayList<Rule>();
+		
+		Consequent cons = new Consequent(targetVar,targetVal);
+		
+		Stack<Rule> stack = new Stack<Rule>();
+		ArrayList<Rule> stacked = new ArrayList<Rule>();
+		
+		//find the first lot of containing rules and push to the stack
+		Rule[] containingRules = findContainingRules(cons);
+		//sort the containing rules to resolve conflicts
+		/*if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
+			Arrays.sort(containingRules, new RuleAntecedentComparator());*/
+		
+		
+		if(containingRules.length > 0)
+		{			
+			for(Rule r : containingRules)
+			{
+				if(!stacked.contains(r))
+				{
+					stack.push(r);
+					stacked.add(r);
+				}
+			}
+		}
+		
+		//loop while the stack contains rules
+		while(!stack.isEmpty())
+		{
+			//get the set of rule at the top of the stack
+			Rule rule = stack.peek();
+								
+
+			if(rule.evaluate(KBase.getUncertaintyMethod(),this,KBase))
+			{
+				//if a rule is evaluated then drop the set off the stack and look at the rule set below
+				howList.add(stack.pop());
+				continue;
+			}	
+			else
+			{
+				System.out.println("could not evaluate");
+				//else stack the rules that can cause this rule to trigger
+				int nStacked = 0;
+				for(int j = 0; j < rule.getNumberOfAntecedents(); j++)
+				{
+					if(!rule.getAntecedent(j).getVariable().hasValue() || rule.getAntecedent(j).evaluate() == false)
+					{
+						containingRules = findContainingRules(rule.getAntecedent(j).convertToConsequent());
+						
+						//sort the containing rules to resolve conflicts
+						/*if(KBase.getConflictResolutionMethod() == KBSettings.ConflictResolution.SPECIFICITY_BASED)
+							Arrays.sort(containingRules, new RuleAntecedentComparator());*/
+						if(containingRules.length > 0)
+						{		
+							for(Rule r : containingRules)
+							{
+								if(!stacked.contains(r))
+								{
+									stack.push(r);
+									stacked.add(r);
+									nStacked++;
+								}
+							}
+						}
+						
+					}
+				}
+				//if no rules got stacked this time around then we have reached a dead end. go back down the stack.
+				if(nStacked == 0)
+				{
+					stack.pop();
+				}
+			}
+			
+			
+		}
+		return targetVar;
+	}
+	
 	
 	// this method searches the knowledge base to find rules that contain the given consequent
 	public Rule[] findContainingRules(Consequent cons)

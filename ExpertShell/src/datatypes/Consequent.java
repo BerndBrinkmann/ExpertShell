@@ -91,7 +91,7 @@ public class Consequent extends getSetKBSettings implements Serializable
 	
 	public Antecedent convertToAntecedent()
 	{
-		if(isNumeric)
+		if(variable.isNumeric)
 		{
 			return new Antecedent(this.variable, Comparison.EQ, this.numVal);
 		}
@@ -151,9 +151,11 @@ public class Consequent extends getSetKBSettings implements Serializable
 	}
 	
 	public String getValueAsString() {
-		if(isNumeric) {
+		if(this.getVariable().isNumeric) 
+		{
 			return numVal.toString();
-		} else {
+		} 
+		else {
 			if (value == null)
 				return new String("");
 			else
