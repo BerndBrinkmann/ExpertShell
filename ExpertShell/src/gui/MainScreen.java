@@ -268,7 +268,7 @@ public class MainScreen  implements Serializable {
 				textNewKb.setText("");
 			}
 		});
-		textNewKb.setBounds(115, 467, 172, 23);
+		textNewKb.setBounds(115, 446, 172, 23);
 		textNewKb.setText("Enter Name");
 		
 		Button btnNewButton = new Button(composite_1, SWT.NONE);
@@ -289,8 +289,25 @@ public class MainScreen  implements Serializable {
 				}				 
 			}
 		});
-		btnNewButton.setBounds(293, 465, 87, 25);
+		btnNewButton.setBounds(293, 444, 87, 25);
 		btnNewButton.setText("Create New");
+		
+		QSCloseListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				e.getSource();
+				tbtmQS.dispose();
+				compositeQS =null;
+			}	
+		};
+
+		
+		labelCurrentKb = new Label(composite_1, SWT.NONE);
+		labelCurrentKb.setAlignment(SWT.CENTER);
+		labelCurrentKb.setText("No Knowledge-Base Loaded");
+		labelCurrentKb.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
+		labelCurrentKb.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD | SWT.ITALIC));
+		labelCurrentKb.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
+		labelCurrentKb.setBounds(116, 341, 265, 25);
 		
 		Button btnRun = new Button(composite_1, SWT.NONE);
 		btnRun.addMouseListener(new MouseAdapter() {
@@ -301,7 +318,7 @@ public class MainScreen  implements Serializable {
 				
 			}
 		});
-		btnRun.setBounds(131, 369, 93, 25);
+		btnRun.setBounds(300, 400, 93, 25);
 		btnRun.setText("Run");
 		
 		Button btnEdit = new Button(composite_1, SWT.NONE);
@@ -412,24 +429,25 @@ public class MainScreen  implements Serializable {
 			}
 		});
 		btnEdit.setText("Edit");
-		btnEdit.setBounds(267, 369, 93, 25);
+		btnEdit.setBounds(201, 400, 93, 25);
 		
-		QSCloseListener = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				e.getSource();
-				tbtmQS.dispose();
-				compositeQS =null;
-			}	
-		};
-
-		
-		labelCurrentKb = new Label(composite_1, SWT.NONE);
-		labelCurrentKb.setAlignment(SWT.CENTER);
-		labelCurrentKb.setText("No Knowledge-Base Loaded");
-		labelCurrentKb.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		labelCurrentKb.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD | SWT.ITALIC));
-		labelCurrentKb.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		labelCurrentKb.setBounds(115, 328, 265, 25);
+		Button btnLoad = new Button(composite_1, SWT.NONE);
+		btnLoad.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				Object Temp;
+				Temp = FileManager.loadKnowledgeFile();
+				if (Temp !=null)
+				{
+					KBase = (KnowledgeBase) Temp;
+					
+					updateKnowledgeBase();
+					labelCurrentKb.setText(KBase.getName());
+				
+			}
+			}});
+		btnLoad.setBounds(108, 400, 87, 25);
+		btnLoad.setText("Load...");
 		Label lblNewLabel_1 = new Label(composite_1, SWT.HORIZONTAL | SWT.CENTER);
 		lblNewLabel_1.setText("Load");
 		lblNewLabel_1.setBounds(0, 0, 836, 607);
