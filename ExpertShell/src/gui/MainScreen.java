@@ -398,7 +398,7 @@ public class MainScreen  implements Serializable {
 				
 				uncertaintyBox.setRuleList(ruleList);
 				
-				
+				RuleButtonsGUI compEditorControls = new RuleButtonsGUI(compListEditor, SWT.NONE, KBase, ruleList);				
 				
 				Composite compRuleEditorHolder = new Composite(composite_3, SWT.NONE);
 				compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
