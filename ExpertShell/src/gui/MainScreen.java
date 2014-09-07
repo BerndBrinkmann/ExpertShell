@@ -151,7 +151,7 @@ public class MainScreen  implements Serializable {
 		mntmFile.setMenu(menu_1);
 		
 		MenuItem mntmExample = new MenuItem(menu, SWT.CASCADE);
-		mntmExample.setText("Examples");
+		mntmExample.setText("Load Example");
 		Menu menu_2 = new Menu(mntmExample);
 		mntmExample.setMenu(menu_2);
 		
@@ -242,6 +242,12 @@ public class MainScreen  implements Serializable {
 		mntmAbout.setText("About");
 		
 		tabFolder = new TabFolder(shlExpertSystemShell, SWT.NONE);
+		tabFolder.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateKnowledgeBase();
+			}
+		});
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		
@@ -249,6 +255,7 @@ public class MainScreen  implements Serializable {
 		tbtmMain.setText("Main");
 		
 		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
+		
 		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		tbtmMain.setControl(composite_1);
 		composite_1.setLayout(null);
@@ -321,6 +328,8 @@ public class MainScreen  implements Serializable {
 		btnRun.setBounds(300, 400, 93, 25);
 		btnRun.setText("Run");
 		
+		
+		
 		Button btnEdit = new Button(composite_1, SWT.NONE);
 		btnEdit.addMouseListener(new MouseAdapter() {
 			@Override
@@ -345,12 +354,18 @@ public class MainScreen  implements Serializable {
 				composite_3.setLayout(new GridLayout(2, false));
 				
 				Composite header = new Composite(composite_3,SWT.BORDER);
+				header.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusLost(FocusEvent e) {
+						updateKnowledgeBase();
+					}
+				});
 				header.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
-				header.setLayout(new GridLayout(2, false));
+				header.setLayout(new GridLayout(3, false));
 				
 				RuleUncertaintyGUI uncertaintyBox = new RuleUncertaintyGUI(header, KBase);
 				Button runFromEditor = new Button(header, SWT.NONE);
-				runFromEditor.setText("Run");
+				runFromEditor.setText(" Run ");
 				runFromEditor.addSelectionListener(new SelectionAdapter() {
 					
 					public void widgetSelected(SelectionEvent e) {
@@ -359,6 +374,9 @@ public class MainScreen  implements Serializable {
 						Run();
 					}
 				});
+				
+				Label submitchanges = new Label(header, SWT.LEFT);
+				submitchanges.setText("          -Press <Tab> to cycle through editor.\n          -Press <Enter> to submit changes.");
 				
 				Composite compListEditor = new Composite(composite_3, SWT.NONE);
 				compListEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
@@ -413,10 +431,16 @@ public class MainScreen  implements Serializable {
 				tbtmVariables.setText("Variables");
 
 				Variables = new VariablesGUI(tabFolder, SWT.NONE,KBase);
+				
 				//Variables.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 				tbtmVariables.setControl(Variables);
 				//Variables.setLayout(new GridLayout(2, true));
-				
+				Variables.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent e) {
+						updateKnowledgeBase();
+					}
+				});
 				
 				}
 				tabFolder.setSelection(tbtmDeveloperInterface);

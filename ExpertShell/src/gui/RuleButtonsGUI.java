@@ -59,7 +59,7 @@ public class RuleButtonsGUI extends Composite {
 		
 		btnSort = new Button(this, SWT.NONE);
 		btnSort.setFont(SWTResourceManager.getFont("Segoe UI Semibold", 9, SWT.BOLD));
-		btnSort.setText("Sort");
+		btnSort.setText("Sort Most Specific");
 		btnSort.addSelectionListener(selAdaptor);
 		
 	}
