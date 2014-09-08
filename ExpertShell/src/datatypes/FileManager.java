@@ -147,13 +147,13 @@ public class FileManager
 	{
 		if (Desktop.isDesktopSupported())
 		{
-			InputStream resource = ClassLoader.getSystemClassLoader().getResourceAsStream("resources/Manual.pdf");
+			InputStream resource = ClassLoader.getSystemClassLoader().getResourceAsStream("resources/User_Manual.pdf");
 						
 		    
 			try
 		    {
 //				File manualFile = File.createTempFile("Manual", ".pdf", new File(System.getProperty("java.io.tmpdir")));
-				File manualFile = new File(System.getProperty("java.io.tmpdir") + "Manual.pdf");
+				File manualFile = new File(System.getProperty("java.io.tmpdir") + "User_Manual.pdf");
 		        manualFile.deleteOnExit();
 		        OutputStream out = new FileOutputStream(manualFile);
 		        try
@@ -196,13 +196,13 @@ public class FileManager
 		//open the PDF of the manual
 		if (Desktop.isDesktopSupported())
 		{
-			InputStream resource = ClassLoader.getSystemClassLoader().getResourceAsStream("resources/QuickStart.pdf");
+			InputStream resource = ClassLoader.getSystemClassLoader().getResourceAsStream("resources/quick start guide.pdf");
 						
 		    
 			try
 		    {
 //				File manualFile = File.createTempFile("Manual", ".pdf", new File(System.getProperty("java.io.tmpdir")));
-				File manualFile = new File(System.getProperty("java.io.tmpdir") + "QuickStart.pdf");
+				File manualFile = new File(System.getProperty("java.io.tmpdir") + "quick start guide.pdf");
 		        manualFile.deleteOnExit();
 		        OutputStream out = new FileOutputStream(manualFile);
 		        try

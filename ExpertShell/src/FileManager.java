@@ -24,7 +24,7 @@ public class FileManager
 	
 	public static void saveKnowledgeFile(KnowledgeBase kb,Component frame)
 	{
-		fileChooser.setSelectedFile(new File(kb.getName()+".stu"));
+		fileChooser.setSelectedFile(new File(kb.getName()+".kb"));
 		int returnVal = fileChooser.showSaveDialog(frame);
 		
         if (returnVal == JFileChooser.APPROVE_OPTION) 
@@ -63,9 +63,9 @@ public class FileManager
 	{
 		try
 		{
-			if(!f.getAbsolutePath().endsWith(".stu"))
+			if(!f.getAbsolutePath().endsWith(".kb"))
 			{
-			    f = new File(f + ".stu");
+			    f = new File(f + ".kb");
 			}
 			FileOutputStream fos = new FileOutputStream(f);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -146,12 +146,12 @@ public class FileManager
 		// as the file cannot be accessed otherwise
 		if (Desktop.isDesktopSupported())
 		{
-			InputStream resource = FileManager.class.getResourceAsStream("/manual.pdf");
+			InputStream resource = FileManager.class.getResourceAsStream("/User_Manual.pdf");
 		    
 			try
 		    {
 //				File manualFile = File.createTempFile("Manual", ".pdf", new File(System.getProperty("java.io.tmpdir")));
-				File manualFile = new File(System.getProperty("java.io.tmpdir") + "Manual.pdf");
+				File manualFile = new File(System.getProperty("java.io.tmpdir") + "User_Manual.pdf");
 		        manualFile.deleteOnExit();
 		        OutputStream out = new FileOutputStream(manualFile);
 		        try
@@ -196,11 +196,11 @@ public class FileManager
 		// as the file cannot be accessed otherwise
 		if (Desktop.isDesktopSupported())
 		{
-			InputStream resource = FileManager.class.getResourceAsStream("/Quick Start Guide.pdf");
+			InputStream resource = FileManager.class.getResourceAsStream("/quick start guide.pdf");
 		    
 			try
 		    {
-				File manualFile = new File(System.getProperty("java.io.tmpdir") + "Quick Start Guide.pdf");
+				File manualFile = new File(System.getProperty("java.io.tmpdir") + "quick start guide.pdf");
 		        manualFile.deleteOnExit();
 		        OutputStream out = new FileOutputStream(manualFile);
 		        try
