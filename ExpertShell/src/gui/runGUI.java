@@ -816,6 +816,7 @@ switch(kb.getUncertaintyMethod())
 	public void updateKBase(KnowledgeBase kb)
 	{
 		KBase = kb;
+		text.setText(KBase.getName());
 		getTargetVariableCombo();
 	}
 }
