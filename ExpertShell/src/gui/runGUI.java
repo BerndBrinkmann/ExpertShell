@@ -524,7 +524,7 @@ switch(kb.getUncertaintyMethod())
 				setRCMethod(false);
 				result = Inference.solveForwardChaining(selectedVariable);
 				HowList = Inference.getHowList();
-				if(result != null && !(Inference.stopFlag))
+				if(result != null && !(Inference.stopFlag) && resultVar!= null)
 				{
 					AnswerGUI showAnswer = new AnswerGUI(CompQ, result, scrolledComposite , lblWhyhow, Inference.getHowList(), KBase, scrolledComposite_1);	
 				}
@@ -545,7 +545,7 @@ switch(kb.getUncertaintyMethod())
 					result = Inference.solveBackwardChaining(selectedVariable, selectedValue);
 				}
 				HowList = Inference.getHowList();
-				if(result != null&& !(Inference.stopFlag))
+				if(result != null&& !(Inference.stopFlag) && resultVar!= null)
 				{
 					AnswerGUI showAnswer = new AnswerGUI(CompQ, result, scrolledComposite , lblWhyhow, Inference.getHowList(), KBase, scrolledComposite_1);	
 				}
@@ -815,8 +815,43 @@ switch(kb.getUncertaintyMethod())
 	}
 	public void updateKBase(KnowledgeBase kb)
 	{
+		resetVariableValues();
+		lblWhyhow.setText("");
+		for(Control i: CompQ.getChildren())
+		{
+			i.dispose();
+		}
+		btnRun.setText("Run");
+		setRCMethod(true);
+		//Inference.stopFlag = true;
+		resultVar = null;
+		result = null;
 		KBase = kb;
 		text.setText(KBase.getName());
 		getTargetVariableCombo();
+		
+		switch(kb.getUncertaintyMethod())
+		{
+		case NONE:
+			button.setSelection(true);
+			btnCertainityFactor.setSelection(false);
+			btnBayesianReasoning.setSelection(false);
+			break;
+		
+		case BAYESIAN:
+			button.setSelection(false);
+			btnCertainityFactor.setSelection(false);
+			btnBayesianReasoning.setSelection(true);
+			break;
+		
+		case CF:
+			button.setSelection(false);
+			btnCertainityFactor.setSelection(true);
+			btnBayesianReasoning.setSelection(false);
+			break;
+			
+		default:		
+		}
+		
 	}
 }
