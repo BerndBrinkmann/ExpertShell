@@ -196,13 +196,13 @@ public class FileManager
 		//open the PDF of the manual
 		if (Desktop.isDesktopSupported())
 		{
-			InputStream resource = ClassLoader.getSystemClassLoader().getResourceAsStream("resources/quick start guide.pdf");
+			InputStream resource = ClassLoader.getSystemClassLoader().getResourceAsStream("resources/QuickStart.pdf");
 						
 		    
 			try
 		    {
 //				File manualFile = File.createTempFile("Manual", ".pdf", new File(System.getProperty("java.io.tmpdir")));
-				File manualFile = new File(System.getProperty("java.io.tmpdir") + "quick start guide.pdf");
+				File manualFile = new File(System.getProperty("java.io.tmpdir") + "QuickStart.pdf");
 		        manualFile.deleteOnExit();
 		        OutputStream out = new FileOutputStream(manualFile);
 		        try
