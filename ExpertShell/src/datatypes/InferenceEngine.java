@@ -52,10 +52,7 @@ public class InferenceEngine implements Serializable {
 				//grab the current rule in a cyclic way
 				rule = rulesList[i];
 				Boolean conseq = false;
-				if(KBase.getUncertaintyMethod() == KBSettings.UncertaintyManagement.NONE)
-				{
 				setRelevant(target);
-				}
 				//checks whether the target can still be adjusted 
 				for( int n=i; n<rulesList.length;n++)
 				{
