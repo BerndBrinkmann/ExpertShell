@@ -67,6 +67,7 @@ public class MainScreen  implements Serializable {
     private VariablesGUI Variables;
     static MainScreen window;
     Display display;
+    public RuleButtonsGUI compEditorControls;
     
 	public KnowledgeBase getKnowledgeBase(){
 		return KBase ;
@@ -416,7 +417,7 @@ public class MainScreen  implements Serializable {
 				
 				uncertaintyBox.setRuleList(ruleList);
 				
-				RuleButtonsGUI compEditorControls = new RuleButtonsGUI(compListEditor, SWT.NONE, KBase, ruleList);				
+				compEditorControls = new RuleButtonsGUI(compListEditor, SWT.NONE, KBase, ruleList);				
 				
 				Composite compRuleEditorHolder = new Composite(composite_3, SWT.NONE);
 				compRuleEditorHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -538,6 +539,7 @@ public class MainScreen  implements Serializable {
 		 if (ruleList != null)
 		 {
 			 ruleList.changeKnowledgeBase(KBase);
+			 compEditorControls.update(KBase);
 		 }
 		 
 	}
