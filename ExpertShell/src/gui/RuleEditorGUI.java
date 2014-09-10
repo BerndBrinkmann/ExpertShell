@@ -144,6 +144,7 @@ public class RuleEditorGUI {
 					//default isn't a var yet
 					toAdd = new Antecedent();
 				} else {
+					
 					toAdd = new Antecedent( variableToAdd, (Value)null );
 				}
 					
@@ -199,7 +200,10 @@ public class RuleEditorGUI {
 				} else { //user has selected an existing variable
 					
 					//set the var in the kb
-					antecedent.setVariable(kb.getVariable(comboText));
+					if(antecedent.getValue()==null && antecedent.getNumVal() == null)
+					{
+						antecedent.setVariable(kb.getVariable(comboText));
+					}
 				}
 				
 				//update values of GUI elements for this antecedent
@@ -312,6 +316,7 @@ public class RuleEditorGUI {
 				
 				//update GUI
 				consList.add(toAdd);
+				this.getParentRuleList().updateTextOfSelected();
 				ruleGrid.getParent().getParent().layout(true,true);
 				
 			} else if (source == Source.DELETE) {
@@ -323,6 +328,7 @@ public class RuleEditorGUI {
 				
 				//update GUI
 				consList.delete(index);
+				this.getParentRuleList().updateTextOfSelected();
 				ruleGrid.getParent().getParent().layout(true,true);
 				
 			} else if (source == Source.VARIABLE) {
@@ -352,8 +358,9 @@ public class RuleEditorGUI {
 					
 					consequent.setVariable(var);
 					
-				} else { //user has selected an existing variable
-					
+				} else 
+				{ //user has selected an existing variable
+					if(consequent.getNumVal() == null && consequent.getValue() ==null )
 					//set the var in the kb
 					consequent.setVariable(kb.getVariable(comboText));
 				}
@@ -446,5 +453,4 @@ public class RuleEditorGUI {
 		this.getParentRuleList().updateTextOfSelected();
 	}
 
-	
 }

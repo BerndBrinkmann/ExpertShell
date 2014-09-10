@@ -69,23 +69,29 @@ public class RuleButtonsGUI extends Composite {
 		
 		if (source == btnUp) {
 			
+			if(ruleList.getSelectedRule() != null)
+			{
 			//move in the kb
 			KBase.shiftRuleUp(ruleList.getSelectedRule());
 			
 			//move in the GUI
 			ruleList.shiftSelectedUp();
 			ruleList.getParent().layout(true, true);
-			update();
+			update(KBase);
+			}
 			
 		} else if (source == btnDown) {
 			
+			if(ruleList.getSelectedRule() != null)
+			{
 			//move in the kb
 			KBase.shiftRuleDown(ruleList.getSelectedRule());
 			
 			//move in the GUI
 			ruleList.shiftSelectedDown();
 			ruleList.getParent().layout(true, true);
-			update();
+			update(KBase);
+			}
 		} else if (source == btnAdd) {
 			
 			//add to kb
@@ -107,10 +113,12 @@ public class RuleButtonsGUI extends Composite {
 			KBase.AddRule(toAdd);
 			
 			//update GUI
-			ruleList.refresh(true);
+			ruleList.refreshNew(true,KBase.getRuleIndex(toAdd));
 			ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 			ruleList.getParent().layout(true, true);
-			update();
+			update(KBase);
+			
+			
 			
 		} else if (source == btnDelete) {
 			//make sure there's something selected
@@ -125,9 +133,12 @@ public class RuleButtonsGUI extends Composite {
 				KBase.removeRule(toDelete);
 				
 				//redraw
+				
 				ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				ruleList.getParent().layout(true, true);
-				update();
+				
+				ruleList.updateRuleGUIList();
+				update(KBase);
 				
 			}
 		} else if (source == btnSort) {
@@ -136,14 +147,17 @@ public class RuleButtonsGUI extends Composite {
 			ruleList.refresh(true);
 			ruleList.setSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 			ruleList.getParent().layout(true, true);
-			update();
+			update(KBase);
 		}
 	}
 	
-	public void update()
+	public void update(KnowledgeBase kb)
 	{
 		ruleList.scroll.setMinSize(ruleList.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		ruleList.layout();
 		ruleList.update();
+		KBase = kb;
 	}
+	
+	
 }

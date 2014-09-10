@@ -107,6 +107,7 @@ public class RuleListGUI extends Composite {
 					//user has clicked another rule and nothing is selected yet
 					select(index);
 				} else {
+					//editor.updateEdit(e);
 					deselect(selected);
 					select(index);
 				}
@@ -143,6 +144,7 @@ public class RuleListGUI extends Composite {
 		st.setBackground(null);
 		
 		if (!(editor == null)) {
+			scroll.setFocus();
 			editor.destroy();  //remove gui elements
 			editor = null; //remove reference
 		}
@@ -180,7 +182,16 @@ public class RuleListGUI extends Composite {
 	}
 
 	public Rule getSelectedRule(){
-		return ruleGUIs.get(selected).getRule();
+		try
+		{
+			ruleGUIs.get(selected).getRule();
+			return ruleGUIs.get(selected).getRule();
+		}
+		catch(ArrayIndexOutOfBoundsException e)
+		{
+			return null;
+		}
+		
 	}
 	
 	public ArrayList<RuleGUI> getRuleGUIArray(){
@@ -206,6 +217,20 @@ public class RuleListGUI extends Composite {
 		
 		if (keepSelection && rememberSelected != -1 && rememberSelected < ruleGUIs.size()) {
 			select(rememberSelected);
+		}
+		
+	}
+	
+	public void refreshNew(boolean keepSelection, Integer index) {
+		
+		deselect(selected);
+		
+		deleteAll();
+		
+		addFromKB();
+		
+		if (keepSelection && index != -1 && index< ruleGUIs.size()) {
+			select(index);
 		}
 		
 	}

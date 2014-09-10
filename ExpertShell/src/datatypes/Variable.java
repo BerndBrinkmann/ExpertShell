@@ -203,6 +203,7 @@ public class Variable implements Serializable
 	{
 		int index = -1;
 		
+		if (getArrayOfPossibleValues() == null || val == null ) return -1;
 		for(int i = 0; i < getNumberOfPossibleValues(); i++)
 		{
 			if(val.equals(getArrayOfPossibleValues()[i]))
