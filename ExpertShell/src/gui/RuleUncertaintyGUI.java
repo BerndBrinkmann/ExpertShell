@@ -58,7 +58,7 @@ public class RuleUncertaintyGUI extends Composite {
 	
 	public void changeKnowledgeBase(KnowledgeBase kb) {
 		KBase = kb;
-		setFromKB();				
+		setFromKB();
 	}
 	
 	private void buttonPress(Button sourceButton, boolean fromUserClick) {
