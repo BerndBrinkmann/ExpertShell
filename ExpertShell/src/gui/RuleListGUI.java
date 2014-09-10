@@ -27,6 +27,7 @@ public class RuleListGUI extends Composite {
 	private MouseListener listen;
 	private Composite editorHolder;
 	private RuleEditorGUI editor;
+	private RuleUncertaintyGUI ruleUncertaintyBox;
 	public ScrolledComposite scroll;
 	
 	//create an editable/selectable rulelistGUI linked to a knowledgebase
@@ -50,7 +51,7 @@ public class RuleListGUI extends Composite {
 		
 		kb = k;
 		
-		
+		ruleUncertaintyBox.changeKnowledgeBase(k);
 		
 		refresh(false);
 		
@@ -204,6 +205,10 @@ public class RuleListGUI extends Composite {
 	
 	public void setEditorHolder(Composite compRuleEditorHolder) {
 		editorHolder = compRuleEditorHolder;
+	}
+	
+	public void setUncertaintyBox(RuleUncertaintyGUI ru) {
+		ruleUncertaintyBox = ru;
 	}
 	
 	public void refresh(boolean keepSelection) {
