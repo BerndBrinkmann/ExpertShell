@@ -68,6 +68,7 @@ public class MainScreen  implements Serializable {
     static MainScreen window;
     Display display;
     public RuleButtonsGUI compEditorControls;
+    private Button btnEdit;
     
 	public KnowledgeBase getKnowledgeBase(){
 		return KBase ;
@@ -294,6 +295,8 @@ public class MainScreen  implements Serializable {
 				KBase = NewKb;
 				updateKnowledgeBase();
 				labelCurrentKb.setText(textNewKb.getText());
+				//'click' edit
+				btnEdit.notifyListeners( SWT.MouseUp, null );
 				}				 
 			}
 		});
@@ -331,7 +334,8 @@ public class MainScreen  implements Serializable {
 		
 		
 		
-		Button btnEdit = new Button(composite_1, SWT.NONE);
+		
+		btnEdit = new Button(composite_1, SWT.NONE);
 		btnEdit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
